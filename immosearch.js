@@ -347,8 +347,8 @@ function RealEstate(immobilie) {
 function RealEstateList(xml) {
     var immobilie = xml.getElementsByTagName("anbieter")[0]
         .getElementsByTagName("immobilie");
-    return [];
     var result = [];
+    return [];
     for (var i = 0; i < immobilie.length; i++) {
         result.push(RealEstate(Immobilie(immobilie[i])));
     }
