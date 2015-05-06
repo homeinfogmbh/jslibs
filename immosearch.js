@@ -350,8 +350,8 @@ function RealEstateList(xml) {
 	    xmlDoc.loadXML(xml);
     }
     var immobilie = xmlDoc.getElementsByTagName("immobilie");
-    result = [];
-    for (var i = 0; i < this._immobilie.length; i++) {
+    var result = [];
+    for (var i = 0; i < immobilie.length; i++) {
         result.push(RealEstate(this._immobilie));
     }
     return result;
