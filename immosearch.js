@@ -343,6 +343,7 @@ function RealEstate(immobilie) {
     return this;
 }
 
+
 // Creates a list of real estates from an OpenImmo™-anbieter XML document
 function RealEstateList(xml) {
     var immobilie = xml.getElementsByTagName("anbieter")[0]
