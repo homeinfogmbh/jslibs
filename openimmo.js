@@ -371,6 +371,7 @@ function Energiepass(energiepass) {
 
 
 function ZustandAngaben(zustand_angaben) {
+    console.log("ZA: " + zustand_angaben);
     function _energiepass() {
         var energiepass_ = zustand_angaben.getElements("energiepass");
         var result = [];
