@@ -349,7 +349,7 @@ function RealEstateList(xml) {
 	    xmlDoc.async = false;
 	    xmlDoc.loadXML(xml);
     }
-    var immobilie = xmlDoc.getElements("immobilie");
+    var immobilie = xmlDoc.getElementsByTagName("immobilie");
     result = [];
     for (var i = 0; i < this._immobilie.length; i++) {
         result.push(RealEstate(this._immobilie));
