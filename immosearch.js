@@ -254,10 +254,10 @@ function Attachment(anhang) {
 
 // Class to represent an energy certificate
 function EnergyCertificate(energiepass) {
-	this.type = energiepass.epart;
+    this.type = energiepass.epart;
 	this.value = energiepass.energieverbrauchkennwert ?
-                 this.energy_certificate_type == "VERBRAUCH" :
-                 energiepass.endenergiebedarf;
+        this.energy_certificate_type == "VERBRAUCH" :
+        energiepass.endenergiebedarf;
 	this.with_warm_water= energiepass.mitwarmwasser;
 	this.primary_energy_carrier = energiepass.primaerenergietraeger;
 	this.class = energiepass.wertklasse;
@@ -288,14 +288,14 @@ function RealEstate(immobilie) {
     this.floors = immobilie.geo.anzahl_etagen;
     this.district = immobilie.geo.regionaler_zusatz;
     this.cold_rent = immobilie.preise.nettokaltmiete ?
-            immobilie.preise.nettokaltmiete : immobilie.preise.kaltmiete;
+        immobilie.preise.nettokaltmiete : immobilie.preise.kaltmiete;
     this.warm_rent = immobilie.preise.warmmiete;
     this.utilities = immobilie.preise.nebenkosten;
     this.heating_costs = immobilie.preise.heizkosten;
     this.heating_costs_included = immobilie.preise.heizkosten_enthalten;
     this.energy_certificate = EnergyCertificate(
         immobilie.zustand_angaben.energiepass[0]) ?
-                immobilie.zustand_angaben.energiepass[0] : null;
+        immobilie.zustand_angaben.energiepass[0] : null;
     this.attachments = _attachments
 
     this.fullRent = function() {
@@ -334,4 +334,25 @@ function RealEstate(immobilie) {
     }
     
     return this;
+}
+
+// Creates a list of real estates from an OpenImmo™-anbieter XML document
+function RealEstateList(xml) {
+    var parser;
+    var xmlDoc;
+    if (window.DOMParser) {
+	    parser = new DOMParser();
+	    xmlDoc = parser.parseFromString(xml,"text/xml");
+    }
+    else { // code for IE
+	    xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+	    xmlDoc.async = false;
+	    xmlDoc.loadXML(xml);
+    }
+    var immobilie = xmlDoc.getElements("immobilie");
+    result = [];
+    for (var i = 0; i < this._immobilie.length; i++) {
+        result.push(RealEstate(this._immobilie));
+    }
+    return result;
 }
