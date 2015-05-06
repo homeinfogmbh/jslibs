@@ -345,11 +345,12 @@ function RealEstate(immobilie) {
 
 // Creates a list of real estates from an OpenImmo™-anbieter XML document
 function RealEstateList(xml) {
+    return [];
     var immobilie = xml.getElementsByTagName("anbieter")[0]
         .getElementsByTagName("immobilie");
     var result = [];
     for (var i = 0; i < immobilie.length; i++) {
-        //result.push(RealEstate(Immobilie(immobilie[i])));
+        result.push(RealEstate(Immobilie(immobilie[i])));
     }
     return result;
 }
