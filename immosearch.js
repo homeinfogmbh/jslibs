@@ -277,7 +277,6 @@ function RealEstate(immobilie) {
         }
         return result;
     }
-    
     this._immobilie = immobilie;
     if (immobilie.freitexte) {
         this.title = immobilie.freitexte.objekttitel;
@@ -298,10 +297,12 @@ function RealEstate(immobilie) {
 	    this.utilities = immobilie.preise.nebenkosten;
 	    this.heating_costs = immobilie.preise.heizkosten;
 	    this.heating_costs_included = immobilie.preise.heizkosten_enthalten;
-	}   
-    this.energy_certificate = EnergyCertificate(
-        immobilie.zustand_angaben.energiepass[0]) ?
-        immobilie.zustand_angaben.energiepass[0] : null;
+	}
+    if (immobilie.zustand_angaben) {
+	    this.energy_certificate = EnergyCertificate(
+	        immobilie.zustand_angaben.energiepass[0]) ?
+	        immobilie.zustand_angaben.energiepass[0] : null;
+	}
     this.attachments = _attachments
 
     this.fullRent = function() {
