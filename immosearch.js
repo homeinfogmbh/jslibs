@@ -338,18 +338,8 @@ function RealEstate(immobilie) {
 
 // Creates a list of real estates from an OpenImmo™-anbieter XML document
 function RealEstateList(xml) {
-    var parser;
-    var xmlDoc;
-    if (window.DOMParser) {
-	    parser = new DOMParser();
-	    xmlDoc = parser.parseFromString(xml,"text/xml");
-    }
-    else { // code for IE
-	    xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-	    xmlDoc.async = false;
-	    xmlDoc.loadXML(xml);
-    }
-    var immobilie = xmlDoc.getElementsByTagName("immobilie");
+    var immobilie = xml.getElementsByTagName("anbieter")[0]
+        .getElementsByTagName("immobilie");
     var result = [];
     for (var i = 0; i < immobilie.length; i++) {
         result.push(RealEstate(this._immobilie));
