@@ -40,7 +40,7 @@ function group(iterable) {
     var result = {};
 
     for (var i = 0; i < iterable.length; i++) {
-        match = false;
+        var match = false;
         for (var key in result) {
             if (key == iterable[i]) {
                 result[key] = result[key] + 1;
@@ -53,19 +53,6 @@ function group(iterable) {
         }
     }
     return result;
-}
-
-
-// Load an XML file into a DOM
-function loadXMLDoc(filename) {
-    if (window.XMLHttpRequest) {
-        xhttp=new XMLHttpRequest();
-    } else { // code for IE5 and IE6
-        xhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xhttp.open("GET",filename,false);
-    xhttp.send();
-    return xhttp.responseXML;
 }
 
 
@@ -101,7 +88,7 @@ Element.prototype.getElement = function (element_name) {
 
 // Gets value of a DOM element by its name
 Element.prototype.getElementValue = function (element_name) {
-    element = this.getElement(element_name);
+    var element = this.getElement(element_name);
     if (element != null) {
         return element.nodeValue;
     } else {
@@ -168,12 +155,11 @@ String.prototype.capitalize = function () {
 // Escape some special HTML characters
 String.prototype.escapeHtml = function () {
     // DOMPurify to sanitize HTML and prevents XSS attacks
-    return DOMPurify.sanitize(
-        this.replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;"));
+    return this.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
