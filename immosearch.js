@@ -279,20 +279,26 @@ function RealEstate(immobilie) {
     }
     
     this._immobilie = immobilie;
-    this.title = immobilie.freitexte.objekttitel;
-    this.street = immobilie.geo.strasse;
-    this.house_no = immobilie.geo.hausnummer;
-    this.zip_code = immobilie.geo.plz;
-    this.city = immobilie.geo.ort;
-    this.floor = immobilie.geo.etage;
-    this.floors = immobilie.geo.anzahl_etagen;
-    this.district = immobilie.geo.regionaler_zusatz;
-    this.cold_rent = immobilie.preise.nettokaltmiete ?
-        immobilie.preise.nettokaltmiete : immobilie.preise.kaltmiete;
-    this.warm_rent = immobilie.preise.warmmiete;
-    this.utilities = immobilie.preise.nebenkosten;
-    this.heating_costs = immobilie.preise.heizkosten;
-    this.heating_costs_included = immobilie.preise.heizkosten_enthalten;
+    if (immobilie.freitexte) {
+        this.title = immobilie.freitexte.objekttitel;
+	}
+    if (immobilie.geo) {
+	    this.street = immobilie.geo.strasse;
+	    this.house_no = immobilie.geo.hausnummer;
+	    this.zip_code = immobilie.geo.plz;
+	    this.city = immobilie.geo.ort;
+	    this.floor = immobilie.geo.etage;
+	    this.floors = immobilie.geo.anzahl_etagen;
+	    this.district = immobilie.geo.regionaler_zusatz;
+    }
+    if (immobilie.preise) {
+	    this.cold_rent = immobilie.preise.nettokaltmiete ?
+	        immobilie.preise.nettokaltmiete : immobilie.preise.kaltmiete;
+	    this.warm_rent = immobilie.preise.warmmiete;
+	    this.utilities = immobilie.preise.nebenkosten;
+	    this.heating_costs = immobilie.preise.heizkosten;
+	    this.heating_costs_included = immobilie.preise.heizkosten_enthalten;
+	}   
     this.energy_certificate = EnergyCertificate(
         immobilie.zustand_angaben.energiepass[0]) ?
         immobilie.zustand_angaben.energiepass[0] : null;
