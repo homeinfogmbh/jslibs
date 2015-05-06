@@ -270,7 +270,7 @@ function EnergyCertificate(energiepass) {
 // DOM node for easy attribute access
 function RealEstate(immobilie) {
     function _attachments() {
-        var attachments = immobilie.getElements("anhaenge");
+        var attachments = immobilie.anhang;
         var result = [];
         for (var i = 0; i < attachments.length; i++) {
         	result.push(Attachment(attachments[i]));
@@ -349,8 +349,7 @@ function RealEstateList(xml) {
         .getElementsByTagName("immobilie");
     var result = [];
     for (var i = 0; i < immobilie.length; i++) {
-        //result.push(RealEstate(Immobilie(immobilie[i])));
+        result.push(RealEstate(Immobilie(immobilie[i])));
     }
-    return [];
     return result;
 }
