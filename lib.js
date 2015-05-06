@@ -90,7 +90,11 @@ Element.prototype.getElement = function (element_name) {
 Element.prototype.getElementValue = function (element_name) {
     var element = this.getElement(element_name);
     if (element != null) {
-        return element.firstChild.nodeValue;
+        if (element.firstChild != null) {
+            return element.firstChild.nodeValue;
+        } else {
+            return null;
+        }
     } else {
         return null;
     }
