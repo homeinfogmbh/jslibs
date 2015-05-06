@@ -47,7 +47,7 @@ function Ausstattung(ausstattung_node) {
         "ausricht_balkon_terrasse");
     this.moebliert = ausstattung_node.getElementValue("moebliert");
     this.rollstuhlgerecht = ausstattung_node.getElementValue(
-	    "rollstuhlgerecht");
+        "rollstuhlgerecht");
     this.kabel_sat_tv = ausstattung_node.getElementValue("kabel_sat_tv");
     this.dvbt = ausstattung_node.getElementValue("dvbt");
     this.barrierefrei = ausstattung_node.getElementValue("barrierefrei");
@@ -283,7 +283,6 @@ function Kontaktperson(kontaktperson_node) {
     this.freitextfeld = kontaktperson_node.getElementValue("freitextfeld");
     return this;
 }
-    
 
 
 function Geo(geo_node) {
@@ -333,14 +332,25 @@ function Objektart(objektart) {
 }
 
 
-
 function Objektkategorie(objektkategorie_node) {
-    this.nutzungsart = Nutzungsart(
-        objektkategorie_node.getElement("nutzungsart"));
-    this.vermarktungsart = Vermarktungsart(
-        objektkategorie_node.getElement("vermarktungsart"));
-    this.objektart = Objektart(
-        objektkategorie_node.getElement("objektart"));
+    var nutzungsart = objektkategorie_node.getElement("nutzungsart");
+    if (nutzungsart) {
+        this.nutzungsart = Nutzungsart();
+    } else {
+        this.nutzungsart = null;
+    }
+    var vermarktungsart = objektkategorie_node.getElement("vermarktungsart");
+    if (vermarktungsart) {
+        this.vermarktungsart = Vermarktungsart();
+    } else {
+        this.vermarktungsart = null;
+    }
+    var objektart = objektkategorie_node.getElement("objektart");
+    if (objektart) {
+        this.objektart = Objektart(objektart);
+    } else {
+        this.objektart = null;
+    }
     return this;
 }
 
@@ -371,12 +381,11 @@ function Energiepass(energiepass) {
 
 
 function ZustandAngaben(zustand_angaben) {
-    console.log("ZA: " + zustand_angaben);
     function _energiepass() {
         var energiepass_ = zustand_angaben.getElements("energiepass");
         var result = [];
         for (var i = 0; i < energiepass_.length; i++) {
-        	result.push(Energiepass(energiepass_[i]));
+            result.push(Energiepass(energiepass_[i]));
         }
         return result;
     }
@@ -386,20 +395,41 @@ function ZustandAngaben(zustand_angaben) {
         "letztemodernisierung");
     var zustand = zustand_angaben.getElement("zustand");
     if (zustand) {
-	    this.zustand = zustand.getAttribute("zustand_art");
-	}   
+        this.zustand = zustand.getAttribute("zustand_art");
+    } else{
+        this.zustand = null; 
+    }
+    
     this.alter = zustand_angaben.getElementValue("alter");
-    this.bebaubar_nach = zustand_angaben.getElement(
-        "bebaubar_nach").getAttribute("bebaubar_attr");
-    this.erschliessung = zustand_angaben.getElement(
-        "erschliessung").getAttribute("erschl_attr");
-    this.erschliessung_umfang = zustand_angaben.getElement(
-        "erschliessung_umfang").getAttribute("erschl_attr");
+    var bebaubar_nach = zustand_angaben.getElement("bebaubar_nach");
+    if (bebaubar_nach) {
+        this.bebaubar_nach = bebaubar_nach.getAttribute("bebaubar_attr");
+    } else {
+        this.bebaubar_nach = null;
+    }
+    var erschliessung = zustand_angaben.getElement("erschliessung");
+    if (erschliessung) {
+        this.erschliessung = erschliessung.getAttribute("erschl_attr");
+    } else {
+        this.erschliessung = null;
+    }    
+    var erschliessung_umfang = zustand_angaben.getElement(
+        "erschliessung_umfang");
+    if (erschliessung_umfang) {
+        this.erschliessung_umfang = erschliessung_umfang.getAttribute(
+            "erschl_attr");
+    } else {
+        this.erschliessung_umfang = null;
+    }    
     this.bauzone = zustand_angaben.getElementValue("bauzone");
     this.altlasten = zustand_angaben.getElementValue("altlasten");
     this.energiepass = _energiepass();
-    this.verkaufstatus = zustand_angaben.getElementValue(
-        "verkaufstatus").getAttribute("stand");
+    var verkaufstatus = zustand_angaben.getElementValue("verkaufstatus");
+    if (verkaufstatus) {
+        this.verkaufstatus = verkaufstatus.getAttribute("stand");
+    } else {
+        this.verkaufstatus = null;
+    }
     return this;
 }
 
@@ -459,7 +489,12 @@ function Anhang(anhang) {
     this.anhangtitel = anhang.getElementValue("anhangtitel");
     this.format = anhang.getElementValue("format");
     this.check = anhang.getElementValue("check");
-    this.daten = Daten(anhang.getElement("daten"));
+    var daten = anhang.getElement("daten");
+    if (daten) {
+        this.daten = Daten(daten);
+    } else {
+        this.daten = null;
+    }
     this.location = anhang.getElementValue("location");
     this.gruppe = anhang.getElementValue("gruppe");
     return this;
@@ -495,30 +530,74 @@ function Immobilie(immobilie_node) {
         var result = [];
         var anhaenge = immobilie_node.getElement("anhaenge");
         if (anhaenge != null) {
-	        var anhang = anhaenge.getElements("anhaenge");
-	        for (var i = 0; i < anhang.length; i++) {
-	            result.push(Anhang(anhang[i]));
-	        }
+            var anhang = anhaenge.getElements("anhang");
+            for (var i = 0; i < anhang.length; i++) {
+                result.push(Anhang(anhang[i]));
+            }
         }
         return result;
     }
-
-    this.objektkategorie = Objektkategorie(
-        immobilie_node.getElement("objektkategorie"));
-    this.geo = Geo(immobilie_node.getElement("geo"));
-    this.kontaktperson = Kontaktperson(
-        immobilie_node.getElement("kontaktperson"));
-    this.preise = Preise(immobilie_node.getElement("preise"));
-    this.flaechen = Flaechen(immobilie_node.getElement("flaechen"));
-    this.ausstattung = Ausstattung(immobilie_node.getElement("ausstattung"));
-    this.zustand_angaben = ZustandAngaben(
-        immobilie_node.getElement("zustand_angaben"));
-    this.freitexte = Freitexte(immobilie_node.getElement("freitexte"));
+    var objektkategorie = immobilie_node.getElement("objektkategorie");
+    if (objektkategorie) {
+        this.objektkategorie = Objektkategorie(objektkategorie);
+    } else {
+        this.objektkategorie = null;
+    }   
+    var geo = immobilie_node.getElement("geo");
+    if (geo) {
+        this.geo = Geo(geo);
+    } else {
+        this.geo = null;
+    }
+    var kontaktperson = immobilie_node.getElement("kontaktperson");
+    if (kontaktperson) {
+        this.kontaktperson = Kontaktperson(kontaktperson);
+    } else {
+        this.kontaktperson = null;
+    }
+    var preise = immobilie_node.getElement("preise");
+    if (preise) {
+        this.preise = Preise(preise);
+    } else {
+        this.preise = null;
+    }
+    var flaechen = immobilie_node.getElement("flaechen");
+    if (flaechen) {
+        this.flaechen = Flaechen(flaechen);
+    } else {
+        this.flaechen = null;
+    }
+    var ausstattung = immobilie_node.getElement("ausstattung");
+    if (ausstattung) {
+        this.ausstattung = Ausstattung(ausstattung);
+    } else {
+        this.ausstattung = null;
+    }
+    var zustand_angaben = immobilie_node.getElement("zustand_angaben");
+    if (zustand_angaben) {
+        this.zustand_angaben = ZustandAngaben(zustand_angaben);
+    } else {
+        this.zustand_angaben = null;
+    }
+    var freitexte = immobilie_node.getElement("freitexte");
+    if (freitexte) {
+        this.freitexte = Freitexte(freitexte);
+    } else {
+        this.freitexte = null;
+    }
     this.anhaenge = _anhaenge();
-    this.verwaltung_objekt = VerwaltungObjekt(
-        immobilie_node.getElement("verwaltung_objekt"));
-    this.verwaltung_techn = VerwaltungTechn(
-        immobilie_node.getElement("verwaltung_techn"));
+    var verwaltung_objekt = immobilie_node.getElement("verwaltung_objekt");
+    if (verwaltung_objekt) {
+        this.verwaltung_objekt = VerwaltungObjekt(verwaltung_objekt);
+    } else {
+        this.verwaltung_objekt = null;
+    }
+    var verwaltung_techn = immobilie_node.getElement("verwaltung_techn");
+    if (verwaltung_techn) {
+        this.verwaltung_techn = VerwaltungTechn(verwaltung_techn);
+    } else {
+        this.verwaltung_techn = null;
+    }
     return this;
 }
 
@@ -543,6 +622,6 @@ function Anbieter(anbieter_node) {
 
 function Openimmo(xml) {
     // TODO: Implement
-	return this;
+    return this;
 }
 
