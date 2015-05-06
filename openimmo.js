@@ -335,7 +335,7 @@ function Objektart(objektart) {
 function Objektkategorie(objektkategorie_node) {
     var nutzungsart = objektkategorie_node.getElement("nutzungsart");
     if (nutzungsart) {
-        this.nutzungsart = Nutzungsart();
+        this.nutzungsart = Nutzungsart(nutzungsart);
     } else {
         this.nutzungsart = null;
     }
