@@ -341,7 +341,7 @@ function Objektkategorie(objektkategorie_node) {
     }
     var vermarktungsart = objektkategorie_node.getElement("vermarktungsart");
     if (vermarktungsart) {
-        this.vermarktungsart = Vermarktungsart();
+        this.vermarktungsart = Vermarktungsart(vermarktungsart);
     } else {
         this.vermarktungsart = null;
     }
