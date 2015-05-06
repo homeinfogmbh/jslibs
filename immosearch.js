@@ -349,7 +349,7 @@ function RealEstateList(xml) {
         .getElementsByTagName("immobilie");
     var result = [];
     for (var i = 0; i < immobilie.length; i++) {
-        result.push(RealEstate(Immobilie(immobilie[i])));
+        //result.push(RealEstate(Immobilie(immobilie[i])));
     }
     return [];
     return result;
