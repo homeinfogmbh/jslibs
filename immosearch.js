@@ -26,9 +26,9 @@
 */
 
 
-var cid = "993301";  // 993301 = BGW - Bielefeld
-var base_url = "https://tls.homeinfo.de/immosearch/customer/" + cid;
-var img_dummy = "img/customer_dummy/" + cid + ".png";
+// Global variable CID must be specified from here on
+var base_url = "https://tls.homeinfo.de/immosearch/customer/" + CID;
+var img_dummy = "img/customer_dummy/" + CID + ".png";
 var selected_locations = [];
 
 var sorting = "";
@@ -242,16 +242,96 @@ function mkFilter() {
 }
 
 
+// Class to represent an internal attachment
+function Attachment(anhang) {
+    this.title = anhang.anhangtitel;
+    this.mimetype = anhang.format;
+    this.b64data = anhang.daten.anhanginhalt;
+    this.group = anhang.gruppe;
+    return this;
+}
+
+
+// Class to represent an energy certificate
+function EnergyCertificate(energiepass) {
+	this.type = energiepass.epart;
+	this.value = energiepass.energieverbrauchkennwert ?
+                 this.energy_certificate_type == "VERBRAUCH" :
+                 energiepass.endenergiebedarf;
+	this.with_warm_water= energiepass.mitwarmwasser;
+	this.primary_energy_carrier = energiepass.primaerenergietraeger;
+	this.class = energiepass.wertklasse;
+	this.construction_year = energiepass.baujahr;
+	return this;
+}
+
+
 // Real estate wrapper for an OpenImmo™ immobilie
 // DOM node for easy attribute access
 function RealEstate(immobilie) {
-    this.title = immobilie.freitexte.objekttitel
-    this.street = immobilie.geo.strasse
-    this.house_no = immobilie.geo.hausnummer
-    this.zip_code = immobilie.geo.plz
-    this.city = immobilie.geo.ort
-    this.floor = immobilie.geo.etage
-    this.floors = immobilie.geo.anzahl_etagen
-    this.district = immobilie.geo.regionaler_zusatz
-    return this
+    function _attachments() {
+        var attachments = immobilie.getElements("anhaenge");
+        var result = [];
+        for (var i = 0; i < attachments.length; i++) {
+        	result.push(Attachment(attachments[i]));
+        }
+        return result;
+    }
+    
+    this._immobilie = immobilie;
+    this.title = immobilie.freitexte.objekttitel;
+    this.street = immobilie.geo.strasse;
+    this.house_no = immobilie.geo.hausnummer;
+    this.zip_code = immobilie.geo.plz;
+    this.city = immobilie.geo.ort;
+    this.floor = immobilie.geo.etage;
+    this.floors = immobilie.geo.anzahl_etagen;
+    this.district = immobilie.geo.regionaler_zusatz;
+    this.cold_rent = immobilie.preise.nettokaltmiete ?
+            immobilie.preise.nettokaltmiete : immobilie.preise.kaltmiete;
+    this.warm_rent = immobilie.preise.warmmiete;
+    this.utilities = immobilie.preise.nebenkosten;
+    this.heating_costs = immobilie.preise.heizkosten;
+    this.heating_costs_included = immobilie.preise.heizkosten_enthalten;
+    this.energy_certificate = EnergyCertificate(
+        immobilie.zustand_angaben.energiepass[0]) ?
+                immobilie.zustand_angaben.energiepass[0] : null;
+    this.attachments = _attachments
+
+    this.fullRent = function() {
+        if (this.warm_rent) {
+            return Number(this.warm_rent);
+        } else if (this.cold_rent) {
+            if (this.utilities) {
+            	if (this.heating_costs) {
+	                if (this.heating_costs_included) {
+	                    return Number(this.cold_rent)
+	                           + Number(this.utilities);
+	                } else {
+	                    return Number(this.cold_rent)
+                               + Number(this.utilities)
+                 	           + Number(this.heating_costs);
+	                }
+                } else {
+                    return Number(this.cold_rent)
+                           + Number(this.utilities);
+                }
+            } else {
+                if (this.heating_costs) {
+	                if (this.heating_costs_included) {
+	                    return Number(this.cold_rent);
+	                } else {
+	                    return Number(this.cold_rent)
+                 	           + Number(this.heating_costs);
+	                }
+                } else {
+                    return Number(this.cold_rent)
+                           + Number(this.utilities);
+                }           
+            }
+        }
+        
+    }
+    
+    return this;
 }

@@ -168,12 +168,12 @@ String.prototype.capitalize = function () {
 // Escape some special HTML characters
 String.prototype.escapeHtml = function () {
     // DOMPurify to sanitize HTML and prevents XSS attacks
-  return DOMPurify.sanitize(this
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;"));
+    return DOMPurify.sanitize(
+        this.replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;"));
 }
 
 
@@ -185,6 +185,6 @@ String.prototype.terminate = function (character) {
 
 // Determines whether a number is odd
 Number.prototype.isOdd = function () {
-    return true ? this % 2 == 0 : false;
+    return false ? this % 2 == 0 : true;
 }
 

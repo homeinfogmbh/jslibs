@@ -28,6 +28,77 @@
 */
 
 
+function Ausstattung(ausstattung_node) {
+    this.ausstatt_kategorie = ausstattung_node.getElementValue(
+        "ausstatt_kategorie");
+    this.wg_geeignet = ausstattung_node.getElementValue("wg_geeignet");
+    this.raeume_veraenderbar = ausstattung_node.getElementValue(
+        "raeume_veraenderbar");
+    this.bad = ausstattung_node.getElementValue("bad");
+    this.kueche = ausstattung_node.getElementValue("kueche");
+    this.boden = ausstattung_node.getElementValue("boden");
+    this.kamin = ausstattung_node.getElementValue("kamin");
+    this.heizungsart = ausstattung_node.getElementValue("heizungsart");
+    this.klimatisiert = ausstattung_node.getElementValue("klimatisiert");
+    this.fahrstuhl = ausstattung_node.getElementValue("fahrstuhl");
+    this.stellplatzart = ausstattung_node.getElementValue("stellplatzart");
+    this.gartennutzung = ausstattung_node.getElementValue("gartennutzung");
+    this.ausricht_balkon_terrasse = ausstattung_node.getElementValue(
+        "ausricht_balkon_terrasse");
+    this.moebliert = ausstattung_node.getElementValue("moebliert");
+    this.rollstuhlgerecht = ausstattung_node.getElementValue(
+	    "rollstuhlgerecht");
+    this.kabel_sat_tv = ausstattung_node.getElementValue("kabel_sat_tv");
+    this.dvbt = ausstattung_node.getElementValue("dvbt");
+    this.barrierefrei = ausstattung_node.getElementValue("barrierefrei");
+    this.sauna = ausstattung_node.getElementValue("sauna");
+    this.swimmingpool = ausstattung_node.getElementValue("swimmingpool");
+    this.wasch_trockenraum = ausstattung_node.getElementValue(
+        "wasch_trockenraum");
+    this.wintergarten = ausstattung_node.getElementValue("wintergarten");
+    this.dv_verkabelung = ausstattung_node.getElementValue("dv_verkabelung");
+    this.rampe = ausstattung_node.getElementValue("rampe");
+    this.hebebuehne = ausstattung_node.getElementValue("hebebuehne");
+    this.kran = ausstattung_node.getElementValue("kran");
+    this.gastterrasse = ausstattung_node.getElementValue("gastterrasse");
+    this.stromanschlusswert = ausstattung_node.getElementValue(
+        "stromanschlusswert");
+    this.kantine_cafeteria = ausstattung_node.getElementValue(
+        "kantine_cafeteria");
+    this.teekueche = ausstattung_node.getElementValue("teekueche");
+    this.hallenhoehe = ausstattung_node.getElementValue("hallenhoehe");
+    this.angeschl_gastronomie = ausstattung_node.getElementValue(
+        "angeschl_gastronomie");
+    this.brauereibindung = ausstattung_node.getElementValue("brauereibindung");
+    this.sporteinrichtungen = ausstattung_node.getElementValue(
+        "sporteinrichtungen");
+    this.wellnessbereich = ausstattung_node.getElementValue("wellnessbereich");
+    this.serviceleistungen = ausstattung_node.getElementValue(
+        "serviceleistungen");
+    this.telefon_ferienimmobilie = ausstattung_node.getElementValue(
+        "telefon_ferienimmobilie");
+    this.breitband_zugang = ausstattung_node.getElementValue(
+        "breitband_zugang");
+    this.umts_empfang = ausstattung_node.getElementValue("umts_empfang");
+    this.sicherheitstechnik = ausstattung_node.getElementValue(
+        "sicherheitstechnik");
+    this.unterkellert = ausstattung_node.getElementValue("unterkellert");
+    this.abstellraum = ausstattung_node.getElementValue("abstellraum");
+    this.fahrradraum = ausstattung_node.getElementValue("fahrradraum");
+    this.rolladen = ausstattung_node.getElementValue("rolladen");
+    this.dachform = ausstattung_node.getElementValue("dachform");
+    this.bauweise = ausstattung_node.getElementValue("bauweise");
+    this.ausbaustufe = ausstattung_node.getElementValue("ausbaustufe");
+    this.energietyp = ausstattung_node.getElementValue("energietyp");
+    this.bibliothek = ausstattung_node.getElementValue("bibliothek");
+    this.dachboden = ausstattung_node.getElementValue("dachboden");
+    this.gaestewc = ausstattung_node.getElementValue("gaestewc");
+    this.kabelkanaele = ausstattung_node.getElementValue("kabelkanaele");
+    this.seniorengerecht= ausstattung_node.getElementValue("seniorengerecht");
+    return this;
+}
+
+
 function Flaechen(flaechen_node) {
     this.wohnflaeche = flaechen_node.getElementValue("wohnflaeche");
     this.nutzflaeche = flaechen_node.getElementValue("nutzflaeche");
@@ -67,9 +138,28 @@ function Flaechen(flaechen_node) {
     this.grundstuecksfront = flaechen_node.getElementValue("grundstuecksfront");
     this.dachbodenflaeche = flaechen_node.getElementValue("dachbodenflaeche");
     this.teilbar_ab = flaechen_node.getElementValue("teilbar_ab");
-    
-    // TODO: Implement
+    this.beheizbare_flaeche = flaechen_node.getElementValue(
+        "beheizbare_flaeche");
+    this.anzahl_stellplaetze = flaechen_node.getElementValue(
+        "anzahl_stellplaetze");
+    this.plaetze_gastraum = flaechen_node.getElementValue("plaetze_gastraum");
+    this.anzahl_betten = flaechen_node.getElementValue("anzahl_betten");
+    this.anzahl_tagungsraeume = flaechen_node.getElementValue(
+        "anzahl_tagungsraeume");
+    this.vermietbare_flaeche = flaechen_node.getElementValue(
+        "vermietbare_flaeche");
+    this.anzahl_wohneinheiten = flaechen_node.getElementValue(
+        "anzahl_wohneinheiten");
+    this.anzahl_gewerbeeinheiten = flaechen_node.getElementValue(
+        "anzahl_gewerbeeinheiten");
+    this.einliegerwohnung = flaechen_node.getElementValue("einliegerwohnung");
+    this.kubatur = flaechen_node.getElementValue("kubatur");
+    this.ausnuetzungsziffer = flaechen_node.getElementValue(
+        "ausnuetzungsziffer");
+    this.flaechevon = flaechen_node.getElementValue("flaechevon");
+    this.flaechebis = flaechen_node.getElementValue("flaechebis");
     return this;
+}
 
 
 function Preise(preise_node) {
@@ -153,6 +243,7 @@ function Preise(preise_node) {
     this.richtpreis = preise_node.getElementValue("richtpreis");
     this.richtpreisprom2 = preise_node.getElementValue("richtpreisprom2");
     return this;
+}
 
 
 function Kontaktperson(kontaktperson_node) {
@@ -191,6 +282,8 @@ function Kontaktperson(kontaktperson_node) {
     this.foto = kontaktperson_node.getElementValue("foto");
     this.freitextfeld = kontaktperson_node.getElementValue("freitextfeld");
     return this;
+}
+    
 
 
 function Geo(geo_node) {
@@ -216,6 +309,31 @@ function Geo(geo_node) {
 }
 
 
+function Nutzungsart(nutzungsart) {
+    this.WOHNEN = nutzungsart.getElementValue("WOHNEN");
+    this.GEWERBE = nutzungsart.getElementValue("GEWERBE");
+    this.ANLAGE = nutzungsart.getElementValue("ANLAGE");
+    this.WAZ = nutzungsart.getElementValue("WAZ");
+    return this;
+}
+
+
+function Vermarktungsart(vermarktungsart) {
+    this.KAUF = vermarktungsart.getElementValue("KAUF");
+    this.MIETE_PACHT = vermarktungsart.getElementValue("MIETE_PACHT");
+    this.ERBPACHT = vermarktungsart.getElementValue("ERBPACHT");
+    this.LEASING = vermarktungsart.getElementValue("LEASING");
+    return this;
+}
+
+
+function Objektart(objektart) {
+    // TODO: Implement object types...
+    return this;
+}
+
+
+
 function Objektkategorie(objektkategorie_node) {
     this.nutzungsart = Nutzungsart(
         objektkategorie_node.getElement("nutzungsart"));
@@ -227,12 +345,157 @@ function Objektkategorie(objektkategorie_node) {
 }
 
 
+function Energiepass(energiepass) {
+    this.epart = energiepass.getElementValue("epart");
+    this.gueltig_bis = energiepass.getElementValue("gueltig_bis");
+    this.energieverbrauchkennwert = energiepass.getElementValue(
+        "energieverbrauchkennwert");
+    this.mitwarmwasser = energiepass.getElementValue("mitwarmwasser");
+    this.endenergiebedarf = energiepass.getElementValue("endenergiebedarf");
+    this.primaerenergietraeger = energiepass.getElementValue(
+        "primaerenergietraeger");
+    this.stromwert = energiepass.getElementValue("stromwert");
+    this.waermewert = energiepass.getElementValue("waermewert");
+    this.wertklasse = energiepass.getElementValue("wertklasse");
+    this.baujahr = energiepass.getElementValue("baujahr");
+    this.ausstelldatum = energiepass.getElementValue("ausstelldatum");
+    this.jahrgang = energiepass.getElementValue("jahrgang");
+    this.gebaeudeart = energiepass.getElementValue("gebaeudeart");
+    this.epasstext = energiepass.getElementValue("epasstext");
+    this.hwbwert = energiepass.getElementValue("hwbwert");
+    this.hwbklasse = energiepass.getElementValue("hwbklasse");
+    this.fgeewert = energiepass.getElementValue("fgeewert");
+    this.fgeeklasse = energiepass.getElementValue("fgeeklasse");
+    return this;
+}
+
+
+function ZustandAngaben(zustand_angaben) {
+    function _energiepass() {
+        var energiepass_ = zustand_angaben.getElements("energiepass");
+        var result = [];
+        for (var i = 0; i < energiepass_.length; i++) {
+        	result.push(Energiepass(energiepass_[i]));
+        }
+        return result;
+    }
+    
+    this.baujahr = zustand_angaben.getElementValue("baujahr");
+    this.letztemodernisierung = zustand_angaben.getElementValue(
+        "letztemodernisierung");
+    this.zustand = zustand_angaben.getElement(
+        "zustand").getAttribute("zustand_art");
+    this.alter = zustand_angaben.getElementValue("alter");
+    this.bebaubar_nach = zustand_angaben.getElement(
+        "bebaubar_nach").getAttribute("bebaubar_attr");
+    this.erschliessung = zustand_angaben.getElement(
+        "erschliessung").getAttribute("erschl_attr");
+    this.erschliessung_umfang = zustand_angaben.getElement(
+        "erschliessung_umfang").getAttribute("erschl_attr");
+    this.bauzone = zustand_angaben.getElementValue("bauzone");
+    this.altlasten = zustand_angaben.getElementValue("altlasten");
+    this.energiepass = _energiepass();
+    this.verkaufstatus = zustand_angaben.getElementValue(
+        "verkaufstatus").getAttribute("stand");
+    return this;
+}
+
+
+function Freitexte(freitexte) {
+    this.objekttitel = freitexte.getElementValue("objekttitel");
+    this.dreizeiler = freitexte.getElementValue("dreizeiler");
+    this.lage = freitexte.getElementValue("lage");
+    this.ausstatt_beschr = freitexte.getElementValue("ausstatt_beschr");
+    this.objektbeschreibung = freitexte.getElementValue("objektbeschreibung");
+    this.sonstige_angaben = freitexte.getElementValue("sonstige_angaben");
+    this.objekt_text = freitexte.getElementValue("objekt_text");
+    return this;
+}
+
+
+function VerwaltungObjekt(verwaltung_objekt) {
+    this.objektadresse_freigeben = verwaltung_objekt.getElementValue(
+        "objektadresse_freigeben");
+    this.verfuegbar_ab = verwaltung_objekt.getElementValue("verfuegbar_ab");
+    this.abdatum = verwaltung_objekt.getElementValue("abdatum");
+    this.bisdatum = verwaltung_objekt.getElementValue("bisdatum");
+    this.min_mietdauer = verwaltung_objekt.getElementValue("min_mietdauer");
+    this.max_mietdauer = verwaltung_objekt.getElementValue("max_mietdauer");
+    this.versteigerungstermin = verwaltung_objekt.getElementValue(
+        "versteigerungstermin");
+    this.wbs_sozialwohnung = verwaltung_objekt.getElementValue(
+        "wbs_sozialwohnung");
+    this.vermietet = verwaltung_objekt.getElementValue("vermietet");
+    this.gruppennummer = verwaltung_objekt.getElementValue("gruppennummer");
+    this.zugang = verwaltung_objekt.getElementValue("zugang");
+    this.laufzeit = verwaltung_objekt.getElementValue("laufzeit");
+    this.max_personen = verwaltung_objekt.getElementValue("max_personen");
+    this.nichtraucher = verwaltung_objekt.getElementValue("nichtraucher");
+    this.haustiere = verwaltung_objekt.getElementValue("haustiere");
+    this.geschlecht = verwaltung_objekt.getElementValue("geschlecht");
+    this.denkmalgeschuetzt = verwaltung_objekt.getElementValue(
+        "denkmalgeschuetzt");
+    this.als_ferien = verwaltung_objekt.getElementValue("als_ferien");
+    this.gewerbliche_nutzung = verwaltung_objekt.getElementValue(
+        "gewerbliche_nutzung");
+    this.branchen = verwaltung_objekt.getElementValue("branchen");
+    this.hochhaus = verwaltung_objekt.getElementValue("hochhaus");
+    return this;
+}
+
+
+function Daten(daten) {
+    this.pfad = daten.getElementValue("pfad");
+    this.anhanginhalt = daten.getElementValue("anhanginhalt");
+    return this;
+}
+
+
+
+function Anhang(anhang) {
+    this.anhangtitel = anhang.getElementValue("anhangtitel");
+    this.format = anhang.getElementValue("format");
+    this.check = anhang.getElementValue("check");
+    this.daten = Daten(anhang.getElement("daten"));
+    this.location = anhang.getElementValue("location");
+    this.gruppe = anhang.getElementValue("gruppe");
+    return this;
+}
+
+
+function VerwaltungTechn(verwaltung_techn){
+    this.objektnr_intern = verwaltung_techn.getElementValue("objektnr_intern");
+    this.objektnr_extern = verwaltung_techn.getElementValue("objektnr_extern");
+    this.aktion = verwaltung_techn.getElement(
+        "aktion").getAttribute("aktionart");
+    this.aktiv_von = verwaltung_techn.getElementValue("aktiv_von");
+    this.aktiv_bis = verwaltung_techn.getElementValue("aktiv_bis");
+    this.openimmo_obid = verwaltung_techn.getElementValue("openimmo_obid");
+    this.kennung_ursprung = verwaltung_techn.getElementValue(
+        "kennung_ursprung");
+    this.stand_vom = verwaltung_techn.getElementValue("stand_vom");
+    this.weitergabe_generell = verwaltung_techn.getElementValue(
+        "weitergabe_generell");
+    this.weitergabe_positiv = verwaltung_techn.getElementValue(
+        "weitergabe_positiv");
+    this.weitergabe_negativ = verwaltung_techn.getElementValue(
+        "weitergabe_negativ");
+    this.gruppen_kennung = verwaltung_techn.getElementValue("gruppen_kennung");
+    this.master = verwaltung_techn.getElementValue("master");
+    this.sprache = verwaltung_techn.getElementValue("sprache");
+    return this;
+}
+
+
 function Immobilie(immobilie_node) {
     function _anhaenge() {
         var result = [];
-        var anhaenge_ = immobilie_node.getElementsByTagName("anhaenge");
-        for (var i = 0; i < anhaenge_.length; i++) {
-            result.push(Anhang(anhaenge_[i]));
+        var anhaenge = immobilie_node.getElement("anhaenge");
+        if (anhaenge != null) {
+	        var anhang = anhaenge.getElements("anhaenge");
+	        for (var i = 0; i < anhang.length; i++) {
+	            result.push(Anhang(anhang[i]));
+	        }
         }
         return result;
     }
@@ -259,7 +522,7 @@ function Immobilie(immobilie_node) {
 
 function Anbieter(anbieter_node) {
     function _immobilie() {
-        result = [];
+        var result = [];
         var immobilie_ = anbieter_node.getElementsByTagName("immobilie");
         for (var i = 0; i < immobilie_.length; i++) {
             result.push(Immobilie(immobilie_[i]));
@@ -277,5 +540,6 @@ function Anbieter(anbieter_node) {
 
 function Openimmo(xml) {
     // TODO: Implement
+	return this;
 }
 
