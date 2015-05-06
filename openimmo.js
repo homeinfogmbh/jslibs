@@ -384,8 +384,10 @@ function ZustandAngaben(zustand_angaben) {
     this.baujahr = zustand_angaben.getElementValue("baujahr");
     this.letztemodernisierung = zustand_angaben.getElementValue(
         "letztemodernisierung");
-    this.zustand = zustand_angaben.getElement(
-        "zustand").getAttribute("zustand_art");
+    var zustand = zustand_angaben.getElement("zustand");
+    if (zustand) {
+	    this.zustand = zustand.getAttribute("zustand_art");
+	}   
     this.alter = zustand_angaben.getElementValue("alter");
     this.bebaubar_nach = zustand_angaben.getElement(
         "bebaubar_nach").getAttribute("bebaubar_attr");
