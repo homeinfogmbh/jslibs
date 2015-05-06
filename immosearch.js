@@ -280,7 +280,6 @@ function RealEstate(immobilie) {
     this._immobilie = immobilie;
     if (immobilie.freitexte) {
         this.title = immobilie.freitexte.objekttitel;
-        console.log("Title: " + this.title);
 	}
     if (immobilie.geo) {
 	    this.street = immobilie.geo.strasse;
