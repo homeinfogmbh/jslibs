@@ -184,9 +184,11 @@ String.prototype["umlauts"] = function () {
         current_uc = current.toUpperCase();
         if (last == null) {
             if (current_uc == "A" || current_uc == "O" || current_uc == "U") {
+                res = res.concat(last);
             	last = current;
+            } else {
+                res = res.concat(current);
             }
-            
         } else if (current_uc == "E") {            
         	last = current;
             if (last.toUpperCase == last) {
