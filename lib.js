@@ -56,6 +56,18 @@ function group(iterable) {
 }
 
 
+//Strips leading zeros from number-like strings
+function strplz(str) {
+ var i = 0
+ for (i; i < str.length; i++) {
+     if (str[i] != "0") {
+         break;
+     }
+ }
+ return str.substr(i);
+}
+
+
 /****************************
  *  Prototype extensions    *
  ****************************/
@@ -102,7 +114,7 @@ Element.prototype.getElementValue = function (element_name) {
 
 
 // Removes an item from an array
-Array.prototype.remove = function(item) {
+Array.prototype["remove"] = function(item) {
     var index = this.indexOf(item);
     if (index > -1) {
         this.splice(index, 1);
@@ -112,13 +124,13 @@ Array.prototype.remove = function(item) {
 
 
 // Fix for American-style -> German-style float interpunctuation
-String.prototype.dot2comma = function () {
+String.prototype["dot2comma"] = function () {
     return this.replace(".", ",");
 }
 
 
 // Padds a zero to a digit string iff it has exactly one zero after the comma
-String.prototype.padd0 = function () {
+String.prototype["padd0"] = function () {
     var afterComma = this.substr(this.indexOf(",") + 1);
     var char_length = afterComma.length;
     if (char_length == 1) {
@@ -129,20 +141,8 @@ String.prototype.padd0 = function () {
 }
 
 
-// Strips leading zeros from number-like strings
-function strplz(str) {
-    var i = 0
-    for (i; i < str.length; i++) {
-        if (str[i] != "0") {
-            break;
-        }
-    }
-    return str.substr(i);
-}
-
-
 // Capitalizes a string
-String.prototype.capitalize = function () {
+String.prototype["capitalize"] = function () {
     if (this != "" || this != 'undefined') {
         return this.replace(
             /\w\S*/g,
@@ -157,7 +157,7 @@ String.prototype.capitalize = function () {
 
 
 // Escape some special HTML characters
-String.prototype.escapeHtml = function () {
+String.prototype["escapeHtml"] = function () {
     // DOMPurify to sanitize HTML and prevents XSS attacks
     return this.replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -168,13 +168,13 @@ String.prototype.escapeHtml = function () {
 
 
 // Remove evrything after the specified character
-String.prototype.terminate = function (character) {
+String.prototype["terminate"] = function (character) {
     return this.substring(0, this.indexOf(character));
 }
 
 
 // Determines whether a number is odd
-Number.prototype.isOdd = function () {
+Number.prototype["isOdd"] = function () {
     return false ? this % 2 == 0 : true;
 }
 
