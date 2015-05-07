@@ -56,9 +56,9 @@ function group(iterable) {
 }
 
 
-//Strips leading zeros from number-like strings
+// Strips leading zeros from number-like strings
 function strplz(str) {
- var i = 0
+ var i = 0;
  for (i; i < str.length; i++) {
      if (str[i] != "0") {
          break;
@@ -80,7 +80,7 @@ Element.prototype.getElements = function (element_name) {
     } else {
         return [];
     }
-}
+};
 
 
 // Gets a DOM element by its name
@@ -95,7 +95,7 @@ Element.prototype.getElement = function (element_name) {
     } else {
         return null;
     }
-}
+};
 
 
 // Gets value of a DOM element by its name
@@ -110,7 +110,7 @@ Element.prototype.getElementValue = function (element_name) {
     } else {
         return null;
     }
-}
+};
 
 
 // Removes an item from an array
@@ -126,7 +126,7 @@ Array.prototype["remove"] = function(item) {
 // Fix for American-style -> German-style float interpunctuation
 String.prototype["dot2comma"] = function () {
     return this.replace(".", ",");
-}
+};
 
 
 // Padds a zero to a digit string iff it has exactly one zero after the comma
@@ -138,7 +138,7 @@ String.prototype["padd0"] = function () {
     } else {
         return this;
     }
-}
+};
 
 
 // Capitalizes a string
@@ -153,9 +153,9 @@ String.prototype["capitalize"] = function () {
     } else {
         return this;
     }
-}
+};
 
-
+/*
 // Escape some special HTML characters
 String.prototype["escapeHtml"] = function () {
     // DOMPurify to sanitize HTML and prevents XSS attacks
@@ -164,12 +164,54 @@ String.prototype["escapeHtml"] = function () {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-}
+}*/
 
 
 // Remove evrything after the specified character
 String.prototype["terminate"] = function (character) {
     return this.substring(0, this.indexOf(character));
+};
+
+
+// Convert umlaut descriptions to actual umlauts
+String.prototype["umlauts"] = function () {
+    var res = "";
+    var current = null;
+    var current_uc = null;
+    var last = null;
+    for (var i = 0; i < this.length; i++) {
+        current = this.chatAt(i);
+        current_uc = current.toUpperCase();
+        if (last == null) {
+            if (current_uc == "A" || current_uc == "O" || current_uc == "U") {
+            	last = current;
+            }
+            
+        } else if (current_uc == "E") {            
+        	last = current;
+            if (last.toUpperCase == last) {
+                if (last == "A") {
+                    res = res.concat("Ä");
+                } else if (last == "O") {
+                    res = res.concat("Ö");                    
+                } else if (last == "U") {
+                	res = res.concat("Ü");
+                }
+            } else {
+				if (last == "a") {
+				    res = res.concat("ä");
+				} else if (last == "o") {
+				    res = res.concat("ö");				    
+				} else if (last == "u") {
+					res = res.concat("ü");
+				}
+			}
+        } else {
+            res = res.concat(last);
+            last = null;
+        }
+    }
+    return res;
 }
 
 
