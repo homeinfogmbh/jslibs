@@ -180,7 +180,7 @@ String.prototype["umlauts"] = function () {
     var current_uc = null;
     var last = null;
     for (var i = 0; i < this.length; i++) {
-        current = this.chatAt(i);
+        current = this.charAt(i);
         current_uc = current.toUpperCase();
         if (last == null) {
             if (current_uc == "A" || current_uc == "O" || current_uc == "U") {
