@@ -175,45 +175,8 @@ String.prototype["terminate"] = function (character) {
 
 // Convert umlaut descriptions to actual umlauts
 String.prototype["umlauts"] = function () {
-    var res = "";
-    var current = null;
-    var current_uc = null;
-    var last = null;
-    for (var i = 0; i < this.length; i++) {
-        current = this.charAt(i);
-        current_uc = current.toUpperCase();
-        if (last == null) {
-            if (current_uc == "A" || current_uc == "O" || current_uc == "U") {
-                res = res.concat(last);
-            	last = current;
-            } else {
-                res = res.concat(current);
-            }
-        } else if (current_uc == "E") {            
-        	last = current;
-            if (last.toUpperCase == last) {
-                if (last == "A") {
-                    res = res.concat("Ä");
-                } else if (last == "O") {
-                    res = res.concat("Ö");                    
-                } else if (last == "U") {
-                	res = res.concat("Ü");
-                }
-            } else {
-				if (last == "a") {
-				    res = res.concat("ä");
-				} else if (last == "o") {
-				    res = res.concat("ö");				    
-				} else if (last == "u") {
-					res = res.concat("ü");
-				}
-			}
-        } else {
-            res = res.concat(last);
-            last = null;
-        }
-    }
-    return res;
+    return this.replace("Ae", "Ä").replace("Oe", "Ö").replace("Ue", "Ü")
+        .replace("ae", "ä").replace("oe", "ö").replace("ue", "u");
 }
 
 
