@@ -26,8 +26,6 @@
 */
 
 
-// Library for yellow map
-
 var yellowmap = {
     /* Extracts a yellow map ID from an objektnr_intern
        of an OpenImmo™ real estate */
