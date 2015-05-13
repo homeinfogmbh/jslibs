@@ -3,7 +3,7 @@
 /* Extracts a yellow map ID from an objektnr_intern
    of an OpenImmo™ real estate */
 function get_yellowmap_id(objektnr_intern) {
-    var items = str.split(".");
+    var items = objektnr_intern.split(".");
     var ve = items[0];
     var he = items[1];
     return strplz(ve) + "-" + strplz(he)
