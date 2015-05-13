@@ -18,3 +18,5 @@ function gen_yellowmap_url(customer, id) {
     return base_url + customer + tail + id
 }
 
+var yellowmap_customers = {"993301": "BielefelderGW"};
+
