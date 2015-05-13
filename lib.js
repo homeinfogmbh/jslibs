@@ -19,8 +19,10 @@
 
     Change log:
     
-    03.05.2015: Richard Neumann <r.neumann@homeinfo.de>
-    *   Implemented this library
+    * 03.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
+        Implemented this library
+    * 13.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
+        Moved most global methods to prototype extensions
 */
 
 
