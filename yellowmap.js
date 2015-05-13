@@ -33,7 +33,7 @@ var yellowmap = {
         var items = objektnr_intern.split(".");
         var ve = items[0];
         var he = items[1];
-        return strplz(ve) + "-" + strplz(he)
+        return ve.strplz() + "-" + he.strplz()
     },
 
 

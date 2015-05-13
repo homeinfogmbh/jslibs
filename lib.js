@@ -28,43 +28,10 @@
  *  General-purpose methods *
  ****************************/
  
-// Gets text content of an object, preferring the
-// textContent attribute over innerText attribute
+/* Gets text content of an object, preferring the
+   textContent attribute over innerText attribute */
 function getText(obj) {
     return obj.textContent ? obj.textContent : obj.innerText;
-}
-
-
-// Groups an iterable and counts occurances
-function group(iterable) {
-    var result = {};
-
-    for (var i = 0; i < iterable.length; i++) {
-        var match = false;
-        for (var key in result) {
-            if (key == iterable[i]) {
-                result[key] = result[key] + 1;
-                match = true;
-                break;
-            }
-        }
-        if (match == false) {
-            result[iterable[i]] = 1;
-        }
-    }
-    return result;
-}
-
-
-// Strips leading zeros from number-like strings
-function strplz(str) {
- var i = 0;
- for (i; i < str.length; i++) {
-     if (str[i] != "0") {
-         break;
-     }
- }
- return str.substr(i);
 }
 
 
@@ -180,8 +147,41 @@ String.prototype["umlauts"] = function () {
 }
 
 
+// Strips leading zeros from number-like strings
+String.prototype["strplz"] = function () {
+    var i = 0;
+    for (i; i < this.length; i++) {
+     if (this[i] != "0") {
+         break;
+     }
+    }
+    return this.substr(i);
+}
+
+
 // Determines whether a number is odd
 Number.prototype["isOdd"] = function () {
     return false ? this % 2 == 0 : true;
+}
+
+
+// Groups an iterable and counts occurences
+Array.prototype["group"] = function () {
+    var result = {};
+
+    for (var i = 0; i < this.length; i++) {
+        var match = false;
+        for (var key in result) {
+            if (key == this[i]) {
+                result[key] = result[key] + 1;
+                match = true;
+                break;
+            }
+        }
+        if (match == false) {
+            result[this[i]] = 1;
+        }
+    }
+    return result;
 }
 
