@@ -31,18 +31,18 @@ var yellowmap = {
        of an OpenImmo™ real estate */
     get_yellowmap_id: function (objektnr_intern) {
         var items = objektnr_intern.split(".");
-        var ve = items[0];
-        var he = items[1];
-        return ve.strplz() + "-" + he.strplz()
+        var ve = String(items[0]);
+        var he = String(items[1]);
+        return ve.strplz() + "-" + he.strplz();
     },
 
 
     /* Generates a URL for a yellowmap
        customer and a real estate id */
     gen_yellowmap_url: function (customer, id) {
-        var base_url = "http://www.yellowmap.de/Partners/"
-        var tail = "/Map.aspx?MapPartnerIds="
-        return base_url + customer + tail + id
+        var base_url = "http://www.yellowmap.de/Partners/";
+        var tail = "/Map.aspx?MapPartnerIds=";
+        return base_url + customer + tail + id;
     },
 
     // Maps HOMEINFO CIDs to YellowMap customers
