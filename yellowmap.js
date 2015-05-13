@@ -46,5 +46,5 @@ var yellowmap = {
     },
 
     // Maps HOMEINFO CIDs to YellowMap customers
-    yellowmap_customers: {"993301": "BielefelderGW"},
+    yellowmap_customers: {"993301": "BielefelderGW"}
 }
