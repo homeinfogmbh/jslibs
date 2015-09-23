@@ -18,18 +18,22 @@
 
 
     Change log:
-    
+
     * 03.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
         Implemented this library
     * 13.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
         Moved most global methods to prototype extensions
 */
 
+/****************************
+ *  Global vars *
+ ****************************/
+var NEW_LINE = new RegExp('\r?\n','g');
 
 /****************************
  *  General-purpose methods *
  ****************************/
- 
+
 /* Gets text content of an object, preferring the
    textContent attribute over innerText attribute */
 function getText(obj) {
@@ -40,7 +44,7 @@ function getText(obj) {
 /****************************
  *  Prototype extensions    *
  ****************************/
- 
+
 // Gets DOM elements by a name
 Element.prototype.getElements = function (element_name) {
     var elements = this.getElementsByTagName(element_name);
@@ -160,6 +164,11 @@ String.prototype["strplz"] = function () {
     return this.substr(i);
 }
 
+// Replace line feed for HTML
+String.prototype["lf2html"] = function () {
+  return this.replace(NEW_LINE, "<br />");
+}
+
 
 // Determines whether a number is odd
 Number.prototype["isOdd"] = function () {
@@ -186,4 +195,3 @@ Array.prototype["group"] = function () {
     }
     return result;
 }
-
