@@ -16,13 +16,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-    Change log:
-
-    * 03.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
-        Implemented this library
-    * 13.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
-        Moved most global methods to prototype extensions
 */
 
 /****************************
@@ -34,16 +27,130 @@ var NEW_LINE = new RegExp('\r?\n','g');
  *  General-purpose methods *
  ****************************/
 
-/* Gets text content of an object, preferring the
-   textContent attribute over innerText attribute */
+
+
+
+
+
+
+/****************************
+*  Functions *
+****************************/
+
+// Gets text content of an object, preferring the textContent attribute over innerText attribute
 function getText(obj) {
     return obj.textContent ? obj.textContent : obj.innerText;
 }
 
+//check e-mail address
+function validateEmail($email) {
+	var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	if(!emailReg.test($email)) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+// Check if element exists and return boolean
+function check_if_element_exists_boolean(element) {
+  if (typeof(element) == 'undefined' && element == null) {
+    return false;//element does not exists
+  } else {
+    return true;//element exists
+  }
+}
+
+// Remove evrything after the dynamic character parameter
+function removeAfterCertainCharacter(string, character) {
+	return string.substring(0, string.indexOf(character));
+}
+
+// Check if value start from 0 and fix it because thatose numbers are address nr.
+function checkIfNumberStartsFromZero(object_number) {
+  if (object_number.charAt(2) == 0) {//get first 000
+    return object_number.substr(3);
+  } else if (object_number.charAt(1) == 0) {//get first 00
+    return object_number.substr(2);
+  } else if (object_number.charAt(0) == 0) {//get first 0
+    return object_number.substr(1);
+  }
+}
+
+// Capitalise function (first char toUpperCase and all the rest toLowerCase)
+function capitalise(string) {
+  if (typeof string != 'undefined') {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  } else {
+    return string;
+  }
+}
+
+//if last char is only one 0 (price)
+function ifLastCharIsOnlyOneNull(str) {
+	var afterComma = str.substr(str.indexOf(",") + 1);
+	var char_length = afterComma.length;
+	if (char_length == 1) {
+		return str + "0";
+	} else {
+		return str;
+	}
+}
+
+//replace comma with dot
+function replaceCommaWithDot(str) {
+	return str.replace(",", ".");
+}
+
+//replace dot with comma
+function replaceDotWithComma(value) {
+  return value.replace(".", ",");
+}
+
+function afterCommaKeep2Char(str) {
+  var afterCommaKeep2Char = str;
+  var valueBeforeComma = str.substr(0, str.indexOf(','));
+  if (afterCommaKeep2Char.indexOf(',') > -1) {//check if value has comma
+    afterCommaKeep2Char = afterCommaKeep2Char.substr(afterCommaKeep2Char.indexOf(",") + 1)
+    //return valueBeforeComma + "," + "<sup>" + afterCommaKeep2Char.substr(0, 2) + "</sup>";
+    return valueBeforeComma + "," + afterCommaKeep2Char.substr(0, 2);
+  } else {//else return the original value
+    return str;
+  }
+}
+
+function isOdd(num) {
+	return num % 2;
+}
+
+function escapeHtml(unsafe) {
+	//DOMPurify to sanitize HTML and prevents XSS attacks
+  /*
+  return DOMPurify.sanitize(unsafe
+  	.replace(/&/g, "&amp;")
+  	.replace(/</g, "&lt;")
+  	.replace(/>/g, "&gt;")
+  	.replace(/"/g, "&quot;")
+  	.replace(/'/g, "&#039;"));
+  */
+    return unsafe;
+}
 
 /****************************
  *  Prototype extensions    *
  ****************************/
+
+// Remove from array
+Array.prototype.remove_from_array = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 // Gets DOM elements by a name
 Element.prototype.getElements = function (element_name) {
@@ -102,7 +209,7 @@ String.prototype["dot2comma"] = function () {
 };
 
 
-// Padds a zero to a digit string iff it has exactly one zero after the comma
+// Padds a zero to a digit string if it has exactly one zero after the comma
 String.prototype["padd0"] = function () {
     var afterComma = this.substr(this.indexOf(",") + 1);
     var char_length = afterComma.length;
@@ -116,16 +223,13 @@ String.prototype["padd0"] = function () {
 
 // Capitalizes a string
 String.prototype["capitalize"] = function () {
-    if (this != "" || this != 'undefined') {
-        return this.replace(
-            /\w\S*/g,
-            function(txt) {
-                return txt.charAt(0).toUpperCase()
-                       + txt.substr(1).toLowerCase();
-            });
-    } else {
-        return this;
-    }
+  if (this != "" || this != 'undefined') {
+    return this.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  } else {
+      return this;
+  }
 };
 
 /*

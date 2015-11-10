@@ -1,5 +1,5 @@
 /*
-    HOMEINFO OpenImmo™ XML DOM library
+    HOMEINFO general-purpose Javascript library
 
     (C) 2015 HOMEINFO - Digitale Informationssysteme GmbH
 
@@ -16,20 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-    XXX: Depends on "lib.js"
-    TODO: 
-        * Implement further DOM classes
-
-    Change log:
-    
-    * 03.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
-        Implemented this library
-    
-    * 13.05.2015: Richard Neumann <r.neumann@homeinfo.de>:
-        Updated some classes
 */
-
 
 var openimmo = {
     ausstattung: function(ausstattung) {
@@ -105,8 +92,8 @@ var openimmo = {
             "seniorengerecht");
         return this;
     },
-    
-    
+
+
     flaechen: function(flaechen) {
         this.wohnflaeche = flaechen.getElementValue("wohnflaeche");
         this.nutzflaeche = flaechen.getElementValue("nutzflaeche");
@@ -177,8 +164,8 @@ var openimmo = {
         this.flaechebis = flaechen.getElementValue("flaechebis");
         return this;
     },
-    
-    
+
+
     preise: function(preise) {
         this.kaufpreis = preise.getElementValue("kaufpreis");
         this.kaufpreisnetto = preise.getElementValue("kaufpreisnetto");
@@ -277,8 +264,8 @@ var openimmo = {
         this.richtpreisprom2 = preise.getElementValue("richtpreisprom2");
         return this;
     },
-    
-    
+
+
     kontaktperson: function(kontaktperson) {
         this.email_zentrale = kontaktperson.getElementValue(
             "email_zentrale");
@@ -321,8 +308,8 @@ var openimmo = {
         this.freitextfeld = kontaktperson.getElementValue("freitextfeld");
         return this;
     },
-    
-    
+
+
     geo: function(geo) {
         this.strasse = geo.getElementValue("strasse");
         this.hausnummer = geo.getElementValue("hausnummer");
@@ -344,8 +331,8 @@ var openimmo = {
         this.luftbildern = geo.getElementValue("luftbildern");
         return this;
     },
-    
-    
+
+
     nutzungsart: function(nutzungsart) {
         this.WOHNEN = nutzungsart.getElementValue("WOHNEN");
         this.GEWERBE = nutzungsart.getElementValue("GEWERBE");
@@ -353,8 +340,8 @@ var openimmo = {
         this.WAZ = nutzungsart.getElementValue("WAZ");
         return this;
     },
-    
-    
+
+
     vermarktungsart: function(vermarktungsart) {
         this.KAUF = vermarktungsart.getElementValue("KAUF");
         this.MIETE_PACHT = vermarktungsart.getElementValue("MIETE_PACHT");
@@ -362,14 +349,14 @@ var openimmo = {
         this.LEASING = vermarktungsart.getElementValue("LEASING");
         return this;
     },
-    
-    
+
+
     objektart: function(objektart) {
         // TODO: Implement object types...
         return this;
     },
-    
-    
+
+
     objektkategorie: function(objektkategorie) {
         var nutzungsart = objektkategorie.getElement("nutzungsart");
         if (nutzungsart) {
@@ -392,8 +379,8 @@ var openimmo = {
         }
         return this;
     },
-    
-    
+
+
     energiepass: function(energiepass) {
         this.epart = energiepass.getElementValue("epart");
         this.gueltig_bis = energiepass.getElementValue("gueltig_bis");
@@ -418,8 +405,8 @@ var openimmo = {
         this.fgeeklasse = energiepass.getElementValue("fgeeklasse");
         return this;
     },
-    
-    
+
+
     zustand_angaben: function(zustand_angaben) {
         function _energiepass() {
             var energiepass_ = zustand_angaben.getElements("energiepass");
@@ -429,7 +416,7 @@ var openimmo = {
             }
             return result;
         }
-        
+
         this.baujahr = zustand_angaben.getElementValue("baujahr");
         this.letztemodernisierung = zustand_angaben.getElementValue(
             "letztemodernisierung");
@@ -437,9 +424,9 @@ var openimmo = {
         if (zustand) {
             this.zustand = zustand.getAttribute("zustand_art");
         } else{
-            this.zustand = null; 
+            this.zustand = null;
         }
-        
+
         this.alter = zustand_angaben.getElementValue("alter");
         var bebaubar_nach = zustand_angaben.getElement("bebaubar_nach");
         if (bebaubar_nach) {
@@ -452,7 +439,7 @@ var openimmo = {
             this.erschliessung = erschliessung.getAttribute("erschl_attr");
         } else {
             this.erschliessung = null;
-        }    
+        }
         var erschliessung_umfang = zustand_angaben.getElement(
             "erschliessung_umfang");
         if (erschliessung_umfang) {
@@ -460,7 +447,7 @@ var openimmo = {
                 "erschl_attr");
         } else {
             this.erschliessung_umfang = null;
-        }    
+        }
         this.bauzone = zustand_angaben.getElementValue("bauzone");
         this.altlasten = zustand_angaben.getElementValue("altlasten");
         this.energiepass = _energiepass();
@@ -472,8 +459,8 @@ var openimmo = {
         }
         return this;
     },
-    
-    
+
+
     freitexte: function(freitexte) {
         this.objekttitel = freitexte.getElementValue("objekttitel");
         this.dreizeiler = freitexte.getElementValue("dreizeiler");
@@ -485,8 +472,8 @@ var openimmo = {
         this.objekt_text = freitexte.getElementValue("objekt_text");
         return this;
     },
-    
-    
+
+
     verwaltung_objekt: function(verwaltung_objekt) {
         this.objektadresse_freigeben = verwaltung_objekt.getElementValue(
             "objektadresse_freigeben");
@@ -520,16 +507,16 @@ var openimmo = {
         this.hochhaus = verwaltung_objekt.getElementValue("hochhaus");
         return this;
     },
-    
-    
+
+
     daten: function(daten) {
         this.pfad = daten.getElementValue("pfad");
         this.anhanginhalt = daten.getElementValue("anhanginhalt");
         return this;
     },
-    
-    
-    
+
+
+
     anhang: function(anhang) {
         this.anhangtitel = anhang.getElementValue("anhangtitel");
         this.format = anhang.getElementValue("format");
@@ -544,8 +531,8 @@ var openimmo = {
         this.gruppe = anhang.getElementValue("gruppe");
         return this;
     },
-    
-    
+
+
     verwaltung_techn: function(verwaltung_techn){
         this.objektnr_intern = verwaltung_techn.getElementValue(
             "objektnr_intern");
@@ -571,8 +558,8 @@ var openimmo = {
         this.sprache = verwaltung_techn.getElementValue("sprache");
         return this;
     },
-    
-    
+
+
     immobilie: function(immobilie) {
         function _anhaenge() {
             var result = [];
@@ -590,7 +577,7 @@ var openimmo = {
             this.objektkategorie = openimmo.objektkategorie(objektkategorie);
         } else {
             this.objektkategorie = null;
-        }   
+        }
         var geo = immobilie.getElement("geo");
         if (geo) {
             this.geo = openimmo.geo(geo);
@@ -649,8 +636,8 @@ var openimmo = {
         }
         return this;
     },
-    
-    
+
+
     anbieter: function(anbieter) {
         function _immobilie() {
             var result = [];
@@ -660,14 +647,14 @@ var openimmo = {
             }
             return result;
         }
-    
+
         this.anbieternr = anbieter.getElementValue("anbieternr");
         this.firma = anbieter.getElementValue("firma");
         this.openimmo_anid = anbieter.getElementValue("openimmo_anid");
         this.immobilie = _immobilie();
         return this;
     },
-    
+
 
     uebertragung: function(uebertragung) {
         this.art = verwaltung_techn.getElementValue("art");
@@ -681,8 +668,8 @@ var openimmo = {
         this.timestamp = verwaltung_techn.getElementValue("timestamp");
         return this;
     },
-    
-    
+
+
     openimmo: function(openimmo) {
         function _anbieter() {
             var result = [];
@@ -696,5 +683,5 @@ var openimmo = {
         this.uebertragung = openimmo.getElement("uebertragung");
         this.anbieter = _anbieter();
         return this;
-    }    
+    }
 }
