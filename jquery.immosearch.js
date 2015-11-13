@@ -1018,6 +1018,18 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				immoDetailElement += '<div class="panel panel-default nohover">';
 		      immoDetailElement += '<div class="panel-heading nohover">';
 		        immoDetailElement += '<h3 class="panel-title nohover">';
+
+							/*
+							//should be this title first, else the title made from Homeinfo
+							if (typeof immosearch_var_details_object_freitexte_objekttitel != "undefined" && immosearch_var_details_object_freitexte_objekttitel) {
+								if (immosearch_var_details_object_freitexte_objekttitel.indexOf('bad') > -1 || immosearch_var_details_object_freitexte_objekttitel.indexOf('Bad') > -1 || immosearch_var_details_object_freitexte_objekttitel.indexOf('BAD') > -1) {
+									immoDetailElement += '<strong>Anzahl Bäder</strong><span class="pull-right">1</span><br>';
+								} else {
+									immoDetailElement += '<strong>Anzahl Bäder</strong><span class="pull-right">K.A.</span><br>';
+								}
+							}
+							*/
+
 		          immoDetailElement += '<strong>' + immosearch_array_object_details_zimmer_val + ' Zimmer Wohnung | ' + details_address + ' ' + details_address_number + ' | ' + details_address_plz_number + ' ' + details_address_ort + ' - ' + details_address_ortsteil + '</strong> <button class="btn btn-success pull-right" type="button" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;"><strong>Wohnungsnr: '  + immosearch_array_object_objektnr_extern + '</strong></button>';
 		        immoDetailElement += '</h3>';
 		      immoDetailElement += '</div>';
@@ -1095,7 +1107,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 									immoDetailElement += '<span class="badge">' + immosearch_array_details_object_img.length + '</span> <span class="badge"><i class="fa fa-search"></i> Bild</span>';
 								}
 
-
 								immoDetailElement += '<script>';
 								immoDetailElement += '$(document).ready(function() {';
 								//images
@@ -1170,22 +1181,22 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 								immoDetailElement += '});';
 								immoDetailElement += '<\/script>';
 
-
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6" style="padding-top:5px; padding-bottom:5px;">';
 
 							if (immosearch_array_details_object_img_floor_plan.length != 0) {
-								console.log("Case 1");
 								//link to open image gallery
                 immoDetailElement += '<a href="javascript:void(0);" id="images_modal_click_event_floor_plan" data-toggle="modal" data-target="#imagesGalleryModalFloorPlan">';
 								//immoDetailElement += '<img src="' + immosearch_array_details_object_img_floor_plan[0] + '" class="img-responsive img-thumbnail" width="540" height="401" id="immosearch_detail_image" style="margin-bottom:5px;">';
 								immoDetailElement += '<canvas id="images_modal_click_event_floor_plan" class="kenburns_floor img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></canvas>';
+                immoDetailElement += '</a>';//end - anchor tag
 
-
+								//if the image is just a single item in the array, push one more time to have the kenburns effect
 								if (immosearch_array_details_object_img_floor_plan.length == 1) {
 									immosearch_array_details_object_img_floor_plan.push(immosearch_array_details_object_img_floor_plan[0])
 								}
 
+								//add the event for the kenburns effect after the a tag
 								immoDetailElement += '<script>';
 								immoDetailElement += '$(document).ready(function() {';
 								immoDetailElement += '$(".kenburns_floor").kenburns({';
@@ -1221,17 +1232,10 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 								immoDetailElement += '});';
 								immoDetailElement += '<\/script>';
-
-
-
-                immoDetailElement += '</a>';//end - anchor tag
               } else {
                 immoDetailElement += '<img src="' + dummyPicsPath + '" class="img-responsive img-thumbnail" width="100%" height="401" id="immosearch_detail_image" style="margin-bottom:5px;">';
-								console.log("Case 2");
               }
 		            immoDetailElement += '<span class="badge">' + immosearch_array_details_object_img_floor_plan.length + '</span> <span class="badge"><i class="fa fa-search"></i> Grundriss</span>';
-
-
 
 								immoDetailElement += '<script>';
 								immoDetailElement += '$(document).ready(function() {';
@@ -1296,9 +1300,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 								immoDetailElement += '});';
 								immoDetailElement += '<\/script>';
 
-
-
-
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
@@ -1312,16 +1313,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 			              } else {
 											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right">K.A.</span><br>';
 			              }
-
-										/*
-										if (typeof immosearch_var_details_object_freitexte_objekttitel != "undefined" && immosearch_var_details_object_freitexte_objekttitel) {
-											if (immosearch_var_details_object_freitexte_objekttitel.indexOf('bad') > -1 || immosearch_var_details_object_freitexte_objekttitel.indexOf('Bad') > -1 || immosearch_var_details_object_freitexte_objekttitel.indexOf('BAD') > -1) {
-												immoDetailElement += '<strong>Anzahl Bäder</strong><span class="pull-right">1</span><br>';
-											} else {
-												immoDetailElement += '<strong>Anzahl Bäder</strong><span class="pull-right">K.A.</span><br>';
-											}
-										}
-										*/
 
 										var immosearch_array_object_details_wohnflaeche_val = immosearch_array_details_object_wohnflaeche[0];
 			              if (typeof immosearch_array_object_details_wohnflaeche_val != "undefined" && immosearch_array_object_details_wohnflaeche_val) {
@@ -1769,14 +1760,14 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				//js und jquery
 				immoDetailElement += '<script>';
 				immoDetailElement += '$(document).ready(function() {';
-				immoDetailElement += '';
-				immoDetailElement += '';
 
-				immoDetailElement += '$("#btn_contact_form").click(function() {';
-				immoDetailElement += 'console.log("Contact form");';
+				immoDetailElement += '$("#btn_details_print").click(function() {';
+						immoDetailElement += '$.print("#' + container + '");';
+						immoDetailElement += 'console.log("Print event");';
+				immoDetailElement += '});';
 
-
-
+				immoDetailElement += '$("#send_form").click(function() {';
+				immoDetailElement += 'console.log("Contact form send button");';
 				immoDetailElement += '});';
 
         //console.log("ARRAY PDF [item]: " + immosearch_array_details_object_attachment_pdf[0]);//trace
