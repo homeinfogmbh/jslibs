@@ -585,7 +585,33 @@ function immosearchList(cid, container, preloadeGif, immo_counter_or_object_nr, 
 					immosearchElement += '<div class="panel panel-default" id="object_details___' + i + '">';
 			      immosearchElement += '<div class="row panel-body">';
 			        immosearchElement += '<div class="col-md-3">';
-			          immosearchElement += '<img src="' + immosearch_array_img[i][0] + '" class="img-responsive img-thumbnail" width="300" height="201" id="immosearch_image">';
+
+								immosearchElement += '<div class="img_mask img-responsive img-thumbnail">';
+				          immosearchElement += '<img src="' + immosearch_array_img[i][0] + '" class="portrait" width="300" height="201" id="immosearch_image">';//portrait case
+									//immosearchElement += '<img src="' + immosearch_array_img[i][0] + '" width="300" height="201" id="immosearch_image">';//landscape case
+									immosearchElement += '<script>';
+									immosearchElement += '$(document).ready(function() {';
+
+									immosearchElement += '$("img").load(function() {';
+									//immosearchElement += 'console.log("HEIGHT: " + $(this).height());';
+									//immosearchElement += 'console.log("WIDTH: " + $(this).width());';
+									immosearchElement += 'if ($(this).width() > $(this).height()) {';
+									immosearchElement += '$(this).addClass("portrait");';
+									//immosearchElement += 'console.log("Case Portrait");';
+									immosearchElement += '} else if ($(this).width() < $(this).height()) {';
+									immosearchElement += '$(this).removeClass("portrait");';
+									//immosearchElement += 'console.log("Case Landscape");';
+									immosearchElement += '} else {';
+									immosearchElement += '$(this).removeClass("portrait");';
+									//immosearchElement += 'console.log("Case Box");';
+									immosearchElement += '}';
+									//immosearchElement += 'console.log("----------------------------------");';
+									immosearchElement += '});';
+
+									immosearchElement += '});';
+									immosearchElement += '<\/script>';
+								immosearchElement += '</div>';
+
 			        immosearchElement += '</div>';
 			        immosearchElement += '<div class="col-md-9">';
 			          immosearchElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
@@ -1030,7 +1056,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							}
 							*/
 
-		          immoDetailElement += '<strong>' + immosearch_array_object_details_zimmer_val + ' Zimmer Wohnung | ' + details_address + ' ' + details_address_number + ' | ' + details_address_plz_number + ' ' + details_address_ort + ' - ' + details_address_ortsteil + '</strong> <button class="btn btn-success pull-right" type="button" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;"><strong>Wohnungsnr: '  + immosearch_array_object_objektnr_extern + '</strong></button>';
+		          immoDetailElement += '<strong id="form_object_title">' + immosearch_array_object_details_zimmer_val + ' Zimmer Wohnung | ' + details_address + ' ' + details_address_number + ' | ' + details_address_plz_number + ' ' + details_address_ort + ' - ' + details_address_ortsteil + '</strong> <button class="btn btn-success pull-right" type="button" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;"><strong>Wohnungsnr: '  + immosearch_array_object_objektnr_extern + '</strong></button>';
 		        immoDetailElement += '</h3>';
 		      immoDetailElement += '</div>';
 		      immoDetailElement += '<div class="panel-body nohover">';
@@ -1044,6 +1070,9 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 								//check if images are more than 1 to use kenburns
 								if (immosearch_array_details_object_img.length != 1) {
 									immoDetailElement += '<canvas id="mypic" class="kenburns img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></canvas>';
+
+									//img for the form
+
 
 									immoDetailElement += '<script>';
                   immoDetailElement += '$(document).ready(function() {';
@@ -1309,16 +1338,16 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		            immoDetailElement += '<div class="row">';
 		              immoDetailElement += '<div class="col-md-12">';
 										if (typeof immosearch_array_object_details_zimmer_val != "undefined" && immosearch_array_object_details_zimmer_val) {
-											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right">' + immosearch_array_object_details_zimmer_val + '</span><br>';
+											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right" id="form_anzahl_zimmer">' + immosearch_array_object_details_zimmer_val + '</span><br>';
 			              } else {
-											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right">K.A.</span><br>';
+											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right" id="form_anzahl_zimmer">K.A.</span><br>';
 			              }
 
 										var immosearch_array_object_details_wohnflaeche_val = immosearch_array_details_object_wohnflaeche[0];
 			              if (typeof immosearch_array_object_details_wohnflaeche_val != "undefined" && immosearch_array_object_details_wohnflaeche_val) {
-											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right">' + immosearch_array_object_details_wohnflaeche_val.dot2comma() + ' m&#178;</span><br>';
+											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right" id="form_wohnflaeche">' + immosearch_array_object_details_wohnflaeche_val.dot2comma() + ' m&#178;</span><br>';
 			              } else {
-											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right">K.A.</span><br>';
+											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right" id="form_wohnflaeche">K.A.</span><br>';
 			              }
 
 										//etage
@@ -1392,34 +1421,34 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 										if (typeof immosearch_array_object_details_grundmiete_val != "undefined" && immosearch_array_object_details_grundmiete_val) {
 											immosearch_array_object_details_grundmiete_val = immosearch_array_object_details_grundmiete_val.dot2comma();
 											immosearch_array_object_details_grundmiete_val = ifLastCharIsOnlyOneNull(immosearch_array_object_details_grundmiete_val);
-											immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right">' + immosearch_array_object_details_grundmiete_val + ' &euro;</span><br>';
+											immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">' + immosearch_array_object_details_grundmiete_val + ' &euro;</span><br>';
 										} else {
 											if (typeof immosearch_var_details_object_kaltmiete != "undefined" && immosearch_var_details_object_kaltmiete) {
 												immosearch_var_details_object_kaltmiete = immosearch_var_details_object_kaltmiete.dot2comma();
-												immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_kaltmiete) + ' &euro;</span><br>';
+												immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_kaltmiete) + ' &euro;</span><br>';
 											} else {
-												immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right">K.A.</span><br>';
+												immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">K.A.</span><br>';
 											}
 										}
 
 										if (typeof immosearch_var_details_object_provisionnetto != "undefined" && immosearch_var_details_object_provisionnetto) {
 											immosearch_var_details_object_provisionnetto = immosearch_var_details_object_provisionnetto.dot2comma();
-											immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right">' + immosearch_var_details_object_provisionnetto + ' &euro;</span><br>';
+											immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right" id="form_object_kabelgebuhr">' + immosearch_var_details_object_provisionnetto + ' &euro;</span><br>';
 										} else {
-											immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right">K.A.</span><br>';
+											immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right" id="form_object_kabelgebuhr">K.A.</span><br>';
 										}
 
 
 										if (typeof immosearch_var_details_object_nebenkosten != "undefined" && immosearch_var_details_object_nebenkosten) {
 			                immosearch_var_details_object_nebenkosten = immosearch_var_details_object_nebenkosten.dot2comma();
-											immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
+											immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
 											//immosearch_var_details_object_betriebskostennetto
 			              } else {
 											if (typeof immosearch_var_details_object_betriebskostennetto != "undefined" && immosearch_var_details_object_betriebskostennetto) {
 												immosearch_var_details_object_betriebskostennetto = immosearch_var_details_object_betriebskostennetto.dot2comma();
-												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_betriebskostennetto) + ' &euro;</span><br>';//netto
+												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_betriebskostennetto) + ' &euro;</span><br>';//netto
 											} else {
-												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right">K.A.</span><br>';
+												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">K.A.</span><br>';
 											}
 			              }
 
@@ -1427,21 +1456,21 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 			                immosearch_var_details_object_heizkostennetto = immosearch_var_details_object_heizkostennetto.dot2comma();
 			                immosearch_var_details_object_heizkostennetto = ifLastCharIsOnlyOneNull(immosearch_var_details_object_heizkostennetto);
 			                if (immosearch_var_details_object_heizkostennetto == "0,00") {
-												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right">werden direkt mit dem Energieversorger abgerechnet</span><br>';
+												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">werden direkt mit dem Energieversorger abgerechnet</span><br>';
 			                } else {
-												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right">' + immosearch_var_details_object_heizkostennetto + ' &euro;</span><br>';
+												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">' + immosearch_var_details_object_heizkostennetto + ' &euro;</span><br>';
 			                }
 			              } else {
 			                if (typeof immosearch_var_details_object_heizkosten != "undefined" && immosearch_var_details_object_heizkosten) {
 			                  immosearch_var_details_object_heizkosten = immosearch_var_details_object_heizkosten.dot2comma();
 			                  immosearch_var_details_object_heizkosten = ifLastCharIsOnlyOneNull(immosearch_var_details_object_heizkosten);
 			                  if (immosearch_var_details_object_heizkosten == "0,00") {
-													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right">werden direkt mit dem Energieversorger abgerechnet</span><br>';
+													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">werden direkt mit dem Energieversorger abgerechnet</span><br>';
 			                  } else {
-													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right">' + immosearch_var_details_object_heizkosten + ' &euro;</span><br>';
+													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">' + immosearch_var_details_object_heizkosten + ' &euro;</span><br>';
 			                  }
 			                } else {
-												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right">K.A.</span><br>';
+												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">K.A.</span><br>';
 			                }
 			              }
 
@@ -1499,9 +1528,9 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 			                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val.replaceAt(pos, ","));
 			                  immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.replaceAt(pos, ",");
 			                }
-											immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right">' + ifLastCharIsOnlyOneNull(immosearch_array_object_details_kaution_val) + ' &euro;</span><br>';
+											immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right" id="form_kaution">' + ifLastCharIsOnlyOneNull(immosearch_array_object_details_kaution_val) + ' &euro;</span><br>';
 			              } else {
-											immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right">K.A.</span><br>';
+											immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right" id="form_kaution">K.A.</span><br>';
 			              }
 
 										var immosearch_array_object_details_verfugbar_ab_val = immosearch_array_details_object_verfugbar_ab[0];
@@ -1513,15 +1542,15 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 			              var xml_date = immosearch_array_details_object_verfugbar_ab[0]
 			              if (typeof immosearch_array_object_details_verfugbar_ab_val != "undefined" && immosearch_array_object_details_verfugbar_ab_val) {
 			                if (xml_date >= today_date_output) {
-												immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right">' + immosearch_array_object_details_verfugbar_ab_val + '</span><br>';
+												immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">' + immosearch_array_object_details_verfugbar_ab_val + '</span><br>';
 			                } else {
-												immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right">sofort</span><br>';
+												immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">sofort</span><br>';
 			                }
 			              } else {
-											immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right">K.A.</span><br>';
+											immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">K.A.</span><br>';
 			              }
 
-										immoDetailElement += '<strong>Frei ab</strong><span class="pull-right">' + immosearch_array_details_object_verfugbar_ab[0] + '</span><br>';
+										immoDetailElement += '<strong>Frei ab</strong><span class="pull-right" id="form_verfugbar_ab">' + immosearch_array_details_object_verfugbar_ab[0] + '</span><br>';
 
 										if (typeof immosearch_var_details_object_provisionspflichtig != "undefined" && immosearch_var_details_object_provisionspflichtig) {
 			                if (immosearch_var_details_object_provisionspflichtig == "false" || immosearch_var_details_object_provisionspflichtig == "") {
@@ -1545,23 +1574,23 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 											if (details_energiepass_epart == "VERBRAUCH") {
 												//epassTyp = "Endenergieverbrauch";
 												epassTyp = "Energieausweistyp";
-												immoDetailElement += '<strong>' + epassTyp +'</strong><span class="pull-right">Verbrauchsausweis</span><br>';
+												immoDetailElement += '<strong id="form_energie_epassTyp_Energieausweistyp_title">' + epassTyp +'</strong><span class="pull-right" id="form_energie_epassTyp_Energieausweistyp_value">Verbrauchsausweis</span><br>';
 												if (typeof details_energiepass_energieverbrauchkennwert != "undefined" && details_energiepass_energieverbrauchkennwert) {
 													if (isNaN(details_energiepass_energieverbrauchkennwert)) {
 														//BGW-Bielefeld wants this title as "Endenergieverbrauch"
-														immoDetailElement += '<strong>Verbrauchswert</strong><span class="pull-right">' + details_energiepass_energieverbrauchkennwert.dot2comma() + '</span><br>';
+														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Verbrauchswert</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_energieverbrauchkennwert.dot2comma() + '</span><br>';
 													} else {
-														immoDetailElement += '<strong>Verbrauchswert</strong><span class="pull-right">' + details_energiepass_energieverbrauchkennwert.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
+														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Verbrauchswert</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_energieverbrauchkennwert.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
 													}
 												}
 											} else if (details_energiepass_epart == "BEDARF") {
 												epassTyp = "Ausweistyp";
-												immoDetailElement += '<strong>' + epassTyp + '</strong><span class="pull-right">Bedarfsausweis</span><br>';
+												immoDetailElement += '<strong id="form_energie_epassTyp_Energieausweistyp_title">' + epassTyp + '</strong><span class="pull-right" id="form_energie_epassTyp_Energieausweistyp_value">Bedarfsausweis</span><br>';
 												if (typeof details_energiepass_endenergiebedarf != "undefined" && details_energiepass_endenergiebedarf) {
 													if (isNaN(details_energiepass_endenergiebedarf)) {
-														immoDetailElement += '<strong>Endenergiebedarf</strong><span class="pull-right">' + details_energiepass_endenergiebedarf.dot2comma() + '</span><br>';
+														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Endenergiebedarf</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_endenergiebedarf.dot2comma() + '</span><br>';
 													} else {
-														immoDetailElement += '<strong>Endenergiebedarf</strong><span class="pull-right">' + details_energiepass_endenergiebedarf.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
+														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Endenergiebedarf</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_endenergiebedarf.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
 													}
 												}
 											}
@@ -1575,7 +1604,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 												//BGW bielefeld wants this title as "Wesentlicher Energieträger"
 
-												immoDetailElement += '<strong>Energieträger</strong><span class="pull-right">' + immosearch_var_details_object_primaerenergietraeger + '</span><br>';
+												immoDetailElement += '<strong id="form_energie_ferngas_title">Energieträger</strong><span class="pull-right" id="form_energie_ferngas_value">' + immosearch_var_details_object_primaerenergietraeger + '</span><br>';
 			                }
 			              } else {
 			                for (var i_befeuerung = 0; i_befeuerung < immosearch_var_details_object_ausstattung_befeuerung.length; ++i_befeuerung) {
@@ -1584,32 +1613,32 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 			                  if (befeuerung_value == "Fern") {//check the value if it's Fern to become Ferngas
 			                    befeuerung_value = "Ferngas";
 			                  }
-												immoDetailElement += '<strong>Energieträger</strong><span class="pull-right">' + befeuerung_value + '</span><br>';
+												immoDetailElement += '<strong id="form_energie_ferngas_title">Energieträger</strong><span class="pull-right" id="form_energie_ferngas_value">' + befeuerung_value + '</span><br>';
 			                }
 			              }
 
 										//this case gets value from ausstattung_heizungsart icon
 										if (typeof immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart != "undefined" && immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart) {
-											immoDetailElement += '<strong>Heizungsart</strong><span class="pull-right">' + immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart + '</span><br>';
+											immoDetailElement += '<strong id="form_energie_heizungsart_title">Heizungsart</strong><span class="pull-right" id="form_energie_heizungsart_value">' + immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart + '</span><br>';
 										} else {
-											immoDetailElement += '<strong>Heizungsart</strong><span class="pull-right">K.A.</span><br>';
+											immoDetailElement += '<strong id="form_energie_heizungsart_title">Heizungsart</strong><span class="pull-right" id="form_energie_heizungsart_value">K.A.</span><br>';
 										}
 
 										if (typeof immosearch_var_details_object_zustand_angaben__zustand__zustand_art != "undefined" && immosearch_var_details_object_zustand_angaben__zustand__zustand_art) {
-											immoDetailElement += '<strong>Objektzustand</strong><span class="pull-right">' + immosearch_var_details_object_zustand_angaben__zustand__zustand_art.capitalize() + '</span><br>';
+											immoDetailElement += '<strong id="form_energie_objektzustand_title">Objektzustand</strong><span class="pull-right" id="form_energie_objektzustand_value">' + immosearch_var_details_object_zustand_angaben__zustand__zustand_art.capitalize() + '</span><br>';
 										} else {
-											immoDetailElement += '<strong>Objektzustand</strong><span class="pull-right">K.A.</span><br>';
+											immoDetailElement += '<strong id="form_energie_objektzustand_title">Objektzustand</strong><span class="pull-right" id="form_energie_objektzustand_value">K.A.</span><br>';
 										}
 
 										if (typeof details_energiepass_mitwarmwasser != "undefined" && details_energiepass_mitwarmwasser) {
 			                if (details_energiepass_mitwarmwasser == "true") {
-												immoDetailElement += '<strong>Mit Warmwasser</strong><span class="pull-right">ja</span><br>';
+												immoDetailElement += '<strong id="form_energie_warmwasser_title">Mit Warmwasser</strong><span class="pull-right" id="form_energie_warmwasser_value">ja</span><br>';
 			                }
 			              }
 
 										//baujahr
 			              if (typeof immosearch_var_details_object_baujahr != "undefined" && immosearch_var_details_object_baujahr) {
-											immoDetailElement += '<strong>Baujahr</strong><span class="pull-right">' + immosearch_var_details_object_baujahr + '</span><br>';
+											immoDetailElement += '<strong>Baujahr</strong><span class="pull-right" id="form_baujahr">' + immosearch_var_details_object_baujahr + '</span><br>';
 			              }
 
 		              immoDetailElement += '</div>';
@@ -1698,9 +1727,9 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 										}
 
 										if (typeof immosearch_var_details_kontakt__email_zentrale != "undefined" && immosearch_var_details_kontakt__email_zentrale) {
-											immoDetailElement += '<strong>E-mail</strong><span class="pull-right"><a href="' + immosearch_var_details_kontakt__email_zentrale + '">' + immosearch_var_details_kontakt__email_zentrale + '</a></span><br>';
+											immoDetailElement += '<strong>E-mail</strong><span class="pull-right"><a href="' + immosearch_var_details_kontakt__email_zentrale + '" id="form_kontakt_email_zentrale">' + immosearch_var_details_kontakt__email_zentrale + '</a></span><br>';
 										} else if (typeof immosearch_var_details_kontakt__email_direkt != "undefined" && immosearch_var_details_kontakt__email_direkt) {
-											immoDetailElement += '<strong>E-mail</strong><span class="pull-right"><a href="' + immosearch_var_details_kontakt__email_zentrale + '">' + immosearch_var_details_kontakt__email_direkt + '</a></span><br>';
+											immoDetailElement += '<strong>E-mail</strong><span class="pull-right"><a href="mailto:' + immosearch_var_details_kontakt__email_direkt + '" id="form_kontakt_email_zentrale">' + immosearch_var_details_kontakt__email_direkt + '</a></span><br>';
 										}
 
 		                immoDetailElement += '<button class="btn btn-success" type="button" id="btn_contact_form" data-toggle="modal" data-target="#contactFormModal"><i class="fa fa-envelope"></i> <strong>Kontaktformular</strong></button>';
@@ -1764,10 +1793,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				immoDetailElement += '$("#btn_details_print").click(function() {';
 						immoDetailElement += '$.print("#' + container + '");';
 						immoDetailElement += 'console.log("Print event");';
-				immoDetailElement += '});';
-
-				immoDetailElement += '$("#send_form").click(function() {';
-				immoDetailElement += 'console.log("Contact form send button");';
 				immoDetailElement += '});';
 
         //console.log("ARRAY PDF [item]: " + immosearch_array_details_object_attachment_pdf[0]);//trace
