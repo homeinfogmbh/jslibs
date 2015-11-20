@@ -650,7 +650,7 @@ function immosearchList(cid, container, preloadeGif, immo_counter_or_object_nr, 
 			              immosearchElement += '<small>Zimmer</small>';
 			            immosearchElement += '</div>';
 			          immosearchElement += '</div>';
-								immosearchElement += '<div class="col-md-12 col-sm-12 col-xs-12">' + immo_object_ausstattung + '</div>';
+								immosearchElement += '<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:25px;">' + immo_object_ausstattung + '</div>';
 			        immosearchElement += '</div>';
 			      immosearchElement += '</div>';
 			    immosearchElement += '</div>';
