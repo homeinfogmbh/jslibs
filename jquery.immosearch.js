@@ -1071,8 +1071,8 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 								if (immosearch_array_details_object_img.length != 1) {
 									immoDetailElement += '<canvas id="mypic" class="kenburns img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></canvas>';
 
-									//img for the form
-
+									//img for the print (show only when is printing, then hide)
+									immoDetailElement += '<img src="' + immosearch_array_details_object_img[0] + '" class="img-responsive img-thumbnail" width="100%" height="401" id="print_img" style="margin-bottom:5px; display:none;">';
 
 									immoDetailElement += '<script>';
                   immoDetailElement += '$(document).ready(function() {';
@@ -1782,6 +1782,11 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				        immoDetailElement += '</div>';
 							}
 
+							//google maps goes here
+							//immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
+								//immoDetailElement += 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, ';
+							//immoDetailElement += '</div>';
+
 					//ending of panel
 		      immoDetailElement += '</div>';
 		    immoDetailElement += '</div>';
@@ -1790,10 +1795,23 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				immoDetailElement += '<script>';
 				immoDetailElement += '$(document).ready(function() {';
 
+				//print object
 				immoDetailElement += '$("#btn_details_print").click(function() {';
-						immoDetailElement += '$.print("#' + container + '");';
-						immoDetailElement += 'console.log("Print event");';
+						immoDetailElement += '$("canvas").hide();';//hide canvas
+						immoDetailElement += '$("#print_img").show();';//show default image to print
+						immoDetailElement += 'setTimeout(function() {';//set timeout half sec to get ready the image
+							immoDetailElement += '$.print("#' + container + '");';
+							immoDetailElement += 'showCanvasAfterPrint();';
+					  immoDetailElement += '}, 1000);';
 				immoDetailElement += '});';
+
+				//wait 3 sec and bring back the canvas
+				immoDetailElement += 'function showCanvasAfterPrint() {';
+				immoDetailElement += 'setTimeout(function() {';//set timeout half sec to get ready the image
+					immoDetailElement += '$("canvas").show();';//hide canvas
+					immoDetailElement += '$("#print_img").hide();';//show default image to print
+				immoDetailElement += '}, 3000);';
+				immoDetailElement += '}';
 
         //console.log("ARRAY PDF [item]: " + immosearch_array_details_object_attachment_pdf[0]);//trace
         //console.log("ARRAY PDF: " + immosearch_array_details_object_attachment_pdf);//trace
