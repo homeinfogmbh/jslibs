@@ -715,8 +715,31 @@ function immosearchList(cid, container, preloadeGif, immo_counter_or_object_nr, 
 
 //details page function
 function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, immo_counter_or_object_nr, dummyPicsPath, container_zuruck_to_list, contact_form_object_nr) {
+
+	//console.log("homeinfo_immosearch_details() OBID: " + object_id);
+
   $("#" + immo_counter_or_object_nr + "").empty();
 	$("#" + container_zuruck_to_list + "").show();
+
+	//////////////////////////////////////////////////////////////////////////////
+	//get url parameter
+  function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.hash)||[,""])[1].replace(/\+/g, '%20'))||null
+  }
+
+  //console.log("PAGE URL: " + window.location.href);
+  var obid_param = getURLParameter('obid');//get the object number
+  if (obid_param) {
+    //true
+    //console.log("OBJECT PARAM VALUE: " + obid_param);
+  } else {
+    //false
+    //console.log("OBJECT PARAM VALUE IS EMPTY OR NULL: " + obid_param);
+
+		//get url and add the object number
+		history.pushState("wohnungssuche", "?obid=" + object_id, window.location.href + "?obid=" + object_id);
+  }
+	//////////////////////////////////////////////////////////////////////////////
 
 	//ajax details (by object id)
 	$.ajax({
@@ -1838,6 +1861,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				immoDetailElement += '<\/script>';
 
 				$("#" + container + "").append(immoDetailElement);//append details
+
 				//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				//SHOW DATA///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
