@@ -583,7 +583,7 @@ function immosearchList(cid, container, preloadeGif, immo_counter_or_object_nr, 
 					//VARS///////////////////////////////////////////////////////////////////////////////
 
 
-					immosearchElement += '<a href="javascript:void(0)" id="object_details___' + i + '" target="_self" style="color:#5a5a5a;">';
+					immosearchElement += '<a href="http://gwg-hombruch-barop.de/#wohnungssuche?obid=' + immosearch_array_object_object_number[i] + '" id="object_details___' + i + '" target="_self" style="color:#5a5a5a;">';
 						immosearchElement += '<div class="panel panel-default">';
 				      immosearchElement += '<div class="row panel-body">';
 				        immosearchElement += '<div class="col-md-3">';
@@ -662,6 +662,7 @@ function immosearchList(cid, container, preloadeGif, immo_counter_or_object_nr, 
 					immosearchElement += '<script>';
 					immosearchElement += '$(document).ready(function() {';
 
+					/*
 					immosearchElement += '$("#object_details___' + i + '").on("contextmenu", function() {';
 
 					immosearchElement += 'if (window.confirm("Link im neuen tab öffnen")) {';
@@ -677,6 +678,7 @@ function immosearchList(cid, container, preloadeGif, immo_counter_or_object_nr, 
 						immosearchElement += 'homeinfo_immosearch_details("'+immosearch_array_object_object_number[i]+'", "'+cid+'", "'+container+'", "'+preloadeGif+'", "'+immo_counter_or_object_nr+'", "'+dummyPicsPath+'", "'+container_zuruck_to_list+'", "'+contact_form_object_nr+'");';//details page
 						immosearchElement += 'return false;';
 					immosearchElement += '});';
+					*/
 
 					immosearchElement += '});';
 					immosearchElement += '<\/script>';
