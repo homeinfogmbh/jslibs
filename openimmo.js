@@ -1,5 +1,5 @@
 /*
-    HOMEINFO general-purpose Javascript library
+    HOMEINFO OpenImmo Javascript library
 
     (C) 2015 HOMEINFO - Digitale Informationssysteme GmbH
 
@@ -359,24 +359,29 @@ var openimmo = {
 
     objektkategorie: function(objektkategorie) {
         var nutzungsart = objektkategorie.getElement("nutzungsart");
+
         if (nutzungsart) {
             this.nutzungsart = openimmo.nutzungsart(nutzungsart);
         } else {
             this.nutzungsart = null;
         }
-        var vermarktungsart = objektkategorie.getElement(
-            "vermarktungsart");
+
+        var vermarktungsart = objektkategorie.getElement("vermarktungsart");
+
         if (vermarktungsart) {
             this.vermarktungsart = openimmo.vermarktungsart(vermarktungsart);
         } else {
             this.vermarktungsart = null;
         }
+
         var objektart = objektkategorie.getElement("objektart");
+
         if (objektart) {
             this.objektart = openimmo.objektart(objektart);
         } else {
             this.objektart = null;
         }
+
         return this;
     },
 
@@ -411,16 +416,20 @@ var openimmo = {
         function _energiepass() {
             var energiepass_ = zustand_angaben.getElements("energiepass");
             var result = [];
+
             for (var i = 0; i < energiepass_.length; i++) {
                 result.push(openimmo.Energiepass(energiepass_[i]));
             }
+
             return result;
         }
 
         this.baujahr = zustand_angaben.getElementValue("baujahr");
         this.letztemodernisierung = zustand_angaben.getElementValue(
             "letztemodernisierung");
+
         var zustand = zustand_angaben.getElement("zustand");
+
         if (zustand) {
             this.zustand = zustand.getAttribute("zustand_art");
         } else{
@@ -428,35 +437,45 @@ var openimmo = {
         }
 
         this.alter = zustand_angaben.getElementValue("alter");
+
         var bebaubar_nach = zustand_angaben.getElement("bebaubar_nach");
+
         if (bebaubar_nach) {
             this.bebaubar_nach = bebaubar_nach.getAttribute("bebaubar_attr");
         } else {
             this.bebaubar_nach = null;
         }
+
         var erschliessung = zustand_angaben.getElement("erschliessung");
+
         if (erschliessung) {
             this.erschliessung = erschliessung.getAttribute("erschl_attr");
         } else {
             this.erschliessung = null;
         }
+
         var erschliessung_umfang = zustand_angaben.getElement(
             "erschliessung_umfang");
+
         if (erschliessung_umfang) {
             this.erschliessung_umfang = erschliessung_umfang.getAttribute(
                 "erschl_attr");
         } else {
             this.erschliessung_umfang = null;
         }
+
         this.bauzone = zustand_angaben.getElementValue("bauzone");
         this.altlasten = zustand_angaben.getElementValue("altlasten");
         this.energiepass = _energiepass();
+
         var verkaufstatus = zustand_angaben.getElementValue("verkaufstatus");
+
         if (verkaufstatus) {
             this.verkaufstatus = verkaufstatus.getAttribute("stand");
         } else {
             this.verkaufstatus = null;
         }
+
         return this;
     },
 
@@ -521,14 +540,18 @@ var openimmo = {
         this.anhangtitel = anhang.getElementValue("anhangtitel");
         this.format = anhang.getElementValue("format");
         this.check = anhang.getElementValue("check");
+
         var daten = anhang.getElement("daten");
+
         if (daten) {
             this.daten = openimmo.daten(daten);
         } else {
             this.daten = null;
         }
+
         this.location = anhang.getElementValue("location");
         this.gruppe = anhang.getElementValue("gruppe");
+
         return this;
     },
 
@@ -564,76 +587,101 @@ var openimmo = {
         function _anhaenge() {
             var result = [];
             var anhaenge = immobilie.getElement("anhaenge");
+
             if (anhaenge != null) {
                 var anhang = anhaenge.getElements("anhang");
+
                 for (var i = 0; i < anhang.length; i++) {
                     result.push(openimmo.Anhang(anhang[i]));
                 }
             }
+
             return result;
         }
+
         var objektkategorie = immobilie.getElement("objektkategorie");
+
         if (objektkategorie) {
             this.objektkategorie = openimmo.objektkategorie(objektkategorie);
         } else {
             this.objektkategorie = null;
         }
+
         var geo = immobilie.getElement("geo");
+
         if (geo) {
             this.geo = openimmo.geo(geo);
         } else {
             this.geo = null;
         }
+
         var kontaktperson = immobilie.getElement("kontaktperson");
+
         if (kontaktperson) {
             this.kontaktperson = openimmo.kontaktperson(kontaktperson);
         } else {
             this.kontaktperson = null;
         }
+
         var preise = immobilie.getElement("preise");
+
         if (preise) {
             this.preise = openimmo.preise(preise);
         } else {
             this.preise = null;
         }
+
         var flaechen = immobilie.getElement("flaechen");
+
         if (flaechen) {
             this.flaechen = openimmo.flaechen(flaechen);
         } else {
             this.flaechen = null;
         }
+
         var ausstattung = immobilie.getElement("ausstattung");
+
         if (ausstattung) {
             this.ausstattung = openimmo.ausstattung(ausstattung);
         } else {
             this.ausstattung = null;
         }
+
         var zustand_angaben = immobilie.getElement("zustand_angaben");
+
         if (zustand_angaben) {
             this.zustand_angaben = openimmo.zustand_angaben(zustand_angaben);
         } else {
             this.zustand_angaben = null;
         }
+
         var freitexte = immobilie.getElement("freitexte");
+
         if (freitexte) {
             this.freitexte = openimmo.freitexte(freitexte);
         } else {
             this.freitexte = null;
         }
+
         this.anhaenge = _anhaenge();
+
         var verwaltung_objekt = immobilie.getElement("verwaltung_objekt");
+
         if (verwaltung_objekt) {
             this.verwaltung_objekt = openimmo.verwaltung_objekt(
                 verwaltung_objekt);
         } else {
             this.verwaltung_objekt = null;
         }
+
         var verwaltung_techn = immobilie.getElement("verwaltung_techn");
+
         if (verwaltung_techn) {
             this.verwaltung_techn = openimmo.verwaltung_techn(verwaltung_techn);
         } else {
             this.verwaltung_techn = null;
         }
+
         return this;
     },
 
@@ -642,9 +690,11 @@ var openimmo = {
         function _immobilie() {
             var result = [];
             var immobilie_ = anbieter.getElementsByTagName("immobilie");
+
             for (var i = 0; i < immobilie_.length; i++) {
                 result.push(openimmo.immobilie(immobilie_[i]));
             }
+
             return result;
         }
 
@@ -674,14 +724,17 @@ var openimmo = {
         function _anbieter() {
             var result = [];
             var anbieter_ = openimmo.getElementsByTagName("anbieter");
+
             for (var i = 0; i < anbieter_.length; i++) {
                 result.push(openimmo.anbieter(anbieter_[i]));
             }
+
             return result;
         }
 
         this.uebertragung = openimmo.getElement("uebertragung");
         this.anbieter = _anbieter();
+
         return this;
     }
 }
