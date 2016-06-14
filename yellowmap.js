@@ -28,7 +28,7 @@
 
 var yellowmap = {
     /* Extracts a yellow map ID from an objektnr_intern
-       of an OpenImmo™ real estate */
+       of an OpenImmo real estate */
     get_yellowmap_id: function (objektnr_intern) {
         var items = objektnr_intern.split(".");
         var ve = String(items[0]);
