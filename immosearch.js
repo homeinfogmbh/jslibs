@@ -15,14 +15,6 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
-    XXX: Depends on "openimmo.js"
-
-    Change log:
-    
-    03.05.2015: Richard Neumann <r.neumann@homeinfo.de>
-    *   Implemented this library
 */
 
 
@@ -55,42 +47,41 @@ var immosearch = {
     base_url: function (cid) {
         return "https://tls.homeinfo.de/immosearch/customer/" + cid;
     },
-    
+
     img_dummy: function (cid) {
         "img/customer_dummy/" + cid + ".png";
     },
-    
-    
+
+
     // Creates location filters
     // XXX: Location filters are "or"-joined
     mkLocationFilter: function() {
         var current_item = "";
         var result = null;
-    
+
         for (var i = 0; i < selected_locations.length; i++) {
             current_item = selected_locations[i];
-    
+
             if (result == null) {
                 result = "ortsteil==" + current_item;
             } else {
                 result += " or ortsteil==" + current_item;
             }
-    
         }
-    
+
         if (result == null) {
             return "";
         } else {
             return "(" + result + ")";
         }
     },
-    
-    
+
+
     // Creates floor filters
     // XXX: Floor filters are "or"-joined
     mkEtageFilter: function() {
         var result = null;
-    
+
         if (erdgeschoss == true) {
             if (result == null) {
                 result = "etage==0";
@@ -106,7 +97,7 @@ var immosearch = {
                 result += " or etage==1";
             }
         }
-    
+
         if (second_floor == true) {
             if (result == null) {
                 result = "etage>=2";
@@ -114,7 +105,7 @@ var immosearch = {
                 result += " or etage>=2";
             }
         }
-    
+
         if (result == null) {
             return "";
         } else {
@@ -125,9 +116,8 @@ var immosearch = {
     
     // Creates filter rules
     mkFilter: function() {
-    
         var result = null;
-    
+
         if (zimmer_von) {
             if (result == null) {
                 result = "zimmer>=" + zimmer_von;
@@ -135,7 +125,7 @@ var immosearch = {
                 result += " and zimmer>=" + zimmer_von;
             }
         }
-    
+
         if (zimmer_bis) {
             if (result == null) {
                 result = "zimmer<=" + zimmer_bis;
@@ -143,7 +133,7 @@ var immosearch = {
                 result += " and zimmer<=" + zimmer_bis;
             }
         }
-    
+
         if (wohnflaeche_von) {
             if (result == null) {
                 result = "wohnflaeche>=" + wohnflaeche_von;
@@ -151,7 +141,7 @@ var immosearch = {
                 result += " and wohnflaeche>=" + wohnflaeche_von;
             }
         }
-    
+
         if (wohnflaeche_bis) {
             if (result == null) {
                 result = "wohnflaeche<=" + wohnflaeche_bis;
@@ -159,7 +149,7 @@ var immosearch = {
                 result += " and wohnflaeche<=" + wohnflaeche_bis;
             }
         }
-    
+
         if (grundmiete_von) {
             if (result == null) {
                 result = "kaltmiete>=" + grundmiete_von;
@@ -167,7 +157,7 @@ var immosearch = {
                 result += " and kaltmiete>=" + grundmiete_von;
             }
         }
-    
+
         if (grundmiete_bis) {
             if (result == null) {
                 result = "kaltmiete<=" + grundmiete_bis;
@@ -175,7 +165,7 @@ var immosearch = {
                 result += " and kaltmiete<=" + grundmiete_bis;
             }
         }
-    
+
         if (terrasse) {
             if (result == null) {
                 result = "terrassen>>0";
@@ -191,7 +181,7 @@ var immosearch = {
                 result += " and garten>>0"
             }
         }
-    
+
         if (balkon) {
             if (result == null) {
                 result = "balkone>>0";
@@ -207,7 +197,7 @@ var immosearch = {
                 result += " and wanne>>0";
             }
         }
-    
+
         if (dusche) {
             if (result == null) {
                 result = "dusche>>0";
@@ -215,7 +205,7 @@ var immosearch = {
                 result += " and dusche>>0";
             }
         }
-    
+
         if (aufzug) {
             if (result == null) {
                 result = "aufzug>>0";
@@ -223,8 +213,9 @@ var immosearch = {
                 result += " and aufzug>>0";
             }
         }
-    
+
         var etage = immosearch.mkEtageFilter();
+
         if (etage) {
             if (result == null) {
                 result = etage;
@@ -232,8 +223,9 @@ var immosearch = {
                 result += " and " + etage;
             }
         }
-    
+
         var location = immosearch.mkLocationFilter();
+
         if (location) {
             if (result == null) {
                 result = location;
@@ -241,15 +233,15 @@ var immosearch = {
                 result += " and " + location;
             }
         }
-    
+
         if (result) {
             return result;
         } else {
             return "";
         }
     },
-    
-    
+
+
     // Class to represent an internal attachment
     Attachment: function(anhang) {
         this.title = anhang.anhangtitel;
@@ -258,8 +250,8 @@ var immosearch = {
         this.group = anhang.gruppe;
         return this;
     },
-    
-    
+
+
     // Class to represent an energy certificate
     EnergyCertificate: function(energiepass) {
         this.type = energiepass.epart;
@@ -272,15 +264,17 @@ var immosearch = {
         this.construction_year = energiepass.baujahr;
         return this;
     },
-    
-    
-    // Real estate wrapper for an OpenImmo™ immobilie
+
+
+    // Real estate wrapper for an OpenImmo immobilie
     // DOM node for easy attribute access
     RealEstate: function(immobilie) {
         this._immobilie = immobilie;
+
         if (immobilie.freitexte) {
             this.title = immobilie.freitexte.objekttitel;
         }
+
         if (immobilie.geo) {
             this.street = immobilie.geo.strasse;
             this.house_no = immobilie.geo.hausnummer;
@@ -290,6 +284,7 @@ var immosearch = {
             this.floors = immobilie.geo.anzahl_etagen;
             this.district = immobilie.geo.regionaler_zusatz;
         }
+
         if (immobilie.preise) {
             this.cold_rent = immobilie.preise.nettokaltmiete ?
                 immobilie.preise.nettokaltmiete : immobilie.preise.kaltmiete;
@@ -299,20 +294,24 @@ var immosearch = {
             this.heating_costs_included = immobilie.preise
                 .heizkosten_enthalten;
         }
+
         if (immobilie.zustand_angaben) {
             this.energy_certificate = immosearch.EnergyCertificate(
                 immobilie.zustand_angaben.energiepass[0]) ?
                 immobilie.zustand_angaben.energiepass[0] : null;
         }
+
         function attachments() {
             var attachments = immobilie.anhang;
             var result = [];
+
             for (var i = 0; i < attachments.length; i++) {
                 result.push(immosearch.Attachment(attachments[i]));
             }
+
             return result;
         }
-    
+
         this.fullRent = function() {
             if (this.warm_rent) {
                 return Number(this.warm_rent);
@@ -321,15 +320,15 @@ var immosearch = {
                     if (this.heating_costs) {
                         if (this.heating_costs_included) {
                             return Number(this.cold_rent)
-                                   + Number(this.utilities);
+                                + Number(this.utilities);
                         } else {
                             return Number(this.cold_rent)
-                                   + Number(this.utilities)
-                                    + Number(this.heating_costs);
+                                + Number(this.utilities)
+                                + Number(this.heating_costs);
                         }
                     } else {
                         return Number(this.cold_rent)
-                               + Number(this.utilities);
+                            + Number(this.utilities);
                     }
                 } else {
                     if (this.heating_costs) {
@@ -337,31 +336,35 @@ var immosearch = {
                             return Number(this.cold_rent);
                         } else {
                             return Number(this.cold_rent)
-                                    + Number(this.heating_costs);
+                                + Number(this.heating_costs);
                         }
                     } else {
                         return Number(this.cold_rent)
-                               + Number(this.utilities);
-                    }           
+                            + Number(this.utilities);
+                    }
                 }
             }
             
         }
+
         return this;
     },
-    
-    
-    // Creates a list of real estates from an OpenImmo™-anbieter XML document
+
+
+    // Creates a list of real estates from an OpenImmo-anbieter XML document
     RealEstateList: function(xml) {
         var lst = new Array();
         var anbieter = xml.getElementsByTagName("anbieter")[0];
+
         if (anbieter) {
             var immobilie = anbieter.getElementsByTagName("immobilie");
+
             for (var i = 0; i < immobilie.length; i++) {
                 lst.push(immosearch.RealEstate(
                     immosearch.Immobilie(immobilie[i])));
             }
         }
+
         return lst;
     }
 }
