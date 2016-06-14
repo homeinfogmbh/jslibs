@@ -18,123 +18,135 @@
 
 */
 
-/****************************
- *  Global vars *
- ****************************/
+/**********************
+ *  Global constants  *
+ **********************/
 var NEW_LINE = new RegExp('\r?\n','g');
 
-/****************************
- *  General-purpose methods *
- ****************************/
 
+/**********************
+ *  Global functions  *
+ **********************/
 
-
-
-
-
-
-/****************************
-*  Functions *
-****************************/
-
-// Gets text content of an object, preferring the textContent attribute over innerText attribute
+// Gets text content of an object, preferring the
+// textContent attribute over innerText attribute
 function getText(obj) {
     return obj.textContent ? obj.textContent : obj.innerText;
 }
 
-//check e-mail address
+
+// Validates email addresses
 function validateEmail($email) {
-	var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-	if(!emailReg.test($email)) {
-		return false;
-	} else {
-		return true;
-	}
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+    if(!emailReg.test($email)) {
+        return false;
+    } else {
+        return true;
+    }
 }
+
 
 // Check if element exists and return boolean
 function check_if_element_exists_boolean(element) {
-  if (typeof(element) == 'undefined' && element == null) {
-    return false;//element does not exists
-  } else {
-    return true;//element exists
-  }
+    if (typeof(element) == 'undefined' && element == null) {
+        return false;  // Element does not exists
+    } else {
+        return true;  // Element exists
+    }
 }
+
 
 // Remove evrything after the dynamic character parameter
 function removeAfterCertainCharacter(string, character) {
-	return string.substring(0, string.indexOf(character));
+    return string.substring(0, string.indexOf(character));
 }
+
 
 // Check if value start from 0 and fix it because thatose numbers are address nr.
 function checkIfNumberStartsFromZero(object_number) {
-  if (object_number.charAt(2) == 0) {//get first 000
-    return object_number.substr(3);
-  } else if (object_number.charAt(1) == 0) {//get first 00
-    return object_number.substr(2);
-  } else if (object_number.charAt(0) == 0) {//get first 0
-    return object_number.substr(1);
-  }
+    if (object_number.charAt(2) == 0) {//get first 000
+        return object_number.substr(3);
+    } else if (object_number.charAt(1) == 0) {//get first 00
+        return object_number.substr(2);
+    } else if (object_number.charAt(0) == 0) {//get first 0
+        return object_number.substr(1);
+    }
 }
+
 
 // Capitalise function (first char toUpperCase and all the rest toLowerCase)
 function capitalise(string) {
-  if (typeof string != 'undefined') {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-  } else {
-    return string;
-  }
+    if (typeof string != 'undefined') {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    } else {
+        return string;
+    }
 }
 
-//if last char is only one 0 (price)
+
+// Check whether the last character of a string is only one 0 (price)
 function ifLastCharIsOnlyOneNull(str) {
-	var afterComma = str.substr(str.indexOf(",") + 1);
-	var char_length = afterComma.length;
-	if (char_length == 1) {
-		return str + "0";
-	} else {
-		return str;
-	}
+    var afterComma = str.substr(str.indexOf(",") + 1);
+    var char_length = afterComma.length;
+
+    if (char_length == 1) {
+        return str + "0";
+    } else {
+        return str;
+    }
 }
+
 
 //replace comma with dot
 function replaceCommaWithDot(str) {
-	return str.replace(",", ".");
+    return str.replace(",", ".");
 }
 
-//replace dot with comma
+
+// Replace dot with comma
 function replaceDotWithComma(value) {
-  return value.replace(".", ",");
+    return value.replace(".", ",");
 }
 
+
+// Trim string to two characters after a comma
 function afterCommaKeep2Char(str) {
-  var afterCommaKeep2Char = str;
-  var valueBeforeComma = str.substr(0, str.indexOf(','));
-  if (afterCommaKeep2Char.indexOf(',') > -1) {//check if value has comma
-    afterCommaKeep2Char = afterCommaKeep2Char.substr(afterCommaKeep2Char.indexOf(",") + 1)
-    //return valueBeforeComma + "," + "<sup>" + afterCommaKeep2Char.substr(0, 2) + "</sup>";
-    return valueBeforeComma + "," + afterCommaKeep2Char.substr(0, 2);
-  } else {//else return the original value
-    return str;
-  }
+    var afterCommaKeep2Char = str;
+    var valueBeforeComma = str.substr(0, str.indexOf(','));
+
+    // Check if value contains a comma
+    if (afterCommaKeep2Char.indexOf(',') > -1) {
+        afterCommaKeep2Char = afterCommaKeep2Char.substr(afterCommaKeep2Char.indexOf(",") + 1)
+        //return valueBeforeComma + "," + "<sup>" + afterCommaKeep2Char.substr(0, 2) + "</sup>";
+        return valueBeforeComma + "," + afterCommaKeep2Char.substr(0, 2);
+    } else {
+        // Fall back to original string
+        return str;
+    }
 }
 
+
+// Determines whether a number is odd
 function isOdd(num) {
-	return num % 2;
+    return num % 2;
 }
 
+
+// Escape potentially unsafe HTML content
 function escapeHtml(unsafe) {
-	//DOMPurify to sanitize HTML and prevents XSS attacks
-  /*
-  return DOMPurify.sanitize(unsafe
-  	.replace(/&/g, "&amp;")
-  	.replace(/</g, "&lt;")
-  	.replace(/>/g, "&gt;")
-  	.replace(/"/g, "&quot;")
-  	.replace(/'/g, "&#039;"));
-  */
+    //DOMPurify to sanitize HTML and prevents XSS attacks
+    /*
+    return DOMPurify.sanitize(unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;"));
+    */
     return unsafe;
 }
+
 
 function addCommas(n){
   var rx=  /(\d+)(\d{3})/;
@@ -146,38 +158,183 @@ function addCommas(n){
   });
 }
 
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 
 /****************************
  *  Prototype extensions    *
  ****************************/
 
+/*** Numbers ***/
+
+// Determines whether a number is odd
+Number.prototype["isOdd"] = function () {
+    return false ? this % 2 == 0 : true;
+};
+
+
+/*** Strings ***/
+
 // Capitalize First Letter
 String.prototype.capitalizeFirstLetter = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
-
-String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};
+
+
+// Validates email addresses
+String.prototype.capitalizeFirstLetter = function() {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+    if(emailReg.test($this)) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+
+// Fix for American-style -> German-style float interpunctuation
+String.prototype["dot2comma"] = function () {
+    return this.replace(".", ",");
+};
+
+
+// Fix for German-style -> American-style float interpunctuation
+String.prototype["comma2dot"] = function () {
+    return this.replace(",", ".");
+};
+
+
+// Padds a zero to a digit string if it has exactly one zero after the comma
+String.prototype["padd0"] = function () {
+    if (this.substr(this.indexOf(",") + 1).length == 1) {
+        return this + "0";
+    } else {
+        return this;
+    }
+};
+
+
+// Capitalizes a string
+String.prototype["capitalize"] = function () {
+    if (this != "" || this != 'undefined') {
+        return this.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    } else {
+        return this;
+    }
+};
+
+
+// Remove evrything after the specified character
+String.prototype["terminate"] = function (character) {
+    return this.substring(0, this.indexOf(character));
+};
+
+
+// Convert umlaut descriptions to actual umlauts
+String.prototype["umlauts"] = function () {
+    return this.replace("Ae", "Ä").replace("Oe", "Ö").replace("Ue", "Ü")
+        .replace("ae", "ä").replace("oe", "ö").replace("ue", "ü");
+};
+
+
+// Strips leading zeros from number-like strings
+String.prototype["strplz"] = function () {
+    var i = 0;
+
+    for (i; i < this.length; i++) {
+        if (this[i] != "0") {
+            break;
+        }
+    }
+
+    return this.substr(i);
+};
+
+
+// Replace line feed for HTML
+String.prototype["lf2html"] = function () {
+    return this.replace(NEW_LINE, "<br />");
+};
+
+
+/*
+// Escape some special HTML characters
+String.prototype["escapeHtml"] = function () {
+    // DOMPurify to sanitize HTML and prevents XSS attacks
+    return this.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}*/
+
+
+/*** Arrays ***/
 
 // Remove from array
 Array.prototype.remove_from_array = function() {
     var what, a = arguments, L = a.length, ax;
+
     while (L && this.length) {
         what = a[--L];
+
         while ((ax = this.indexOf(what)) !== -1) {
             this.splice(ax, 1);
         }
     }
+
     return this;
 };
+
+
+// Removes an item from an array
+Array.prototype["remove"] = function(item) {
+    var index = this.indexOf(item);
+
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+
+    return this;
+};
+
+
+// Groups an iterable and counts occurences
+Array.prototype["group"] = function () {
+    var result = {};
+
+    for (var i = 0; i < this.length; i++) {
+        var match = false;
+
+        for (var key in result) {
+            if (key == this[i]) {
+                result[key] = result[key] + 1;
+                match = true;
+                break;
+            }
+        }
+
+        if (match == false) {
+            result[this[i]] = 1;
+        }
+    }
+
+    return result;
+};
+
+
+/*** DOM elements ***/
 
 // Gets DOM elements by a name
 Element.prototype.getElements = function (element_name) {
     var elements = this.getElementsByTagName(element_name);
+
     if (elements.length > 0) {
         return elements;
     } else {
@@ -189,6 +346,7 @@ Element.prototype.getElements = function (element_name) {
 // Gets a DOM element by its name
 Element.prototype.getElement = function (element_name) {
     var elements = this.getElements(element_name);
+
     if (elements.length > 0) {
         if (elements[0] != null) {
             return elements[0];
@@ -204,6 +362,7 @@ Element.prototype.getElement = function (element_name) {
 // Gets value of a DOM element by its name
 Element.prototype.getElementValue = function (element_name) {
     var element = this.getElement(element_name);
+
     if (element != null) {
         if (element.firstChild != null) {
             return element.firstChild.nodeValue;
@@ -214,111 +373,3 @@ Element.prototype.getElementValue = function (element_name) {
         return null;
     }
 };
-
-
-// Removes an item from an array
-Array.prototype["remove"] = function(item) {
-    var index = this.indexOf(item);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
-    return this;
-};
-
-
-// Fix for American-style -> German-style float interpunctuation
-String.prototype["dot2comma"] = function () {
-    return this.replace(".", ",");
-};
-
-
-// Padds a zero to a digit string if it has exactly one zero after the comma
-String.prototype["padd0"] = function () {
-    var afterComma = this.substr(this.indexOf(",") + 1);
-    var char_length = afterComma.length;
-    if (char_length == 1) {
-        return this + "0";
-    } else {
-        return this;
-    }
-};
-
-
-// Capitalizes a string
-String.prototype["capitalize"] = function () {
-  if (this != "" || this != 'undefined') {
-    return this.replace(/\w\S*/g, function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  } else {
-      return this;
-  }
-};
-
-/*
-// Escape some special HTML characters
-String.prototype["escapeHtml"] = function () {
-    // DOMPurify to sanitize HTML and prevents XSS attacks
-    return this.replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}*/
-
-
-// Remove evrything after the specified character
-String.prototype["terminate"] = function (character) {
-    return this.substring(0, this.indexOf(character));
-};
-
-
-// Convert umlaut descriptions to actual umlauts
-String.prototype["umlauts"] = function () {
-    return this.replace("Ae", "Ä").replace("Oe", "Ö").replace("Ue", "Ü")
-        .replace("ae", "ä").replace("oe", "ö").replace("ue", "u");
-}
-
-
-// Strips leading zeros from number-like strings
-String.prototype["strplz"] = function () {
-    var i = 0;
-    for (i; i < this.length; i++) {
-     if (this[i] != "0") {
-         break;
-     }
-    }
-    return this.substr(i);
-}
-
-// Replace line feed for HTML
-String.prototype["lf2html"] = function () {
-  return this.replace(NEW_LINE, "<br />");
-}
-
-
-// Determines whether a number is odd
-Number.prototype["isOdd"] = function () {
-    return false ? this % 2 == 0 : true;
-}
-
-
-// Groups an iterable and counts occurences
-Array.prototype["group"] = function () {
-    var result = {};
-
-    for (var i = 0; i < this.length; i++) {
-        var match = false;
-        for (var key in result) {
-            if (key == this[i]) {
-                result[key] = result[key] + 1;
-                match = true;
-                break;
-            }
-        }
-        if (match == false) {
-            result[this[i]] = 1;
-        }
-    }
-    return result;
-}
