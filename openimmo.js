@@ -351,8 +351,127 @@ var openimmo = {
     },
 
 
+    zimmer: function(zimmer) {
+        this.zimmertyp = zimmer.getAttribute("zimmertyp");
+        return this;
+    },
+
+
+    wohnung: function(wohnung) {
+        this.wohnungtyp = wohnung.getAttribute("wohnungtyp");
+        return this;
+    },
+
+
+    haus: function(haus) {
+        this.haustyp = haus.getAttribute("haustyp");
+        return this;
+    },
+
+
+    grundstueck: function(grundstueck) {
+        this.grundst_typ = grundstueck.getAttribute("grundst_typ");
+        return this;
+    },
+
+
+    buero_praxen: function(buero_praxen) {
+        this.buero_typ = buero_praxen.getAttribute("buero_typ");
+        return this;
+    },
+
+
+    einzelhandel: function(einzelhandel) {
+        this.handel_typ = einzelhandel.getAttribute("handel_typ");
+        return this;
+    },
+
+
+    gastgewerbe: function(gastgewerbe) {
+        this.gastgew_typ = gastgewerbe.getAttribute("gastgew_typ");
+        return this;
+    },
+
+
+    hallen_lager_prod: function(hallen_lager_prod) {
+        this.hallen_typ = hallen_lager_prod.getAttribute("hallen_typ");
+        return this;
+    },
+
+
+    land_und_forstwirtschaft: function(land_und_forstwirtschaft) {
+        this.land_typ = land_und_forstwirtschaft.getAttribute("land_typ");
+        return this;
+    },
+
+
+    parken: function(parken) {
+        this.parken_typ = parken.getAttribute("parken_typ");
+        return this;
+    },
+
+
+    sonstige: function(sonstige) {
+        this.sonstige_typ = sonstige.getAttribute("sonstige_typ");
+        return this;
+    },
+
+
+    freizeitimmobilie_gewerblich: function(freizeitimmobilie_gewerblich) {
+        this.freizeit_typ = freizeitimmobilie_gewerblich.getAttribute(
+            "freizeit_typ");
+        return this;
+    },
+
+
+    zinshaus_renditeobjekt: function(zinshaus_renditeobjekt) {
+        this.zins_typ = zinshaus_renditeobjekt.getAttribute("zins_typ");
+        return this;
+    },
+
+
     objektart: function(objektart) {
-        // TODO: Implement object types...
+        function _get_items(name, type) {
+            var elements = objektart.getElements(name);
+            var result = [];
+
+            for (var i = 0; i < elements.length; i++) {
+                result.push(type(elements[i]));
+            }
+
+            return result;
+        }
+
+        function _get_values(name) {
+            var elements = objektart.getElements(name);
+            var result = [];
+
+            for (var i = 0; i < elements.length; i++) {
+                result.push(objektart.getElementValue(elements[i]));
+            }
+
+            return result;
+        }
+
+        this.zimmer = _get_items("zimmer", openimmo.zimmer);
+        this.wohnung = _get_items("wohnung", openimmo.wohnung);
+        this.haus = _get_items("haus", openimmo.haus);
+        this.grundstueck = _get_items("grundstueck", openimmo.grundstueck);
+        this.buero_praxen = _get_items("buero_praxen", openimmo.buero_praxen);
+        this.einzelhandel = _get_items("einzelhandel", openimmo.einzelhandel);
+        this.gastgewerbe = _get_items("gastgewerbe", openimmo.gastgewerbe);
+        this.hallen_lager_prod = _get_items(
+            "hallen_lager_prod", openimmo.hallen_lager_prod);
+        this.land_und_forstwirtschaft = _get_items(
+            "land_und_forstwirtschaft", openimmo.land_und_forstwirtschaft);
+        this.parken = _get_items("parken", openimmo.parken);
+        this.sonstige = _get_items("sonstige", openimmo.sonstige);
+        this.freizeitimmobilie_gewerblich = _get_items(
+            "freizeitimmobilie_gewerblich",
+            openimmo.freizeitimmobilie_gewerblich);
+        this.zinshaus_renditeobjekt = _get_items(
+            "zinshaus_renditeobjekt", openimmo.zinshaus_renditeobjekt);
+        this.objektart_zusatz = _get_values("objektart_zusatz");
         return this;
     },
 
@@ -418,7 +537,7 @@ var openimmo = {
             var result = [];
 
             for (var i = 0; i < energiepass_.length; i++) {
-                result.push(openimmo.Energiepass(energiepass_[i]));
+                result.push(openimmo.energiepass(energiepass_[i]));
             }
 
             return result;
