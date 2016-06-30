@@ -199,7 +199,7 @@ String.prototype.capitalizeFirstLetter = function() {
 String.prototype.capitalizeFirstLetter = function() {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
-    if(emailReg.test($this)) {
+    if(emailReg.test(this)) {
         return true;
     } else {
         return false;
