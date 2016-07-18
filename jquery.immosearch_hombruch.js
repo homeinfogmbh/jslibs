@@ -1490,9 +1490,9 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 										if (typeof immosearch_var_details_object_nebenkosten != "undefined" && immosearch_var_details_object_nebenkosten) {
 			                immosearch_var_details_object_nebenkosten = immosearch_var_details_object_nebenkosten.dot2comma();
-											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
+											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
 			              } else {
-											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_betriebskosten">K.A.</span><br>';
+											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">K.A.</span><br>';
 										}
 
 										if (typeof immosearch_var_details_object_betriebskostennetto != "undefined" && immosearch_var_details_object_betriebskostennetto) {
