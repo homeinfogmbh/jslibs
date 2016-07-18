@@ -912,7 +912,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 					immosearch_var_details_object_heizkostennetto = escapeHtml($(this).find("preise heizkostennetto").text());//decimal
 					immosearch_var_details_object_heizkosten_enthalten = escapeHtml($(this).find("preise heizkosten_enthalten").text());//boolean
 					immosearch_var_details_object_heizkosten = escapeHtml($(this).find("preise heizkosten").text());//decimal
-					immosearch_var_details_object_nebenkosten = escapeHtml($(this).find("preise nebenkosten").text());
+					immosearch_var_details_object_nebenkosten = escapeHtml($(this).find("preise betriebskostennetto").text());
 					immosearch_var_details_object_provisionspflichtig = escapeHtml($(this).find("preise provisionspflichtig").text());
 					immosearch_var_details_object_primaerenergietraeger = escapeHtml($(this).find("energiepass primaerenergietraeger").text());
 
