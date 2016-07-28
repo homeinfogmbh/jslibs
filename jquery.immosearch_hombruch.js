@@ -1723,7 +1723,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							if (immosearch_array_details_object_ausstattung.length > 0 || immosearch_array_details_object_ausstattung != "") {
 								if (immosearch_array_details_object_ausstattung[0].length != 0) {
 									immoDetailElement += '<h4><strong>AUSSTATTUNGSMERKMALE</strong></h4>';
-									console.log("test git");
 									immoDetailElement += '<div class="row">';
 			              immoDetailElement += '<div class="col-md-12">';
 			                //$.each(immosearch_array_object_ausstatt_beschr_concat.split(','), function(index, value) {
