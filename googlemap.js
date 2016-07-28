@@ -54,7 +54,7 @@ function google_map(param_div, param_full_address, param_strasse, param_hnr, par
       	map_lat = results[0].geometry.location.lat();
       	map_lng = results[0].geometry.location.lng();
 
-      	function initialize() {
+      	function initialize(google, geocoder) {
 
         	var myOptions = {
         	  scaleControl: true,
