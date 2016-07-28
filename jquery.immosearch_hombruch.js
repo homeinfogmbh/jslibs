@@ -1248,13 +1248,13 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 								immoDetailElement += '<div id="googleMapContainer" class="img-responsive img-thumbnail" width="498" height="370"></div>';//google maps
 		          immoDetailElement += '</div>';
 
-							console.log("CONTAINER: " + immo_object_address___final);
-							console.log("ADDRESS: " + immosearch_array_object_address[i]);
-							console.log("ADDRESS NR: " + immo_object_address_nr);
-							console.log("PLZ NR: " + immo_object_plz_nr);
-							console.log("ORT: " + immosearch_array_object_ort[i]);
+							console.log("FULL ADDRESS: " + immosearch_array_details_object_address[0] + " " + immosearch_array_details_object_address_number[0]);
+							console.log("ADDRESS: " + immosearch_array_details_object_address[0]);
+							console.log("ADDRESS NR: " + immosearch_array_details_object_address_number[0]);
+							console.log("PLZ NR: " + immosearch_array_details_object_plz_number[0]);
+							console.log("ORT: " + immosearch_array_details_object_ort[0]);
 
-							google_map("googleMapContainer", immo_object_address___final, immosearch_array_object_address[i], immo_object_address_nr, immo_object_plz_nr, immosearch_array_object_ort[i]);
+							google_map("googleMapContainer", immosearch_array_details_object_address[0] + " " + immosearch_array_details_object_address_number[0], immosearch_array_details_object_address[0], immosearch_array_details_object_address_number[0], immosearch_array_details_object_plz_number[0], immosearch_array_details_object_ort[0]);
 
 
 		        immoDetailElement += '</div>';
