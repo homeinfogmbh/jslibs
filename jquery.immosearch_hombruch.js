@@ -1716,14 +1716,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 										if (immosearch_array_object_ausstatt_beschr.length != 0) {
 											immoDetailElement += '<strong>Ausstattung Beschreibung</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
 										}
-										/*
-										if (immosearch_var_details_object_freitexte_objekttitel.length != 0) {
-											immoDetailElement += '<strong>OBJECTTITEL</strong><br>' + immosearch_var_details_object_freitexte_objekttitel.capitalizeFirstLetter() + '<br>';
-										}
-										*/
-										if (immosearch_var_details_object_freitexte_dreizeiler.length != 0) {
-											immoDetailElement += '<strong>Dreizeiler</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
-										}
 										if (immosearch_var_details_object_freitexte_lage.length != 0) {
 											immoDetailElement += '<strong>Lage</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
 										}
