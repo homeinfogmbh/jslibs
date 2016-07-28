@@ -48,13 +48,7 @@ function getText(obj) {
 
 // Validates email addresses
 function validateEmail(email) {
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-
-    if(!emailReg.test(email)) {
-        return false;
-    } else {
-        return true;
-    }
+    return email.is_email();
 }
 
 
@@ -196,7 +190,7 @@ String.prototype.capitalizeFirstLetter = function() {
 
 
 // Validates email addresses
-String.prototype.capitalizeFirstLetter = function() {
+String.prototype.is_email = function() {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
     if(emailReg.test(this)) {
