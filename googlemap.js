@@ -16,11 +16,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+var google = "";
 
 function google_map(param_div, param_full_address, param_strasse, param_hnr, param_plz, param_ort) {
 
-  var google = "";
   var div_placeholder = param_div;
   var address = param_full_address;
   var map_lat = "";
