@@ -1246,6 +1246,10 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6" style="padding-top:5px; padding-bottom:5px;">';
 								immoDetailElement += 'google map goes here';
+
+								//google maps
+								immoDetailElement += '<canvas id="mypic" class="img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></canvas>';
+
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
