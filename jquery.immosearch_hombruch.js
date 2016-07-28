@@ -44,7 +44,6 @@ var build_locations_array = [];//this array should fill once
 var build_locations_array_number = [];
 var immosearch_array_img = [];
 var immosearch_array_details_object_attachment_pdf = [];
-var immosearch_array_details_object_img_floor_plan = [];
 var immosearch_array_details_object_img = [];
 
 // Functions
@@ -821,7 +820,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 				//arrays
 				immosearch_array_details_object_attachment_pdf = [];
-				immosearch_array_details_object_img_floor_plan = [];
 				immosearch_array_details_object_img = [];
 				var immosearch_array_details_object_address = [];
 				var immosearch_array_details_object_address_number = [];
@@ -845,25 +843,21 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 					$(xml).find("anhang").each(function(i) {
             if ($(this).attr("location") == "REMOTE") {
               if ($(this).attr("gruppe") == "DOKUMENTE") {
-                //PDF
                 if ($(this).children().find("pfad").text()) {
                   immosearch_array_details_object_attachment_pdf.push($(this).children().find("pfad").text());
                 }
-              } else if ($(this).attr("gruppe") == "GRUNDRISS") {
-                if ($(this).children().find("pfad").text()) {
-                  immosearch_array_details_object_img_floor_plan.push($(this).children().find("pfad").text());
-                } else {
-                  immosearch_array_details_object_img_floor_plan.push(dummyPicsPath);
-                }
-              } else {
-
-								if ($(this).attr("gruppe") == "TITELBILD" || $(this).attr("gruppe") == "AUSSENANSICHTEN" || $(this).attr("gruppe") == "BILD" || $(this).attr("gruppe") == "INNENANSICHTEN") {
-									if ($(this).children().find("pfad").text()) {
-  									immosearch_array_details_object_img.push($(this).children().find("pfad").text());
-  								} else {
-  									immosearch_array_details_object_img.push(dummyPicsPath);
-  								}
+              } else if ($(this).attr("gruppe") == "TITELBILD" || $(this).attr("gruppe") == "AUSSENANSICHTEN" || $(this).attr("gruppe") == "BILD" || $(this).attr("gruppe") == "INNENANSICHTEN") {
+								if ($(this).children().find("pfad").text()) {
+									immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+								} else {
+									immosearch_array_details_object_img.push(dummyPicsPath);
 								}
+              } else if($(this).attr("gruppe") == "GRUNDRISS") {
+								if ($(this).children().find("pfad").text()) {
+                  immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+                } else {
+                  immosearch_array_details_object_img.push(dummyPicsPath);
+                }
               }
             }
 					});
@@ -1252,57 +1246,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6" style="padding-top:5px; padding-bottom:5px;">';
 
-							if (immosearch_array_details_object_img_floor_plan.length != 0) {
-								//link to open image gallery
-                immoDetailElement += '<a href="javascript:void(0);" id="images_modal_click_event_floor_plan" data-toggle="modal" data-target="#imagesGalleryModalFloorPlan">';
-								//immoDetailElement += '<img src="' + immosearch_array_details_object_img_floor_plan[0] + '" class="img-responsive img-thumbnail" width="540" height="401" id="immosearch_detail_image" style="margin-bottom:5px;">';
-								immoDetailElement += '<canvas id="images_modal_click_event_floor_plan" class="kenburns_floor img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></canvas>';
-                immoDetailElement += '</a>';//end - anchor tag
-
-								//if the image is just a single item in the array, push one more time to have the kenburns effect
-								if (immosearch_array_details_object_img_floor_plan.length == 1) {
-									immosearch_array_details_object_img_floor_plan.push(immosearch_array_details_object_img_floor_plan[0])
-								}
-
-								//add the event for the kenburns effect after the a tag
-								immoDetailElement += '<script>';
-								immoDetailElement += '$(document).ready(function() {';
-								immoDetailElement += '$(".kenburns_floor").kenburns({';
-									immoDetailElement += 'images:[';
-									//array loop
-									immosearch_array_details_object_img_floor_plan.forEach(function(item) {
-										immoDetailElement += '"' + item + '",';
-									});
-									//array loop
-									immoDetailElement += '],';
-									immoDetailElement += 'frames_per_second: 30,';
-									immoDetailElement += 'display_time: 7000,';
-									immoDetailElement += 'fade_time: 1000,';
-									immoDetailElement += 'zoom: 2,';
-									immoDetailElement += 'background_color:"#ffffff",';
-									immoDetailElement += 'post_render_callback:function($canvas, context) {';
-										immoDetailElement += 'context.save();';
-										immoDetailElement += 'context.fillStyle = "#000";';
-										immoDetailElement += 'context.font = "bold 20px sans-serif";';
-										immoDetailElement += 'var width = $canvas.width();';
-										immoDetailElement += 'var height = $canvas.height();';
-										immoDetailElement += 'var text = "";';
-										immoDetailElement += 'var metric = context.measureText(text);';
-										immoDetailElement += 'context.fillStyle = "#fff";';
-										immoDetailElement += 'context.shadowOffsetX = 3;';
-										immoDetailElement += 'context.shadowOffsetY = 3;';
-										immoDetailElement += 'context.shadowBlur = 4;';
-										immoDetailElement += 'context.shadowColor = "rgba(0, 0, 0, 0.8)";';
-										immoDetailElement += 'context.fillText(text, width - metric.width - 8, height - 8);';
-										immoDetailElement += 'context.restore();';
-									immoDetailElement += '}';
-								immoDetailElement += '});';
-
-								immoDetailElement += '});';
-								immoDetailElement += '<\/script>';
-              } else {
-                immoDetailElement += '<img src="' + dummyPicsPath + '" class="img-responsive img-thumbnail" width="100%" height="401" id="immosearch_detail_image" style="margin-bottom:5px;">';
-              }
 		            immoDetailElement += '<span class="badge">' + immosearch_array_details_object_img_floor_plan.length + '</span> <span class="badge"><i class="fa fa-search"></i> Grundriss</span>';
 
 								immoDetailElement += '<script>';
