@@ -1245,72 +1245,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6" style="padding-top:5px; padding-bottom:5px;">';
-
-		            immoDetailElement += '<span class="badge">' + immosearch_array_details_object_img_floor_plan.length + '</span> <span class="badge"><i class="fa fa-search"></i> Grundriss</span>';
-
-								immoDetailElement += '<script>';
-								immoDetailElement += '$(document).ready(function() {';
-
-								var popup_images_details_title_grundris = '<strong>' + immosearch_array_object_details_zimmer_val + ' Zimmer Wohnung, ' + details_address + ' ' + details_address_number + ', ' + details_address_plz_number + ' ' + details_address_ort + ' - ' + details_address_ortsteil + '</strong>';
-
-								immoDetailElement += '$("#myModalLabel_floor_plan").html("' + popup_images_details_title_grundris + '");';
-
-								if (immosearch_array_details_object_img_floor_plan.length != 0) {
-									immoDetailElement += '$("#images_modal_click_event_floor_plan").click(function() {';
-											immoDetailElement += '$("#image_source_gallery_floor_plan").attr("src", "' + immosearch_array_details_object_img_floor_plan[0] + '");';
-									immoDetailElement += '});';
-								}
-
-								//images floor plan
-								//image counter for the modal floor plans/////////////////////////////////////////////////////////////////////////////////
-								var img_counter_floor_plans = 0;//img counter for the arrows to run the img array
-
-								//show the counter of the picture (on popup modal)
-								function show_counter_pic_floor_plans(img_html_counter) {
-									$("#show_img_counter_floor_plans").html(img_counter_floor_plans+1);
-								}
-
-								//reset the img counter
-								$("#close_modal_floor_plans").click(function() {
-									img_counter_floor_plans = 0;
-									$("#show_img_counter_floor_plans").html(1);//reset the visual value (so when the user open the modal the number starts from 1)
-								});
-
-								//previous pic
-								$("#previous_pic_floor_plans").click(function() {
-									if (img_counter_floor_plans == 0) {
-										//do nothing
-									} else if (img_counter_floor_plans <= immosearch_array_details_object_img_floor_plan.length) {
-										img_counter_floor_plans--;
-										$("#image_source_gallery_floor_plan").attr("src", "" + immosearch_array_details_object_img_floor_plan[img_counter_floor_plans] + "");
-										show_counter_pic_floor_plans(img_counter_floor_plans);
-									}
-								});
-
-								//next pic
-								$("#next_pic_floor_plans").click(function() {
-									if (img_counter_floor_plans < immosearch_array_details_object_img_floor_plan.length -1) {
-										img_counter_floor_plans++;
-										$("#image_source_gallery_floor_plan").attr("src", "" + immosearch_array_details_object_img_floor_plan[img_counter_floor_plans] + "");
-										show_counter_pic_floor_plans(img_counter_floor_plans);
-									}
-								});
-
-								//on close modal clean content and reset counter
-								$('body').on('hidden.bs.modal', '.modal', function () {
-									$(this).removeData('bs.modal');
-									$("#number_of_visible_picture_floor_plans").empty();
-									img_counter_floor_plans = 0;
-									$("#show_img_counter_floor_plans").html(1);//reset the visual value (so when the user open the modal the number starts from 1)
-								});
-
-								show_counter_pic_floor_plans(img_counter_floor_plans);//show the number of the picture (next - previous btn)
-								$("#show_img_length_floor_plans").html(immosearch_array_details_object_img_floor_plan.length);//show in modal the length of the pictures
-								//image counter for the modal floor plans/////////////////////////////////////////////////////////////////////////////////
-
-								immoDetailElement += '});';
-								immoDetailElement += '<\/script>';
-
+								immoDetailElement += 'google map goes here';
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
