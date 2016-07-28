@@ -817,6 +817,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				var immosearch_var_details_object_zustand_angaben__zustand__zustand_art = "";
 				var immosearch_var_details_object_freitexte_lage = "";
 				var immosearch_var_details_object_freitexte_dreizeiler = "";
+				var immosearch_var_details_object_freitexte_sonstige_angaben = "";
 
 				//arrays
 				immosearch_array_details_object_attachment_pdf = [];
@@ -925,20 +926,25 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 					immosearch_var_details_object_objnumber = escapeHtml($(this).find("verwaltung_techn openimmo_obid").text());
 					immosearch_array_object_balkon = escapeHtml($(this).find("flaechen anzahl_balkone").text());
+
+					//freitexte
 					immosearch_array_object_ausstatt_beschr = escapeHtml($(this).find("freitexte ausstatt_beschr").text());
+					immosearch_var_details_object_freitexte_objekttitel = escapeHtml($(this).find("freitexte objekttitel").text());
+					immosearch_var_details_object_freitexte_dreizeiler = escapeHtml($(this).find("freitexte dreizeiler").text());
+					immosearch_var_details_object_freitexte_lage = escapeHtml($(this).find("freitexte lage").text());
+					immosearch_var_details_object_freitexte_sonstige_angaben = escapeHtml($(this).find("freitexte sonstige_angaben").text());
+
 					immosearch_array_object_objektnr_extern  = escapeHtml($(this).find("verwaltung_techn objektnr_extern").text());
           $("#" + immo_counter_or_object_nr + "").html("Wohnungsnr: <span id='count_immobilien'>" + immosearch_array_object_objektnr_extern + "</span>");//add the object nr tot title
 					$("#" + contact_form_object_nr + "").html('<br><button class="btn btn-success pull-right" type="button" style="margin-right:5px; margin-bottom:5px; margin-top:5px; box-shadow:none; cursor:default;"><strong>Wohnungsnr: '  + immosearch_array_object_objektnr_extern + '</strong></button>');
 					immosearch_var_details_object_betriebskostennetto = escapeHtml($(this).find("preise betriebskostennetto").text());
 					immosearch_var_details_object_provisionnetto = escapeHtml($(this).find("preise provisionnetto").text());
-					immosearch_var_details_object_freitexte_objekttitel = escapeHtml($(this).find("freitexte objekttitel").text());
+
 					immosearch_var_details_object_lage_im_bau_left = escapeHtml($(this).find("geo lage_im_bau").attr("LINKS"));
 					immosearch_var_details_object_lage_im_bau_right = escapeHtml($(this).find("geo lage_im_bau").attr("RECHTS"));
 					immosearch_var_details_object_lage_im_bau_front = escapeHtml($(this).find("geo lage_im_bau").attr("VORNE"));
 					immosearch_var_details_object_lage_im_bau_back = escapeHtml($(this).find("geo lage_im_bau").attr("HINTEN"));
 					immosearch_var_details_object_zustand_angaben__zustand__zustand_art = escapeHtml($(this).find("zustand_angaben zustand").attr("zustand_art"));
-					immosearch_var_details_object_freitexte_lage = escapeHtml($(this).find("freitexte lage").text());
-					immosearch_var_details_object_freitexte_dreizeiler = escapeHtml($(this).find("freitexte dreizeiler").text());
 
 					//kontakt details
 					immosearch_var_details_kontakt__email_zentrale = escapeHtml($(this).find("kontaktperson email_zentrale").text());
@@ -1488,19 +1494,19 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 											immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right" id="form_object_kabelgebuhr">K.A.</span><br>';
 										}
 
-
 										if (typeof immosearch_var_details_object_nebenkosten != "undefined" && immosearch_var_details_object_nebenkosten) {
 			                immosearch_var_details_object_nebenkosten = immosearch_var_details_object_nebenkosten.dot2comma();
-											immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
-											//immosearch_var_details_object_betriebskostennetto
+											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
 			              } else {
-											if (typeof immosearch_var_details_object_betriebskostennetto != "undefined" && immosearch_var_details_object_betriebskostennetto) {
-												immosearch_var_details_object_betriebskostennetto = immosearch_var_details_object_betriebskostennetto.dot2comma();
-												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_betriebskostennetto) + ' &euro;</span><br>';//netto
-											} else {
-												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">K.A.</span><br>';
-											}
-			              }
+											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">K.A.</span><br>';
+										}
+
+										if (typeof immosearch_var_details_object_betriebskostennetto != "undefined" && immosearch_var_details_object_betriebskostennetto) {
+											immosearch_var_details_object_betriebskostennetto = immosearch_var_details_object_betriebskostennetto.dot2comma();
+											immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_betriebskostennetto) + ' &euro;</span><br>';//netto
+										} else {
+											immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">K.A.</span><br>';
+										}
 
 										if (typeof immosearch_var_details_object_heizkostennetto != "undefined" && immosearch_var_details_object_heizkostennetto) {
 			                immosearch_var_details_object_heizkostennetto = immosearch_var_details_object_heizkostennetto.dot2comma();
@@ -1711,24 +1717,30 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 								immoDetailElement += '</div>';
 							}
 
-              if (immosearch_array_object_ausstatt_beschr_concat.length > 0) {
-                immoDetailElement += '<h4><strong>AUSSTATTUNGSMERKMALE</strong></h4>';
-								immoDetailElement += '<div class="row">';
-		              immoDetailElement += '<div class="col-md-12">';
-		                $.each(immosearch_array_object_ausstatt_beschr_concat.split(','), function(index, value) {
-		                  //check and replace some cases
-		                  if (value == " BalkonAufzug" || value == "BalkonAufzug") {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Balkon" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  } else if (value == " IsolierverglasungAufzug" || value == "IsolierverglasungAufzug") {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Isolierverglasung" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  } else if (value == " ParkettAufzug" || value == "ParkettAufzug") {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Parkett" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  } else {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="' + value + '" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  }
-		                });
+              //if (immosearch_array_object_ausstatt_beschr_concat.length > 0) {
+							//console.log("LENGTH: " + immosearch_array_details_object_ausstattung.length);
+							//console.log("VALUE: " + immosearch_array_details_object_ausstattung[0].length);
+							if (immosearch_array_details_object_ausstattung.length > 0 || immosearch_array_details_object_ausstattung != "") {
+								if (immosearch_array_details_object_ausstattung[0].length != 0) {
+									immoDetailElement += '<h4><strong>AUSSTATTUNGSMERKMALE</strong></h4>';
+									immoDetailElement += '<div class="row">';
+			              immoDetailElement += '<div class="col-md-12">';
+			                //$.each(immosearch_array_object_ausstatt_beschr_concat.split(','), function(index, value) {
+											$.each(immosearch_array_details_object_ausstattung, function(index, value) {
+			                  //check and replace some cases
+			                  if (value == " BalkonAufzug" || value == "BalkonAufzug") {
+													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Balkon" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+			                  } else if (value == " IsolierverglasungAufzug" || value == "IsolierverglasungAufzug") {
+													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Isolierverglasung" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+			                  } else if (value == " ParkettAufzug" || value == "ParkettAufzug") {
+													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Parkett" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+			                  } else {
+													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="' + value + '" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+			                  }
+			                });
+										immoDetailElement += '</div>';
 									immoDetailElement += '</div>';
-								immoDetailElement += '</div>';
+								}
               }
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
@@ -1788,6 +1800,27 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		            immoDetailElement += '</div>';
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6">';
+
+							immoDetailElement += '<h4><strong>FREITEXTE</strong></h4>';
+							immoDetailElement += '<div class="row">';
+								immoDetailElement += '<div class="col-md-12">';
+									if (immosearch_array_object_ausstatt_beschr.length != 0) {
+										immoDetailElement += '<strong>AUSSTATTUNG BESCHREIBUNG</strong><br>' + immosearch_array_object_ausstatt_beschr + '<br>';
+									}
+									if (immosearch_var_details_object_freitexte_objekttitel.length != 0) {
+										immoDetailElement += '<strong>OBJECTTITEL</strong><br>' + immosearch_var_details_object_freitexte_objekttitel + '<br>';
+									}
+									if (immosearch_var_details_object_freitexte_dreizeiler.length != 0) {
+										immoDetailElement += '<strong>DREIZEILER</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler + '<br>';
+									}
+									if (immosearch_var_details_object_freitexte_lage.length != 0) {
+										immoDetailElement += '<strong>LAGE</strong><br>' + immosearch_var_details_object_freitexte_lage + '<br>';
+									}
+									if (immosearch_var_details_object_freitexte_sonstige_angaben.length != 0) {
+										immoDetailElement += '<strong>SONSTIGE ANGABEN</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben + '<br>';
+									}
+								immoDetailElement += '</div>';
+							immoDetailElement += '</div>';
 
 							//extra group goes here
 							if (cid == "1044001" && immosearch_array_details_object_ausstattung[0].length > 0 && immosearch_array_details_object_attachment_pdf.length == 0) {
