@@ -1714,19 +1714,21 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 										immoDetailElement += '<strong>Objektbeschreibung</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
 										immoDetailElement += '<strong>Ausstattung</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
 										if (immosearch_array_object_ausstatt_beschr.length != 0) {
-											immoDetailElement += '<strong>AUSSTATTUNG BESCHREIBUNG</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
+											immoDetailElement += '<strong>Ausstattung Beschreibung</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
 										}
+										/*
 										if (immosearch_var_details_object_freitexte_objekttitel.length != 0) {
 											immoDetailElement += '<strong>OBJECTTITEL</strong><br>' + immosearch_var_details_object_freitexte_objekttitel.capitalizeFirstLetter() + '<br>';
 										}
+										*/
 										if (immosearch_var_details_object_freitexte_dreizeiler.length != 0) {
-											immoDetailElement += '<strong>DREIZEILER</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
+											immoDetailElement += '<strong>Dreizeiler</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
 										}
 										if (immosearch_var_details_object_freitexte_lage.length != 0) {
-											immoDetailElement += '<strong>LAGE</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
+											immoDetailElement += '<strong>Lage</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
 										}
 										if (immosearch_var_details_object_freitexte_sonstige_angaben.length != 0) {
-											immoDetailElement += '<strong>SONSTIGE ANGABEN</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben.capitalizeFirstLetter() + '<br>';
+											immoDetailElement += '<strong>Sonstige Angaben</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben.capitalizeFirstLetter() + '<br>';
 										}
 									immoDetailElement += '</div>';
 								immoDetailElement += '</div>';
