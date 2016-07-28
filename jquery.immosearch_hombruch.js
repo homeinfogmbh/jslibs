@@ -1245,9 +1245,18 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6" style="padding-top:5px; padding-bottom:5px;">';
-								//google maps
-								immoDetailElement += '<canvas id="mypic" class="img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></canvas>';
+								immoDetailElement += '<div id="googleMapContainer" class="img-responsive img-thumbnail" width="498" height="370"></div>';//google maps
 		          immoDetailElement += '</div>';
+
+							console.log("CONTAINER: " + immo_object_address___final);
+							console.log("ADDRESS: " + immosearch_array_object_address[i]);
+							console.log("ADDRESS NR: " + immo_object_address_nr);
+							console.log("PLZ NR: " + immo_object_plz_nr);
+							console.log("ORT: " + immosearch_array_object_ort[i]);
+
+							google_map("googleMapContainer", immo_object_address___final, immosearch_array_object_address[i], immo_object_address_nr, immo_object_plz_nr, immosearch_array_object_ort[i]);
+
+
 		        immoDetailElement += '</div>';
 
 						immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
