@@ -16,8 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-var google = "";
-var geocoder = "";
+
 
 function google_map(param_div, param_full_address, param_strasse, param_hnr, param_plz, param_ort) {
 
@@ -42,7 +41,7 @@ function google_map(param_div, param_full_address, param_strasse, param_hnr, par
   //check if address is empty
   if (address != "") {
 
-    geocoder = new google.maps.Geocoder();
+    var geocoder = new google.maps.Geocoder();
 
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
@@ -54,7 +53,7 @@ function google_map(param_div, param_full_address, param_strasse, param_hnr, par
       	map_lat = results[0].geometry.location.lat();
       	map_lng = results[0].geometry.location.lng();
 
-      	function initialize(google, geocoder) {
+      	function initialize() {
 
         	var myOptions = {
         	  scaleControl: true,
