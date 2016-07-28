@@ -1707,7 +1707,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 							//special case, check if there are no austattung icons and show the below details (sonstiges) else show it in the correct place (some code lines after)
 							//console.log("Austattung array length: " + immosearch_array_object_ausstatt_beschr_concat.length);
-							if (cid == "1044001" && immosearch_array_object_ausstatt_beschr_concat.length == 0) {
+							//if (cid == "1044001" && immosearch_array_object_ausstatt_beschr_concat.length == 0) {
 								immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
 								immoDetailElement += '<div class="row">';
 		              immoDetailElement += '<div class="col-md-12">';
@@ -1730,7 +1730,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 										}
 									immoDetailElement += '</div>';
 								immoDetailElement += '</div>';
-							}
+							//}
 
               //if (immosearch_array_object_ausstatt_beschr_concat.length > 0) {
 							//console.log("LENGTH: " + immosearch_array_details_object_ausstattung.length);
