@@ -856,31 +856,14 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
                   immosearch_array_details_object_img_floor_plan.push(dummyPicsPath);
                 }
               } else {
-                if ($(this).attr("gruppe") == "TITELBILD") {
-  								if ($(this).children().find("pfad").text()) {
+
+								if ($(this).attr("gruppe") == "TITELBILD" || $(this).attr("gruppe") == "AUSSENANSICHTEN" || $(this).attr("gruppe") == "BILD" || $(this).attr("gruppe") == "INNENANSICHTEN") {
+									if ($(this).children().find("pfad").text()) {
   									immosearch_array_details_object_img.push($(this).children().find("pfad").text());
   								} else {
   									immosearch_array_details_object_img.push(dummyPicsPath);
   								}
-    						} else if ($(this).attr("gruppe") == "AUSSENANSICHTEN") {
-                  if ($(this).children().find("pfad").text()) {
-                    immosearch_array_details_object_img.push($(this).children().find("pfad").text());
-                  } else {
-                    immosearch_array_details_object_img.push(dummyPicsPath);
-                  }
-                } else if ($(this).attr("gruppe") == "BILD") {
-                  if ($(this).children().find("pfad").text()) {
-                    immosearch_array_details_object_img.push($(this).children().find("pfad").text());
-                  } else {
-                    immosearch_array_details_object_img.push(dummyPicsPath);
-                  }
-                } else if ($(this).attr("gruppe") == "INNENANSICHTEN") {
-                  if ($(this).children().find("pfad").text()) {
-                    immosearch_array_details_object_img.push($(this).children().find("pfad").text());
-                  } else {
-                    immosearch_array_details_object_img.push(dummyPicsPath);
-                  }
-                }
+								}
               }
             }
 					});
