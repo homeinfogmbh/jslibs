@@ -17,6 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 var google = "";
+var geocoder = "";
 
 function google_map(param_div, param_full_address, param_strasse, param_hnr, param_plz, param_ort) {
 
@@ -41,7 +42,7 @@ function google_map(param_div, param_full_address, param_strasse, param_hnr, par
   //check if address is empty
   if (address != "") {
 
-    var geocoder = new google.maps.Geocoder();
+    geocoder = new google.maps.Geocoder();
 
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
