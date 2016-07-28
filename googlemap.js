@@ -20,11 +20,11 @@
 
 function google_map(param_div, param_full_address, param_strasse, param_hnr, param_plz, param_ort) {
 
+  var google = "";
   var div_placeholder = param_div;
   var address = param_full_address;
   var map_lat = "";
   var map_lng = "";
-
   var strasse = param_strasse;
   var hnr = param_hnr;
   var plz = param_plz;
