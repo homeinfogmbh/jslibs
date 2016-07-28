@@ -44,6 +44,7 @@ var build_locations_array = [];//this array should fill once
 var build_locations_array_number = [];
 var immosearch_array_img = [];
 var immosearch_array_details_object_attachment_pdf = [];
+var immosearch_array_details_object_img_floor_plan = [];
 var immosearch_array_details_object_img = [];
 
 // Functions
@@ -816,10 +817,10 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				var immosearch_var_details_object_zustand_angaben__zustand__zustand_art = "";
 				var immosearch_var_details_object_freitexte_lage = "";
 				var immosearch_var_details_object_freitexte_dreizeiler = "";
-				var immosearch_var_details_object_freitexte_sonstige_angaben = "";
 
 				//arrays
 				immosearch_array_details_object_attachment_pdf = [];
+				immosearch_array_details_object_img_floor_plan = [];
 				immosearch_array_details_object_img = [];
 				var immosearch_array_details_object_address = [];
 				var immosearch_array_details_object_address_number = [];
@@ -843,20 +844,41 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 					$(xml).find("anhang").each(function(i) {
             if ($(this).attr("location") == "REMOTE") {
               if ($(this).attr("gruppe") == "DOKUMENTE") {
+                //PDF
                 if ($(this).children().find("pfad").text()) {
                   immosearch_array_details_object_attachment_pdf.push($(this).children().find("pfad").text());
                 }
-              } else if ($(this).attr("gruppe") == "TITELBILD" || $(this).attr("gruppe") == "AUSSENANSICHTEN" || $(this).attr("gruppe") == "BILD" || $(this).attr("gruppe") == "INNENANSICHTEN") {
-								if ($(this).children().find("pfad").text()) {
-									immosearch_array_details_object_img.push($(this).children().find("pfad").text());
-								} else {
-									immosearch_array_details_object_img.push(dummyPicsPath);
-								}
-              } else if($(this).attr("gruppe") == "GRUNDRISS") {
-								if ($(this).children().find("pfad").text()) {
-                  immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+              } else if ($(this).attr("gruppe") == "GRUNDRISS") {
+                if ($(this).children().find("pfad").text()) {
+                  immosearch_array_details_object_img_floor_plan.push($(this).children().find("pfad").text());
                 } else {
-                  immosearch_array_details_object_img.push(dummyPicsPath);
+                  immosearch_array_details_object_img_floor_plan.push(dummyPicsPath);
+                }
+              } else {
+                if ($(this).attr("gruppe") == "TITELBILD") {
+  								if ($(this).children().find("pfad").text()) {
+  									immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+  								} else {
+  									immosearch_array_details_object_img.push(dummyPicsPath);
+  								}
+    						} else if ($(this).attr("gruppe") == "AUSSENANSICHTEN") {
+                  if ($(this).children().find("pfad").text()) {
+                    immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+                  } else {
+                    immosearch_array_details_object_img.push(dummyPicsPath);
+                  }
+                } else if ($(this).attr("gruppe") == "BILD") {
+                  if ($(this).children().find("pfad").text()) {
+                    immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+                  } else {
+                    immosearch_array_details_object_img.push(dummyPicsPath);
+                  }
+                } else if ($(this).attr("gruppe") == "INNENANSICHTEN") {
+                  if ($(this).children().find("pfad").text()) {
+                    immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+                  } else {
+                    immosearch_array_details_object_img.push(dummyPicsPath);
+                  }
                 }
               }
             }
@@ -903,25 +925,20 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 					immosearch_var_details_object_objnumber = escapeHtml($(this).find("verwaltung_techn openimmo_obid").text());
 					immosearch_array_object_balkon = escapeHtml($(this).find("flaechen anzahl_balkone").text());
-
-					//freitexte
 					immosearch_array_object_ausstatt_beschr = escapeHtml($(this).find("freitexte ausstatt_beschr").text());
-					immosearch_var_details_object_freitexte_objekttitel = escapeHtml($(this).find("freitexte objekttitel").text());
-					immosearch_var_details_object_freitexte_dreizeiler = escapeHtml($(this).find("freitexte dreizeiler").text());
-					immosearch_var_details_object_freitexte_lage = escapeHtml($(this).find("freitexte lage").text());
-					immosearch_var_details_object_freitexte_sonstige_angaben = escapeHtml($(this).find("freitexte sonstige_angaben").text());
-
 					immosearch_array_object_objektnr_extern  = escapeHtml($(this).find("verwaltung_techn objektnr_extern").text());
           $("#" + immo_counter_or_object_nr + "").html("Wohnungsnr: <span id='count_immobilien'>" + immosearch_array_object_objektnr_extern + "</span>");//add the object nr tot title
 					$("#" + contact_form_object_nr + "").html('<br><button class="btn btn-success pull-right" type="button" style="margin-right:5px; margin-bottom:5px; margin-top:5px; box-shadow:none; cursor:default;"><strong>Wohnungsnr: '  + immosearch_array_object_objektnr_extern + '</strong></button>');
 					immosearch_var_details_object_betriebskostennetto = escapeHtml($(this).find("preise betriebskostennetto").text());
 					immosearch_var_details_object_provisionnetto = escapeHtml($(this).find("preise provisionnetto").text());
-
+					immosearch_var_details_object_freitexte_objekttitel = escapeHtml($(this).find("freitexte objekttitel").text());
 					immosearch_var_details_object_lage_im_bau_left = escapeHtml($(this).find("geo lage_im_bau").attr("LINKS"));
 					immosearch_var_details_object_lage_im_bau_right = escapeHtml($(this).find("geo lage_im_bau").attr("RECHTS"));
 					immosearch_var_details_object_lage_im_bau_front = escapeHtml($(this).find("geo lage_im_bau").attr("VORNE"));
 					immosearch_var_details_object_lage_im_bau_back = escapeHtml($(this).find("geo lage_im_bau").attr("HINTEN"));
 					immosearch_var_details_object_zustand_angaben__zustand__zustand_art = escapeHtml($(this).find("zustand_angaben zustand").attr("zustand_art"));
+					immosearch_var_details_object_freitexte_lage = escapeHtml($(this).find("freitexte lage").text());
+					immosearch_var_details_object_freitexte_dreizeiler = escapeHtml($(this).find("freitexte dreizeiler").text());
 
 					//kontakt details
 					immosearch_var_details_kontakt__email_zentrale = escapeHtml($(this).find("kontaktperson email_zentrale").text());
@@ -1245,30 +1262,125 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6" style="padding-top:5px; padding-bottom:5px;">';
-								immoDetailElement += '<div id="googleMapContainer" class="img-responsive img-thumbnail" width="498" height="370"></div>';//google maps
+
+							if (immosearch_array_details_object_img_floor_plan.length != 0) {
+								//link to open image gallery
+                immoDetailElement += '<a href="javascript:void(0);" id="images_modal_click_event_floor_plan" data-toggle="modal" data-target="#imagesGalleryModalFloorPlan">';
+								//immoDetailElement += '<img src="' + immosearch_array_details_object_img_floor_plan[0] + '" class="img-responsive img-thumbnail" width="540" height="401" id="immosearch_detail_image" style="margin-bottom:5px;">';
+								immoDetailElement += '<canvas id="images_modal_click_event_floor_plan" class="kenburns_floor img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></canvas>';
+                immoDetailElement += '</a>';//end - anchor tag
+
+								//if the image is just a single item in the array, push one more time to have the kenburns effect
+								if (immosearch_array_details_object_img_floor_plan.length == 1) {
+									immosearch_array_details_object_img_floor_plan.push(immosearch_array_details_object_img_floor_plan[0])
+								}
+
+								//add the event for the kenburns effect after the a tag
+								immoDetailElement += '<script>';
+								immoDetailElement += '$(document).ready(function() {';
+								immoDetailElement += '$(".kenburns_floor").kenburns({';
+									immoDetailElement += 'images:[';
+									//array loop
+									immosearch_array_details_object_img_floor_plan.forEach(function(item) {
+										immoDetailElement += '"' + item + '",';
+									});
+									//array loop
+									immoDetailElement += '],';
+									immoDetailElement += 'frames_per_second: 30,';
+									immoDetailElement += 'display_time: 7000,';
+									immoDetailElement += 'fade_time: 1000,';
+									immoDetailElement += 'zoom: 2,';
+									immoDetailElement += 'background_color:"#ffffff",';
+									immoDetailElement += 'post_render_callback:function($canvas, context) {';
+										immoDetailElement += 'context.save();';
+										immoDetailElement += 'context.fillStyle = "#000";';
+										immoDetailElement += 'context.font = "bold 20px sans-serif";';
+										immoDetailElement += 'var width = $canvas.width();';
+										immoDetailElement += 'var height = $canvas.height();';
+										immoDetailElement += 'var text = "";';
+										immoDetailElement += 'var metric = context.measureText(text);';
+										immoDetailElement += 'context.fillStyle = "#fff";';
+										immoDetailElement += 'context.shadowOffsetX = 3;';
+										immoDetailElement += 'context.shadowOffsetY = 3;';
+										immoDetailElement += 'context.shadowBlur = 4;';
+										immoDetailElement += 'context.shadowColor = "rgba(0, 0, 0, 0.8)";';
+										immoDetailElement += 'context.fillText(text, width - metric.width - 8, height - 8);';
+										immoDetailElement += 'context.restore();';
+									immoDetailElement += '}';
+								immoDetailElement += '});';
+
+								immoDetailElement += '});';
+								immoDetailElement += '<\/script>';
+              } else {
+                immoDetailElement += '<img src="' + dummyPicsPath + '" class="img-responsive img-thumbnail" width="100%" height="401" id="immosearch_detail_image" style="margin-bottom:5px;">';
+              }
+		            immoDetailElement += '<span class="badge">' + immosearch_array_details_object_img_floor_plan.length + '</span> <span class="badge"><i class="fa fa-search"></i> Grundriss</span>';
+
+								immoDetailElement += '<script>';
+								immoDetailElement += '$(document).ready(function() {';
+
+								var popup_images_details_title_grundris = '<strong>' + immosearch_array_object_details_zimmer_val + ' Zimmer Wohnung, ' + details_address + ' ' + details_address_number + ', ' + details_address_plz_number + ' ' + details_address_ort + ' - ' + details_address_ortsteil + '</strong>';
+
+								immoDetailElement += '$("#myModalLabel_floor_plan").html("' + popup_images_details_title_grundris + '");';
+
+								if (immosearch_array_details_object_img_floor_plan.length != 0) {
+									immoDetailElement += '$("#images_modal_click_event_floor_plan").click(function() {';
+											immoDetailElement += '$("#image_source_gallery_floor_plan").attr("src", "' + immosearch_array_details_object_img_floor_plan[0] + '");';
+									immoDetailElement += '});';
+								}
+
+								//images floor plan
+								//image counter for the modal floor plans/////////////////////////////////////////////////////////////////////////////////
+								var img_counter_floor_plans = 0;//img counter for the arrows to run the img array
+
+								//show the counter of the picture (on popup modal)
+								function show_counter_pic_floor_plans(img_html_counter) {
+									$("#show_img_counter_floor_plans").html(img_counter_floor_plans+1);
+								}
+
+								//reset the img counter
+								$("#close_modal_floor_plans").click(function() {
+									img_counter_floor_plans = 0;
+									$("#show_img_counter_floor_plans").html(1);//reset the visual value (so when the user open the modal the number starts from 1)
+								});
+
+								//previous pic
+								$("#previous_pic_floor_plans").click(function() {
+									if (img_counter_floor_plans == 0) {
+										//do nothing
+									} else if (img_counter_floor_plans <= immosearch_array_details_object_img_floor_plan.length) {
+										img_counter_floor_plans--;
+										$("#image_source_gallery_floor_plan").attr("src", "" + immosearch_array_details_object_img_floor_plan[img_counter_floor_plans] + "");
+										show_counter_pic_floor_plans(img_counter_floor_plans);
+									}
+								});
+
+								//next pic
+								$("#next_pic_floor_plans").click(function() {
+									if (img_counter_floor_plans < immosearch_array_details_object_img_floor_plan.length -1) {
+										img_counter_floor_plans++;
+										$("#image_source_gallery_floor_plan").attr("src", "" + immosearch_array_details_object_img_floor_plan[img_counter_floor_plans] + "");
+										show_counter_pic_floor_plans(img_counter_floor_plans);
+									}
+								});
+
+								//on close modal clean content and reset counter
+								$('body').on('hidden.bs.modal', '.modal', function () {
+									$(this).removeData('bs.modal');
+									$("#number_of_visible_picture_floor_plans").empty();
+									img_counter_floor_plans = 0;
+									$("#show_img_counter_floor_plans").html(1);//reset the visual value (so when the user open the modal the number starts from 1)
+								});
+
+								show_counter_pic_floor_plans(img_counter_floor_plans);//show the number of the picture (next - previous btn)
+								$("#show_img_length_floor_plans").html(immosearch_array_details_object_img_floor_plan.length);//show in modal the length of the pictures
+								//image counter for the modal floor plans/////////////////////////////////////////////////////////////////////////////////
+
+								immoDetailElement += '});';
+								immoDetailElement += '<\/script>';
+
 		          immoDetailElement += '</div>';
-
-							console.log("FULL ADDRESS: " + immosearch_array_details_object_address[0] + " " + immosearch_array_details_object_address_number[0]);
-							console.log("ADDRESS: " + immosearch_array_details_object_address[0]);
-							console.log("ADDRESS NR: " + immosearch_array_details_object_address_number[0]);
-							console.log("PLZ NR: " + immosearch_array_details_object_plz_number[0]);
-							console.log("ORT: " + immosearch_array_details_object_ort[0]);
-
-							google_map("googleMapContainer", immosearch_array_details_object_address[0] + " " + immosearch_array_details_object_address_number[0], immosearch_array_details_object_address[0], immosearch_array_details_object_address_number[0], immosearch_array_details_object_plz_number[0], immosearch_array_details_object_ort[0]);
-
-
 		        immoDetailElement += '</div>';
-
-						immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
-
-							immoDetailElement += '<div class="col-md-6">';
-								immoDetailElement += '<h4><strong>COLUMN 1</strong></h4>';
-							immoDetailElement += '</div>';
-							immoDetailElement += '<div class="col-md-6">';
-								immoDetailElement += '<h4><strong>COLUMN 2</strong></h4>';
-							immoDetailElement += '</div>';
-
-						immoDetailElement += '</div>';
 
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
 		          immoDetailElement += '<div class="col-md-6">';
@@ -1587,30 +1699,36 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							//concat 2 array to one and remove duplicates
               var immosearch_array_object_ausstatt_beschr_concat = immosearch_array_object_ausstatt_beschr.concat(immosearch_array_details_object_ausstattung[0]);
 
-              //if (immosearch_array_object_ausstatt_beschr_concat.length > 0) {
-							//console.log("LENGTH: " + immosearch_array_details_object_ausstattung.length);
-							//console.log("VALUE: " + immosearch_array_details_object_ausstattung[0].length);
-							if (immosearch_array_details_object_ausstattung.length > 0 || immosearch_array_details_object_ausstattung != "") {
-								if (immosearch_array_details_object_ausstattung[0].length != 0) {
-									immoDetailElement += '<h4><strong>AUSSTATTUNGSMERKMALE</strong></h4>';
-									immoDetailElement += '<div class="row">';
-			              immoDetailElement += '<div class="col-md-12">';
-			                //$.each(immosearch_array_object_ausstatt_beschr_concat.split(','), function(index, value) {
-											$.each(immosearch_array_details_object_ausstattung, function(index, value) {
-			                  //check and replace some cases
-			                  if (value == " BalkonAufzug" || value == "BalkonAufzug") {
-													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Balkon" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-			                  } else if (value == " IsolierverglasungAufzug" || value == "IsolierverglasungAufzug") {
-													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Isolierverglasung" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-			                  } else if (value == " ParkettAufzug" || value == "ParkettAufzug") {
-													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Parkett" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-			                  } else {
-													immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="' + value + '" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-			                  }
-			                });
-										immoDetailElement += '</div>';
+							//special case, check if there are no austattung icons and show the below details (sonstiges) else show it in the correct place (some code lines after)
+							//console.log("Austattung array length: " + immosearch_array_object_ausstatt_beschr_concat.length);
+							if (cid == "1044001" && immosearch_array_object_ausstatt_beschr_concat.length == 0) {
+								immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
+								immoDetailElement += '<div class="row">';
+		              immoDetailElement += '<div class="col-md-12">';
+										immoDetailElement += '<strong>Objektbeschreibung</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
+										immoDetailElement += '<strong>Ausstattung</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
 									immoDetailElement += '</div>';
-								}
+								immoDetailElement += '</div>';
+							}
+
+              if (immosearch_array_object_ausstatt_beschr_concat.length > 0) {
+                immoDetailElement += '<h4><strong>AUSSTATTUNGSMERKMALE</strong></h4>';
+								immoDetailElement += '<div class="row">';
+		              immoDetailElement += '<div class="col-md-12">';
+		                $.each(immosearch_array_object_ausstatt_beschr_concat.split(','), function(index, value) {
+		                  //check and replace some cases
+		                  if (value == " BalkonAufzug" || value == "BalkonAufzug") {
+												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Balkon" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+		                  } else if (value == " IsolierverglasungAufzug" || value == "IsolierverglasungAufzug") {
+												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Isolierverglasung" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+		                  } else if (value == " ParkettAufzug" || value == "ParkettAufzug") {
+												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Parkett" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+		                  } else {
+												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="' + value + '" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+		                  }
+		                });
+									immoDetailElement += '</div>';
+								immoDetailElement += '</div>';
               }
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
@@ -1700,28 +1818,19 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		        immoDetailElement += '</div>';
 
 							//extra group goes here
-							//if (cid == "1044001" && immosearch_array_details_object_ausstattung[0].length > 0 && immosearch_array_details_object_attachment_pdf.length > 0) {
+							if (cid == "1044001" && immosearch_array_details_object_ausstattung[0].length > 0 && immosearch_array_details_object_attachment_pdf.length > 0) {
 								immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
 				          immoDetailElement += '<div class="col-md-12">';
 									immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
 									immoDetailElement += '<div class="row">';
 										immoDetailElement += '<div class="col-md-12">';
-										immoDetailElement += '<strong>Objektbeschreibung</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
-										immoDetailElement += '<strong>Ausstattung</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
-										if (immosearch_array_object_ausstatt_beschr.length != 0) {
-											immoDetailElement += '<strong>Ausstattung Beschreibung</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
-										}
-										if (immosearch_var_details_object_freitexte_lage.length != 0) {
-											immoDetailElement += '<strong>Lage</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
-										}
-										if (immosearch_var_details_object_freitexte_sonstige_angaben.length != 0) {
-											immoDetailElement += '<strong>Sonstige Angaben</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben.capitalizeFirstLetter() + '<br>';
-										}
+											immoDetailElement += '<strong>Objektbeschreibung</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
+											immoDetailElement += '<strong>Ausstattung</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
 										immoDetailElement += '</div>';
 									immoDetailElement += '</div>';
 				          immoDetailElement += '</div>';
 				        immoDetailElement += '</div>';
-							//}
+							}
 
 							//google maps goes here
 							//immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
