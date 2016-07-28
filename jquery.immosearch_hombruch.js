@@ -1388,9 +1388,10 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
-
-						immoDetailElement += '<div class="row col-md-12 col-sm-12 col-xs-12">';
-							immoDetailElement += '<div>test row</div>';
+						immoDetailElement += '<div class="row">';
+							immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
+								immoDetailElement += '<div>test row</div>';
+							immoDetailElement += '</div>';
 						immoDetailElement += '</div>';
 
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
