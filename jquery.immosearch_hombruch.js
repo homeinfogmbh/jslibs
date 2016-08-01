@@ -1368,154 +1368,165 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 										}
 
 		              immoDetailElement += '</div>';
+
+									immoDetailElement += '<h4><strong>PREISE UND KOSTEN</strong></h4>';
+			            immoDetailElement += '<div class="row">';
+			              immoDetailElement += '<div class="col-md-12">';
+											var immosearch_array_object_details_grundmiete_val = immosearch_array_details_object_nettokaltmiete[0];
+											if (typeof immosearch_array_object_details_grundmiete_val != "undefined" && immosearch_array_object_details_grundmiete_val) {
+												immosearch_array_object_details_grundmiete_val = immosearch_array_object_details_grundmiete_val.dot2comma();
+												immosearch_array_object_details_grundmiete_val = ifLastCharIsOnlyOneNull(immosearch_array_object_details_grundmiete_val);
+												immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">' + immosearch_array_object_details_grundmiete_val + ' &euro;</span><br>';
+											} else {
+												if (typeof immosearch_var_details_object_kaltmiete != "undefined" && immosearch_var_details_object_kaltmiete) {
+													immosearch_var_details_object_kaltmiete = immosearch_var_details_object_kaltmiete.dot2comma();
+													immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_kaltmiete) + ' &euro;</span><br>';
+												} else {
+													immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">K.A.</span><br>';
+												}
+											}
+
+											if (typeof immosearch_var_details_object_provisionnetto != "undefined" && immosearch_var_details_object_provisionnetto) {
+												immosearch_var_details_object_provisionnetto = immosearch_var_details_object_provisionnetto.dot2comma();
+												immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right" id="form_object_kabelgebuhr">' + immosearch_var_details_object_provisionnetto + ' &euro;</span><br>';
+											} else {
+												immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right" id="form_object_kabelgebuhr">K.A.</span><br>';
+											}
+
+											if (typeof immosearch_var_details_object_nebenkosten != "undefined" && immosearch_var_details_object_nebenkosten) {
+				                immosearch_var_details_object_nebenkosten = immosearch_var_details_object_nebenkosten.dot2comma();
+												immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
+				              } else {
+												immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">K.A.</span><br>';
+											}
+
+											if (typeof immosearch_var_details_object_betriebskostennetto != "undefined" && immosearch_var_details_object_betriebskostennetto) {
+												immosearch_var_details_object_betriebskostennetto = immosearch_var_details_object_betriebskostennetto.dot2comma();
+												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_betriebskostennetto) + ' &euro;</span><br>';//netto
+											} else {
+												immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">K.A.</span><br>';
+											}
+
+											if (typeof immosearch_var_details_object_heizkostennetto != "undefined" && immosearch_var_details_object_heizkostennetto) {
+				                immosearch_var_details_object_heizkostennetto = immosearch_var_details_object_heizkostennetto.dot2comma();
+				                immosearch_var_details_object_heizkostennetto = ifLastCharIsOnlyOneNull(immosearch_var_details_object_heizkostennetto);
+				                if (immosearch_var_details_object_heizkostennetto == "0,00") {
+													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">werden direkt mit dem Energieversorger abgerechnet</span><br>';
+				                } else {
+													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">' + immosearch_var_details_object_heizkostennetto + ' &euro;</span><br>';
+				                }
+				              } else {
+				                if (typeof immosearch_var_details_object_heizkosten != "undefined" && immosearch_var_details_object_heizkosten) {
+				                  immosearch_var_details_object_heizkosten = immosearch_var_details_object_heizkosten.dot2comma();
+				                  immosearch_var_details_object_heizkosten = ifLastCharIsOnlyOneNull(immosearch_var_details_object_heizkosten);
+				                  if (immosearch_var_details_object_heizkosten == "0,00") {
+														immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">werden direkt mit dem Energieversorger abgerechnet</span><br>';
+				                  } else {
+														immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">' + immosearch_var_details_object_heizkosten + ' &euro;</span><br>';
+				                  }
+				                } else {
+													//immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">K.A.</span><br>';
+				                }
+				              }
+
+											//fix the gasamtmiete value
+				              var immosearch_var_details_object_gesamtmiete_mix_value = "";
+				              if (immosearch_var_details_object_heizkosten_enthalten == true) {
+				                immosearch_var_details_object_gesamtmiete_mix_value = parseFloat(immosearch_array_details_object_nettokaltmiete[0]) + parseFloat(immosearch_var_details_object_nebenkosten);
+				              } else {
+				                immosearch_var_details_object_gesamtmiete_mix_value = parseFloat(immosearch_array_details_object_nettokaltmiete[0]) + parseFloat(immosearch_var_details_object_nebenkosten) + parseFloat(immosearch_var_details_object_heizkosten);
+				              }
+				              immosearch_var_details_object_gesamtmiete_mix_value = JSON.stringify(immosearch_var_details_object_gesamtmiete_mix_value);//modify from object to string
+				              immosearch_var_details_object_gesamtmiete_mix_value = immosearch_var_details_object_gesamtmiete_mix_value.dot2comma();//replace dot with comma
+				              immosearch_var_details_object_gesamtmiete_mix_value = ifLastCharIsOnlyOneNull(immosearch_var_details_object_gesamtmiete_mix_value);
+				              immosearch_var_details_object_gesamtmiete_mix_value = addCommas(immosearch_var_details_object_gesamtmiete_mix_value)
+
+				              //append the value
+				              if (typeof immosearch_var_details_object_gesamtmiete_mix_value != "undefined" && immosearch_var_details_object_gesamtmiete_mix_value && !immosearch_var_details_object_gesamtmiete_mix_value) {
+												immoDetailElement += '<strong>Gesamtmiete</strong><span class="pull-right">' + afterCommaKeep2Char(immosearch_var_details_object_gesamtmiete_mix_value) + ' &euro;</span><br>';
+				              } else {
+												//immoDetailElement += '<strong>Gesamtmiete</strong><span class="pull-right">K.A.</span><br>';
+				              }
+
+											var immosearch_array_object_details_kaution_val = immosearch_array_details_object_kaution[0];
+				              immosearch_array_object_details_kaution_val = numberWithCommas(immosearch_array_object_details_kaution_val);
+				              if (typeof immosearch_array_object_details_kaution_val != "undefined" && immosearch_array_object_details_kaution_val) {
+				                //immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.dot2comma();
+				                //immosearch_array_object_details_kaution_val = ifLastCharIsOnlyOneNull(immosearch_array_object_details_kaution_val);
+				                if (immosearch_array_details_object_kaution[0] > 999) {
+				                  function numberCommaToDot(x) {
+				                      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+				                  }
+				                  String.prototype.replaceAt=function(index, character) {
+				                      return this.substr(0, index) + character + this.substr(index+character.length);
+				                  }
+				                  immosearch_array_object_details_kaution_val = immosearch_array_details_object_kaution[0];
+				                  immosearch_array_object_details_kaution_val = numberCommaToDot(immosearch_array_object_details_kaution_val);
+				                  var pos = immosearch_array_object_details_kaution_val.lastIndexOf(".");
+				                  //immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.substring(0, pos);
+				                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val);
+				                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val.replaceAt(pos, ","));
+				                  immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.replaceAt(pos, ",");
+				                } else {
+				                  function numberCommaToDot(x) {
+				                      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+				                  }
+				                  String.prototype.replaceAt=function(index, character) {
+				                      return this.substr(0, index) + character + this.substr(index+character.length);
+				                  }
+				                  immosearch_array_object_details_kaution_val = immosearch_array_details_object_kaution[0];
+				                  immosearch_array_object_details_kaution_val = numberCommaToDot(immosearch_array_object_details_kaution_val);
+				                  //console.log("KAUTION VAL: " + immosearch_array_object_details_kaution_val);
+				                  var pos = immosearch_array_object_details_kaution_val.lastIndexOf(".");
+				                  //immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.substring(0, pos);
+				                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val);
+				                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val.replaceAt(pos, ","));
+				                  immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.replaceAt(pos, ",");
+				                }
+												immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right" id="form_kaution">' + ifLastCharIsOnlyOneNull(immosearch_array_object_details_kaution_val) + ' &euro;</span><br>';
+				              } else {
+												immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right" id="form_kaution">K.A.</span><br>';
+				              }
+
+											var immosearch_array_object_details_verfugbar_ab_val = immosearch_array_details_object_verfugbar_ab[0];
+				              var d_xml = Date.parse(immosearch_array_object_details_verfugbar_ab_val);
+				              var today_date = new Date();
+				              var today_month = today_date.getMonth() + 1;
+				              var today_day = today_date.getDate();
+				              var today_date_output = (today_day<10 ? '0' : '') + today_day + '.' + (today_month<10 ? '0' : '') + today_month + '.' + today_date.getFullYear();
+				              var xml_date = immosearch_array_details_object_verfugbar_ab[0]
+				              if (typeof immosearch_array_object_details_verfugbar_ab_val != "undefined" && immosearch_array_object_details_verfugbar_ab_val) {
+				                if (xml_date >= today_date_output) {
+													//immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">' + immosearch_array_object_details_verfugbar_ab_val + '</span><br>';
+				                } else {
+													//immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">sofort</span><br>';
+				                }
+				              } else {
+												//immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">K.A.</span><br>';
+				              }
+
+											immoDetailElement += '<strong>Frei ab</strong><span class="pull-right" id="form_verfugbar_ab">' + immosearch_array_details_object_verfugbar_ab[0] + '</span><br>';
+
+											if (typeof immosearch_var_details_object_provisionspflichtig != "undefined" && immosearch_var_details_object_provisionspflichtig) {
+				                if (immosearch_var_details_object_provisionspflichtig == "false" || immosearch_var_details_object_provisionspflichtig == "") {
+													//immoDetailElement += '<strong>Provisionsfrei</strong><span class="pull-right">ja</span><br>';
+				                }
+				              }
+
+			              immoDetailElement += '</div>';
+
 		            immoDetailElement += '</div>';
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6">';
-		            immoDetailElement += '<h4><strong>PREISE UND KOSTEN</strong></h4>';
-		            immoDetailElement += '<div class="row">';
-		              immoDetailElement += '<div class="col-md-12">';
-										var immosearch_array_object_details_grundmiete_val = immosearch_array_details_object_nettokaltmiete[0];
-										if (typeof immosearch_array_object_details_grundmiete_val != "undefined" && immosearch_array_object_details_grundmiete_val) {
-											immosearch_array_object_details_grundmiete_val = immosearch_array_object_details_grundmiete_val.dot2comma();
-											immosearch_array_object_details_grundmiete_val = ifLastCharIsOnlyOneNull(immosearch_array_object_details_grundmiete_val);
-											immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">' + immosearch_array_object_details_grundmiete_val + ' &euro;</span><br>';
-										} else {
-											if (typeof immosearch_var_details_object_kaltmiete != "undefined" && immosearch_var_details_object_kaltmiete) {
-												immosearch_var_details_object_kaltmiete = immosearch_var_details_object_kaltmiete.dot2comma();
-												immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_kaltmiete) + ' &euro;</span><br>';
-											} else {
-												immoDetailElement += '<strong>Grundmiete</strong><span class="pull-right" id="form_object_grundmiete">K.A.</span><br>';
-											}
-										}
 
-										if (typeof immosearch_var_details_object_provisionnetto != "undefined" && immosearch_var_details_object_provisionnetto) {
-											immosearch_var_details_object_provisionnetto = immosearch_var_details_object_provisionnetto.dot2comma();
-											immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right" id="form_object_kabelgebuhr">' + immosearch_var_details_object_provisionnetto + ' &euro;</span><br>';
-										} else {
-											immoDetailElement += '<strong>Kabelgebühr</strong><span class="pull-right" id="form_object_kabelgebuhr">K.A.</span><br>';
-										}
 
-										if (typeof immosearch_var_details_object_nebenkosten != "undefined" && immosearch_var_details_object_nebenkosten) {
-			                immosearch_var_details_object_nebenkosten = immosearch_var_details_object_nebenkosten.dot2comma();
-											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_nebenkosten) + ' &euro;</span><br>';
-			              } else {
-											immoDetailElement += '<strong>Nebenkosten</strong><span class="pull-right" id="form_nebenkosten">K.A.</span><br>';
-										}
 
-										if (typeof immosearch_var_details_object_betriebskostennetto != "undefined" && immosearch_var_details_object_betriebskostennetto) {
-											immosearch_var_details_object_betriebskostennetto = immosearch_var_details_object_betriebskostennetto.dot2comma();
-											immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">' + ifLastCharIsOnlyOneNull(immosearch_var_details_object_betriebskostennetto) + ' &euro;</span><br>';//netto
-										} else {
-											immoDetailElement += '<strong>Betriebskosten</strong><span class="pull-right" id="form_betriebskosten">K.A.</span><br>';
-										}
 
-										if (typeof immosearch_var_details_object_heizkostennetto != "undefined" && immosearch_var_details_object_heizkostennetto) {
-			                immosearch_var_details_object_heizkostennetto = immosearch_var_details_object_heizkostennetto.dot2comma();
-			                immosearch_var_details_object_heizkostennetto = ifLastCharIsOnlyOneNull(immosearch_var_details_object_heizkostennetto);
-			                if (immosearch_var_details_object_heizkostennetto == "0,00") {
-												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">werden direkt mit dem Energieversorger abgerechnet</span><br>';
-			                } else {
-												immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">' + immosearch_var_details_object_heizkostennetto + ' &euro;</span><br>';
-			                }
-			              } else {
-			                if (typeof immosearch_var_details_object_heizkosten != "undefined" && immosearch_var_details_object_heizkosten) {
-			                  immosearch_var_details_object_heizkosten = immosearch_var_details_object_heizkosten.dot2comma();
-			                  immosearch_var_details_object_heizkosten = ifLastCharIsOnlyOneNull(immosearch_var_details_object_heizkosten);
-			                  if (immosearch_var_details_object_heizkosten == "0,00") {
-													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">werden direkt mit dem Energieversorger abgerechnet</span><br>';
-			                  } else {
-													immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">' + immosearch_var_details_object_heizkosten + ' &euro;</span><br>';
-			                  }
-			                } else {
-												//immoDetailElement += '<strong>Heizkosten</strong><span class="pull-right" id="form_heizkosten">K.A.</span><br>';
-			                }
-			              }
 
-										//fix the gasamtmiete value
-			              var immosearch_var_details_object_gesamtmiete_mix_value = "";
-			              if (immosearch_var_details_object_heizkosten_enthalten == true) {
-			                immosearch_var_details_object_gesamtmiete_mix_value = parseFloat(immosearch_array_details_object_nettokaltmiete[0]) + parseFloat(immosearch_var_details_object_nebenkosten);
-			              } else {
-			                immosearch_var_details_object_gesamtmiete_mix_value = parseFloat(immosearch_array_details_object_nettokaltmiete[0]) + parseFloat(immosearch_var_details_object_nebenkosten) + parseFloat(immosearch_var_details_object_heizkosten);
-			              }
-			              immosearch_var_details_object_gesamtmiete_mix_value = JSON.stringify(immosearch_var_details_object_gesamtmiete_mix_value);//modify from object to string
-			              immosearch_var_details_object_gesamtmiete_mix_value = immosearch_var_details_object_gesamtmiete_mix_value.dot2comma();//replace dot with comma
-			              immosearch_var_details_object_gesamtmiete_mix_value = ifLastCharIsOnlyOneNull(immosearch_var_details_object_gesamtmiete_mix_value);
-			              immosearch_var_details_object_gesamtmiete_mix_value = addCommas(immosearch_var_details_object_gesamtmiete_mix_value)
 
-			              //append the value
-			              if (typeof immosearch_var_details_object_gesamtmiete_mix_value != "undefined" && immosearch_var_details_object_gesamtmiete_mix_value && !immosearch_var_details_object_gesamtmiete_mix_value) {
-											immoDetailElement += '<strong>Gesamtmiete</strong><span class="pull-right">' + afterCommaKeep2Char(immosearch_var_details_object_gesamtmiete_mix_value) + ' &euro;</span><br>';
-			              } else {
-											//immoDetailElement += '<strong>Gesamtmiete</strong><span class="pull-right">K.A.</span><br>';
-			              }
 
-										var immosearch_array_object_details_kaution_val = immosearch_array_details_object_kaution[0];
-			              immosearch_array_object_details_kaution_val = numberWithCommas(immosearch_array_object_details_kaution_val);
-			              if (typeof immosearch_array_object_details_kaution_val != "undefined" && immosearch_array_object_details_kaution_val) {
-			                //immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.dot2comma();
-			                //immosearch_array_object_details_kaution_val = ifLastCharIsOnlyOneNull(immosearch_array_object_details_kaution_val);
-			                if (immosearch_array_details_object_kaution[0] > 999) {
-			                  function numberCommaToDot(x) {
-			                      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-			                  }
-			                  String.prototype.replaceAt=function(index, character) {
-			                      return this.substr(0, index) + character + this.substr(index+character.length);
-			                  }
-			                  immosearch_array_object_details_kaution_val = immosearch_array_details_object_kaution[0];
-			                  immosearch_array_object_details_kaution_val = numberCommaToDot(immosearch_array_object_details_kaution_val);
-			                  var pos = immosearch_array_object_details_kaution_val.lastIndexOf(".");
-			                  //immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.substring(0, pos);
-			                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val);
-			                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val.replaceAt(pos, ","));
-			                  immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.replaceAt(pos, ",");
-			                } else {
-			                  function numberCommaToDot(x) {
-			                      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-			                  }
-			                  String.prototype.replaceAt=function(index, character) {
-			                      return this.substr(0, index) + character + this.substr(index+character.length);
-			                  }
-			                  immosearch_array_object_details_kaution_val = immosearch_array_details_object_kaution[0];
-			                  immosearch_array_object_details_kaution_val = numberCommaToDot(immosearch_array_object_details_kaution_val);
-			                  //console.log("KAUTION VAL: " + immosearch_array_object_details_kaution_val);
-			                  var pos = immosearch_array_object_details_kaution_val.lastIndexOf(".");
-			                  //immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.substring(0, pos);
-			                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val);
-			                  //console.log("VALUE: " + immosearch_array_object_details_kaution_val.replaceAt(pos, ","));
-			                  immosearch_array_object_details_kaution_val = immosearch_array_object_details_kaution_val.replaceAt(pos, ",");
-			                }
-											immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right" id="form_kaution">' + ifLastCharIsOnlyOneNull(immosearch_array_object_details_kaution_val) + ' &euro;</span><br>';
-			              } else {
-											immoDetailElement += '<strong>Genossenschaftsanteil</strong><span class="pull-right" id="form_kaution">K.A.</span><br>';
-			              }
 
-										var immosearch_array_object_details_verfugbar_ab_val = immosearch_array_details_object_verfugbar_ab[0];
-			              var d_xml = Date.parse(immosearch_array_object_details_verfugbar_ab_val);
-			              var today_date = new Date();
-			              var today_month = today_date.getMonth() + 1;
-			              var today_day = today_date.getDate();
-			              var today_date_output = (today_day<10 ? '0' : '') + today_day + '.' + (today_month<10 ? '0' : '') + today_month + '.' + today_date.getFullYear();
-			              var xml_date = immosearch_array_details_object_verfugbar_ab[0]
-			              if (typeof immosearch_array_object_details_verfugbar_ab_val != "undefined" && immosearch_array_object_details_verfugbar_ab_val) {
-			                if (xml_date >= today_date_output) {
-												//immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">' + immosearch_array_object_details_verfugbar_ab_val + '</span><br>';
-			                } else {
-												//immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">sofort</span><br>';
-			                }
-			              } else {
-											//immoDetailElement += '<strong>Verfügbar ab</strong><span class="pull-right" id="form_verfugbar_ab">K.A.</span><br>';
-			              }
 
-										immoDetailElement += '<strong>Frei ab</strong><span class="pull-right" id="form_verfugbar_ab">' + immosearch_array_details_object_verfugbar_ab[0] + '</span><br>';
-
-										if (typeof immosearch_var_details_object_provisionspflichtig != "undefined" && immosearch_var_details_object_provisionspflichtig) {
-			                if (immosearch_var_details_object_provisionspflichtig == "false" || immosearch_var_details_object_provisionspflichtig == "") {
-												//immoDetailElement += '<strong>Provisionsfrei</strong><span class="pull-right">ja</span><br>';
-			                }
-			              }
-
-		              immoDetailElement += '</div>';
 		            immoDetailElement += '</div>';
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
