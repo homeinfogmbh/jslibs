@@ -1273,7 +1273,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 						immoDetailElement += '<script>';
 						immoDetailElement += '$(document).ready(function() {';
-							immoDetailElement += 'console.log("Load the google maps!");';
+							immoDetailElement += 'google_map("googleMapContainer", details_address, details_address, details_address_number, details_address_plz_number, details_address_ort);';
 						immoDetailElement += '});';
 						immoDetailElement += '<\/script>';
 
