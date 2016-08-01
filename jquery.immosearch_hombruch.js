@@ -849,7 +849,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
                 if ($(this).children().find("pfad").text()) {
                   immosearch_array_details_object_attachment_pdf.push($(this).children().find("pfad").text());
                 }
-              } else if {
+              } else {
 								console.log("NORMAL IMAGES.");
                 if ($(this).attr("gruppe") == "TITELBILD") {
   								if ($(this).children().find("pfad").text()) {
