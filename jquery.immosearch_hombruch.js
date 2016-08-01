@@ -849,13 +849,8 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
                 if ($(this).children().find("pfad").text()) {
                   immosearch_array_details_object_attachment_pdf.push($(this).children().find("pfad").text());
                 }
-              } else if ($(this).attr("gruppe") == "GRUNDRISS") {
-                if ($(this).children().find("pfad").text()) {
-                  immosearch_array_details_object_img_floor_plan.push($(this).children().find("pfad").text());
-                } else {
-                  immosearch_array_details_object_img_floor_plan.push(dummyPicsPath);
-                }
-              } else {
+              } else if {
+								console.log("NORMAL IMAGES.");
                 if ($(this).attr("gruppe") == "TITELBILD") {
   								if ($(this).children().find("pfad").text()) {
   									immosearch_array_details_object_img.push($(this).children().find("pfad").text());
@@ -882,6 +877,17 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
                   }
                 }
               }
+
+							if ($(this).attr("gruppe") == "GRUNDRISS") {
+								console.log("GRUNDRISS IMAGES.");
+                if ($(this).children().find("pfad").text()) {
+                  immosearch_array_details_object_img.push($(this).children().find("pfad").text());
+                } else {
+                  immosearch_array_details_object_img.push(dummyPicsPath);
+                }
+              }
+
+
             }
 					});
 
