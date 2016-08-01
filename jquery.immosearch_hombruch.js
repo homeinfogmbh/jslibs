@@ -1271,7 +1271,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
-						google_map("googleMapContainer", details_address, details_address, details_address_number, details_address_plz_number, details_address_ort);
+						//google_map("googleMapContainer", details_address, details_address, details_address_number, details_address_plz_number, details_address_ort);
 
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
 		          immoDetailElement += '<div class="col-md-6">';

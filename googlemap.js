@@ -29,14 +29,12 @@ function google_map(param_div, param_full_address, param_strasse, param_hnr, par
   var plz = param_plz;
   var ort = param_ort;
 
-  /*
   console.log("DIV PLACEHOLDER: " + div_placeholder);
   console.log("FULL ADDRESS: " + address);
   console.log("STRASSE: " + strasse);
   console.log("hnr: " + hnr);
   console.log("PLZ: " + plz);
   console.log("ORT: " + ort);
-  */
 
   //check if address is empty
   if (address != "") {
