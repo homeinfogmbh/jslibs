@@ -1271,6 +1271,12 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
+						immoDetailElement += '<script>';
+						immoDetailElement += '$(document).ready(function() {';
+							immoDetailElement += 'console.log("Load the google maps!");';
+						immoDetailElement += '});';
+						immoDetailElement += '<\/script>';
+
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
 		          immoDetailElement += '<div class="col-md-6">';
 		            immoDetailElement += '<h4><strong>GRÖSSE UND ZUSTAND</strong></h4>';
