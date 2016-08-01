@@ -1515,6 +1515,55 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				              immoDetailElement += '</div>';
 				            immoDetailElement += '</div>';
 
+										//sonstiges
+										//concat 2 array to one and remove duplicates
+			              var immosearch_array_object_ausstatt_beschr_concat = immosearch_array_object_ausstatt_beschr.concat(immosearch_array_details_object_ausstattung[0]);
+
+										//special case, check if there are no austattung icons and show the below details (sonstiges) else show it in the correct place (some code lines after)
+										//console.log("Austattung array length: " + immosearch_array_object_ausstatt_beschr_concat.length);
+										//if (cid == "1044001" && immosearch_array_object_ausstatt_beschr_concat.length == 0) {
+										if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
+											immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
+											immoDetailElement += '<div class="row">';
+					              immoDetailElement += '<div class="col-md-12">';
+												if (immosearch_array_object_ausstatt_beschr.length != 0) {
+													immoDetailElement += '<strong>Ausstattung Bescheibung</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
+												}
+												if (immosearch_var_details_object_freitexte_objekttitel.length != 0) {
+													immoDetailElement += '<strong>Objecttitel</strong><br>' + immosearch_var_details_object_freitexte_objekttitel.capitalizeFirstLetter() + '<br>';
+												}
+												if (immosearch_var_details_object_freitexte_dreizeiler.length != 0) {
+													immoDetailElement += '<strong>Dreizeiler</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
+												}
+												if (immosearch_var_details_object_freitexte_lage.length != 0) {
+													immoDetailElement += '<strong>Lage</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
+												}
+												if (immosearch_var_details_object_freitexte_sonstige_angaben.length != 0) {
+													immoDetailElement += '<strong>Sonstige Angaben</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben.capitalizeFirstLetter() + '<br>';
+												}
+												immoDetailElement += '</div>';
+											immoDetailElement += '</div>';
+										}
+
+			              if (immosearch_array_object_ausstatt_beschr_concat.length > 0) {
+			                immoDetailElement += '<h4><strong>AUSSTATTUNGSMERKMALE</strong></h4>';
+											immoDetailElement += '<div class="row">';
+					              immoDetailElement += '<div class="col-md-12">';
+					                $.each(immosearch_array_object_ausstatt_beschr_concat.split(','), function(index, value) {
+					                  //check and replace some cases
+					                  if (value == " BalkonAufzug" || value == "BalkonAufzug") {
+															immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Balkon" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+					                  } else if (value == " IsolierverglasungAufzug" || value == "IsolierverglasungAufzug") {
+															immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Isolierverglasung" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+					                  } else if (value == " ParkettAufzug" || value == "ParkettAufzug") {
+															immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Parkett" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+					                  } else {
+															immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="' + value + '" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
+					                  }
+					                });
+												immoDetailElement += '</div>';
+											immoDetailElement += '</div>';
+			              }
 
 
 
@@ -1522,9 +1571,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		            immoDetailElement += '</div>';
 		          immoDetailElement += '</div>';
 
-		          immoDetailElement += '<div class="col-md-6">';
-								immoDetailElement += 'test';
-		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
@@ -1611,54 +1657,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6">';
 
-							//concat 2 array to one and remove duplicates
-              var immosearch_array_object_ausstatt_beschr_concat = immosearch_array_object_ausstatt_beschr.concat(immosearch_array_details_object_ausstattung[0]);
 
-							//special case, check if there are no austattung icons and show the below details (sonstiges) else show it in the correct place (some code lines after)
-							//console.log("Austattung array length: " + immosearch_array_object_ausstatt_beschr_concat.length);
-							//if (cid == "1044001" && immosearch_array_object_ausstatt_beschr_concat.length == 0) {
-							if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
-								immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
-								immoDetailElement += '<div class="row">';
-		              immoDetailElement += '<div class="col-md-12">';
-									if (immosearch_array_object_ausstatt_beschr.length != 0) {
-										immoDetailElement += '<strong>Ausstattung Bescheibung</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_objekttitel.length != 0) {
-										immoDetailElement += '<strong>Objecttitel</strong><br>' + immosearch_var_details_object_freitexte_objekttitel.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_dreizeiler.length != 0) {
-										immoDetailElement += '<strong>Dreizeiler</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_lage.length != 0) {
-										immoDetailElement += '<strong>Lage</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_sonstige_angaben.length != 0) {
-										immoDetailElement += '<strong>Sonstige Angaben</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben.capitalizeFirstLetter() + '<br>';
-									}
-									immoDetailElement += '</div>';
-								immoDetailElement += '</div>';
-							}
-
-              if (immosearch_array_object_ausstatt_beschr_concat.length > 0) {
-                immoDetailElement += '<h4><strong>AUSSTATTUNGSMERKMALE</strong></h4>';
-								immoDetailElement += '<div class="row">';
-		              immoDetailElement += '<div class="col-md-12">';
-		                $.each(immosearch_array_object_ausstatt_beschr_concat.split(','), function(index, value) {
-		                  //check and replace some cases
-		                  if (value == " BalkonAufzug" || value == "BalkonAufzug") {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Balkon" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  } else if (value == " IsolierverglasungAufzug" || value == "IsolierverglasungAufzug") {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Isolierverglasung" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  } else if (value == " ParkettAufzug" || value == "ParkettAufzug") {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="Parkett" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  } else {
-												immoDetailElement += '<input type="button" class="btn btn-default btn-xs" value="' + value + '" id="immo_small_icons" style="border-color:#f89406; color:#FFFFFF; background-color:#f89406; margin-right:5px; margin-bottom:5px; box-shadow:none; cursor:default;">';
-		                  }
-		                });
-									immoDetailElement += '</div>';
-								immoDetailElement += '</div>';
-              }
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
