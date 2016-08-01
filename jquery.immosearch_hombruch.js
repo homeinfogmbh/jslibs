@@ -759,7 +759,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 	//ajax details (by object id)
 	$.ajax({
-		url: immosearch_url  + cid + "/?filter=openimmo_obid==" + object_id + "&include=allatts,freitexte",
+		url: immosearch_url  + cid + "/?filter=objektnr_intern==" + object_id + "&include=allatts,freitexte",
     crossDomain: true,
     type: "GET",
     dataType: "xml",
