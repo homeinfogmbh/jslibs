@@ -319,7 +319,7 @@ function immosearchList(cid, container, preloadeGif, immo_counter_or_object_nr, 
 					immosearch_array_object_zimmer.push(escapeHtml($(this).find("flaechen anzahl_zimmer").text()));
 					immosearch_array_object_wohnflaeche.push(escapeHtml($(this).find("flaechen wohnflaeche").text()));
 					immosearch_array_object_gesamtmiete.push(escapeHtml($(this).find("preise warmmiete").text()));
-					immosearch_array_object_object_number.push(escapeHtml($(this).find("verwaltung_techn openimmo_obid").text()));
+					immosearch_array_object_object_number.push(escapeHtml($(this).find("verwaltung_techn objektnr_intern").text()));
 					immosearch_array_object_nettokaltmiete.push(escapeHtml($(this).find("preise nettokaltmiete").text()));
 					immosearch_array_object_kaltmiete.push(escapeHtml($(this).find("preise kaltmiete").text()));
 					immosearch_array_object_heizkosten_enthalten.push(escapeHtml($(this).find("preise heizkosten_enthalten").text()));//boolean
