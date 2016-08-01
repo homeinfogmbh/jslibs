@@ -1709,7 +1709,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							console.log("AUSSTATTUNG LENGTH: " + immosearch_array_details_object_ausstattung.length);
 							console.log("PDF LENGTH: " + immosearch_array_details_object_attachment_pdf.length);
 
-							if (cid == "1044001" && immosearch_array_details_object_ausstattung[0].length > 0 && immosearch_array_details_object_attachment_pdf.length == 0) {
+							if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
 								immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
 								immoDetailElement += '<div class="row">';
 		              immoDetailElement += '<div class="col-md-12">';
@@ -1811,7 +1811,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '<div class="col-md-6">';
 
 							//extra group goes here
-							if (cid == "1044001" && immosearch_array_details_object_ausstattung[0].length > 0 && immosearch_array_details_object_attachment_pdf.length == 0) {
+							if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
 								immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
 								immoDetailElement += '<div class="row">';
 									immoDetailElement += '<div class="col-md-12">';
@@ -1852,7 +1852,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		        immoDetailElement += '</div>';
 
 							//extra group goes here
-							if (cid == "1044001" && immosearch_array_details_object_ausstattung[0].length > 0 && immosearch_array_details_object_attachment_pdf.length > 0) {
+							if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
 								immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
 				          immoDetailElement += '<div class="col-md-12">';
 									immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
