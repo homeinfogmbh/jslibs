@@ -1275,7 +1275,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							url: "http://gwg-hombruch-barop.de/seiten/map.php",
 							type: "POST",
 							data: "container=googleMapContainer"
-								+ "&fullAddress=" + details_address
+								+ "&fullAddress=" + details_address + " " + details_address_number
 								+ "&address=" + details_address
 								+ "&addressNumber=" + details_address_number
 								+ "&addressPlz=" + details_address_plz_number
