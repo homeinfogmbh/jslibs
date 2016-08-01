@@ -1370,6 +1370,11 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		              immoDetailElement += '</div>';
 		            immoDetailElement += '</div>';
 		          immoDetailElement += '</div>';
+
+							immoDetailElement += '<div class="col-md-6">';
+								immoDetailElement += 'test';
+							immoDetailElement += '</div">';
+
 		          immoDetailElement += '<div class="col-md-6">';
 		            immoDetailElement += '<h4><strong>PREISE UND KOSTEN</strong></h4>';
 		            immoDetailElement += '<div class="row">';
@@ -1520,13 +1525,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
-
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
-
-							immoDetailElement += '<div class="col-md-6">';
-								immoDetailElement += 'test';
-							immoDetailElement += '</div">';
-
 
 		          immoDetailElement += '<div class="col-md-6">';
 		            immoDetailElement += '<h4><strong>ENERGIEMERKMALE</strong></h4>';
