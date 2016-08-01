@@ -1707,7 +1707,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							//console.log("Austattung array length: " + immosearch_array_object_ausstatt_beschr_concat.length);
 							//if (cid == "1044001" && immosearch_array_object_ausstatt_beschr_concat.length == 0) {
 							if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
-								console.log("Case 1");
 								immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
 								immoDetailElement += '<div class="row">';
 		              immoDetailElement += '<div class="col-md-12">';
@@ -1808,31 +1807,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6">';
 
-							//extra group goes here
-							if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
-								console.log("Case 2");
-								immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
-								immoDetailElement += '<div class="row">';
-									immoDetailElement += '<div class="col-md-12">';
-									if (immosearch_array_object_ausstatt_beschr.length != 0) {
-										immoDetailElement += '<strong>Ausstattung Bescheibung</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_objekttitel.length != 0) {
-										immoDetailElement += '<strong>Objecttitel</strong><br>' + immosearch_var_details_object_freitexte_objekttitel.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_dreizeiler.length != 0) {
-										immoDetailElement += '<strong>Dreizeiler</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_lage.length != 0) {
-										immoDetailElement += '<strong>Lage</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
-									}
-									if (immosearch_var_details_object_freitexte_sonstige_angaben.length != 0) {
-										immoDetailElement += '<strong>Sonstige Angaben</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben.capitalizeFirstLetter() + '<br>';
-									}
-									immoDetailElement += '</div>';
-								immoDetailElement += '</div>';
-							}
-
               if (immosearch_array_details_object_attachment_pdf[0] !== undefined || immosearch_array_details_object_attachment_pdf != "" || immosearch_array_details_object_attachment_pdf.length != 0) {
 
 		            immoDetailElement += '<h4><strong>DOKUMENTE</strong></h4>';
@@ -1849,35 +1823,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
               }
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
-
-							//extra group goes here
-							if (cid == "1044001" && immosearch_array_details_object_ausstattung.length > 0) {
-								console.log("Case 3");
-								immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
-				          immoDetailElement += '<div class="col-md-12">';
-									immoDetailElement += '<h4><strong>SONSTIGES</strong></h4>';
-									immoDetailElement += '<div class="row">';
-										immoDetailElement += '<div class="col-md-12">';
-										if (immosearch_array_object_ausstatt_beschr.length != 0) {
-											immoDetailElement += '<strong>Ausstattung Bescheibung</strong><br>' + immosearch_array_object_ausstatt_beschr.capitalizeFirstLetter() + '<br>';
-										}
-										if (immosearch_var_details_object_freitexte_objekttitel.length != 0) {
-											immoDetailElement += '<strong>Objecttitel</strong><br>' + immosearch_var_details_object_freitexte_objekttitel.capitalizeFirstLetter() + '<br>';
-										}
-										if (immosearch_var_details_object_freitexte_dreizeiler.length != 0) {
-											immoDetailElement += '<strong>Dreizeiler</strong><br>' + immosearch_var_details_object_freitexte_dreizeiler.capitalizeFirstLetter() + '<br>';
-										}
-										if (immosearch_var_details_object_freitexte_lage.length != 0) {
-											immoDetailElement += '<strong>Lage</strong><br>' + immosearch_var_details_object_freitexte_lage.capitalizeFirstLetter() + '<br>';
-										}
-										if (immosearch_var_details_object_freitexte_sonstige_angaben.length != 0) {
-											immoDetailElement += '<strong>Sonstige Angaben</strong><br>' + immosearch_var_details_object_freitexte_sonstige_angaben.capitalizeFirstLetter() + '<br>';
-										}
-										immoDetailElement += '</div>';
-									immoDetailElement += '</div>';
-				          immoDetailElement += '</div>';
-				        immoDetailElement += '</div>';
-							}
 
 							//google maps goes here
 							//immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
