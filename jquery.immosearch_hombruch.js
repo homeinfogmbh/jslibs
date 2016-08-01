@@ -1272,6 +1272,9 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		        immoDetailElement += '</div>';
 
 						$.ajax({
+							beforeSend: function() {
+								$("#googleMapContainer").html("<img src='http://www.gwg-hombruch-barop.de/img/preloader/googleMapsIconPreloader.png'>");
+					    },
 							url: "http://gwg-hombruch-barop.de/seiten/map.php",
 							type: "POST",
 							data: "container=googleMapContainer"
