@@ -1660,6 +1660,8 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				                }
 				              }
 										}
+										immoDetailElement += '</div>';
+				          immoDetailElement += '</div>';
 
 									/////////////////////////////////////////////////////////////////////////////////////////////
 									//all details////////////////////////////////////////////////////////////////////////////////
