@@ -1515,6 +1515,86 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 				              immoDetailElement += '</div>';
 				            immoDetailElement += '</div>';
 
+										//energie
+										immoDetailElement += '<h4><strong>ENERGIEMERKMALE</strong></h4>';
+				            immoDetailElement += '<div class="row">';
+				              immoDetailElement += '<div class="col-md-12">';
+
+												if (typeof details_energiepass_epart != "undefined" && details_energiepass_epart) {
+													var epassTyp;
+													if (details_energiepass_epart == "VERBRAUCH") {
+														//epassTyp = "Endenergieverbrauch";
+														epassTyp = "Energieausweistyp";
+														immoDetailElement += '<strong id="form_energie_epassTyp_Energieausweistyp_title">' + epassTyp +'</strong><span class="pull-right" id="form_energie_epassTyp_Energieausweistyp_value">Verbrauchsausweis</span><br>';
+														if (typeof details_energiepass_energieverbrauchkennwert != "undefined" && details_energiepass_energieverbrauchkennwert) {
+															if (isNaN(details_energiepass_energieverbrauchkennwert)) {
+																//BGW-Bielefeld wants this title as "Endenergieverbrauch"
+																immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Verbrauchswert</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_energieverbrauchkennwert.dot2comma() + '</span><br>';
+															} else {
+																immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Verbrauchswert</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_energieverbrauchkennwert.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
+															}
+														}
+													} else if (details_energiepass_epart == "BEDARF") {
+														epassTyp = "Ausweistyp";
+														immoDetailElement += '<strong id="form_energie_epassTyp_Energieausweistyp_title">' + epassTyp + '</strong><span class="pull-right" id="form_energie_epassTyp_Energieausweistyp_value">Bedarfsausweis</span><br>';
+														if (typeof details_energiepass_endenergiebedarf != "undefined" && details_energiepass_endenergiebedarf) {
+															if (isNaN(details_energiepass_endenergiebedarf)) {
+																immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Endenergiebedarf</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_endenergiebedarf.dot2comma() + '</span><br>';
+															} else {
+																immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Endenergiebedarf</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_endenergiebedarf.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
+															}
+														}
+													}
+												}
+
+												if (immosearch_var_details_object_primaerenergietraeger != "") {
+					                if (typeof immosearch_var_details_object_primaerenergietraeger != "undefined" && immosearch_var_details_object_primaerenergietraeger) {
+					                  if (immosearch_var_details_object_primaerenergietraeger == "Fern") {//check the value if it's Fern to become Ferngas
+					                    immosearch_var_details_object_primaerenergietraeger = "Ferngas";
+					                  }
+
+														//BGW bielefeld wants this title as "Wesentlicher Energieträger"
+
+														immoDetailElement += '<strong id="form_energie_ferngas_title">Energieträger</strong><span class="pull-right" id="form_energie_ferngas_value">' + immosearch_var_details_object_primaerenergietraeger + '</span><br>';
+					                }
+					              } else {
+					                for (var i_befeuerung = 0; i_befeuerung < immosearch_var_details_object_ausstattung_befeuerung.length; ++i_befeuerung) {
+					                  var befeuerung_value = immosearch_var_details_object_ausstattung_befeuerung[i_befeuerung].capitalize();
+					                  befeuerung_value = befeuerung_value.umlauts();
+					                  if (befeuerung_value == "Fern") {//check the value if it's Fern to become Ferngas
+					                    befeuerung_value = "Ferngas";
+					                  }
+														immoDetailElement += '<strong id="form_energie_ferngas_title">Energieträger</strong><span class="pull-right" id="form_energie_ferngas_value">' + befeuerung_value + '</span><br>';
+					                }
+					              }
+
+												//this case gets value from ausstattung_heizungsart icon
+												if (typeof immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart != "undefined" && immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart) {
+													immoDetailElement += '<strong id="form_energie_heizungsart_title">Heizungsart</strong><span class="pull-right" id="form_energie_heizungsart_value">' + immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart + '</span><br>';
+												} else {
+													immoDetailElement += '<strong id="form_energie_heizungsart_title">Heizungsart</strong><span class="pull-right" id="form_energie_heizungsart_value">K.A.</span><br>';
+												}
+
+												if (typeof immosearch_var_details_object_zustand_angaben__zustand__zustand_art != "undefined" && immosearch_var_details_object_zustand_angaben__zustand__zustand_art) {
+													immoDetailElement += '<strong id="form_energie_objektzustand_title">Objektzustand</strong><span class="pull-right" id="form_energie_objektzustand_value">' + immosearch_var_details_object_zustand_angaben__zustand__zustand_art.capitalize() + '</span><br>';
+												} else {
+													immoDetailElement += '<strong id="form_energie_objektzustand_title">Objektzustand</strong><span class="pull-right" id="form_energie_objektzustand_value">K.A.</span><br>';
+												}
+
+												if (typeof details_energiepass_mitwarmwasser != "undefined" && details_energiepass_mitwarmwasser) {
+					                if (details_energiepass_mitwarmwasser == "true") {
+														immoDetailElement += '<strong id="form_energie_warmwasser_title">Mit Warmwasser</strong><span class="pull-right" id="form_energie_warmwasser_value">ja</span><br>';
+					                }
+					              }
+
+												//baujahr
+					              if (typeof immosearch_var_details_object_baujahr != "undefined" && immosearch_var_details_object_baujahr) {
+													immoDetailElement += '<strong>Baujahr</strong><span class="pull-right" id="form_baujahr">' + immosearch_var_details_object_baujahr + '</span><br>';
+					              }
+
+				              immoDetailElement += '</div>';
+				            immoDetailElement += '</div>';
+
 										//sonstiges
 										//concat 2 array to one and remove duplicates
 			              var immosearch_array_object_ausstatt_beschr_concat = immosearch_array_object_ausstatt_beschr.concat(immosearch_array_details_object_ausstattung[0]);
@@ -1576,84 +1656,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
 
 		          immoDetailElement += '<div class="col-md-6">';
-		            immoDetailElement += '<h4><strong>ENERGIEMERKMALE</strong></h4>';
-		            immoDetailElement += '<div class="row">';
-		              immoDetailElement += '<div class="col-md-12">';
 
-										if (typeof details_energiepass_epart != "undefined" && details_energiepass_epart) {
-											var epassTyp;
-											if (details_energiepass_epart == "VERBRAUCH") {
-												//epassTyp = "Endenergieverbrauch";
-												epassTyp = "Energieausweistyp";
-												immoDetailElement += '<strong id="form_energie_epassTyp_Energieausweistyp_title">' + epassTyp +'</strong><span class="pull-right" id="form_energie_epassTyp_Energieausweistyp_value">Verbrauchsausweis</span><br>';
-												if (typeof details_energiepass_energieverbrauchkennwert != "undefined" && details_energiepass_energieverbrauchkennwert) {
-													if (isNaN(details_energiepass_energieverbrauchkennwert)) {
-														//BGW-Bielefeld wants this title as "Endenergieverbrauch"
-														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Verbrauchswert</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_energieverbrauchkennwert.dot2comma() + '</span><br>';
-													} else {
-														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Verbrauchswert</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_energieverbrauchkennwert.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
-													}
-												}
-											} else if (details_energiepass_epart == "BEDARF") {
-												epassTyp = "Ausweistyp";
-												immoDetailElement += '<strong id="form_energie_epassTyp_Energieausweistyp_title">' + epassTyp + '</strong><span class="pull-right" id="form_energie_epassTyp_Energieausweistyp_value">Bedarfsausweis</span><br>';
-												if (typeof details_energiepass_endenergiebedarf != "undefined" && details_energiepass_endenergiebedarf) {
-													if (isNaN(details_energiepass_endenergiebedarf)) {
-														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Endenergiebedarf</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_endenergiebedarf.dot2comma() + '</span><br>';
-													} else {
-														immoDetailElement += '<strong id="form_energie_Verbrauchswert_title">Endenergiebedarf</strong><span class="pull-right" id="form_energie_Verbrauchswert_value">' + details_energiepass_endenergiebedarf.dot2comma() + ' kWh/(m&sup2;a)</span><br>';
-													}
-												}
-											}
-										}
-
-										if (immosearch_var_details_object_primaerenergietraeger != "") {
-			                if (typeof immosearch_var_details_object_primaerenergietraeger != "undefined" && immosearch_var_details_object_primaerenergietraeger) {
-			                  if (immosearch_var_details_object_primaerenergietraeger == "Fern") {//check the value if it's Fern to become Ferngas
-			                    immosearch_var_details_object_primaerenergietraeger = "Ferngas";
-			                  }
-
-												//BGW bielefeld wants this title as "Wesentlicher Energieträger"
-
-												immoDetailElement += '<strong id="form_energie_ferngas_title">Energieträger</strong><span class="pull-right" id="form_energie_ferngas_value">' + immosearch_var_details_object_primaerenergietraeger + '</span><br>';
-			                }
-			              } else {
-			                for (var i_befeuerung = 0; i_befeuerung < immosearch_var_details_object_ausstattung_befeuerung.length; ++i_befeuerung) {
-			                  var befeuerung_value = immosearch_var_details_object_ausstattung_befeuerung[i_befeuerung].capitalize();
-			                  befeuerung_value = befeuerung_value.umlauts();
-			                  if (befeuerung_value == "Fern") {//check the value if it's Fern to become Ferngas
-			                    befeuerung_value = "Ferngas";
-			                  }
-												immoDetailElement += '<strong id="form_energie_ferngas_title">Energieträger</strong><span class="pull-right" id="form_energie_ferngas_value">' + befeuerung_value + '</span><br>';
-			                }
-			              }
-
-										//this case gets value from ausstattung_heizungsart icon
-										if (typeof immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart != "undefined" && immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart) {
-											immoDetailElement += '<strong id="form_energie_heizungsart_title">Heizungsart</strong><span class="pull-right" id="form_energie_heizungsart_value">' + immosearch_var_details_object_element_that_gets_value_from_ausstattung_heizungsart + '</span><br>';
-										} else {
-											immoDetailElement += '<strong id="form_energie_heizungsart_title">Heizungsart</strong><span class="pull-right" id="form_energie_heizungsart_value">K.A.</span><br>';
-										}
-
-										if (typeof immosearch_var_details_object_zustand_angaben__zustand__zustand_art != "undefined" && immosearch_var_details_object_zustand_angaben__zustand__zustand_art) {
-											immoDetailElement += '<strong id="form_energie_objektzustand_title">Objektzustand</strong><span class="pull-right" id="form_energie_objektzustand_value">' + immosearch_var_details_object_zustand_angaben__zustand__zustand_art.capitalize() + '</span><br>';
-										} else {
-											immoDetailElement += '<strong id="form_energie_objektzustand_title">Objektzustand</strong><span class="pull-right" id="form_energie_objektzustand_value">K.A.</span><br>';
-										}
-
-										if (typeof details_energiepass_mitwarmwasser != "undefined" && details_energiepass_mitwarmwasser) {
-			                if (details_energiepass_mitwarmwasser == "true") {
-												immoDetailElement += '<strong id="form_energie_warmwasser_title">Mit Warmwasser</strong><span class="pull-right" id="form_energie_warmwasser_value">ja</span><br>';
-			                }
-			              }
-
-										//baujahr
-			              if (typeof immosearch_var_details_object_baujahr != "undefined" && immosearch_var_details_object_baujahr) {
-											immoDetailElement += '<strong>Baujahr</strong><span class="pull-right" id="form_baujahr">' + immosearch_var_details_object_baujahr + '</span><br>';
-			              }
-
-		              immoDetailElement += '</div>';
-		            immoDetailElement += '</div>';
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6">';
 
