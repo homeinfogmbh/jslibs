@@ -1516,22 +1516,9 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 			              }
 
 		              immoDetailElement += '</div>';
-
-									immoDetailElement += '<div class="col-md-6">';
-										immoDetailElement += 'test';
-									immoDetailElement += '</div">';
-
 		            immoDetailElement += '</div>';
-
-
-
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
-
-
-
-
-
 
 
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
