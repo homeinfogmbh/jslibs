@@ -927,7 +927,7 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 					immosearch_var_details_object_objnumber = escapeHtml($(this).find("verwaltung_techn openimmo_obid").text());
 					immosearch_array_object_balkon = escapeHtml($(this).find("flaechen anzahl_balkone").text());
-					immosearch_array_object_objektnr_extern  = escapeHtml($(this).find("verwaltung_techn objektnr_extern").text());
+					immosearch_array_object_objektnr_extern  = escapeHtml($(this).find("verwaltung_techn objektnr_intern").text());
           $("#" + immo_counter_or_object_nr + "").html("Wohnungsnr: <span id='count_immobilien'>" + immosearch_array_object_objektnr_extern + "</span>");//add the object nr tot title
 					$("#" + contact_form_object_nr + "").html('<br><button class="btn btn-success pull-right" type="button" style="margin-right:5px; margin-bottom:5px; margin-top:5px; box-shadow:none; cursor:default;"><strong>Wohnungsnr: '  + immosearch_array_object_objektnr_extern + '</strong></button>');
 					immosearch_var_details_object_betriebskostennetto = escapeHtml($(this).find("preise betriebskostennetto").text());
