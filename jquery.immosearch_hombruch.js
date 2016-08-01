@@ -1267,7 +1267,9 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 
 		          immoDetailElement += '</div>';
 		          immoDetailElement += '<div class="col-md-6" style="padding-top:5px; padding-bottom:5px;">';
-								immoDetailElement += '<div id="googleMapContainer" class="img-responsive img-thumbnail" width="498" height="370"><p>Your browser doesnt support canvas!</p></div>';
+
+								immoDetailElement += '<div id="googleMapContainer" class="img-responsive img-thumbnail" width="498" height="370" style="display:block;"><p>Your browser doesnt support canvas!</p></div>';
+
 		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
