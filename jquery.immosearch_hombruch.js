@@ -1289,9 +1289,93 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							}
 						});
 
+
+						immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
+		          immoDetailElement += '<div class="col-md-6">';
+								//all details
+		          immoDetailElement += '</div>';
+		          immoDetailElement += '<div class="col-md-6">';
+								//contact form
+		          immoDetailElement += '</div>';
+		        immoDetailElement += '</div>';
+
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
 		          immoDetailElement += '<div class="col-md-6">';
+		            immoDetailElement += '<h4><strong>GRÖSSE UND ZUSTAND</strong></h4>';
+		            immoDetailElement += '<div class="row">';
+		              immoDetailElement += '<div class="col-md-12">';
+										if (typeof immosearch_array_object_details_zimmer_val != "undefined" && immosearch_array_object_details_zimmer_val) {
+											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right" id="form_anzahl_zimmer">' + immosearch_array_object_details_zimmer_val + '</span><br>';
+			              } else {
+											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right" id="form_anzahl_zimmer">K.A.</span><br>';
+			              }
 
+										var immosearch_array_object_details_wohnflaeche_val = immosearch_array_details_object_wohnflaeche[0];
+			              if (typeof immosearch_array_object_details_wohnflaeche_val != "undefined" && immosearch_array_object_details_wohnflaeche_val) {
+											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right" id="form_wohnflaeche">' + immosearch_array_object_details_wohnflaeche_val.dot2comma() + ' m&#178;</span><br>';
+			              } else {
+											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right" id="form_wohnflaeche">K.A.</span><br>';
+			              }
+
+										//etage
+			              if (typeof immosearch_var_details_object_etage != "undefined" && immosearch_var_details_object_etage) {
+			                //check for etage value and modify
+			                if (immosearch_var_details_object_etage  == 0) {
+			                  //floor
+			                  immosearch_details_etage_string = "EG";
+			                } else if (immosearch_var_details_object_etage  < 0) {
+			                  //basement
+			                  immosearch_details_etage_string = "Souterrain";
+			                } else if (immosearch_var_details_object_etage == immosearch_var_details_object_anzahl_etagen) {
+
+												//check for the side of the appartment (left, right, front, back)
+												if (immosearch_var_details_object_lage_im_bau_left == "true") {
+													immosearch_details_etage_string = "DGL";
+												} else if (immosearch_var_details_object_lage_im_bau_right == "true") {
+													immosearch_details_etage_string = "DGR";
+												} else if (immosearch_var_details_object_lage_im_bau_front == "true") {
+													immosearch_details_etage_string = "DGE";
+												} else if (immosearch_var_details_object_lage_im_bau_front == "true") {
+													immosearch_details_etage_string = "DGN";
+												} else {
+													immosearch_details_etage_string = "DG";
+												}
+
+											} else if (immosearch_var_details_object_etage  > 0) {
+			                  //floor
+			                  immosearch_details_etage_string = immosearch_var_details_object_etage  + ". OG";
+			                }
+
+			                //attach the custom value
+											immoDetailElement += '<strong>Etage</strong><span class="pull-right">' + immosearch_details_etage_string + '</span><br>';
+			              } else {
+			                var user_defined_etage = immosearch_var_details_object_user_defined_anyfield[0];
+			                if (typeof user_defined_etage != "undefined" && user_defined_etage) {
+												immoDetailElement += '<strong>Etage</strong><span class="pull-right">' + user_defined_etage + '</span><br>';
+			                } else {
+												immoDetailElement += '<strong>Etage</strong><span class="pull-right">K.A.</span><br>';
+			                }
+			              }
+
+
+										if (typeof immosearch_var_details_object_anzahl_etagen != "undefined" && immosearch_var_details_object_anzahl_etagen) {
+											immoDetailElement += '<strong>Anzahl Etagen</strong><span class="pull-right">' + immosearch_var_details_object_anzahl_etagen + '</span><br>';
+										} else {
+											immoDetailElement += '<strong>Anzahl Etagen</strong><span class="pull-right">K.A.</span><br>';
+										}
+
+			              //immosearch_array_details_object_wbs, check if element exists
+			              if ($(xml).find('wbs_sozialwohnung').children().length == 0) {
+											immoDetailElement += '<strong>WBS</strong><span class="pull-right">nicht erforderlich</span><br>';
+			              } else {
+											if (typeof immosearch_var_object_details_wbs_val != "undefined" && immosearch_var_object_details_wbs_val) {
+				                if (immosearch_var_object_details_wbs_val == "true") {
+													immoDetailElement += '<strong>WBS</strong><span class="pull-right">erforderlich</span><br>';
+				                } else if (immosearch_var_object_details_wbs_val == "false") {
+													immoDetailElement += '<strong>WBS</strong><span class="pull-right">nicht erforderlich</span><br>';
+				                }
+				              }
+										}
 
 										//preise und costen
 										immoDetailElement += '<h4><strong>PREISE UND KOSTEN</strong></h4>';
@@ -1577,99 +1661,6 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 		            immoDetailElement += '</div>';
 		          immoDetailElement += '</div>';
 
-		        immoDetailElement += '</div>';
-
-		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
-		          immoDetailElement += '<div class="col-md-6">';
-							/////////////////////////////////////////////////////////////////////////////////////////////
-							//all details////////////////////////////////////////////////////////////////////////////////
-							/////////////////////////////////////////////////////////////////////////////////////////////
-
-								immoDetailElement += '<h4><strong>GRÖSSE UND ZUSTAND</strong></h4>';
-		            immoDetailElement += '<div class="row">';
-		              immoDetailElement += '<div class="col-md-12">';
-										if (typeof immosearch_array_object_details_zimmer_val != "undefined" && immosearch_array_object_details_zimmer_val) {
-											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right" id="form_anzahl_zimmer">' + immosearch_array_object_details_zimmer_val + '</span><br>';
-			              } else {
-											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right" id="form_anzahl_zimmer">K.A.</span><br>';
-			              }
-
-										var immosearch_array_object_details_wohnflaeche_val = immosearch_array_details_object_wohnflaeche[0];
-			              if (typeof immosearch_array_object_details_wohnflaeche_val != "undefined" && immosearch_array_object_details_wohnflaeche_val) {
-											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right" id="form_wohnflaeche">' + immosearch_array_object_details_wohnflaeche_val.dot2comma() + ' m&#178;</span><br>';
-			              } else {
-											immoDetailElement += '<strong>Wohnfläche</strong><span class="pull-right" id="form_wohnflaeche">K.A.</span><br>';
-			              }
-
-										//etage
-			              if (typeof immosearch_var_details_object_etage != "undefined" && immosearch_var_details_object_etage) {
-			                //check for etage value and modify
-			                if (immosearch_var_details_object_etage  == 0) {
-			                  //floor
-			                  immosearch_details_etage_string = "EG";
-			                } else if (immosearch_var_details_object_etage  < 0) {
-			                  //basement
-			                  immosearch_details_etage_string = "Souterrain";
-			                } else if (immosearch_var_details_object_etage == immosearch_var_details_object_anzahl_etagen) {
-
-												//check for the side of the appartment (left, right, front, back)
-												if (immosearch_var_details_object_lage_im_bau_left == "true") {
-													immosearch_details_etage_string = "DGL";
-												} else if (immosearch_var_details_object_lage_im_bau_right == "true") {
-													immosearch_details_etage_string = "DGR";
-												} else if (immosearch_var_details_object_lage_im_bau_front == "true") {
-													immosearch_details_etage_string = "DGE";
-												} else if (immosearch_var_details_object_lage_im_bau_front == "true") {
-													immosearch_details_etage_string = "DGN";
-												} else {
-													immosearch_details_etage_string = "DG";
-												}
-
-											} else if (immosearch_var_details_object_etage  > 0) {
-			                  //floor
-			                  immosearch_details_etage_string = immosearch_var_details_object_etage  + ". OG";
-			                }
-
-			                //attach the custom value
-											immoDetailElement += '<strong>Etage</strong><span class="pull-right">' + immosearch_details_etage_string + '</span><br>';
-			              } else {
-			                var user_defined_etage = immosearch_var_details_object_user_defined_anyfield[0];
-			                if (typeof user_defined_etage != "undefined" && user_defined_etage) {
-												immoDetailElement += '<strong>Etage</strong><span class="pull-right">' + user_defined_etage + '</span><br>';
-			                } else {
-												immoDetailElement += '<strong>Etage</strong><span class="pull-right">K.A.</span><br>';
-			                }
-			              }
-
-
-										if (typeof immosearch_var_details_object_anzahl_etagen != "undefined" && immosearch_var_details_object_anzahl_etagen) {
-											immoDetailElement += '<strong>Anzahl Etagen</strong><span class="pull-right">' + immosearch_var_details_object_anzahl_etagen + '</span><br>';
-										} else {
-											immoDetailElement += '<strong>Anzahl Etagen</strong><span class="pull-right">K.A.</span><br>';
-										}
-
-			              //immosearch_array_details_object_wbs, check if element exists
-			              if ($(xml).find('wbs_sozialwohnung').children().length == 0) {
-											immoDetailElement += '<strong>WBS</strong><span class="pull-right">nicht erforderlich</span><br>';
-			              } else {
-											if (typeof immosearch_var_object_details_wbs_val != "undefined" && immosearch_var_object_details_wbs_val) {
-				                if (immosearch_var_object_details_wbs_val == "true") {
-													immoDetailElement += '<strong>WBS</strong><span class="pull-right">erforderlich</span><br>';
-				                } else if (immosearch_var_object_details_wbs_val == "false") {
-													immoDetailElement += '<strong>WBS</strong><span class="pull-right">nicht erforderlich</span><br>';
-				                }
-				              }
-										}
-										immoDetailElement += '</div>';
-				          immoDetailElement += '</div>';
-
-									/////////////////////////////////////////////////////////////////////////////////////////////
-									//all details////////////////////////////////////////////////////////////////////////////////
-									/////////////////////////////////////////////////////////////////////////////////////////////
-		          immoDetailElement += '</div>';
-		          immoDetailElement += '<div class="col-md-6">';
-								//contact form
-		          immoDetailElement += '</div>';
 		        immoDetailElement += '</div>';
 
 		        immoDetailElement += '<div class="col-md-12 col-sm-12 col-xs-12">';
