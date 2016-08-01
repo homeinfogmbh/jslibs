@@ -1585,8 +1585,8 @@ function homeinfo_immosearch_details(object_id, cid, container, preloadeGif, imm
 							//all details////////////////////////////////////////////////////////////////////////////////
 							/////////////////////////////////////////////////////////////////////////////////////////////
 
-								//immoDetailElement += '<h4><strong>GRÖSSE UND ZUSTAND</strong></h4>';
-		            //immoDetailElement += '<div class="row">';
+								immoDetailElement += '<h4><strong>GRÖSSE UND ZUSTAND</strong></h4>';
+		            immoDetailElement += '<div class="row">';
 		              immoDetailElement += '<div class="col-md-12">';
 										if (typeof immosearch_array_object_details_zimmer_val != "undefined" && immosearch_array_object_details_zimmer_val) {
 											immoDetailElement += '<strong>Anzahl Zimmer</strong><span class="pull-right" id="form_anzahl_zimmer">' + immosearch_array_object_details_zimmer_val + '</span><br>';
