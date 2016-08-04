@@ -353,7 +353,7 @@ Element.prototype.getElement = function (element_name) {
     var elements = this.getElements(element_name);
 
     if (elements.length > 0) {
-        if (elements[0] != null) {
+        if (elements[0] !== null) {
             return elements[0];
         } else {
             return null;
@@ -368,8 +368,8 @@ Element.prototype.getElement = function (element_name) {
 Element.prototype.getElementValue = function (element_name) {
     var element = this.getElement(element_name);
 
-    if (element != null) {
-        if (element.firstChild != null) {
+    if (element !== null) {
+        if (element.firstChild !== null) {
             return element.firstChild.nodeValue;
         } else {
             return null;
