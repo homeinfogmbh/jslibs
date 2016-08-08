@@ -30,7 +30,7 @@ immobrowse.BASE_URL = "https://tls.homeinfo.de/immosearch";
 /*
     Returns an ImmoSearch URL for either a customer or an attachment
 */
-immobrowse.get_url = function(customer=null, attachment=null) {
+immobrowse.getUrl = function(customer=null, attachment=null) {
     if ((customer !== null) && (attachment !== null)) {
         // TODO: Error
     } else if (customer !== null) {
@@ -46,14 +46,15 @@ immobrowse.get_url = function(customer=null, attachment=null) {
 /*
     Represents a search filter
 */
-immobrowse.SearchFilter = class {
-    constructor(option, operation, value) {
-        this.option = option;
-        this.operation = operation;
-        this.value = value;
-    }
+immobrowse.SearchFilter = function(option, operation, value) {
+    this.option = option;
+    this.operation = operation;
+    this.value = value;
+}
 
-    get operator() {
+immobrowse.SearchFilter.prototype = {
+    /* Returns the operator */
+    operator : function() {
         // TODO: Make operations some kind of enumeration
         return this.operation;
     }
@@ -63,53 +64,56 @@ immobrowse.SearchFilter = class {
 /*
     Represents a search query
 */
-immobrowse.SearchQuery = class {
-    constructor(customer) {
-        this.customer = customer;
-        this.filters = [];
-        this.includes = [];
-        this.json = true;
-    }
+immobrowse.SearchQuery = function(customer) {
+    this.customer = customer;
+}
 
-    get url() {
-        var url = immobrowse.get_url(this.customer);
+immobrowse.SearchQuery.prototype = {
+    filters : [],
+    includes : [],
+    json : true,
+
+    /* Generates the ImmoSearch query URL */
+    url : function() {
+        var url = immobrowse.getUrl(this.customer);
         var args = null;
         var filters = null;
         var includes = null;
 
         // Convert filters to URL parameter
-        for (let filter of this.filters) {
-            var filter_ = filter.option + filter.operator + filter.value;
+        for (var i=0; i < this.filters.length; i++) {
+            var filter = this.filters[i];
+            var filterStr = filter.option + filter.operator() + filter.value;
 
             if (filters === null) {
-                filters = filter_;
+                filters = filterStr;
             } else {
-                filters += "&&" + filter_;
+                filters += "&&" + filterStr;
             }
         }
 
         if (filters !== null) {
-            var filters_ = "filter=" + filters;
+            filters = "filter=" + filters;
 
             if (args === null) {
-                args = "?" + filters_;
+                args = "?" + filters;
             } else {
-                args += filters_;
+                args += "&" + filters;
             }
         }
 
         // Add includes
-        for (let include of this.includes) {
+        for (var i=0; i < this.includes.length; i++) {
+            var include = this.includes[i];
+
             if (includes === null) {
-                includes = include;
+                includes = "include=" + include;
             } else {
                 includes += "," + include;
             }
         }
 
         if (includes !== null) {
-            var includes = "include=" + includes;
-
             if (args === null) {
                 args = "?" + includes;
             } else {
@@ -117,6 +121,7 @@ immobrowse.SearchQuery = class {
             }
         }
 
+        // Add JSON flag
         if (this.json === true) {
             if (args === null) {
                 args = "?" + "json";
@@ -131,9 +136,8 @@ immobrowse.SearchQuery = class {
         }
 
         return url;
-    }
+    },
 
-    sort(desc=false) {
-        this.desc = desc;
-    }
+    /* Sortings */
+    sort : []
 }
