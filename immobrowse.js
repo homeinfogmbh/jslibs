@@ -30,7 +30,7 @@ immobrowse.BASE_URL = "https://tls.homeinfo.de/immosearch";
 /*
     Returns an ImmoSearch URL for either a customer or an attachment
 */
-immobrowse.getUrl = function(customer=null, attachment=null) {
+immobrowse.genUrl = function(customer=null, attachment=null) {
     if ((customer !== null) && (attachment !== null)) {
         // TODO: Error
     } else if (customer !== null) {
@@ -44,7 +44,42 @@ immobrowse.getUrl = function(customer=null, attachment=null) {
 
 
 /*
-    Represents a search filter
+    Join filter rules
+*/
+immobrowse.joinFilters = function() {
+    var statement = null;
+    // First argument is the operator
+    var operator = arguments[0];
+
+    // Other arguments are the filters
+    for (var i = 1; i < arguments.length; i++) {
+        var filter = arguments[i];
+
+        if (statement === null) {
+            statement = filter;
+        } else {
+            statement += operator + filter;
+        }
+    }
+
+    return statement;
+}
+
+
+/*
+    Embrace a (filtering) statement
+*/
+immobrowse.embrace = function(statement) {
+    return "(" + statement + ")";
+}
+
+
+/*
+    Classes
+*/
+
+/*
+    Search filter
 */
 immobrowse.SearchFilter = function(option, operation, value) {
     this.option = option;
@@ -62,20 +97,33 @@ immobrowse.SearchFilter.prototype = {
 
 
 /*
+    Sorting option
+*/
+immobrowse.SortOption = function(option, desc=false) {
+    this.option = option;
+    this.desc = desc;
+}
+
+
+/*
     Represents a search query
 */
 immobrowse.SearchQuery = function(customer) {
     this.customer = customer;
 }
 
+
 immobrowse.SearchQuery.prototype = {
+    // List of to-be AND-joined filters
     filters : [],
+    // List of data to be included
     includes : [],
+    // Flag to render result in JSON (default) or XML otherwise
     json : true,
 
     /* Generates the ImmoSearch query URL */
     url : function() {
-        var url = immobrowse.getUrl(this.customer);
+        var url = immobrowse.genUrl(this.customer);
         var args = null;
         var filters = null;
         var includes = null;
@@ -138,6 +186,6 @@ immobrowse.SearchQuery.prototype = {
         return url;
     },
 
-    /* Sortings */
+    // Sorting options
     sort : []
 }
