@@ -23,9 +23,15 @@
 var immobrowse = immobrowse || {};
 
 
-// Base URL for ImmoSearch
+// Variables //
+
+/*
+    Base URL for ImmoSearch
+*/
 immobrowse.BASE_URL = "https://tls.homeinfo.de/immosearch";
 
+
+// Functions //
 
 /*
     Returns an ImmoSearch URL for either a customer or an attachment
@@ -74,9 +80,7 @@ immobrowse.embrace = function(statement) {
 }
 
 
-/*
-    Classes
-*/
+// Classes //
 
 /*
     Search filter

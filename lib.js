@@ -43,7 +43,11 @@ var NEW_LINE = new RegExp('\r?\n','g');
 
 // Determines whether a number is odd
 Number.prototype["isOdd"] = function () {
-    return false ? this % 2 == 0 : true;
+    if (this % 2 == 0) {
+        return false;
+    } else {
+        return true;
+    }
 };
 
 
@@ -361,4 +365,79 @@ function addCommas(n){
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+/*********************
+ *     Unit test     *
+ *********************/
+
+var homeinfo = homeinfo || {};
+
+
+/*
+    Evaluate a candidate against a target result
+*/
+homeinfo.evaluate = function(candidate, result, target) {
+    var testResult = (result === target);
+    var prefix = null;
+    var suffix = " → " + result;
+
+    if (testResult) {
+        prefix = "[  ok  ]";
+    } else {
+        prefix = "[failed]";
+    }
+
+    console.log(prefix + "\t" + candidate + suffix);
+    return testResult;
+}
+
+
+/*
+    Test extensions and library functions defined here
+*/
+homeinfo.testUnits = function() {
+    // TODO: implement fully
+    var candidates = null;
+
+    // Test number prototype extensions
+    console.log("### Testing Number.prototype extensions ###");
+    console.log("* Number.isOdd()");
+
+    var oddNumbers = [
+        [41, true],
+        [1337, true],
+        [-17, true],
+        [8008, false],
+        [-12134234, false],
+        [0, false],
+        [42.322, true],
+        [8008.13, true],
+        [8001.15, true],
+        [13127301.222, true]
+    ];
+
+    for (var i=0; i<oddNumbers.length; i++) {
+        var candidate = oddNumbers[i][0];
+        var target = oddNumbers[i][1];
+        homeinfo.evaluate(candidate, candidate.isOdd(), target);
+    }
+
+    // Test string prototype extensions
+    console.log("### Testing String.prototype extensions ###");
+    console.log("* String.capitalizeFirstLetter()");
+
+    var capitalFirstLetters = [
+        ["foo", "Foo"],
+        ["Bar", "Bar"],
+        ["spAmM", "SpAmM"],
+        ["EGGS", "EGGS"]
+    ];
+
+    for (var i=0; i<capitalFirstLetters.length; i++) {
+        var candidate = capitalFirstLetters[i][0];
+        var target = capitalFirstLetters[i][1];
+        homeinfo.evaluate(candidate, candidate.capitalizeFirstLetter(), target);
+    }
 }
