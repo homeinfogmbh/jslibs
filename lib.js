@@ -378,8 +378,15 @@ var homeinfo = homeinfo || {};
 /*
     Evaluate a candidate against a target result
 */
-homeinfo.evaluate = function(candidate, result, target) {
-    var testResult = (result === target);
+homeinfo.evaluate = function(candidate, result, target, exact=true) {
+    var testResult = null;
+
+    if (exact) {
+        testResult = (result === target);
+    } else {
+        testResult = (result == target);
+    }
+
     var prefix = null;
     var suffix = " → " + result;
 
@@ -387,6 +394,7 @@ homeinfo.evaluate = function(candidate, result, target) {
         prefix = "[  ok  ]";
     } else {
         prefix = "[failed]";
+        suffix += " (" + typeof(result) + " / " + typeof(target) + ")";
     }
 
     console.log(prefix + "\t" + candidate + suffix);
@@ -397,7 +405,7 @@ homeinfo.evaluate = function(candidate, result, target) {
 /*
     Test extensions and library functions defined here
 */
-homeinfo.testUnits = function() {
+homeinfo.test = function() {
     // TODO: implement fully
     var candidates = null;
 
@@ -439,5 +447,72 @@ homeinfo.testUnits = function() {
         var candidate = capitalFirstLetters[i][0];
         var target = capitalFirstLetters[i][1];
         homeinfo.evaluate(candidate, candidate.capitalizeFirstLetter(), target);
+    }
+
+    console.log("* String.isEmail()");
+
+    var emails = [
+        ["info@homeinfo.de", true],
+        ["homeinfo.de", false],
+        ["employee@homeinfo", false],
+        ["employee@sub.domain.homeinfo.com", true],
+        ["me@homeinfo", false]
+    ];
+
+    for (var i=0; i<emails.length; i++) {
+        var candidate = emails[i][0];
+        var target = emails[i][1];
+        homeinfo.evaluate(candidate, candidate.isEmail(), target);
+    }
+
+    console.log("* String.dot2comma()");
+
+    var dot2comma = [
+        ["Hello, world!", "Hello, world!"],
+        ["I am so proud of you.", "I am so proud of you,"],
+        ["1,230,23.17", "1,230,23,17"],
+        ["12,50", "12,50"],
+        ["65.09", "65,09"]
+    ];
+
+    for (var i=0; i<dot2comma.length; i++) {
+        var candidate = dot2comma[i][0];
+        var target = dot2comma[i][1];
+        homeinfo.evaluate(candidate, candidate.dot2comma(), target);
+    }
+
+    console.log("* String.comma2dot()");
+
+    var comma2dot = [
+        ["Hello, world!", "Hello. world!"],
+        ["I am so proud of you.", "I am so proud of you."],
+        ["1,230,23.17", "1.230,23.17"],
+        ["12,50", "12.50"],
+        ["65.09", "65.09"]
+    ];
+
+    for (var i=0; i<comma2dot.length; i++) {
+        var candidate = comma2dot[i][0];
+        var target = comma2dot[i][1];
+        homeinfo.evaluate(candidate, candidate.comma2dot(), target);
+    }
+
+    console.log("* String.padd0()");
+
+    var padd0 = [
+        ["Hello, world!", "Hello, world!"],
+        ["1,230,23.17", "1,230,23.17"],
+        ["12,50", "12,50"],
+        ["12.50", "12.50"],
+        ["65.0", "65.0"],
+        ["65.", "65."],
+        ["65,0", "65,00"],
+        ["65,,0", "65,,0"]
+    ];
+
+    for (var i=0; i<padd0.length; i++) {
+        var candidate = padd0[i][0];
+        var target = padd0[i][1];
+        homeinfo.evaluate(candidate, candidate.padd0(), target, exact=false);
     }
 }
