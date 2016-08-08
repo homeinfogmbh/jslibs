@@ -32,13 +32,13 @@ immobrowse.BASE_URL = "https://tls.homeinfo.de/immosearch";
 */
 immobrowse.genUrl = function(customer=null, attachment=null) {
     if ((customer !== null) && (attachment !== null)) {
-        // TODO: Error
+        throw "Can only generate URL for either customer or attachment";
     } else if (customer !== null) {
         return immobrowse.BASE_URL + "/customer/" + customer;
     } else if (attachment !== null) {
         return immobrowse.BASE_URL + "/attachment/" + attachment;
     } else {
-        // TODO: Error
+        throw "Must specify either customer or attachment";
     }
 }
 
