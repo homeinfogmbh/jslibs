@@ -260,7 +260,7 @@
                     var char = terminate[i][1];
                     var target = terminate[i][2];
 
-                    if (! evaluate(candidate, candidate.terminate(char), target)) {
+                    if (! evaluate(candidate + " ('" + char + "')", candidate.terminate(char), target)) {
                         result = false;
                     }
                 }
