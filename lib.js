@@ -83,7 +83,9 @@ String.prototype["padd0"] = function () {
     if (this.substr(this.indexOf(",") + 1).length == 1) {
         return this + "0";
     } else {
-        return this;
+        // Add empty string to enforce typecast
+        // of a string rather than an object.
+        return this + "";
     }
 };
 
@@ -108,8 +110,8 @@ String.prototype["terminate"] = function (character) {
 
 // Convert umlaut descriptions to actual umlauts
 String.prototype["umlauts"] = function () {
-    return this.replace("Ae", "Ä").replace("Oe", "Ö").replace("Ue", "Ü")
-        .replace("ae", "ä").replace("oe", "ö").replace("ue", "ü");
+    return this.replace(/Ae/g, "Ä").replace(/Oe/g, "Ö").replace(/Ue/g, "Ü")
+        .replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü");
 };
 
 
@@ -367,152 +369,3 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-
-/*********************
- *     Unit test     *
- *********************/
-
-var homeinfo = homeinfo || {};
-
-
-/*
-    Evaluate a candidate against a target result
-*/
-homeinfo.evaluate = function(candidate, result, target, exact=true) {
-    var testResult = null;
-
-    if (exact) {
-        testResult = (result === target);
-    } else {
-        testResult = (result == target);
-    }
-
-    var prefix = null;
-    var suffix = " → " + result;
-
-    if (testResult) {
-        prefix = "[  ok  ]";
-    } else {
-        prefix = "[failed]";
-        suffix += " (" + typeof(result) + " / " + typeof(target) + ")";
-    }
-
-    console.log(prefix + "\t" + candidate + suffix);
-    return testResult;
-}
-
-
-/*
-    Test extensions and library functions defined here
-*/
-homeinfo.test = function() {
-    // TODO: implement fully
-    var candidates = null;
-
-    // Test number prototype extensions
-    console.log("### Testing Number.prototype extensions ###");
-    console.log("* Number.isOdd()");
-
-    var oddNumbers = [
-        [41, true],
-        [1337, true],
-        [-17, true],
-        [8008, false],
-        [-12134234, false],
-        [0, false],
-        [42.322, true],
-        [8008.13, true],
-        [8001.15, true],
-        [13127301.222, true]
-    ];
-
-    for (var i=0; i<oddNumbers.length; i++) {
-        var candidate = oddNumbers[i][0];
-        var target = oddNumbers[i][1];
-        homeinfo.evaluate(candidate, candidate.isOdd(), target);
-    }
-
-    // Test string prototype extensions
-    console.log("### Testing String.prototype extensions ###");
-    console.log("* String.capitalizeFirstLetter()");
-
-    var capitalFirstLetters = [
-        ["foo", "Foo"],
-        ["Bar", "Bar"],
-        ["spAmM", "SpAmM"],
-        ["EGGS", "EGGS"]
-    ];
-
-    for (var i=0; i<capitalFirstLetters.length; i++) {
-        var candidate = capitalFirstLetters[i][0];
-        var target = capitalFirstLetters[i][1];
-        homeinfo.evaluate(candidate, candidate.capitalizeFirstLetter(), target);
-    }
-
-    console.log("* String.isEmail()");
-
-    var emails = [
-        ["info@homeinfo.de", true],
-        ["homeinfo.de", false],
-        ["employee@homeinfo", false],
-        ["employee@sub.domain.homeinfo.com", true],
-        ["me@homeinfo", false]
-    ];
-
-    for (var i=0; i<emails.length; i++) {
-        var candidate = emails[i][0];
-        var target = emails[i][1];
-        homeinfo.evaluate(candidate, candidate.isEmail(), target);
-    }
-
-    console.log("* String.dot2comma()");
-
-    var dot2comma = [
-        ["Hello, world!", "Hello, world!"],
-        ["I am so proud of you.", "I am so proud of you,"],
-        ["1,230,23.17", "1,230,23,17"],
-        ["12,50", "12,50"],
-        ["65.09", "65,09"]
-    ];
-
-    for (var i=0; i<dot2comma.length; i++) {
-        var candidate = dot2comma[i][0];
-        var target = dot2comma[i][1];
-        homeinfo.evaluate(candidate, candidate.dot2comma(), target);
-    }
-
-    console.log("* String.comma2dot()");
-
-    var comma2dot = [
-        ["Hello, world!", "Hello. world!"],
-        ["I am so proud of you.", "I am so proud of you."],
-        ["1,230,23.17", "1.230,23.17"],
-        ["12,50", "12.50"],
-        ["65.09", "65.09"]
-    ];
-
-    for (var i=0; i<comma2dot.length; i++) {
-        var candidate = comma2dot[i][0];
-        var target = comma2dot[i][1];
-        homeinfo.evaluate(candidate, candidate.comma2dot(), target);
-    }
-
-    console.log("* String.padd0()");
-
-    var padd0 = [
-        ["Hello, world!", "Hello, world!"],
-        ["1,230,23.17", "1,230,23.17"],
-        ["12,50", "12,50"],
-        ["12.50", "12.50"],
-        ["65.0", "65.0"],
-        ["65.", "65."],
-        ["65,0", "65,00"],
-        ["65,,0", "65,,0"]
-    ];
-
-    for (var i=0; i<padd0.length; i++) {
-        var candidate = padd0[i][0];
-        var target = padd0[i][1];
-        homeinfo.evaluate(candidate, candidate.padd0(), target, exact=false);
-    }
-}
