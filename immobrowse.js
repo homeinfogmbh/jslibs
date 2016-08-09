@@ -46,38 +46,70 @@ immobrowse.genUrl = function(customer=null, attachment=null) {
     } else {
         throw "Must specify either customer or attachment";
     }
-}
-
-
-/*
-    Join filter rules
-*/
-immobrowse.joinFilters = function() {
-    var statement = null;
-    // First argument is the operator
-    var operator = arguments[0];
-
-    // Other arguments are the filters
-    for (var i = 1; i < arguments.length; i++) {
-        var filter = arguments[i];
-
-        if (statement === null) {
-            statement = filter;
-        } else {
-            statement += operator + filter;
-        }
-    }
-
-    return statement;
-}
+};
 
 
 /*
     Embrace a (filtering) statement
 */
-immobrowse.embrace = function(statement) {
-    return "(" + statement + ")";
-}
+immobrowse.embrace = function(expression) {
+    return "(" + expression + ")";
+};
+
+
+/*
+    Generic operator class
+*/
+immobrowse.Operator = function(operator) {
+    this.operator = operator;
+};
+
+
+/*
+    Binary operator class
+*/
+immobrowse.BinaryOperator = immobrowse.Operator;
+
+immobrowse.BinaryOperator.prototype = {
+    // Join filters
+    join : function() {
+        var expression = null;
+        var filter = null;
+
+        for (var i=0; i<arguments.length; i++) {
+            filter = arguments[i];
+
+            if (expression === null) {
+                expression = filter;
+            } else {
+                expression += this.operator + filter;
+            }
+        }
+
+        return expression;
+    }
+};
+
+
+/*
+    Unary operator class
+*/
+immobrowse.UnaryOperator = immobrowse.Operator;
+
+immobrowse.UnaryOperator.prototype = {
+    // Apply on filter
+    apply : function(filter) {
+        return this.operator + immobrowse.embrace(filter);
+    }
+};
+
+
+/*
+    Pre defined operators
+*/
+immobrowse.AND = new immobrowse.BinaryOperator(" and ");
+immobrowse.OR = new immobrowse.BinaryOperator(" or ");
+immobrowse.NOT = new immobrowse.UnaryOperator(" not ");
 
 
 // Classes //
@@ -89,7 +121,7 @@ immobrowse.SearchFilter = function(option, operation, value) {
     this.option = option;
     this.operation = operation;
     this.value = value;
-}
+};
 
 immobrowse.SearchFilter.prototype = {
     /* Returns the operator */
@@ -97,7 +129,7 @@ immobrowse.SearchFilter.prototype = {
         // TODO: Make operations some kind of enumeration
         return this.operation;
     }
-}
+};
 
 
 /*
@@ -106,7 +138,7 @@ immobrowse.SearchFilter.prototype = {
 immobrowse.SortOption = function(option, desc=false) {
     this.option = option;
     this.desc = desc;
-}
+};
 
 
 /*
@@ -114,43 +146,28 @@ immobrowse.SortOption = function(option, desc=false) {
 */
 immobrowse.SearchQuery = function(customer) {
     this.customer = customer;
-}
-
+};
 
 immobrowse.SearchQuery.prototype = {
-    // List of to-be AND-joined filters
-    filters : [],
+    // Filtering expression
+    filter : null,
     // List of data to be included
     includes : [],
     // Flag to render result in JSON (default) or XML otherwise
     json : true,
-
+    // Sorting options
+    sort : [],
     /* Generates the ImmoSearch query URL */
     url : function() {
         var url = immobrowse.genUrl(this.customer);
         var args = null;
-        var filters = null;
         var includes = null;
 
-        // Convert filters to URL parameter
-        for (var i=0; i < this.filters.length; i++) {
-            var filter = this.filters[i];
-            var filterStr = filter.option + filter.operator() + filter.value;
-
-            if (filters === null) {
-                filters = filterStr;
-            } else {
-                filters += "&&" + filterStr;
-            }
-        }
-
-        if (filters !== null) {
-            filters = "filter=" + filters;
-
+        if (this.filter !== null) {
             if (args === null) {
-                args = "?" + filters;
+                args = "?filter=" + this.filter;
             } else {
-                args += "&" + filters;
+                args += "&filter=" + this.filter;
             }
         }
 
@@ -188,8 +205,6 @@ immobrowse.SearchQuery.prototype = {
         }
 
         return url;
-    },
+    }
+};
 
-    // Sorting options
-    sort : []
-}
