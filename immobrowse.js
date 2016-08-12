@@ -105,14 +105,12 @@ immobrowse.UnaryOperator.prototype = {
 
 
 /*
-    Pre defined operators
+    Pre-defined operators
 */
 immobrowse.AND = new immobrowse.BinaryOperator(" and ");
 immobrowse.OR = new immobrowse.BinaryOperator(" or ");
 immobrowse.NOT = new immobrowse.UnaryOperator(" not ");
 
-
-// Classes //
 
 /*
     Search filter
