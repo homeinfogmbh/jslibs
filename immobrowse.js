@@ -50,9 +50,9 @@ immobrowse.genUrl = function(customer=null, attachment=null) {
 
 
 /*
-    Embrace a (filtering) statement
+    Parenthesizes a (filtering) statement
 */
-immobrowse.embrace = function(expression) {
+immobrowse.parenthesize = function(expression) {
     return "(" + expression + ")";
 };
 
