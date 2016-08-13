@@ -87,23 +87,19 @@ homeinfo.str.padd0 = function(s) {
 
 // Capitalizes a string
 homeinfo.str.capitalize = function(s) {
-    if (s != "" || s != 'undefined') {
-        return s.replace(/\w\S*/g, function(txt) {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
-    } else {
-        return s;
-    }
+    return s.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    })
 };
 
 
-// Remove evrything after the specified character
+// Removes the string after the first occurence of character
 homeinfo.str.terminate = function(s, character) {
     return s.substring(0, s.indexOf(character));
 };
 
 
-// Convert umlaut descriptions to actual umlauts
+// Converts umlaut descriptions to actual umlauts
 homeinfo.str.umlauts = function(s) {
     return s.replace(/Ae/g, "Ä").replace(/Oe/g, "Ö").replace(/Ue/g, "Ü")
         .replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü");
