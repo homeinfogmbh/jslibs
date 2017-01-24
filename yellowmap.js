@@ -20,8 +20,8 @@
     XXX: Depends on "lib.js"
 
     Change log:
-    
-    13.05.2015: Richard Neumann <r.neumann@homeinfo.de>
+
+    13.05.2015: Richard Neumann <r dot neumann at homeinfo period de>
     *   Implemented this library
 */
 
