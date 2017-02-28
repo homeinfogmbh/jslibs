@@ -15,17 +15,6 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
-    XXX: Development notice:
-
-    1)  Four spaces per indentation level - no hard tabs
-    2)  Let the code breathe - spaces around if/else blocks and while loops
-    3)  Avoid line length > 79 characters
-    4)  Comment methods. Describe what they do. Do not state the obvious.
-    5)  Prefer prototype extenstions over global functions.
-    6)  If you comment out stuff, say why.
-    7)  State your changes to this repository in the Git commit message.
 */
 
 
