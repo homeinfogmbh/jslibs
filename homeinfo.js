@@ -217,3 +217,50 @@ homeinfo.dom.getElementValue = function(d, element_name) {
         return null;
     }
 };
+
+
+/* Logging facility */
+
+homeinfo.log = homeinfo.log || {};
+homeinfo.log.level = 1;
+homeinfo.log.name = 'homeinfo';
+
+
+homeinfo.log.log = function(prefix, msg) {
+  console.log(prefix + ' ' + homeinfo.log.name + ': ' + msg);
+}
+
+
+homeinfo.log.error = function(msg) {
+  if (homeinfo.log.level >= 0) {
+    homeinfo.log('[ fail ]', msg);
+  }
+}
+
+
+homeinfo.log.warning = function(msg) {
+  if (homeinfo.log.level >= 1) {
+    homeinfo.log('[ warn ]', msg);
+  }
+}
+
+
+homeinfo.log.info = function(msg) {
+  if (homeinfo.log.level >= 3) {
+    homeinfo.log('[ info ]', msg);
+  }
+}
+
+
+homeinfo.log.success = function(msg) {
+  if (homeinfo.log.level >= 4) {
+    homeinfo.log('[  ok  ]', msg);
+  }
+}
+
+
+homeinfo.log.debug = function(msg) {
+  if (homeinfo.log.level >= 5) {
+    homeinfo.log('!<DEBUG>', msg);
+  }
+}
