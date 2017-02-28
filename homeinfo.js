@@ -225,34 +225,34 @@ homeinfo.log.log = function(prefix, msg) {
 
 homeinfo.log.error = function(msg) {
   if (homeinfo.log.level >= 0) {
-    homeinfo.log('[ fail ]', msg);
+    homeinfo.log.log('[ fail ]', msg);
   }
 }
 
 
 homeinfo.log.warning = function(msg) {
   if (homeinfo.log.level >= 1) {
-    homeinfo.log('[ warn ]', msg);
+    homeinfo.log.log('[ warn ]', msg);
   }
 }
 
 
 homeinfo.log.info = function(msg) {
   if (homeinfo.log.level >= 3) {
-    homeinfo.log('[ info ]', msg);
+    homeinfo.log.log('[ info ]', msg);
   }
 }
 
 
 homeinfo.log.success = function(msg) {
   if (homeinfo.log.level >= 4) {
-    homeinfo.log('[  ok  ]', msg);
+    homeinfo.log.log('[  ok  ]', msg);
   }
 }
 
 
 homeinfo.log.debug = function(msg) {
   if (homeinfo.log.level >= 5) {
-    homeinfo.log('!<DEBUG>', msg);
+    homeinfo.log.log('!<DEBUG>', msg);
   }
 }
