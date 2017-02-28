@@ -223,14 +223,14 @@ homeinfo.logging.SUCCESS = 3;
 homeinfo.logging.DEBUG = 4;
 
 // Logger class
-homeinfo.logging.Logger = function (name, level){
-  if (name == null) {
-    this.name = 'logger';
+homeinfo.logging.Logger = function (caption, level) {
+  if (caption == null) {
+    this.caption = 'logger';
   } else {
-    this.name = name;
+    this.caption = caption;
   }
 
-  if (name == null) {
+  if (level == null) {
     this.level = homeinfo.logging.WARNING;
   } else {
     this.level = level;
