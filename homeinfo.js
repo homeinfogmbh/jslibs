@@ -223,11 +223,11 @@ homeinfo.logging.SUCCESS = 3;
 homeinfo.logging.DEBUG = 4;
 
 // Logger class
-homeinfo.logging.Logger = function (caption, level) {
-  if (caption == null) {
-    this.caption = 'logger';
+homeinfo.logging.Logger = function (name, level) {
+  if (name == null) {
+    this.name = 'logger';
   } else {
-    this.caption = caption;
+    this.name = name;
   }
 
   if (level == null) {
@@ -237,7 +237,7 @@ homeinfo.logging.Logger = function (caption, level) {
   }
 
   this.log = function(prefix, msg) {
-    console.log(prefix + ' ' + this.caption + ': ' + msg);
+    console.log(prefix + ' ' + this.name + ': ' + msg);
   }
 
   this.error = function(msg) {
