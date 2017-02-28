@@ -237,7 +237,7 @@ homeinfo.logging.Logger = function (caption, level) {
   }
 
   this.log = function(prefix, msg) {
-    console.log(prefix + ' ' + this.name + ': ' + msg);
+    console.log(prefix + ' ' + this.caption + ': ' + msg);
   }
 
   this.error = function(msg) {
