@@ -213,46 +213,60 @@ homeinfo.dom.getElementValue = function(d, element_name) {
 
 /* Logging facility */
 
-homeinfo.log = homeinfo.log || {};
-homeinfo.log.level = 1;
-homeinfo.log.name = 'homeinfo';
+homeinfo.logging = homeinfo.logging || {};
 
+// Log levels
+homeinfo.logging.ERROR = 0;
+homeinfo.logging.WARNING = 1;
+homeinfo.logging.INFO = 2;
+homeinfo.logging.SUCCESS = 3;
+homeinfo.logging.DEBUG = 4;
 
-homeinfo.log.log = function(prefix, msg) {
-  console.log(prefix + ' ' + homeinfo.log.name + ': ' + msg);
-}
-
-
-homeinfo.log.error = function(msg) {
-  if (homeinfo.log.level >= 0) {
-    homeinfo.log.log('[ fail ]', msg);
+// Logger class
+homeinfo.logging.Logger = function (name, level){
+  if (name == null) {
+    this.name = 'logger';
+  } else {
+    this.name = name;
   }
-}
 
-
-homeinfo.log.warning = function(msg) {
-  if (homeinfo.log.level >= 1) {
-    homeinfo.log.log('[ warn ]', msg);
+  if (name == null) {
+    this.level = homeinfo.logging.WARNING;
+  } else {
+    this.level = level;
   }
-}
 
-
-homeinfo.log.info = function(msg) {
-  if (homeinfo.log.level >= 3) {
-    homeinfo.log.log('[ info ]', msg);
+  this.log = function(prefix, msg) {
+    console.log(prefix + ' ' + this.name + ': ' + msg);
   }
-}
 
-
-homeinfo.log.success = function(msg) {
-  if (homeinfo.log.level >= 4) {
-    homeinfo.log.log('[  ok  ]', msg);
+  this.error = function(msg) {
+    if (this.level >= homeinfo.logging.ERROR) {
+      this.log('[ fail ]', msg);
+    }
   }
-}
 
+  this.warning = function(msg) {
+    if (this.level >= homeinfo.logging.WARNING) {
+      this.log('[ warn ]', msg);
+    }
+  }
 
-homeinfo.log.debug = function(msg) {
-  if (homeinfo.log.level >= 5) {
-    homeinfo.log.log('!<DEBUG>', msg);
+  this.info = function(msg) {
+    if (this.level >= homeinfo.logging.INFO) {
+      this.log('[ info ]', msg);
+    }
+  }
+
+  this.success = function(msg) {
+    if (this.level >= homeinfo.logging.SUCCESS) {
+      this.log('[  ok  ]', msg);
+    }
+  }
+
+  this.debug = function(msg) {
+    if (this.level >= homeinfo.logging.DEBUG) {
+      this.log('[debug!]', msg);
+    }
   }
 }
