@@ -38,7 +38,6 @@ homeinfo.isNull = function(element) {
 /* String library */
 homeinfo.str = homeinfo.str || {};
 
-
 homeinfo.str.NEW_LINE = new RegExp('\r?\n','g');
 homeinfo.str.EMAIL = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
@@ -114,7 +113,7 @@ homeinfo.str.strplz = function(s) {
 
 // Replace line feed for HTML
 homeinfo.str.lf2html = function(s) {
-  return s.replace(homeinfo.str.NEW_LINE, "<br />");
+  return s.replace(homeinfo.str.NEW_LINE, "<br/>");
 };
 
 
@@ -122,16 +121,15 @@ homeinfo.str.lf2html = function(s) {
 
 homeinfo.num = homeinfo.num || {};
 
-
-// Determines whether a number is even
-homeinfo.num.isEven = function(num) {
-  return true ? num % 2 == 0 : false;
+// Determines whether a number is odd
+homeinfo.num.isOdd = function(num) {
+  return num % 2;
 }
 
 
-// Determines whether a number is odd
-homeinfo.num.isOdd = function(num) {
-  return ! homeinfo.num.isEven(num)
+// Determines whether a number is even
+homeinfo.num.isEven = function(num) {
+  return ! homeinfo.num.isOdd(num);
 }
 
 
@@ -217,10 +215,10 @@ homeinfo.logging = homeinfo.logging || {};
 
 // Log levels
 homeinfo.logging.ERROR = 0;
-homeinfo.logging.WARNING = 1;
-homeinfo.logging.INFO = 2;
-homeinfo.logging.SUCCESS = 3;
-homeinfo.logging.DEBUG = 4;
+homeinfo.logging.WARNING = 10;
+homeinfo.logging.INFO = 20;
+homeinfo.logging.SUCCESS = 30;
+homeinfo.logging.DEBUG = 40;
 
 // Logger class
 homeinfo.logging.Logger = function (name, level) {
