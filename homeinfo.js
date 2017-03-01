@@ -134,7 +134,7 @@ homeinfo.num.isEven = function(num) {
 
 
 // Parses a number-like string into a actual number
-homeinfo.num.parseFloat(str) {
+homeinfo.num.parse = function(str) {
   return Number(str.replace(",","."));
 }
 
