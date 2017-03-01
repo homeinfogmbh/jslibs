@@ -133,6 +133,12 @@ homeinfo.num.isEven = function(num) {
 }
 
 
+// Parses a number-like string into a actual number
+homeinfo.num.parseFloat(str) {
+  return Number(str.replace(",","."));
+}
+
+
 /* Array library */
 
 homeinfo.arr = homeinfo.arr || {};
