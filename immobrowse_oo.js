@@ -414,7 +414,7 @@ immobrowse.RealEstate = function (cid, json) {
   this.preview = function (baseUrl) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
-    var html = '<a href="' + baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern) + '">';
+    var html = '<a href="' + baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern()) + '">';
     html += '<div class="ib-preview-entry">';
 
     if (titleImageUrl != null) {
