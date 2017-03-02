@@ -523,6 +523,15 @@ immobrowse.List = function (cid, filters, sorting) {
   this.filters = filters;
   this.sorting = sorting;
   this.realEstates = null;
+  this.filteredRealEstates = null;
+
+  this.realEstates = function () {
+    if (this.filteredRealEstates == null) {
+      return this.realEstates;
+    } else {
+      return this.filteredRealEstates;
+    }
+  }
 
   // Match filters on a real estate's JSON data
   this.match = function (realEstate) {
@@ -582,27 +591,25 @@ immobrowse.List = function (cid, filters, sorting) {
 
   // Filters real estates
   this.filter = function () {
-    var filteredRealEstates = [];
+    this.filteredRealEstates = [];
 
     for (var i = 0; i < this.realEstates.length; i++) {
-      if (this.match(realEstates[i])) {
-        filteredRealEstates.push(this.realEstates[i]);
+      if (this.match(this.realEstates[i])) {
+        this.filteredRealEstates.push(this.realEstates[i]);
       } else {
         immobrowse.logger.debug('Discarding: ' + this.realEstates[i].objektnr_extern());
       }
     }
 
-    if (! filteredRealEstates) {
+    if (! this.filteredRealEstates) {
       immobrowse.logger.warning('No real estates available after filtering.');
     }
-
-    this.realEstates = filteredRealEstates;
   }
 
   // Sorts real estates
   this.sort = function (property, order) {
     immobrowse.logger.debug('Sorting after ' + property + ' ' + order + '.');
-    this.realEstates.sort(this.getSorter(property, order));
+    this.filteredRealEstates.sort(this.getSorter(property, order));
   }
 
   this.getSorter = function (property, order) {
@@ -646,8 +653,8 @@ immobrowse.List = function (cid, filters, sorting) {
   this.htmlList = function () {
     var html = '';
 
-    for (var i = 0; i < this.realEstates.length; i++) {
-      html += this.realEstates[i].preview();
+    for (var i = 0; i < this.this.filteredRealEstates.length; i++) {
+      html += this.this.filteredRealEstates[i].preview();
       html += '<br>';
     }
 
@@ -673,9 +680,8 @@ immobrowse.List = function (cid, filters, sorting) {
           this_.realEstates.push(new immobrowse.RealEstate(this_.cid, json[i]));
         }
 
-        this_.filter();
-
         if (htmlElement != null) {
+          this_.filter();
           this_.render(htmlElement, loadAnimation);
         }
       },
