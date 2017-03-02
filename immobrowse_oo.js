@@ -411,11 +411,10 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  this.preview = function () {
-    var objektnr_extern = this.objektnr_extern();
+  this.preview = function (baseUrl) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
-    var html = '<div class="ib-preview-entry" onclick="showDetailExpose(\'' + objektnr_extern + '\');">';
+    var html = '<a class="ib-preview-entry" href="' + baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern) + '">';
 
     if (titleImageUrl != null) {
       html += immobrowse.titleImageHtml(titleImageUrl);
@@ -510,7 +509,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
 
     html += '</div>';
-    html += '</div>';
+    html += '</a>';
     return html;
   }
 }
@@ -519,10 +518,11 @@ immobrowse.RealEstate = function (cid, json) {
 /*
   Real estate list pseudo-class
 */
-immobrowse.List = function (cid, filters, sorting) {
+immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
   this.cid = cid;
   this.filters = filters;
   this.sorting = sorting;
+  this.exposeBaseUrl = exposeBaseUrl;
   this.realEstates = null;
   this.filteredRealEstates = null;
 
@@ -647,7 +647,7 @@ immobrowse.List = function (cid, filters, sorting) {
     var html = '';
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
-      html += this.filteredRealEstates[i].preview();
+      html += this.filteredRealEstates[i].preview(this.exposeBaseUrl);
       html += '<br>';
     }
 
