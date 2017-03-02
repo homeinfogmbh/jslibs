@@ -671,9 +671,13 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
         immobrowse.logger.info('Retrieved ' + json.length + ' real estates.');
         immobrowse.logger.debug(JSON.stringify(json));
         this_.realEstates = [];
+        var realEstate;
 
         for (var i = 0; i < json.length; i++) {
-          this_.realEstates.push(immobrowse.RealEstate(this_.cid, json[i]));
+          realEstate = immobrowse.RealEstate(this_.cid, json[i]);
+          immobrowse.logger.debug('Wrapped real estate');
+          immobrowse.logger.debug(JSON.stringify(realEstate));
+          this_.realEstates.push(realEstate);
         }
 
         if (htmlElement != null) {
