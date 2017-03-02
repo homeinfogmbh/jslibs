@@ -492,6 +492,7 @@ immobrowse.RealEstate = function (cid, json) {
         if (this.json.ausstattung.kueche != null) {
           if (this.json.ausstattung.kueche.EBK) {
             html += '<div class="ib-preview-oval"><div class="oval">EBK</div></div>';
+          }
         }
 
         if (this.json.ausstattung.stellplatzart != null) {
