@@ -687,7 +687,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     body += '<div style="clear:both"></div><br><br>'; // below again
     body += '<div id="details-body-left">';
     body += '<h3>PREISE & KOSTEN</h3>';
-    body += '<table width="420px" cellspacing="0">';
+    body += '<table width="420px">';
 
     if (this.preise.nettokaltmiete != undefined) {
       body += '<tr>';
