@@ -535,8 +535,7 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
 
   // Match filters on a real estate's JSON data
   this.match = function (realEstate) {
-    var json = realEstate.json;
-    var rent = immobrowse.rent(json);
+    var rent = realEstate.rent();
 
     if (this.filters.priceMin >= rent)
       return false;
