@@ -525,14 +525,6 @@ immobrowse.List = function (cid, filters, sorting) {
   this.realEstates = null;
   this.filteredRealEstates = null;
 
-  this.realEstates = function () {
-    if (this.filteredRealEstates == null) {
-      return this.realEstates;
-    } else {
-      return this.filteredRealEstates;
-    }
-  }
-
   // Match filters on a real estate's JSON data
   this.match = function (realEstate) {
     var json = realEstate.json;
@@ -653,8 +645,8 @@ immobrowse.List = function (cid, filters, sorting) {
   this.htmlList = function () {
     var html = '';
 
-    for (var i = 0; i < this.this.filteredRealEstates.length; i++) {
-      html += this.this.filteredRealEstates[i].preview();
+    for (var i = 0; i < this.filteredRealEstates.length; i++) {
+      html += this.filteredRealEstates[i].preview();
       html += '<br>';
     }
 
