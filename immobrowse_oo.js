@@ -415,7 +415,6 @@ immobrowse.RealEstate = function (cid, json) {
     var objektnr_extern = this.objektnr_extern();
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
-
     var html = '<div class="ib-preview-entry" onclick="showDetailExpose(\'' + objektnr_extern + '\');">';
 
     if (titleImageUrl != null) {
@@ -428,7 +427,6 @@ immobrowse.RealEstate = function (cid, json) {
     html += '<div class="ib-preview-header">';
     html += '<div class="ib-preview-header-title">';
     html += '<a href="#"><h3><strong>' + this.objekttitel() + '</strong></h3></a>';
-    //html += '<div class="ib-preview-header-sub">' + 'Wohnung zur Miete' + '</div>';
     html += '</div>';
     html += '</div>';
     html += '<div class="ib-preview-body">';
@@ -436,24 +434,19 @@ immobrowse.RealEstate = function (cid, json) {
     html += '<div class="ib-preview-rent-caption">Nettokaltmiete</div>';
     html += '<div class="ib-preview-rent-data">' + immobrowse.euroHtml(this.rent()) + '</div>';
     html += '</div>';
-
     html += '<div class="ib-preview-area">';
     html += '<div class="ib-preview-area-caption">Wohnfläche</div>';
     html += '<div class="ib-preview-area-data">' + this.json.flaechen.wohnflaeche + ' m²</div>';
     html += '</div>';
-
     html += '<div class="ib-preview-rooms">';
     html += '<div class="ib-preview-rooms-caption">Zimmer</div>';
     html += '<div class="ib-preview-rooms-data">' + rooms + '</div>';
     html += '</div>';
-
-
     html += '<div class="ib-preview-zimmer">';
     html += '<div class="ib-preview-zimmer-caption">Verfügbar ab</div>';
     html += '<div class="ib-preview-zimmer-data">' + this.json.verwaltung_objekt.verfuegbar_ab + '</div>';
     html += '</div>';
     html += '</div>';
-
 
     if (this.json.ausstattung != null) {
       if (this.json.ausstattung.kueche != null || this.json.ausstattung.bad != null ||
@@ -461,27 +454,56 @@ immobrowse.RealEstate = function (cid, json) {
           this.json.ausstattung.barrierefrei || this.json.ausstattung.fahrstuhl != null ||
           this.json.flaechen.anzahl_balkone > 0 || this.json.ausstattung.bad != null ||
           this.json.ausstattung.unterkellert || this.json.ausstattung.rollstuhlgerecht) {
-        html += (this.json.flaechen.anzahl_balkone > 0) ?'<div class="ib-preview-oval"><div class="oval">Balkon</div></div>' :'';
-        html += (this.json.ausstattung.barrierefrei) ?'<div class="ib-preview-oval"><div class="oval">Barrierefrei</div></div>' :'';
-        html += (this.json.ausstattung.kabel_sat_tv) ?'<div class="ib-preview-oval"><div class="oval">Kabel/Sat/TV</div></div>' :'';
-        html += (this.json.ausstattung.unterkellert) ?'<div class="ib-preview-oval"><div class="oval">Keller</div></div>' :'';
-        html += (this.json.ausstattung.rollstuhlgerecht) ?'<div class="ib-preview-oval"><div class="oval">Rollstuhlgerecht</div></div>' :'';
-        if (this.json.ausstattung.bad != null) {
-          html += (this.json.ausstattung.bad.FENSTER) ?'<div class="ib-preview-oval"><div class="oval">Fenster im Bad</div></div>' :'';
-          html += (this.json.ausstattung.bad.WANNE) ?'<div class="ib-preview-oval"><div class="oval">Badewanne</div></div>' :'';
-          html += (this.json.ausstattung.bad.DUSCHE) ?'<div class="ib-preview-oval"><div class="oval">Dusche</div></div>' :'';
+
+        if (this.json.flaechen.anzahl_balkone > 0) {
+          html += '<div class="ib-preview-oval"><div class="oval">Balkon</div></div>';
         }
+
+        if (this.json.ausstattung.barrierefrei) {
+          html += '<div class="ib-preview-oval"><div class="oval">Barrierefrei</div></div>';
+        }
+
+        if (this.json.ausstattung.kabel_sat_tv) {
+          html += '<div class="ib-preview-oval"><div class="oval">Kabel/Sat/TV</div></div>';
+        }
+
+        if (this.json.ausstattung.unterkellert) {
+          html += '<div class="ib-preview-oval"><div class="oval">Keller</div></div>';
+        }
+
+        if (this.json.ausstattung.rollstuhlgerecht) {
+          html += '<div class="ib-preview-oval"><div class="oval">Rollstuhlgerecht</div></div>';
+        }
+
+        if (this.json.ausstattung.bad != null) {
+          if (this.json.ausstattung.bad.FENSTER) {
+            html += '<div class="ib-preview-oval"><div class="oval">Fenster im Bad</div></div>';
+          }
+
+          if (this.json.ausstattung.bad.WANNE) {
+            html += '<div class="ib-preview-oval"><div class="oval">Badewanne</div></div>';
+          }
+
+          if (this.json.ausstattung.bad.DUSCHE) {
+            html += '<div class="ib-preview-oval"><div class="oval">Dusche</div></div>';
+          }
+        }
+
         if (this.json.ausstattung.kueche != null) {
-          html += (this.json.ausstattung.kueche.EBK) ?'<div class="ib-preview-oval"><div class="oval">EBK</div></div>' :'';
+          if (this.json.ausstattung.kueche.EBK) {
+            html += '<div class="ib-preview-oval"><div class="oval">EBK</div></div>';
         }
-        if (this.json.ausstattung.bad != null) {
-          html += (this.json.ausstattung.bad.WANNE) ?'<div class="ib-preview-oval"><div class="oval">Badewanne</div></div>' :'';
-        }
+
         if (this.json.ausstattung.stellplatzart != null) {
-          html += (this.json.ausstattung.stellplatzart.FREIPLATZ) ?'<div class="ib-preview-oval"><div class="oval">Stellplatz</div></div>' :'';
+          if (this.json.ausstattung.stellplatzart.FREIPLATZ) {
+            html += '<div class="ib-preview-oval"><div class="oval">Stellplatz</div></div>';
+          }
         }
+
         if (this.json.ausstattung.fahrstuhl != null) {
-          html += (this.json.ausstattung.fahrstuhl.PERSONEN) ?'<div class="ib-preview-oval"><div class="oval">Fahrstuhl</div></div>' :'';
+          if (this.json.ausstattung.fahrstuhl.PERSONEN) {
+            html += '<div class="ib-preview-oval"><div class="oval">Fahrstuhl</div></div>';
+          }
         }
       }
     }
@@ -559,14 +581,14 @@ immobrowse.List = function (cid, filters, sorting) {
   }
 
   // Filters real estates
-  this.filter = function (realEstates) {
+  this.filter = function () {
     var filteredRealEstates = [];
 
-    for (var i = 0; i < realEstates.length; i++) {
+    for (var i = 0; i < this.realEstates.length; i++) {
       if (this.match(realEstates[i])) {
-        filteredRealEstates.push(realEstates[i]);
+        filteredRealEstates.push(this.realEstates[i]);
       } else {
-        immobrowse.logger.debug('Discarding: ' + realEstates[i].objektnr_extern());
+        immobrowse.logger.debug('Discarding: ' + this.realEstates[i].objektnr_extern());
       }
     }
 
@@ -574,7 +596,7 @@ immobrowse.List = function (cid, filters, sorting) {
       immobrowse.logger.warning('No real estates available after filtering.');
     }
 
-    return filteredRealEstates;
+    this.realEstates = filteredRealEstates;
   }
 
   // Sorts real estates
@@ -621,11 +643,11 @@ immobrowse.List = function (cid, filters, sorting) {
   }
 
   // Converts real estates to HTML
-  this.htmlList = function (realEstates) {
+  this.htmlList = function () {
     var html = '';
 
-    for (var i = 0; i < realEstates.length; i++) {
-      html += realEstates[i].preview();
+    for (var i = 0; i < this.realEstates.length; i++) {
+      html += this.realEstates[i].preview();
       html += '<br>';
     }
 
@@ -651,6 +673,8 @@ immobrowse.List = function (cid, filters, sorting) {
           this_.realEstates.push(new immobrowse.RealEstate(this_.cid, json[i]));
         }
 
+        this_.filter();
+
         if (htmlElement != null) {
           this_.render(htmlElement, loadAnimation);
         }
@@ -666,11 +690,10 @@ immobrowse.List = function (cid, filters, sorting) {
 
   // Renders real estates into the given HTML element
   this.render = function (htmlElement, loadAnimation) {
-    immobrowse.logger.debug('CALLED');
     if (this.realEstates == null) {
       this.getRealEstates(htmlElement, loadAnimation);
     } else {
-      htmlElement.innerHTML = this.htmlList(this.filter(this.realEstates));
+      htmlElement.innerHTML = this.htmlList();
 
       if (loadAnimation != null) {
         loadAnimation.hide();
