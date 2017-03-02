@@ -767,7 +767,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
       if (this.zustand_angaben.zustand != null) {
         body += '<tr><td>Zustand</td>';
-        body += '<td align="right">' + immobrowse.zustand() + '</td></tr>';
+        body += '<td align="right">' + this.zustand() + '</td></tr>';
       }
     }
 
