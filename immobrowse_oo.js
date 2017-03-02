@@ -29,9 +29,15 @@ var immobrowse = immobrowse || {};
   Real estate wrapper pseudo-class
 */
 immobrowse.RealEstate = function (cid, json) {
-  json.cid = cid;
+  for (var prop in json) {
+    if (json.hasOwnProperty(prop)) {
+        this[prop] = json[prop];
+    }
+  }
 
-  json.addressPreview = function () {
+  this.cid = cid;
+
+  this.addressPreview = function () {
     if (this.geo == null) {
       return 'N/A';
     } else {
@@ -47,7 +53,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.cityPreview = function () {
+  this.cityPreview = function () {
     if (this.geo == null) {
       return 'N/A';
     } else {
@@ -63,11 +69,11 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.objektnr_extern = function () {
+  this.objektnr_extern = function () {
     return this.verwaltung_techn.objektnr_extern;
   }
 
-  json.objekttitel = function () {
+  this.objekttitel = function () {
     if (this.freitexte != null) {
       if (this.freitexte.objekttitel != null) {
         return this.freitexte.objekttitel;
@@ -93,7 +99,7 @@ immobrowse.RealEstate = function (cid, json) {
     Extracts a potential title image from a
     real estate or null if none was found.
   */
-  json.titleImage = function () {
+  this.titleImage = function () {
     if (this.anhaenge == null) {
       return null;
     } else {
@@ -136,7 +142,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.street = function () {
+  this.street = function () {
     if (this.geo == null) {
       return null;
     } else {
@@ -148,7 +154,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.rooms = function() {
+  this.rooms = function() {
     if (this.flaechen == null) {
       return null;
     } else {
@@ -160,7 +166,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.area = function () {
+  this.area = function () {
     if (this.flaechen == null) {
       return null;
     } else {
@@ -180,7 +186,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.netColdRent = function () {
+  this.netColdRent = function () {
     if (this.preise == null) {
       return null;
     } else {
@@ -192,7 +198,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.coldRent = function () {
+  this.coldRent = function () {
     if (this.preise == null) {
       return null;
     } else {
@@ -204,7 +210,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.rent = function () {
+  this.rent = function () {
     var netColdRent = this.netColdRent();
 
     if (netColdRent == null) {
@@ -214,7 +220,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.cableSatTv = function () {
+  this.cableSatTv = function () {
     if (this.ausstattung == null) {
       return null;
     } else {
@@ -222,7 +228,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.builtInKitchen = function () {
+  this.builtInKitchen = function () {
     if (this.ausstattung == null) {
       return false;
     } else {
@@ -234,7 +240,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.basementRoom = function () {
+  this.basementRoom = function () {
     if (this.ausstattung == null) {
       return null;
     } else {
@@ -242,7 +248,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.balconies = function () {
+  this.balconies = function () {
     if (this.flaechen == null) {
       return 0;
     } else {
@@ -254,7 +260,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.terraces = function () {
+  this.terraces = function () {
     if (this.flaechen == null) {
       return 0;
     } else {
@@ -266,7 +272,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.shower = function () {
+  this.shower = function () {
     if (this.ausstattung == null) {
       return false;
     } else {
@@ -278,7 +284,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.bathTub = function () {
+  this.bathTub = function () {
     if (this.ausstattung == null) {
       return false;
     } else {
@@ -290,7 +296,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.bathroomWindow = function () {
+  this.bathroomWindow = function () {
     if (this.ausstattung == null) {
       return false;
     } else {
@@ -302,7 +308,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.lavatoryDryingRoom = function () {
+  this.lavatoryDryingRoom = function () {
     if (this.ausstattung == null) {
       return false;
     } else {
@@ -310,7 +316,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.barrierFree = function () {
+  this.barrierFree = function () {
     if (this.ausstattung == null) {
       return false;
     } else {
@@ -318,7 +324,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.objectTypes = function () {
+  this.objectTypes = function () {
     var types = [];
     var objektart = this.objektkategorie.objektart;
 
@@ -334,7 +340,7 @@ immobrowse.RealEstate = function (cid, json) {
     return types;
   }
 
-  json.marketingTypes = function () {
+  this.marketingTypes = function () {
     var types = [];
     var vermarktungsart = this.objektkategorie.vermarktungsart;
 
@@ -357,7 +363,7 @@ immobrowse.RealEstate = function (cid, json) {
     return types;
   }
 
-  json.showAddress = function () {
+  this.showAddress = function () {
     if (this.verwaltung_objekt == null) {
       return true;
     } else {
@@ -369,7 +375,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.matchTypes = function (types) {
+  this.matchTypes = function (types) {
     if (types == null) {
       return true;
     } else {
@@ -385,7 +391,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.matchMarketing = function (types) {
+  this.matchMarketing = function (types) {
     if (types == null) {
       return true;
     } else {
@@ -401,7 +407,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.attachmentURL = function (anhang) {
+  this.attachmentURL = function (anhang) {
     if (anhang == null) {
       return null;
     } else {
@@ -410,7 +416,7 @@ immobrowse.RealEstate = function (cid, json) {
     }
   }
 
-  json.preview = function (baseUrl) {
+  this.preview = function (baseUrl) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
     var html = '<a href="' + baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern()) + '">';
@@ -513,8 +519,6 @@ immobrowse.RealEstate = function (cid, json) {
     html += '</a>';
     return html;
   }
-
-  return json;
 }
 
 
@@ -671,13 +675,9 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
         immobrowse.logger.info('Retrieved ' + json.length + ' real estates.');
         immobrowse.logger.debug(JSON.stringify(json));
         this_.realEstates = [];
-        var realEstate;
 
         for (var i = 0; i < json.length; i++) {
-          realEstate = immobrowse.RealEstate(this_.cid, json[i]);
-          immobrowse.logger.debug('Wrapped real estate');
-          immobrowse.logger.debug(JSON.stringify(realEstate));
-          this_.realEstates.push(realEstate);
+          this_.realEstates.push(new immobrowse.RealEstate(this_.cid, json[i]));
         }
 
         if (htmlElement != null) {
