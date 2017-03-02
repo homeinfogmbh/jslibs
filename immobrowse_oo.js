@@ -28,10 +28,10 @@ var immobrowse = immobrowse || {};
 /*
   Real estate wrapper pseudo-class
 */
-immobrowse.RealEstate = function (cid, json) {
-  for (var prop in json) {
-    if (json.hasOwnProperty(prop)) {
-        this[prop] = json[prop];
+immobrowse.RealEstate = function (cid, realEstate) {
+  for (var prop in realEstate) {
+    if (realEstate.hasOwnProperty(prop)) {
+        this[prop] = realEstate[prop];
     }
   }
 
@@ -541,47 +541,47 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
       return false;
     else if (this.filters.priceMax <= rent)
       return false;
-    else if (this.filters.areaMin >= json.flaechen.wohnflaeche)
+    else if (this.filters.areaMin >= realEstate.flaechen.wohnflaeche)
       return false;
-    else if (this.filters.roomsMin >= json.flaechen.anzahl_zimmer)
+    else if (this.filters.roomsMin >= realEstate.flaechen.anzahl_zimmer)
       return false;
     else if (this.filters.ebk) {
-      if (json.ausstattung != null) {
-        if (jQuery.isEmptyObject(json.ausstattung))
+      if (realEstate.ausstattung != null) {
+        if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
-        else if (json.ausstattung.kueche != null)
-          if (!json.ausstattung.kueche.EBK)
+        else if (realEstate.ausstattung.kueche != null)
+          if (!realEstate.ausstattung.kueche.EBK)
             return false;
       }
     } else if (this.filters.bathtub) {
-      if (json.ausstattung != null) {
-        if (jQuery.isEmptyObject(json.ausstattung))
+      if (realEstate.ausstattung != null) {
+        if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
-        else if (json.ausstattung.bad != null)
-          if (!json.ausstattung.bad.WANNE)
+        else if (realEstate.ausstattung.bad != null)
+          if (!realEstate.ausstattung.bad.WANNE)
             return false;
       }
     } else if (this.filters.carSpace) {
-      if (json.ausstattung != null) {
-        if (jQuery.isEmptyObject(json.ausstattung))
+      if (realEstate.ausstattung != null) {
+        if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
-        else if (json.ausstattung.stellplatzart != null)
-          if (!json.ausstattung.stellplatzart.TIEFGARAGE)
+        else if (realEstate.ausstattung.stellplatzart != null)
+          if (!realEstate.ausstattung.stellplatzart.TIEFGARAGE)
             return false;
       }
     } else if (this.filters.elevator) {
-      if (json.ausstattung != null) {
-        if (jQuery.isEmptyObject(json.ausstattung))
+      if (realEstate.ausstattung != null) {
+        if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
-        else if (json.ausstattung.fahrstuhl != null)
-          if (!json.ausstattung.fahrstuhl.PERSONEN)
+        else if (realEstate.ausstattung.fahrstuhl != null)
+          if (!realEstate.ausstattung.fahrstuhl.PERSONEN)
             return false;
       }
     } else if (this.filters.garden) {
-      if (json.ausstattung != null) {
-        if (jQuery.isEmptyObject(json.ausstattung))
+      if (realEstate.ausstattung != null) {
+        if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
-        else if (!json.ausstattung.gartennutzung)
+        else if (!realEstate.ausstattung.gartennutzung)
           return false;
       }
     }
@@ -670,13 +670,13 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
     $.ajax({
       url: 'https://tls.homeinfo.de/immobrowse/list/' + this_.cid,
       dataType: "json",
-      success: function (json) {
-        immobrowse.logger.info('Retrieved ' + json.length + ' real estates.');
-        immobrowse.logger.debug(JSON.stringify(json));
+      success: function (realEstates) {
+        immobrowse.logger.info('Retrieved ' + realEstates.length + ' real estates.');
+        immobrowse.logger.debug(JSON.stringify(realEstates));
         this_.realEstates = [];
 
-        for (var i = 0; i < json.length; i++) {
-          this_.realEstates.push(new immobrowse.RealEstate(this_.cid, json[i]));
+        for (var i = 0; i < realEstates.length; i++) {
+          this_.realEstates.push(new immobrowse.RealEstate(this_.cid, realEstates[i]));
         }
 
         if (htmlElement != null) {
