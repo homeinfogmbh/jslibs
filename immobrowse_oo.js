@@ -506,7 +506,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     html += '<div class="ib-preview-data">';
     html += '<div class="ib-preview-header">';
     html += '<div class="ib-preview-header-title">';
-    html += '<a href="#"><h3><strong>' + this.objekttitel() + '</strong></h3></a>';
+    html += '<h3><strong>' + this.objekttitel() + '</strong></h3>';
     html += '</div>';
     html += '</div>';
     html += '<div class="ib-preview-body">';
