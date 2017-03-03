@@ -621,7 +621,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     header += ' | ';
     header += this.cityPreview();
     header += '</strong><br>'
-    header += '<div class="ib-preview-back"><a href="' + listUrl.replace('{cid}', this.cid) + '"> << Zurück</a></div>';
+    header += '<a class="ib-preview-back" href="' + listUrl.replace('{cid}', this.cid) + '"> << Zurück</a>';
     header += '<div></h3><br><br>';
     header += '<div id="objectNumber">';
     header += 'Objektnummer: ' + this.objektnr_extern();
