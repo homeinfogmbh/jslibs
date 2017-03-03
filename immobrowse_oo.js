@@ -1093,6 +1093,8 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
       xmlHttp.open('GET', 'beispiel.xml', true);
       xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4) {
+          immobrowse.logger.debug('Got HTTP response:');
+          immobrowse.logger.debug(xmlHttp.responseText);
           this.realEstates = JSON.parse(xmlHttp.responseText);
           this.filteredRealEstates = this.realEstates;
         }
@@ -1100,31 +1102,6 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
 
       xmlHttp.send(null);
     }
-
-    $.ajax({
-      url: 'https://tls.homeinfo.de/immobrowse/list/' + this_.cid,
-      dataType: "json",
-      success: function (realEstates) {
-        immobrowse.logger.info('Retrieved ' + realEstates.length + ' real estates.');
-        immobrowse.logger.debug(JSON.stringify(realEstates));
-        this_.realEstates = [];
-
-        for (var i = 0; i < realEstates.length; i++) {
-          this_.realEstates.push(new immobrowse.RealEstate(this_.cid, realEstates[i]));
-        }
-
-        if (htmlElement != null) {
-          this_.filter();
-          this_.render(htmlElement, loadAnimation);
-        }
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        immobrowse.logger.error(xhr.responseText);
-        immobrowse.logger.debug(ajaxOptions);
-        immobrowse.logger.debug(thrownError);
-        // TODO: Display error message
-      }
-    });
   }
 
   // Renders real estates into the given HTML element
