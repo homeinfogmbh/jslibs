@@ -1090,7 +1090,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     }
 
     if (xmlHttp) {
-      xmlHttp.open('GET', 'https://tls.homeinfo.de/immobrowse/list/' + this.cid, true);
+      xmlHttp.open('GET', 'https://tls.homeinfo.de/immobrowse/list/' + this.cid, false);
       xmlHttp.send(null);
       immobrowse.logger.debug('Got XMLHTTP response:');
       immobrowse.logger.debug(xmlHttp.responseText);
@@ -1130,7 +1130,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
     }
 
     if (xmlHttp) {
-      xmlHttp.open('GET', 'https://tls.homeinfo.de/immobrowse/real_estate/' + this_.objektnr_extern + '?customer=' + this_.cid, true);
+      xmlHttp.open('GET', 'https://tls.homeinfo.de/immobrowse/real_estate/' + this_.objektnr_extern + '?customer=' + this_.cid, false);
       xmlHttp.send(null);
       immobrowse.logger.debug('Got XMLHTTP response:');
       immobrowse.logger.debug(xmlHttp.responseText);
