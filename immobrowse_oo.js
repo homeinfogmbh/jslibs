@@ -1079,7 +1079,25 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
   }
 
   this.getRealEstates = function (htmlElement, loadAnimation) {
-    var this_ = this;
+    var xmlHttp = null;
+
+    try {
+      xmlHttp = new XMLHttpRequest();
+    } catch(e) {
+      immobrowse.logger.error('XMLHttp is not supported.');
+      immobrowse.logger.debug(e);
+    }
+
+    if (xmlHttp) {
+      xmlHttp.open('GET', 'beispiel.xml', true);
+      xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {
+          this.realEstates = JSON.parse(xmlHttp.responseText);
+        }
+      };
+
+      xmlHttp.send(null);
+    }
 
     $.ajax({
       url: 'https://tls.homeinfo.de/immobrowse/list/' + this_.cid,
