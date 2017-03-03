@@ -1010,6 +1010,8 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     immobrowse.logger.debug(JSON.stringify(this.realEstates));
 
     for (var i = 0; i < this.realEstates.length; i++) {
+      immobrowse.logger.debug('Real estate type: ' + typeof(this.realEstates[i]));
+
       if (this.match(this.realEstates[i], filters)) {
         this.filteredRealEstates.push(this.realEstates[i]);
       } else {
