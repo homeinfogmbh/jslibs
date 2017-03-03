@@ -498,7 +498,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
     var url = baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern());
-    html = '<div class="ib-preview-entry" onclick="immobrowse.load(\'' + url + '\');">';
+    html = '<div class="ib-preview-entry" onclick="immobrowse.open(\'' + url + '\');">';
 
     if (titleImageUrl != null) {
       html += immobrowse.titleImageHtml(titleImageUrl);
