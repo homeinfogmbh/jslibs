@@ -245,3 +245,8 @@ immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
     $.ajax(this.getAjax(this.getUrl(response, subject, recipient, reply_to), body));
   };
 }
+
+// Opens the respective URL
+immobrowse.open = function (url) {
+  window.open(url, '_self');
+}

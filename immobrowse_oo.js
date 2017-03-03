@@ -497,8 +497,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
   this.preview = function (baseUrl) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
-    var html = '<a href="' + baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern()) + '">';
-    html += '<div class="ib-preview-entry">';
+    var url = baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern());
+    html = '<div class="ib-preview-entry" onlick="immobrowse.load(\'' + url + '\');'>';
 
     if (titleImageUrl != null) {
       html += immobrowse.titleImageHtml(titleImageUrl);
@@ -594,7 +594,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     html += '</div>';
     html += '</div>';
-    html += '</a>';
     return html;
   }
 
