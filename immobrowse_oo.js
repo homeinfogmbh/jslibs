@@ -82,15 +82,18 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     var html = '';
     var rooms = this.rooms();
+
     if (rooms == null) {
       html += 'Wohnung | ';
     } else {
       html += rooms + ' Zimmer Wohnung | ';
     }
+
     if (this.showAddress()) {
       html += this.addressPreview();
       html += ' | ';
     }
+
     html += this.cityPreview();
     return html;
   }
