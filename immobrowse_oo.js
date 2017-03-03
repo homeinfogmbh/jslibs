@@ -1097,13 +1097,14 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
           immobrowse.logger.debug('Got XMLHTTP response:');
           immobrowse.logger.debug(xmlHttp.responseText);
           realEstates = JSON.parse(xmlHttp.responseText);
-
         }
       };
 
       xmlHttp.send(null);
+      immobrowse.logger.debug(JSON.stringify(realEstates));
       this.realEstates = realEstates;
       this.filteredRealEstates = realEstates;
+      immobrowse.logger.debug('Retrieved real estates:');
     }
   }
 }
