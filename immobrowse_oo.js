@@ -1094,11 +1094,17 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
       xmlHttp.send(null);
       immobrowse.logger.debug('Got XMLHTTP response:');
       immobrowse.logger.debug(xmlHttp.responseText);
-      this.realEstates = JSON.parse(xmlHttp.responseText);
-      this.filteredRealEstates = this.realEstates;
+      var json = JSON.parse(xmlHttp.responseText);
       immobrowse.logger.debug('Retrieved real estates:');
-      immobrowse.logger.debug(JSON.stringify(this.realEstates));
+      immobrowse.logger.debug(JSON.stringify(json));
 
+      this.realEstates = [];
+
+      for (var i = 0; i < json.length; i++) {
+        this.realEstates.push(new immobrowse.RealEstate(json[i]));
+      }
+
+      this.filteredRealEstates = this.realEstates;
     }
   }
 
@@ -1134,7 +1140,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
       xmlHttp.send(null);
       immobrowse.logger.debug('Got XMLHTTP response:');
       immobrowse.logger.debug(xmlHttp.responseText);
-      this.realEstate = JSON.parse(xmlHttp.responseText);
+      this.realEstate = new immobrowse.RealEstate(JSON.parse(xmlHttp.responseText));
       immobrowse.logger.debug('Retrieved real estate:');
       immobrowse.logger.debug(JSON.stringify(this.realEstates));
     }
