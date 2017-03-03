@@ -596,7 +596,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   // Render real estate's HTML details
-  this.details = function () {
+  this.details = function (listUrl) {
     var rooms = this.rooms();
     var html = '';
     var documents = ''
@@ -604,12 +604,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     header += '<h3 class="panel-title nohover">';
     header += '<div id="form_object_title">';
-
-    if (getUrlParameter('parent')) {
-      $('#main').attr('style', 'padding-top: 80px');
-      header += '<div class="ib-preview-back" onclick="goBack();"> << Zurück<br></div>';
-    }
-
+    header += '<a href="' + listUrl.replace('{cid}', this.cid) + '"><div class="ib-preview-back"> << Zurück<br></div></a>';
     header += '<strong>';
 
     if (this.freitexte != null) {
@@ -1129,11 +1124,12 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
 
 
 /*
-  Detailed expose class
+  Detailed expose peseudo-class
 */
-immobrowse.Expose = function (cid, objektnr_extern) {
+immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
   this.cid = cid;
   this.objektnr_extern = objektnr_extern;
+  this.listUrl = listUrl;
   this.realEstate = null;
 
   this.getRealEstate = function (htmlElement, loadAnimation) {
@@ -1161,7 +1157,7 @@ immobrowse.Expose = function (cid, objektnr_extern) {
     if (this.realEstate == null) {
       this.getRealEstate(htmlElement, loadAnimation);
     } else {
-      htmlElement.innerHTML = this.realEstate.details();
+      htmlElement.innerHTML = this.realEstate.details(this.listUrl);
 
       if (loadAnimation != null) {
         loadAnimation.hide();
