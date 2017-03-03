@@ -494,7 +494,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
-  this.preview = function (baseUrl) {
+  this.preview = function () {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
     var url = baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern());
@@ -602,33 +602,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var rooms = this.rooms();
     var html = '';
     var documents = ''
-    var header = '';
 
-    header += '<h3 class="panel-title nohover">';
-    header += '<div id="form_object_title">';
-    header += '<strong>';
-
-    if (this.freitexte != null) {
-      if (this.freitexte.objekttitel != null) {
-        header += this.freitexte.objekttitel + '<br>';
-      }
-    }
-
-    if (rooms == null) {
-      header += 'Wohnung | ';
-    } else {
-      header += rooms + ' Zimmer Wohnung | ';
-    }
-    header += this.addressPreview();
-    header += ' | ';
-    header += this.cityPreview();
-    header += '</strong><br>'
-    header += '<div class="ib-preview-back" onclick="immobrowse.open(\'' + listUrl.replace('{cid}', this.cid) + '\');"> << Zurück</div>';
-    header += '<div></h3><br><br>';
-    header += '<div id="objectNumber">';
-    header += 'Objektnummer: ' + this.objektnr_extern();
-    header += '</div>'
-    html += header;
 
     var body = '';
     var maxImageCounter = 0; // Complete count of images; needed for the button to hide all images
@@ -1144,8 +1118,40 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
     }
   }
 
+  this.header = function () {
+    var header = '<div class="ib-header">';
+    header += '<h3 class="panel-title nohover">';
+    header += '<strong>';
+
+    if (this.realEstate.freitexte != null) {
+      if (this.realEstate.freitexte.objekttitel != null) {
+        header += this.realEstate.freitexte.objekttitel + '<br>';
+      }
+    }
+
+    var rooms = this.realEstate.rooms();
+
+    if (rooms == null) {
+      header += 'Wohnung | ';
+    } else {
+      header += rooms + ' Zimmer Wohnung | ';
+    }
+
+    header += this.realEstate.addressPreview();
+    header += ' | ';
+    header += this.realEstate.cityPreview();
+    header += '</strong><br>'
+    header += '<div class="ib-preview-back" onclick="immobrowse.open(\'' + this.listUrl.replace('{cid}', this.cid) + '\');"> << Zurück</div>';
+    header += '<div></h3><br><br>';
+    header += '<div id="objectNumber">';
+    header += 'Objektnummer: ' + this.realEstate.objektnr_extern();
+    header += '</div>'
+    return header;
+  }
+
   // Renders the respective real estate into the given HTML element
-  this.render = function (htmlElement) {
-    htmlElement.innerHTML = this.realEstate.details(this.listUrl);
+  this.render = function (header, htmlElement) {
+    header.innerHTML = this.header();
+    htmlElement.innerHTML = this.realEstate.details();
   }
 }
