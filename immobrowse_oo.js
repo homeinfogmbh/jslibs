@@ -1150,8 +1150,8 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
   }
 
   // Renders the respective real estate into the given HTML element
-  this.render = function (header, htmlElement) {
+  this.render = function (header, expose) {
     header.innerHTML = this.header();
-    htmlElement.innerHTML = this.realEstate.details();
+    expose.innerHTML = this.realEstate.details();
   }
 }
