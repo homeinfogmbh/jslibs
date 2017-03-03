@@ -1078,7 +1078,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     }
   }
 
-  this.getRealEstates = function (htmlElement, loadAnimation) {
+  this.getRealEstates = function () {
     var xmlHttp = null;
 
     try {
@@ -1127,14 +1127,10 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
 
   // Renders real estates into the given HTML element
   this.render = function (htmlElement, loadAnimation) {
-    if (this.realEstates == null) {
-      this.getRealEstates(htmlElement, loadAnimation);
-    } else {
-      htmlElement.innerHTML = this.htmlList();
+    htmlElement.innerHTML = this.htmlList();
 
-      if (loadAnimation != null) {
-        loadAnimation.hide();
-      }
+    if (loadAnimation != null) {
+      loadAnimation.hide();
     }
   }
 }
