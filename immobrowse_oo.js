@@ -525,9 +525,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
     html += '<div class="ib-preview-rooms-caption">Zimmer</div>';
     html += '<div class="ib-preview-rooms-data">' + rooms + '</div>';
     html += '</div>';
-    html += '<div class="ib-preview-zimmer">';
-    html += '<div class="ib-preview-zimmer-caption">Verfügbar ab</div>';
-    html += '<div class="ib-preview-zimmer-data">' + this.verwaltung_objekt.verfuegbar_ab + '</div>';
+    html += '<div class="ib-preview-freefrom">';
+    html += '<div class="ib-preview-freefrom-caption">Verfügbar ab</div>';
+    html += '<div class="ib-preview-freefrom-data">' + this.verwaltung_objekt.verfuegbar_ab + '</div>';
     html += '</div>';
     html += '</div>';
 
