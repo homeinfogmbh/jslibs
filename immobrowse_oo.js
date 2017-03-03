@@ -1006,15 +1006,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
   this.filter = function (filters) {
     this.filteredRealEstates = [];
 
-    immobrowse.logger.debug('Available real estates:');
-    immobrowse.logger.debug(JSON.stringify(this.realEstates));
-
     for (var i = 0; i < this.realEstates.length; i++) {
-      immobrowse.logger.debug('Real estate type: ' + typeof(this.realEstates[i]));
-      immobrowse.logger.debug('Real estate: ' + this.realEstates[i]);
-      immobrowse.logger.debug('Real estate → objektnr_extern: ' + this.realEstates[i].objektnr_extern);
-      immobrowse.logger.debug('Real estate → objektnr_extern(): ' + this.realEstates[i].objektnr_extern());
-
       if (this.match(this.realEstates[i], filters)) {
         this.filteredRealEstates.push(this.realEstates[i]);
       } else {
@@ -1109,7 +1101,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
       this.realEstates = [];
 
       for (var i = 0; i < json.length; i++) {
-        this.realEstates.push(new immobrowse.RealEstate(json[i]));
+        this.realEstates.push(new immobrowse.RealEstate(this.cid, json[i]));
       }
 
       immobrowse.logger.debug('Built wrapped real estates:');
@@ -1150,7 +1142,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
       xmlHttp.send(null);
       immobrowse.logger.debug('Got XMLHTTP response:');
       immobrowse.logger.debug(xmlHttp.responseText);
-      this.realEstate = new immobrowse.RealEstate(JSON.parse(xmlHttp.responseText));
+      this.realEstate = new immobrowse.RealEstate(this.cid, JSON.parse(xmlHttp.responseText));
       immobrowse.logger.debug('Retrieved real estate:');
       immobrowse.logger.debug(JSON.stringify(this.realEstates));
     }
