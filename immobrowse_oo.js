@@ -1101,11 +1101,16 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
       };
 
       xmlHttp.send(null);
+      immobrowse.logger.debug('Retrieved real estates:');
       immobrowse.logger.debug(JSON.stringify(realEstates));
       this.realEstates = realEstates;
       this.filteredRealEstates = realEstates;
-      immobrowse.logger.debug('Retrieved real estates:');
     }
+  }
+
+  // Renders the respective real estates into the given HTML element
+  this.render = function (htmlElement) {
+    htmlElement.innerHTML = this.htmlList();
   }
 }
 
@@ -1120,36 +1125,36 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
   this.listUrl = listUrl;
   this.realEstate = null;
 
-  this.getRealEstate = function (htmlElement, loadAnimation) {
-    this_ = this;
-    $.ajax({
-      url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + this_.objektnr_extern + '?customer=' + this_.cid,
-      dataType: "json",
-      success: function (realEstate) {
-        this_.realEstate = new immobrowse.RealEstate(this_.cid, realEstate);
+  this.getRealEstate = function () {
+    var xmlHttp = null;
+    var realEstates;
 
-        if (htmlElement != null) {
-          this_.render(htmlElement, loadAnimation);
+    try {
+      xmlHttp = new XMLHttpRequest();
+    } catch(e) {
+      immobrowse.logger.error('XMLHttp is not supported.');
+      immobrowse.logger.debug(e);
+    }
+
+    if (xmlHttp) {
+      xmlHttp.open('GET', 'https://tls.homeinfo.de/immobrowse/real_estate/' + this_.objektnr_extern + '?customer=' + this_.cid, true);
+      xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {
+          immobrowse.logger.debug('Got XMLHTTP response:');
+          immobrowse.logger.debug(xmlHttp.responseText);
+          realEstate = JSON.parse(xmlHttp.responseText);
         }
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        immobrowse.logger.error(xhr.responseText);
-        immobrowse.logger.debug(ajaxOptions);
-        immobrowse.logger.debug(thrownError);
-      }
-    });
+      };
+
+      xmlHttp.send(null);
+      immobrowse.logger.debug('Retrieved real estate:');
+      immobrowse.logger.debug(JSON.stringify(realEstates));
+      this.realEstate = realEstate;
+    }
   }
 
   // Renders the respective real estate into the given HTML element
-  this.render = function (htmlElement, loadAnimation) {
-    if (this.realEstate == null) {
-      this.getRealEstate(htmlElement, loadAnimation);
-    } else {
-      htmlElement.innerHTML = this.realEstate.details(this.listUrl);
-
-      if (loadAnimation != null) {
-        loadAnimation.hide();
-      }
-    }
+  this.render = function (htmlElement) {
+    htmlElement.innerHTML = this.realEstate.details(this.listUrl);
   }
 }
