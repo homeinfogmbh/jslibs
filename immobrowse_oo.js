@@ -1011,6 +1011,9 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
 
     for (var i = 0; i < this.realEstates.length; i++) {
       immobrowse.logger.debug('Real estate type: ' + typeof(this.realEstates[i]));
+      immobrowse.logger.debug('Real estate: ' + this.realEstates[i]);
+      immobrowse.logger.debug('Real estate → objektnr_extern: ' + this.realEstates[i].objektnr_extern);
+      immobrowse.logger.debug('Real estate → objektnr_extern(): ' + this.realEstates[i].objektnr_extern());
 
       if (this.match(this.realEstates[i], filters)) {
         this.filteredRealEstates.push(this.realEstates[i]);
