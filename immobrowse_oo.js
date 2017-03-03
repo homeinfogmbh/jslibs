@@ -1065,6 +1065,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
   // Converts real estates to HTML
   this.htmlList = function () {
     var html = '';
+    var realEstates;
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
       html += this.filteredRealEstates[i].preview(this.exposeBaseUrl);
@@ -1093,6 +1094,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
       xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4) {
           this.realEstates = JSON.parse(xmlHttp.responseText);
+          this.filteredRealEstates = this.realEstates;
         }
       };
 
