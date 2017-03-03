@@ -940,27 +940,26 @@ immobrowse.RealEstate = function (cid, realEstate) {
 /*
   Real estate list pseudo-class
 */
-immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
+immobrowse.List = function (cid, sorting, exposeBaseUrl) {
   this.cid = cid;
-  this.filters = filters;
   this.sorting = sorting;
   this.exposeBaseUrl = exposeBaseUrl;
   this.realEstates = null;
   this.filteredRealEstates = null;
 
   // Match filters on a real estate's JSON data
-  this.match = function (realEstate) {
+  this.match = function (realEstate, filters) {
     var rent = realEstate.rent();
 
-    if (this.filters.priceMin >= rent)
+    if (filters.priceMin >= rent)
       return false;
-    else if (this.filters.priceMax <= rent)
+    else if (filters.priceMax <= rent)
       return false;
-    else if (this.filters.areaMin >= realEstate.flaechen.wohnflaeche)
+    else if (filters.areaMin >= realEstate.flaechen.wohnflaeche)
       return false;
-    else if (this.filters.roomsMin >= realEstate.flaechen.anzahl_zimmer)
+    else if (filters.roomsMin >= realEstate.flaechen.anzahl_zimmer)
       return false;
-    else if (this.filters.ebk) {
+    else if (filters.ebk) {
       if (realEstate.ausstattung != null) {
         if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
@@ -968,7 +967,7 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
           if (!realEstate.ausstattung.kueche.EBK)
             return false;
       }
-    } else if (this.filters.bathtub) {
+    } else if (filters.bathtub) {
       if (realEstate.ausstattung != null) {
         if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
@@ -976,7 +975,7 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
           if (!realEstate.ausstattung.bad.WANNE)
             return false;
       }
-    } else if (this.filters.carSpace) {
+    } else if (filters.carSpace) {
       if (realEstate.ausstattung != null) {
         if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
@@ -984,7 +983,7 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
           if (!realEstate.ausstattung.stellplatzart.TIEFGARAGE)
             return false;
       }
-    } else if (this.filters.elevator) {
+    } else if (filters.elevator) {
       if (realEstate.ausstattung != null) {
         if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
@@ -992,7 +991,7 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
           if (!realEstate.ausstattung.fahrstuhl.PERSONEN)
             return false;
       }
-    } else if (this.filters.garden) {
+    } else if (filters.garden) {
       if (realEstate.ausstattung != null) {
         if (jQuery.isEmptyObject(realEstate.ausstattung))
           return false;
@@ -1004,11 +1003,11 @@ immobrowse.List = function (cid, filters, sorting, exposeBaseUrl) {
   }
 
   // Filters real estates
-  this.filter = function () {
+  this.filter = function (filters) {
     this.filteredRealEstates = [];
 
     for (var i = 0; i < this.realEstates.length; i++) {
-      if (this.match(this.realEstates[i])) {
+      if (this.match(this.realEstates[i], filters)) {
         this.filteredRealEstates.push(this.realEstates[i]);
       } else {
         immobrowse.logger.debug('Discarding: ' + this.realEstates[i].objektnr_extern());
