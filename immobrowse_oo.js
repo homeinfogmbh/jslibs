@@ -604,7 +604,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     header += '<h3 class="panel-title nohover">';
     header += '<div id="form_object_title">';
-    header += '<a href="' + listUrl.replace('{cid}', this.cid) + '"><div class="ib-preview-back"> << Zurück<br></div></a>';
     header += '<strong>';
 
     if (this.freitexte != null) {
@@ -621,7 +620,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
     header += this.addressPreview();
     header += ' | ';
     header += this.cityPreview();
-    header += '</strong><div></h3><br><br>';
+    header += '</strong><br>'
+    header += '<div class="ib-preview-back"><a href="' + listUrl.replace('{cid}', this.cid) + '"> << Zurück</a></div>';
+    header += '<div></h3><br><br>';
     header += '<div id="objectNumber">';
     header += 'Objektnummer: ' + this.objektnr_extern();
     header += '</div>'
