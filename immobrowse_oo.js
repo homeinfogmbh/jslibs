@@ -1006,6 +1006,9 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
   this.filter = function (filters) {
     this.filteredRealEstates = [];
 
+    immobrowse.logger.debug('Available real estates:');
+    immobrowse.logger.debug(JSON.stringify(this.realEstates));
+
     for (var i = 0; i < this.realEstates.length; i++) {
       if (this.match(this.realEstates[i], filters)) {
         this.filteredRealEstates.push(this.realEstates[i]);
