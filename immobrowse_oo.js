@@ -1151,10 +1151,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
 
   // Renders the respective real estate into the given HTML element
   this.render = function (headerElement, exposeElement) {
-    immobrowse.logger.debug('Rendering on ' + headerElement + ' and ' + exposeElement);
     headerElement.innerHTML = this.header();
-    immobrowse.logger.debug('headerElement.innerHTML = ' + headerElement.innerHTML);
     exposeElement.innerHTML = this.realEstate.details();
-    immobrowse.logger.debug('exposeElement.innerHTML = ' + exposeElement.innerHTML);
   }
 }
