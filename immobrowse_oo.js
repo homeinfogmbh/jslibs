@@ -494,7 +494,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
-  this.preview = function () {
+  this.preview = function (baseUrl) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
     var url = baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern());
@@ -598,7 +598,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   // Render real estate's HTML details
-  this.details = function (listUrl) {
+  this.details = function () {
     var rooms = this.rooms();
     var html = '';
     var documents = ''
