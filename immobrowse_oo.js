@@ -1104,6 +1104,8 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
         this.realEstates.push(new immobrowse.RealEstate(json[i]));
       }
 
+      immobrowse.logger.debug('Built wrapped real estates:');
+      immobrowse.logger.debug(JSON.stringify(this.realEstates));
       this.filteredRealEstates = this.realEstates;
     }
   }
