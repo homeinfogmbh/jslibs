@@ -638,10 +638,10 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
       }
 
-      body += '<div id="details-body-left">';
+      body += '<div class="ib-detail-images">';
       body += imagesLeft;
       body += '</div>';
-      body += '<div id="details-body-right">';
+      body += '<div class="ib-detail-floorplans">';
       body += floorplans;
       body += '</div>';
 
@@ -657,46 +657,53 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     body += '<div style="clear:both"></div><br><br>'; // below again
-    body += '<div id="details-body-left">';
+    body += '<div class="ib-detail-prices">';
     body += '<h3>PREISE & KOSTEN</h3>';
     body += '<table width="420px">';
 
-    if (this.preise.nettokaltmiete != undefined) {
+    if (this.preise.nettokaltmiete != null) {
       body += '<tr>';
       body += '<td><strong>Nettokaltmiete</strong></td>';
       body += '<td align="right">' + immobrowse.euroHtml(this.preise.nettokaltmiete) + '</td>';
       body += '</tr>';
     }
 
-    if (this.preise.nebenkosten != undefined) {
+    if (this.preise.nebenkosten != null) {
       body += '<tr>';
       body += '<td>Nebenkosten</td>';
-      body += '<td align="right">' + immobrowse.euroHtml(this.preise.nebenkosten) + ' €</td>';
+      body += '<td align="right">' + immobrowse.euroHtml(this.preise.nebenkosten) + '</td>';
       body += '</tr>';
     }
 
-    if (this.preise.heizkosten != undefined) {
+    if (this.preise.heizkosten != null) {
       body += '<tr>';
       body += '<td>Heizkosten</td>';
-      body += '<td align="right">' + immobrowse.euroHtml(this.preise.heizkosten) + ' €</td>';
+      body += '<td align="right">' + immobrowse.euroHtml(this.preise.heizkosten) + '</td>';
       body += '</tr>';
     }
 
-    if (this.preise.heizkosten_enthalten != undefined) {
+    if (this.preise.heizkosten_enthalten != null) {
       body += '<tr>';
       body += '<td>Heizkosten in Nebenkosten enthalten</td>';
-      body += '<td align="right">' + ((this.preise.heizkosten_enthalten == true) ?"Ja" :"Nein") + '</td>';
-      body += '</tr>';
+      body += '<td align="right">';
+
+      if (this.preise.heizkosten_enthalten == true) {
+        html += "Ja";
+      } else {
+        html += "Nein";
+      }
+
+      body += '</td></tr>';
     }
 
-    if (this.preise.kaution != undefined) {
+    if (this.preise.kaution != null) {
       body += '<tr>';
       body += '<td>Kaution oder Genossenschaftsanteile</td>';
-      body += '<td align="right">' + immobrowse.euroHtml(this.preise.kaution) + ' €</td>';
+      body += '<td align="right">' + immobrowse.euroHtml(this.preise.kaution) + '</td>';
       body += '</tr>';
     }
 
-    if (this.preise.provisionspflichtig != undefined) {
+    if (this.preise.provisionspflichtig != null) {
       body += '<tr>';
       body += '<td><strong>Provisionsfrei</strong></td>';
       if (this.preise.provisionspflichtig == true)
@@ -707,7 +714,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     body += '</table><br></div>';
-    body += '<div id="details-body-right">';
+    body += '<div class="ib-detail-properties">';
     body += '<h3>GRÖSSE & ZUSTAND</h3>';
     body += '<table width="420px" cellspacing="0">';
 
@@ -750,7 +757,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     body += '</table><br></div>';
     body += '<div style="clear:both"></div>'; // below again
-    body += '<div id="details-body-left">';
+    body += '<div class="ib-detail-enev">';
     body += '<h3>ENERGIEANGABEN</h3>';
     body += '<table width="420px" cellspacing="0">';
     body += '<tr>';
@@ -813,7 +820,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
           this.ausstattung.barrierefrei || this.ausstattung.fahrstuhl != null ||
           this.flaechen.anzahl_balkone > 0 || this.ausstattung.bad != null ||
           this.ausstattung.unterkellert || this.ausstattung.rollstuhlgerecht) {
-        body += '<div id="details-body-right">';
+        body += '<div class="ib-detail-amenities">';
         body += '<h3>AUSSTATTUNG</h3>';
         body += '<table width="420px" cellspacing="0">';
         body += (this.flaechen.anzahl_balkone > 0) ?'<tr><td style="border: none;"><img src="img/ok.png" /> Balkon</td></tr>' :'';
@@ -884,7 +891,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     var footer = '';
     footer += '<div style="clear:both"></div>'; // below again
-    footer += '<div id="details-body-left">';
+    footer += '<div class="ib-detail-contact">';
     footer += '<h3>IHR ANSPRECHPARTNER</h3>';
     footer += '<b>' + ((this.kontaktperson.anrede != "0") ?this.kontaktperson.anrede :'') + ' ' + this.kontaktperson.vorname + ' ' + this.kontaktperson.name + '</b></br>';
     footer += (this.kontaktperson.firma != undefined) ?this.kontaktperson.firma + '</br>' : '';
@@ -893,7 +900,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     footer += (this.kontaktperson.tel_durchw != undefined) ?'Tel.: ' + this.kontaktperson.tel_durchw + '</br>' :'';
     footer += (this.kontaktperson.url != undefined) ?'<a href="' + ((this.kontaktperson.url.indexOf("http") == -1) ?'http://' + this.kontaktperson.url :this.kontaktperson.url) + '" target="_blank">' + this.kontaktperson.url + '</a></br></br></br>': '</br></br></br>';
     footer += '</div>';
-    footer += '<div id="details-body-right">';
+    footer += '<div class="ib-detail-documents">';
     footer += '<h3>DOKUMENTE</h3>';
     footer += '<table width="420px" cellspacing="0" style="background-color: #efefef; box-shadow: none">';
 
