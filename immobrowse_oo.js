@@ -948,52 +948,49 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
   this.match = function (realEstate, filters) {
     var rent = realEstate.rent();
 
-    if (filters.priceMin >= rent)
+    if (filters.priceMin >= rent) {
       return false;
-    else if (filters.priceMax <= rent)
+    }
+
+    if (filters.priceMax <= rent) {
       return false;
-    else if (filters.areaMin >= realEstate.flaechen.wohnflaeche)
+    }
+
+    if (filters.areaMin >= realEstate.flaechen.wohnflaeche) {
       return false;
-    else if (filters.roomsMin >= realEstate.flaechen.anzahl_zimmer)
+    }
+
+    if (filters.roomsMin >= realEstate.flaechen.anzahl_zimmer) {
       return false;
-    else if (filters.ebk) {
-      if (realEstate.ausstattung != null) {
-        if (jQuery.isEmptyObject(realEstate.ausstattung))
-          return false;
-        else if (realEstate.ausstattung.kueche != null)
-          if (!realEstate.ausstattung.kueche.EBK)
-            return false;
+    }
+
+    if (filters.ebk) {
+      if (! realEstate.ausstattung.kueche.EBK) {
+        return false;
       }
-    } else if (filters.bathtub) {
-      if (realEstate.ausstattung != null) {
-        if (jQuery.isEmptyObject(realEstate.ausstattung))
-          return false;
-        else if (realEstate.ausstattung.bad != null)
-          if (!realEstate.ausstattung.bad.WANNE)
-            return false;
+    }
+
+    if (filters.bathtub) {
+      if (! realEstate.ausstattung.bad.WANNE) {
+        return false;
       }
-    } else if (filters.carSpace) {
-      if (realEstate.ausstattung != null) {
-        if (jQuery.isEmptyObject(realEstate.ausstattung))
-          return false;
-        else if (realEstate.ausstattung.stellplatzart != null)
-          if (!realEstate.ausstattung.stellplatzart.TIEFGARAGE)
-            return false;
+    }
+
+    if (filters.carSpace) {
+      if (! realEstate.ausstattung.stellplatzart.TIEFGARAGE) {
+        return false;
       }
-    } else if (filters.elevator) {
-      if (realEstate.ausstattung != null) {
-        if (jQuery.isEmptyObject(realEstate.ausstattung))
-          return false;
-        else if (realEstate.ausstattung.fahrstuhl != null)
-          if (!realEstate.ausstattung.fahrstuhl.PERSONEN)
-            return false;
+    }
+
+    if (filters.elevator) {
+      if (! realEstate.ausstattung.fahrstuhl.PERSONEN) {
+        return false;
       }
-    } else if (filters.garden) {
-      if (realEstate.ausstattung != null) {
-        if (jQuery.isEmptyObject(realEstate.ausstattung))
-          return false;
-        else if (!realEstate.ausstattung.gartennutzung)
-          return false;
+    }
+
+    if (filters.garden) {
+      if (! realEstate.ausstattung.gartennutzung) {
+        return false;
       }
     }
 
