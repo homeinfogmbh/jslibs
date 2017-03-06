@@ -688,9 +688,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
       body += '<td align="right">';
 
       if (this.preise.heizkosten_enthalten == true) {
-        html += "Ja";
+        body += "Ja";
       } else {
-        html += "Nein";
+        body += "Nein";
       }
 
       body += '</td></tr>';
