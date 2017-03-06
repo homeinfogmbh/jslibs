@@ -996,6 +996,13 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
           return false;
       }
     }
+
+    if (filters.districts != null) {
+      if (filters.districts.indexOf(realEstate.district()) < 0) {
+        return false;
+      }
+    }
+
     return true;
   }
 
