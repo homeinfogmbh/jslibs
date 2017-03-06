@@ -1099,31 +1099,28 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     }
   }
 
-  this.getRealEstates = function () {
-    var xmlHttp = null;
+  this.getRealEstates = function (callback) {
+    self = this;
 
-    try {
-      xmlHttp = new XMLHttpRequest();
-    } catch(e) {
-      immobrowse.logger.error('XMLHttp is not supported.');
-      immobrowse.logger.debug(e);
-    }
+    $.ajax({
+      url: 'https://tls.homeinfo.de/immobrowse/list/' + self.cid,
+      success: function (json) {
+        self.realEstates = [];
 
-    if (xmlHttp) {
-      xmlHttp.open('GET', 'https://tls.homeinfo.de/immobrowse/list/' + this.cid, false);
-      xmlHttp.send(null);
-      immobrowse.logger.debug('Got XMLHTTP response:');
-      immobrowse.logger.debug(xmlHttp.responseText);
-      var json = JSON.parse(xmlHttp.responseText);
+        for (var i = 0; i < json.length; i++) {
+          self.realEstates.push(new immobrowse.RealEstate(self.cid, json[i]));
+        }
 
-      this.realEstates = [];
-
-      for (var i = 0; i < json.length; i++) {
-        this.realEstates.push(new immobrowse.RealEstate(this.cid, json[i]));
-      }
-
-      this.filteredRealEstates = this.realEstates;
-    }
+        self.filteredRealEstates = self.realEstates;
+        callback(),
+      error: function() {
+        swal({
+          title: 'Immobilien konnten nicht geladen werden.',
+          text: 'Bitte versuchen Sie es später noch ein Mal.'
+          type: 'error'
+        });
+      };
+    });
   }
 
   // Renders the respective real estates into the given HTML element
@@ -1143,23 +1140,22 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
   this.listUrl = listUrl;
   this.realEstate = null;
 
-  this.getRealEstate = function () {
-    var xmlHttp = null;
+  this.getRealEstate = function (callback) {
+    self = this;
 
-    try {
-      xmlHttp = new XMLHttpRequest();
-    } catch(e) {
-      immobrowse.logger.error('XMLHttp is not supported.');
-      immobrowse.logger.debug(e);
-    }
-
-    if (xmlHttp) {
-      xmlHttp.open('GET', 'https://tls.homeinfo.de/immobrowse/real_estate/' + this.objektnr_extern + '?customer=' + this.cid, false);
-      xmlHttp.send(null);
-      immobrowse.logger.debug('Got XMLHTTP response:');
-      immobrowse.logger.debug(xmlHttp.responseText);
-      this.realEstate = new immobrowse.RealEstate(this.cid, JSON.parse(xmlHttp.responseText));
-    }
+    $.ajax({
+      url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + self.objektnr_extern + '?customer=' + self.cid,
+      success: function (json) {
+        self.realEstate = new immobrowse.RealEstate(self.cid, JSON.parse(xmlHttp.responseText));
+        callback(),
+      error: function() {
+        swal({
+          title: 'Immobilie konnten nicht geladen werden.',
+          text: 'Bitte versuchen Sie es später noch ein Mal.'
+          type: 'error'
+        });
+      };
+    });
   }
 
   this.header = function () {
