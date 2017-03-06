@@ -1127,7 +1127,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
 
   this.header = function () {
     var header = '<div class="ib-header">';
-    header += '<h3 class="panel-title nohover">';
+    header += '<h3 class="ib-detail-title">';
     header += '<strong>';
 
     if (this.realEstate.freitexte != null) {
