@@ -1117,7 +1117,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
       error: function() {
         swal({
           title: 'Immobilien konnten nicht geladen werden.',
-          text: 'Bitte versuchen Sie es später noch ein Mal.'
+          text: 'Bitte versuchen Sie es später noch ein Mal.',
           type: 'error'
         });
       }
@@ -1152,7 +1152,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
       error: function() {
         swal({
           title: 'Immobilie konnten nicht geladen werden.',
-          text: 'Bitte versuchen Sie es später noch ein Mal.'
+          text: 'Bitte versuchen Sie es später noch ein Mal.',
           type: 'error'
         });
       };
