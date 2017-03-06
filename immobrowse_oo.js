@@ -1156,7 +1156,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
           text: 'Bitte versuchen Sie es später noch ein Mal.',
           type: 'error'
         });
-      };
+      }
     });
   }
 
