@@ -1156,7 +1156,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
     header += '</strong><br>'
     header += '<div class="ib-preview-back" onclick="immobrowse.open(\'' + this.listUrl.replace('{cid}', this.cid) + '\');"> << Zurück</div>';
     header += '<div></h3><br><br>';
-    header += '<div id="objectNumber">';
+    header += '<div class="ib-detail-id">';
     header += 'Objektnummer: ' + this.realEstate.objektnr_extern();
     header += '</div>'
     return header;
