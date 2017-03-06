@@ -1147,7 +1147,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
     $.ajax({
       url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + self.objektnr_extern + '?customer=' + self.cid,
       success: function (json) {
-        self.realEstate = new immobrowse.RealEstate(self.cid, JSON.parse(xmlHttp.responseText));
+        self.realEstate = new immobrowse.RealEstate(self.cid, json);
         callback();
       },
       error: function() {
