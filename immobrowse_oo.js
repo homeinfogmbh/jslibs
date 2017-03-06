@@ -1112,14 +1112,15 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
         }
 
         self.filteredRealEstates = self.realEstates;
-        callback(),
+        callback()
+      },
       error: function() {
         swal({
           title: 'Immobilien konnten nicht geladen werden.',
           text: 'Bitte versuchen Sie es später noch ein Mal.'
           type: 'error'
         });
-      };
+      }
     });
   }
 
