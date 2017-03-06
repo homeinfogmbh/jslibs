@@ -116,6 +116,11 @@ immobrowse.titleImageHtml = function (url) {
 /**TODO Mockup **/
 immobrowse.titleImageDummy = 'https://tls.homeinfo.de/does/not/exist';
 
+// Opens the respective URL
+immobrowse.open = function (url) {
+  window.open(url, '_self');
+}
+
 
 immobrowse.mkContactMail = function (
     objektnr_extern, salutation, forename, surname, phone,
@@ -244,9 +249,4 @@ immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
   this.send = function (response, subject, body, recipient, reply_to) {
     $.ajax(this.getAjax(this.getUrl(response, subject, recipient, reply_to), body));
   };
-}
-
-// Opens the respective URL
-immobrowse.open = function (url) {
-  window.open(url, '_self');
 }
