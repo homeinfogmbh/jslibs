@@ -603,10 +603,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var html = '';
     var documents = ''
 
-
     var body = '';
+    var header += '<div class="ib-detail-id">';
+    header += 'Objektnummer: ' + this.objektnr_extern();
+    header += '</div>'
+    body += header;
+
     var maxImageCounter = 0; // Complete count of images; needed for the button to hide all images
     var i;
+
     if (this.anhaenge != null) {
       for (i = 0; i < this.anhaenge.anhang.length; i++) {
         if (this.anhaenge.anhang[i].gruppe != "GRUNDRISS" && this.anhaenge.anhang[i].gruppe != "DOKUMENTE") {
@@ -1156,9 +1161,6 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
     header += '</strong><br>'
     header += '<div class="ib-preview-back" onclick="immobrowse.open(\'' + this.listUrl.replace('{cid}', this.cid) + '\');"> << Zurück</div>';
     header += '<div></h3><br><br>';
-    header += '<div class="ib-detail-id">';
-    header += 'Objektnummer: ' + this.realEstate.objektnr_extern();
-    header += '</div>'
     return header;
   }
 
