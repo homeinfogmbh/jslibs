@@ -1056,6 +1056,25 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     }
   }
 
+  // Gets the respective districts
+  this.districts = function () {
+    var districts = [];
+
+    for (var i = 0; i < this.realEstates.length; i++) {
+      var district = this.realEstates[i].geo.regionaler_zusatz;
+
+      if (district != null) {
+        if (districts[district] != undefined) {
+          districts[district] += 1;
+        } else {
+          districts[district] = 1;
+        }
+      }
+    }
+
+    return districts;
+  }
+
   // Converts real estates to HTML
   this.htmlList = function () {
     var html = '';
