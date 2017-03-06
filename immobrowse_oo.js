@@ -1095,7 +1095,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     if (html == '') {
      return 'Es konnten keine Angebote gefunden werden.';
     } else {
-      return '<div class="ib-preview-list">' + html + '</div>';
+      return html;
     }
   }
 
