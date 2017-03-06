@@ -604,7 +604,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var documents = ''
 
     var body = '';
-    var header += '<div class="ib-detail-id">';
+    var header = '<div class="ib-detail-id">';
     header += 'Objektnummer: ' + this.objektnr_extern();
     header += '</div>';
     body += header;
