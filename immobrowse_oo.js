@@ -997,7 +997,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
       }
     }
 
-    if (filters.districts) {
+    if (filters.districts.length > 0) {
       if (filters.districts.indexOf(realEstate.district()) < 0) {
         return false;
       }
