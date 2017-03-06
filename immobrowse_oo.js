@@ -647,7 +647,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
       // Set the button for each image
       if (imagesLeftCounter > 1) {
-        body += '<div style="clear:both"></div><br>'; // below again
+        body += '<div class="ib-details-row"></div><br>';
         for (i = 0; i < imagesLeftCounter; i++) {
           if (this.anhaenge.anhang[i].gruppe != "GRUNDRISS" && this.anhaenge.anhang[i].gruppe != "DOKUMENTE") {
             body += '<button class="showimage" id="button' + i + '" class="btn btn-success pull-right" type="button" data-nr="' + i + '" data-nrmax="' + maxImageCounter + '">' + (i+1) + '</button>';
@@ -656,7 +656,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       }
     }
 
-    body += '<div style="clear:both"></div><br><br>'; // below again
+    body += '<div class="ib-detail-row"></div><br><br>';
     body += '<div class="ib-detail-prices">';
     body += '<h3>PREISE & KOSTEN</h3>';
     body += '<table width="420px">';
@@ -756,7 +756,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     body += '</table><br></div>';
-    body += '<div style="clear:both"></div>'; // below again
+    body += '<div class="ib-detail-row"></div>';
     body += '<div class="ib-detail-enev">';
     body += '<h3>ENERGIEANGABEN</h3>';
     body += '<table width="420px" cellspacing="0">';
@@ -855,7 +855,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       }
     }
 
-    body += '<div style="clear:both"></div><br>'; // below again
+    body += '<div class="ib-detail-row"></div><br>';
 
     if (this.freitexte != null) {
       if (this.freitexte.objektbeschreibung != null) {
@@ -890,7 +890,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     html += '<div id="content">' + body + '</div>';
 
     var footer = '';
-    footer += '<div style="clear:both"></div>'; // below again
+    footer += '<div class="ib-detail-row"></div>';
     footer += '<div class="ib-detail-contact">';
     footer += '<h3>IHR ANSPRECHPARTNER</h3>';
     footer += '<b>' + ((this.kontaktperson.anrede != "0") ?this.kontaktperson.anrede :'') + ' ' + this.kontaktperson.vorname + ' ' + this.kontaktperson.name + '</b></br>';
@@ -911,7 +911,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     footer += '</table></div>';
-    footer += '<div style="clear:both"></div>'; // below again
+    footer += '<div class="ib-detail-row"></div>';
     footer += '</div>'
     html += '<div id="footer">' + footer + '<br><br><br></div>';
 
