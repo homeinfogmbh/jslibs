@@ -606,7 +606,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var body = '';
     var header += '<div class="ib-detail-id">';
     header += 'Objektnummer: ' + this.objektnr_extern();
-    header += '</div>'
+    header += '</div>';
     body += header;
 
     var maxImageCounter = 0; // Complete count of images; needed for the button to hide all images
