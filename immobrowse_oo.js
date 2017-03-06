@@ -859,31 +859,37 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     if (this.freitexte != null) {
       if (this.freitexte.objektbeschreibung != null) {
+        body += '<div class="ib-detail-description">';
         body += '<h3>OBJEKTBESCHREIBUNG</h3>';
         body += '<table>';
         body += '<tr><td class="ib-detail-datacolumn"> ' + this.freitexte.objektbeschreibung + '</td></tr>';
         body += '</tr>';
         body += '</table><br>';
+        body += '</div>';
       }
     }
 
     if (this.freitexte != null) {
       if (this.freitexte.lage != null) {
+        body += '<div class="ib-detail-exposure">';
         body += '<h3>LAGE</h3>';
         body += '<table>';
         body += '<tr><td class="ib-detail-datacolumn"> ' + this.freitexte.lage + '</td></tr>';
         body += '</tr>';
         body += '</table><br>';
+        body += '</div>';
       }
     }
 
     if (this.freitexte != null) {
       if (this.freitexte.sonstige_angaben != null) {
+        body += '<div class="ib-detail-misc">';
         body += '<h3>SONSTIGES</h3>';
         body += '<table>';
         body += '<tr><td class="ib-detail-datacolumn"> ' + this.freitexte.sonstige_angaben + '</td></tr>';
         body += '</tr>';
         body += '</table><br>';
+        body += '</div>';
       }
     }
 
