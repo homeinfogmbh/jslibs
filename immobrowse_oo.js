@@ -452,6 +452,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return zustand;
   }
 
+  this.district = function () {
+    return this.geo.regionaler_zusatz;
+  }
 
   this.matchTypes = function (types) {
     if (types == null) {
@@ -1061,7 +1064,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     var districts = [];
 
     for (var i = 0; i < this.realEstates.length; i++) {
-      var district = this.realEstates[i].geo.regionaler_zusatz;
+      var district = this.realEstates[i].district();
 
       if (district != null) {
         if (districts[district] != undefined) {
