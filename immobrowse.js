@@ -26,7 +26,7 @@
 var immobrowse = immobrowse || {};
 
 // Logger
-immobrowse.logger = new homeinfo.logging.Logger('immobrowse', 40);
+immobrowse.logger = new homeinfo.logging.Logger('immobrowse', homeinfo.logging.DEBUG);
 
 
 /*** Miscellaneous functions ***/
