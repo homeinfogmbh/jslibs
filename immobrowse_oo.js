@@ -1148,7 +1148,8 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
       url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + self.objektnr_extern + '?customer=' + self.cid,
       success: function (json) {
         self.realEstate = new immobrowse.RealEstate(self.cid, JSON.parse(xmlHttp.responseText));
-        callback(),
+        callback();
+      },
       error: function() {
         swal({
           title: 'Immobilie konnten nicht geladen werden.',
