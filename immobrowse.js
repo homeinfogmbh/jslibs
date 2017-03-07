@@ -20,6 +20,7 @@
 
   Requires:
     * homeinfo.js
+    * jquery.js
     * sweetalert.js
 */
 
