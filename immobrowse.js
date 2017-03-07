@@ -261,6 +261,7 @@ immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
 */
 immobrowse.RealEstate = function (cid, realEstate) {
   this.oval = '<div class="ib-preview-oval"><div class="oval">{}</div></div>';
+  this.kwh = '<sup>kWh</sup>&frasl;<sub>m<sup>2</sup>&middot;a</sub>';
 
   for (var prop in realEstate) {
     if (realEstate.hasOwnProperty(prop)) {
@@ -756,6 +757,57 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
+  this.attachments = function () {
+    var attachments = [];
+
+    if (this.anhaenge != null) {
+      if (this.anhaenge.anhang != null) {
+        for (i = 0; i < this.anhaenge.anhang.length; i++) {
+          attachments.push(this.anhaenge.anhang[i]);
+        }
+      }
+    }
+
+    return attachments;
+  }
+
+  this.pictures = function () {
+    var attachments = this.attachments();
+    var pictures = [];
+
+    for (var i = 0; i < attachments.length; i++) {
+      switch(attachment[i].gruppe) {
+        case 'BILD':
+          pictures.push(attachment[i]);
+        case 'AUSSENANSICHTEN':
+          pictures.push(attachment[i]);
+        case 'INNENANSICHTEN':
+          pictures.push(attachment[i]);
+        default:
+          continue;
+      }
+    }
+
+    return pictures;
+  }
+
+  this.floorplans = function () {
+    var attachments = this.attachments();
+    var floorplans = [];
+
+    for (var i = 0; i < attachments.length; i++) {
+      if (attachment[i].gruppe == "GRUNDRISS") {
+        floorplans.push(attachment[i]);
+      }
+    }
+
+    return floorplans;
+  }
+
+  this.floorplan = function () {
+    return this.floorplans()[0];
+  }
+
   this.furnishingTags = function () {
     var html = '';
 
@@ -798,7 +850,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
       if (this.ausstattung.kueche != null) {
         if (this.ausstattung.kueche.EBK) {
-          html += this.oval.replace('{}', 'Einbauküche');
+          html += this.oval.replace('{}', 'Einbauk&uuml;che');
         }
       }
 
@@ -922,41 +974,171 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
       }
 
-      if (stateElements.energyCertificate) {
+      if (stateElements.energyCertificate != null) {
         if (this.zustand_angaben.energiepass != null) {
           if (this.zustand_angaben.energiepass.length > 0) {
-            if (stateElements.energyCertificate.type != null) {
-              var energiepass = this.zustand_angaben.energiepass[0];
-
-              if (energiepass.epart == null) {
-                stateElements.energyCertificate.type.html('Nicht angegeben');
-              } else if (energiepass.epart == 'VERBRAUCH') {
-                stateElements.energyCertificate.type.html('Verbrauchsausweis');
-              } else {
-                stateElements.energyCertificate.type.html('Bedarfsausweis');
-              }
-            }
-
-            if (stateElements.energyCertificate.consumption != null) {
-              if (energiepass.energieverbrauchkennwert != '') {
-                stateElements.energyCertificate.consumption.html(energiepass.energieverbrauchkennwert + ' kWh/(m²*a)');
-              }
-            }
-
-            if (stateElements.energyCertificate.primaryEnergyCarrier != null) {
-              if (energiepass.primaerenergietraeger != null) {
-                stateElements.energyCertificate.primaryEnergyCarrier.html(this.primaerenergietraeger());
-              }
-            }
-
-            if (stateElements.energyCertificate.valueClass != null) {
-              if (energiepass.wertklasse != null) {
-                stateElements.energyCertificate.valueClass.html(energiepass.wertklasse);
-              }
-            }
+            this.renderEnergyCertificate(stateElements.energyCertificate);
           }
         }
       }
+    }
+  }
+
+  this.renderEnergyCertificate = function (energyCertificateElements) {
+    var energiepass = this.zustand_angaben.energiepass[0];
+
+    if (energyCertificateElements.type != null) {
+      if (energiepass.epart == null) {
+        energyCertificateElements.type.html('Nicht angegeben');
+      } else if (energiepass.epart == 'VERBRAUCH') {
+        energyCertificateElements.type.html('Verbrauchsausweis');
+      } else {
+        energyCertificateElements.type.html('Bedarfsausweis');
+      }
+    }
+
+    if (energyCertificateElements.consumption != null) {
+      if (energiepass.energieverbrauchkennwert != '') {
+        energyCertificateElements.consumption.html(energiepass.energieverbrauchkennwert + this.kwh);
+      }
+    }
+
+    if (energyCertificateElements.primaryEnergyCarrier != null) {
+      if (energiepass.primaerenergietraeger != null) {
+        energyCertificateElements.primaryEnergyCarrier.html(this.primaerenergietraeger());
+      }
+    }
+
+    if (energyCertificateElements.valueClass != null) {
+      if (energiepass.wertklasse != null) {
+        energyCertificateElements.valueClass.html(energiepass.wertklasse);
+      }
+    }
+  }
+
+  this.renderFreeTexts = function (freeTextElements) {
+    if (this.freitexte != null) {
+      if (freeTextElements.description != null) {
+        if (this.freitexte.objektbeschreibung != null) {
+          freeTextElements.description.html(this.freitexte.objektbeschreibung);
+        }
+      }
+
+      if (freeTextElements.exposure != null) {
+        if (this.freitexte.lage != null) {
+          freeTextElements.exposure.html(this.freitexte.lage);
+        }
+      }
+
+      if (freeTextElements.miscellanea != null) {
+        if (this.freitexte.sonstige_angaben != null) {
+          freeTextElements.miscellanea.html(this.freitexte.sonstige_angaben);
+        }
+      }
+    }
+  }
+
+  this.renderContact = function (contactElements) {
+    if (contactElements.salutation != null)
+      if (this.kontaktperson.anrede != null) {
+        contactElements.salutation.html(this.kontaktperson.anrede);
+      }
+    }
+
+    if (contactElements.firstName != null) {
+      if (this.kontaktperson.vorname != null) {
+        contactElements.firstName.html(this.kontaktperson.vorname);
+      }
+    }
+
+    if (contactElements.lastName != null) {
+      contactElements.lastName.html(this.kontaktperson.name);
+    }
+
+    if (contactElements.company != null) {
+      if (this.kontaktperson.firma != null) {
+        contactElements.company.html(this.kontaktperson.firma);
+      }
+    }
+
+    if (contactElements.street != null) {
+      if (this.kontaktperson.strasse != null) {
+        contactElements.street.html(this.kontaktperson.strasse);
+      }
+    }
+
+    if (contactElements.houseNumber != null) {
+      if (this.kontaktperson.hausnummer != null) {
+        contactElements.houseNumber.html(this.kontaktperson.hausnummer);
+      }
+    }
+
+    if (contactElements.streetAndHouseNumber != null) {
+      if (this.kontaktperson.strasse != null && this.kontaktperson.hausnummer != null) {
+        contactElements.streetAndHouseNumber.html(this.kontaktperson.strasse + ' ' + this.kontaktperson.hausnummer);
+      }
+    }
+
+    if (contactElements.zipCode != null) {
+      if (this.kontaktperson.plz != null) {
+        contactElements.zipCode.html(this.kontaktperson.plz);
+      }
+    }
+
+    if (contactElements.city != null) {
+      if (this.kontaktperson.ort != null) {
+        contactElements.city.html(this.kontaktperson.ort);
+      }
+    }
+
+    if (contactElements.zipCodeAndCity != null) {
+      if (this.kontaktperson.plz != null && this.kontaktperson.ort != null) {
+        contactElements.zipCodeAndCity.html(this.kontaktperson.plz + ' ' + this.kontaktperson.ort);
+      }
+    }
+
+    if (contactElements.phone != null) {
+      if (this.kontaktperson.tel_durchw != null) {
+        contactElements.phone.html(this.kontaktperson.tel_durchw);
+      } else if (this.kontaktperson.tel_zentrale != null) {
+        contactElements.phone.html(this.kontaktperson.tel_direkt);
+      }
+    }
+
+    if (contactElements.website != null) {
+      if (this.kontaktperson.url != null){
+        contactElements.website.html(this.kontaktperson.url);
+      }
+    }
+  }
+
+  this.render = function (elements) {
+    if (elements.prices != null) {
+      this.renderPrices(elements.prices);
+    }
+
+    if (elements.area != null) {
+      this.renderArea(elements.area);
+    }
+
+    if (elements.geo != null) {
+      this.renderGeo(elements.geo);
+    }
+
+    if (elements.management != null) {
+      this.renderManagement(elements.management);
+    }
+
+    if (elements.state != null) {
+      this.renderState(elements.state);
+    }
+
+    if (elements.freeTexts != null) {
+      this.renderFreeTexts(elements.freeTexts);
+    }
+
+    if (elements.contact != null) {
+      this.renderContact(elements.contact);
     }
   }
 
@@ -1060,13 +1242,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
       }
 
-      body += '<div class="ib-detail-images">';
-      body += imagesLeft;
-      body += '</div>';
-      body += '<div class="ib-detail-floorplans">';
-      body += floorplans;
-      body += '</div>';
-
       // Set the button for each image
       if (imagesLeftCounter > 1) {
         body += '<div class="ib-details-row"></div><br>';
@@ -1077,235 +1252,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
       }
     }
-
-    body += '<div class="ib-detail-properties">';
-    body += '<h3>GRÖSSE & ZUSTAND</h3>';
-    body += '<table width="420px" cellspacing="0">';
-
-
-    body += '</table><br></div>';
-    body += '<div class="ib-detail-row"></div>';
-    body += '<div class="ib-detail-enev">';
-    body += '<h3>ENERGIEANGABEN</h3>';
-    body += '<table width="420px" cellspacing="0">';
-    body += '<tr>';
-    body += '<td>Energieausweistyp</td>';
-
-    if (this.zustand_angaben != null) {
-      if (this.zustand_angaben.energiepass != null) {
-        if (this.zustand_angaben.energiepass.length > 0) {
-          body += '<td align="right">';
-
-          if (this.zustand_angaben.energiepass[0].epart == null) {
-            body += 'Nicht angegeben';
-          } else if (this.zustand_angaben.energiepass[0].epart == 'VERBRAUCH') {
-            body += 'Verbrauchsausweis';
-          } else {
-            body += 'Bedarfsausweis';
-          }
-
-          body += '</td></tr>';
-
-          if (this.zustand_angaben.energiepass[0].energieverbrauchkennwert != "") {
-            body += '<tr>';
-            body += '<td>Endenergieverbrauch</td>';
-            body += '<td align="right">' + this.zustand_angaben.energiepass[0].energieverbrauchkennwert + ' kWh/(m²*a)</td>';
-            body += '</tr>';
-          }
-
-          if (this.zustand_angaben.energiepass[0].primaerenergietraeger != null) {
-            body += '<tr>';
-            body += '<td>Wesentlicher Energieträger</td>';
-            body += '<td align="right">' + this.primaerenergietraeger() + '</td>';
-            body += '</tr>';
-          }
-
-          if (this.zustand_angaben.energiepass[0].wertklasse != null) {
-            body += '<tr>';
-            body += '<td>Effizienzklasse</td>';
-            body += '<td align="right">' + this.zustand_angaben.energiepass[0].wertklasse + '</td>';
-            body += '</tr>';
-          }
-        }
-
-        if (this.zustand_angaben.letztemodernisierung != null) {
-          body += '<tr>';
-          body += '<td>Letzte Modernisierung</td>';
-          body += '<td align="right">' + this.zustand_angaben.letztemodernisierung + '</td>';
-          body += '</tr>';
-        }
-      }
-    } else {
-      body += '<td align="right">Nicht angegeben</td>';
-    }
-
-    body += '</tr>';
-    body += '</table><br></div>';
-    body += '<div class="ib-detail-amenities">';
-    body += '<h3>AUSSTATTUNG</h3>';
-    body += '<table width="420px" cellspacing="0">';
-
-    if (this.flaechen.anzahl_balkone > 0) {
-      body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Balkon</td></tr>';
-    }
-
-    if (this.ausstattung != null) {
-      if (this.ausstattung.barrierefrei) {
-        body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Barrierefrei</td></tr>';
-      }
-
-      if (this.ausstattung.kabel_sat_tv) {
-        body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Kabel/Sat/TV</td></tr>';
-      }
-
-      if (this.ausstattung.unterkellert) {
-        body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Keller</td></tr>';
-      }
-
-      if (this.ausstattung.rollstuhlgerecht) {
-        body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Rollstuhlgerecht</td></tr>';
-      }
-
-      if (this.ausstattung.bad != null) {
-        if (this.ausstattung.bad.FENSTER) {
-          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Fenster im Bad</td></tr>';
-        }
-
-        if (this.ausstattung.bad.WANNE) {
-          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Badewanne</td></tr>';
-        }
-
-        if (this.ausstattung.bad.DUSCHE) {
-          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Dusche</td></tr>';
-        }
-
-        if (this.ausstattung.bad.WANNE) {
-          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Badewanne</td></tr>';
-        }
-      }
-
-      if (this.ausstattung.kueche != null) {
-        if (this.ausstattung.kueche.EBK) {
-          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> EBK</td></tr>';
-        }
-      }
-
-      if (this.ausstattung.stellplatzart != null) {
-        if (this.ausstattung.stellplatzart.FREIPLATZ) {
-          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Stellplatz</td></tr>';
-        }
-      }
-
-      if (this.ausstattung.fahrstuhl != null) {
-        if (this.ausstattung.fahrstuhl.PERSONEN) {
-          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Fahrstuhl</td></tr>';
-        }
-      }
-    }
-
-    body += '</table></div><br><br>';
-    body += '<div class="ib-detail-row"></div><br>';
-
-    if (this.freitexte != null) {
-      if (this.freitexte.objektbeschreibung != null) {
-        body += '<div class="ib-detail-description">';
-        body += '<h3>OBJEKTBESCHREIBUNG</h3>';
-        body += '<table>';
-        body += '<tr><td class="ib-detail-datacolumn"> ' + this.freitexte.objektbeschreibung + '</td></tr>';
-        body += '</tr>';
-        body += '</table><br>';
-        body += '</div>';
-      }
-    }
-
-    if (this.freitexte != null) {
-      if (this.freitexte.lage != null) {
-        body += '<div class="ib-detail-exposure">';
-        body += '<h3>LAGE</h3>';
-        body += '<table>';
-        body += '<tr><td class="ib-detail-datacolumn"> ' + this.freitexte.lage + '</td></tr>';
-        body += '</tr>';
-        body += '</table><br>';
-        body += '</div>';
-      }
-    }
-
-    if (this.freitexte != null) {
-      if (this.freitexte.sonstige_angaben != null) {
-        body += '<div class="ib-detail-misc">';
-        body += '<h3>SONSTIGES</h3>';
-        body += '<table>';
-        body += '<tr><td class="ib-detail-datacolumn"> ' + this.freitexte.sonstige_angaben + '</td></tr>';
-        body += '</tr>';
-        body += '</table><br>';
-        body += '</div>';
-      }
-    }
-
-    html += '<div id="content">' + body + '</div>';
-
-    var footer = '';
-    footer += '<div class="ib-detail-row"></div>';
-    footer += '<div class="ib-detail-contact">';
-    footer += '<h3>IHR ANSPRECHPARTNER</h3>';
-    footer += '<b>';
-
-    if (this.kontaktperson.anrede !=null) {
-      footer += this.kontaktperson.anrede + ' ';
-    }
-
-    if (this.kontaktperson.vorname !=null) {
-      footer += this.kontaktperson.vorname + ' ';
-    }
-
-    footer += this.kontaktperson.name + '</b></br>';
-
-    if (this.kontaktperson.firma !=null) {
-      footer += this.kontaktperson.firma + '</br>';
-    }
-
-    if (this.kontaktperson.strasse !=null && this.kontaktperson.hausnummer != null) {
-      footer += this.kontaktperson.strasse + ' ' + this.kontaktperson.hausnummer + '</br>';
-    }
-
-    if (this.kontaktperson.plz !=null && this.kontaktperson.ort != null) {
-      footer += this.kontaktperson.plz + ' ' + this.kontaktperson.ort + '</br>';
-    }
-
-    if (this.kontaktperson.tel_durchw != null) {
-      footer += 'Tel.: ' + this.kontaktperson.tel_durchw + '</br>';
-    }
-
-    if (this.kontaktperson.url != null){
-      footer += '<a href="';
-
-      if (this.kontaktperson.url.indexOf("http") == -1) {
-        footer += 'http://' + this.kontaktperson.url;
-      } else {
-        footer += this.kontaktperson.url
-      }
-
-      footer += '" target="_blank">' + this.kontaktperson.url + '</a>';
-    }
-
-    footer += '</br></br></br>';
-    footer += '</div>';
-    footer += '<div class="ib-detail-documents">';
-    footer += '<h3>DOKUMENTE</h3>';
-    footer += '<table width="420px" cellspacing="0" class="ib-detail-document-table">';
-
-    if (documents == '') {
-      footer += 'Keine Dokumente vorhanden';
-    } else {
-      footer += documents;
-    }
-
-    footer += '</table></div>';
-    footer += '<div class="ib-detail-row"></div>';
-    footer += '</div>'
-    html += '<div id="footer">' + footer + '<br><br><br></div>';
-
-    return html + '</div>';
   }
 }
 
@@ -1502,7 +1448,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
 
   // Renders the respective real estates into the given HTML element
   this.render = function (listElement) {
-    listElement.html(this.htmlList();
+
   }
 }
 
@@ -1564,7 +1510,5 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
 
   // Renders the respective real estate into the given HTML element
   this.render = function (headerElement, exposeElement) {
-    headerElement.html(this.header();
-    exposeElement.html(this.realEstate.details();
   }
 }
