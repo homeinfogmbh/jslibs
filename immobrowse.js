@@ -1252,7 +1252,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
 
   // Sorts real estates
   this.sort = function (property, order) {
-    immobrowse.logger.debug('Sorting after ' + property + ' ' + order + '.');
+    immobrowse.logger.debug('Sorting by ' + property + ' ' + order + '.');
     this.filteredRealEstates.sort(this.getSorter(property, order));
   }
 
