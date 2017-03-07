@@ -863,7 +863,13 @@ immobrowse.RealEstate = function (cid, realEstate) {
         if (this.anhaenge.anhang[i].gruppe == "GRUNDRISS") {
           floorplans += '<img src="' + this.attachmentURL(this.anhaenge.anhang[i])
             + '" id="floorplan' + floorplansCounter + '" alt="Grundriss' + (floorplansCounter+1)
-            + '" class="ib-detail-image img-responsive"' + ((floorplans != '') ?'style="display: none;")' :'') + ' />';
+            + '" class="ib-detail-image img-responsive"';
+
+          if (floorplansCounter > 0) {
+            floorplans += 'style="display: none;")';
+          }
+
+          floorplans += ' />';
           floorplansCounter++;
         } else if (this.anhaenge.anhang[i].gruppe == "DOKUMENTE") {
           documents += '<a href="' + this.attachmentURL(this.anhaenge.anhang[i])
@@ -871,8 +877,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
             + this.titleImage().anhangtitel + '</a>';
         } else {
           imagesLeft += '<img src="' + this.attachmentURL(this.anhaenge.anhang[i])
-            + '" id="image' + imagesLeftCounter + '" alt="Bild' + (imagesLeftCounter+1) + '" class="ib-detail-image img-responsive"'
-            + ((imagesLeft != '') ?'style="display: none;")' :'') + ' />';
+            + '" id="image' + imagesLeftCounter + '" alt="Bild' + (imagesLeftCounter+1)
+            + '" class="ib-detail-image img-responsive"';
+
+          if (imagesLeftCounter > 0) {
+            imagesLeft += 'style="display: none;")';
+          }
+
+          imagesLeft += ' />';
           imagesLeftCounter++;
         }
       }
@@ -1062,32 +1074,53 @@ immobrowse.RealEstate = function (cid, realEstate) {
         body += '<div class="ib-detail-amenities">';
         body += '<h3>AUSSTATTUNG</h3>';
         body += '<table width="420px" cellspacing="0">';
-        body += (this.flaechen.anzahl_balkone > 0) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Balkon</td></tr>' :'';
-        body += (this.ausstattung.barrierefrei) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Barrierefrei</td></tr>' :'';
-        body += (this.ausstattung.kabel_sat_tv) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Kabel/Sat/TV</td></tr>' :'';
-        body += (this.ausstattung.unterkellert) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Keller</td></tr>' :'';
-        body += (this.ausstattung.rollstuhlgerecht) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Rollstuhlgerecht</td></tr>' :'';
 
-        if (this.ausstattung.bad != null) {
-          body += (this.ausstattung.bad.FENSTER) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Fenster im Bad</td></tr>' :'';
-          body += (this.ausstattung.bad.WANNE) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Badewanne</td></tr>' :'';
-          body += (this.ausstattung.bad.DUSCHE) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Dusche</td></tr>' :'';
+        if (this.flaechen.anzahl_balkone > 0) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Balkon</td></tr>';
         }
 
-        if (this.ausstattung.kueche != null) {
-          body += (this.ausstattung.kueche.EBK) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> EBK</td></tr>' :'';
+        if (this.ausstattung.barrierefrei) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Barrierefrei</td></tr>';
         }
 
-        if (this.ausstattung.bad != null) {
-          body += (this.ausstattung.bad.WANNE) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Badewanne</td></tr>' :'';
+        if (this.ausstattung.kabel_sat_tv) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Kabel/Sat/TV</td></tr>';
         }
 
-        if (this.ausstattung.stellplatzart != null) {
-          body += (this.ausstattung.stellplatzart.FREIPLATZ) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Stellplatz</td></tr>' :'';
+        if (this.ausstattung.unterkellert) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Keller</td></tr>';
         }
 
-        if (this.ausstattung.fahrstuhl != null) {
-          body += (this.ausstattung.fahrstuhl.PERSONEN) ?'<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Fahrstuhl</td></tr>' :'';
+        if (this.ausstattung.rollstuhlgerecht) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Rollstuhlgerecht</td></tr>';
+        }
+
+        if (this.ausstattung.bad.FENSTER) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Fenster im Bad</td></tr>';
+        }
+
+        if (this.ausstattung.bad.WANNE) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Badewanne</td></tr>';
+        }
+
+        if (this.ausstattung.bad.DUSCHE) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Dusche</td></tr>';
+        }
+
+        if (this.ausstattung.kueche.EBK) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> EBK</td></tr>';
+        }
+
+        if (this.ausstattung.bad.WANNE) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Badewanne</td></tr>';
+        }
+
+        if (this.ausstattung.stellplatzart.FREIPLATZ) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Stellplatz</td></tr>';
+        }
+
+        if (this.ausstattung.fahrstuhl.PERSONEN) {
+          body += '<tr><td class="ib-detail-datacolumn"><img src="img/ok.png" /> Fahrstuhl</td></tr>';
         }
 
         body += '</table></div><br><br>';
@@ -1138,12 +1171,47 @@ immobrowse.RealEstate = function (cid, realEstate) {
     footer += '<div class="ib-detail-row"></div>';
     footer += '<div class="ib-detail-contact">';
     footer += '<h3>IHR ANSPRECHPARTNER</h3>';
-    footer += '<b>' + ((this.kontaktperson.anrede != "0") ?this.kontaktperson.anrede :'') + ' ' + this.kontaktperson.vorname + ' ' + this.kontaktperson.name + '</b></br>';
-    footer += (this.kontaktperson.firma != undefined) ?this.kontaktperson.firma + '</br>' : '';
-    footer += (this.kontaktperson.strasse != undefined && this.kontaktperson.hausnummer != undefined) ?this.kontaktperson.strasse + ' ' + this.kontaktperson.hausnummer + '</br>' :'';
-    footer += (this.kontaktperson.plz != undefined && this.kontaktperson.ort != undefined) ?this.kontaktperson.plz + ' ' + this.kontaktperson.ort + '</br>' :'';
-    footer += (this.kontaktperson.tel_durchw != undefined) ?'Tel.: ' + this.kontaktperson.tel_durchw + '</br>' :'';
-    footer += (this.kontaktperson.url != undefined) ?'<a href="' + ((this.kontaktperson.url.indexOf("http") == -1) ?'http://' + this.kontaktperson.url :this.kontaktperson.url) + '" target="_blank">' + this.kontaktperson.url + '</a></br></br></br>': '</br></br></br>';
+    footer += '<b>';
+
+    if (this.kontaktperson.anrede !=null) {
+      footer += this.kontaktperson.anrede + ' ';
+    }
+
+    if (this.kontaktperson.vorname !=null) {
+      footer += this.kontaktperson.vorname + ' ';
+    }
+
+    footer += this.kontaktperson.name + '</b></br>';
+
+    if (this.kontaktperson.firma !=null) {
+      footer += this.kontaktperson.firma + '</br>';
+    }
+
+    if (this.kontaktperson.strasse !=null && this.kontaktperson.hausnummer != null) {
+      footer += this.kontaktperson.strasse + ' ' + this.kontaktperson.hausnummer + '</br>';
+    }
+
+    if (this.kontaktperson.plz !=null && this.kontaktperson.ort != null) {
+      footer += this.kontaktperson.plz + ' ' + this.kontaktperson.ort + '</br>';
+    }
+
+    if (this.kontaktperson.tel_durchw != null) {
+      footer += 'Tel.: ' + this.kontaktperson.tel_durchw + '</br>';
+    }
+
+    if (this.kontaktperson.url != null){
+      footer += '<a href="';
+
+      if (this.kontaktperson.url.indexOf("http") == -1) {
+        footer += 'http://' + this.kontaktperson.url;
+      } else {
+        footer += this.kontaktperson.url
+      }
+
+      footer += '" target="_blank">' + this.kontaktperson.url + '</a>';
+    }
+
+    footer += '</br></br></br>';
     footer += '</div>';
     footer += '<div class="ib-detail-documents">';
     footer += '<h3>DOKUMENTE</h3>';
@@ -1413,7 +1481,9 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
     header += ' | ';
     header += this.realEstate.cityPreview();
     header += '</strong><br>'
-    header += '<div class="ib-preview-back" onclick="immobrowse.open(\'' + this.listUrl.replace('{cid}', this.cid) + '\');"> << Zurück</div>';
+    header += '<div class="ib-preview-back" onclick="immobrowse.open(\'';
+    header += this.listUrl.replace('{cid}', this.cid);
+    header += '\');"> << Zurück</div>';
     header += '<div></h3><br><br>';
     return header;
   }
