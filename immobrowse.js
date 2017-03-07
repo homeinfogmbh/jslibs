@@ -260,6 +260,8 @@ immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
   Real estate wrapper class
 */
 immobrowse.RealEstate = function (cid, realEstate) {
+  this.oval = '<div class="ib-preview-oval"><div class="oval">{}</div></div>';
+
   for (var prop in realEstate) {
     if (realEstate.hasOwnProperty(prop)) {
         this[prop] = realEstate[prop];
@@ -395,7 +397,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       if (this.flaechen.anzahl_zimmer == null) {
         return null;
       } else {
-        return this.flaechen.anzahl_zimmer.toString().replace(".", ",");;
+        return homeinfo.str.dot2comma(this.flaechen.anzahl_zimmer.toString());
       }
     }
   }
@@ -642,6 +644,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       case 'FLUESSIGGAS':
         return "Flüssiggas";
     }
+
     return pet;
   }
 
@@ -680,6 +683,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       case 'PROJEKTIERT':
         return "Projektiert";
     }
+
     return zustand;
   }
 
@@ -728,6 +732,234 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
+  this.miscNotes = function () {
+    if (this.freitexte != null) {
+      return this.freitexte.sonstige_angaben;
+    } else {
+      return null;
+    }
+  }
+
+  this.description = function () {
+    if (this.freitexte != null) {
+      return this.freitexte.objektbeschreibung;
+    } else {
+      return null;
+    }
+  }
+
+  this.exposure = function () {
+    if (this.freitexte != null) {
+      return this.freitexte.lage;
+    } else {
+      return null;
+    }
+  }
+
+  this.furnishingTags = function () {
+    var html = '';
+
+    if (this.ausstattung != null) {
+      if (this.flaechen != null) {
+        if (this.flaechen.anzahl_balkone > 0) {
+          html += this.oval.replace('{}', 'Balkon');
+        }
+      }
+
+      if (this.ausstattung.barrierefrei) {
+        html += this.oval.replace('{}', 'Barrierefrei');
+      }
+
+      if (this.ausstattung.kabel_sat_tv) {
+        html += this.oval.replace('{}', 'Kabel / Sat. / TV');
+      }
+
+      if (this.ausstattung.unterkellert) {
+        html += this.oval.replace('{}', 'Keller');
+      }
+
+      if (this.ausstattung.rollstuhlgerecht) {
+        html += this.oval.replace('{}', 'Rollstuhlgerecht');
+      }
+
+      if (this.ausstattung.bad != null) {
+        if (this.ausstattung.bad.FENSTER) {
+          html += this.oval.replace('{}', 'Fenster im Bad');
+        }
+
+        if (this.ausstattung.bad.WANNE) {
+          html += this.oval.replace('{}', 'Badewanne');
+        }
+
+        if (this.ausstattung.bad.DUSCHE) {
+          html += this.oval.replace('{}', 'Dusche');
+        }
+      }
+
+      if (this.ausstattung.kueche != null) {
+        if (this.ausstattung.kueche.EBK) {
+          html += this.oval.replace('{}', 'Einbauküche');
+        }
+      }
+
+      if (this.ausstattung.stellplatzart != null) {
+        if (this.ausstattung.stellplatzart.FREIPLATZ) {
+          html += this.oval.replace('{}', 'Stellplatz');
+        }
+      }
+
+      if (this.ausstattung.fahrstuhl != null) {
+        if (this.ausstattung.fahrstuhl.PERSONEN) {
+          html += this.oval.replace('{}', 'Personenaufzug');
+        }
+      }
+    }
+
+    return html;
+  }
+
+  this.renderPrices = function (priceElements) {
+    if (priceElements.coldRent != null) {
+      if (this.preise.nettokaltmiete != null) {
+        priceElements.coldRent.html(immobrowse.euroHtml(this.preise.nettokaltmiete));
+      }
+    }
+
+    if (priceElements.serviceCharge != null) {
+      if (this.preise.nebenkosten != null) {
+        priceElements.serviceCharge.html(immobrowse.euroHtml(this.preise.nebenkosten));
+      }
+    }
+
+    if (priceElements.heatingCosts != null) {
+      if (this.preise.heizkosten != null) {
+        priceElements.heatingCosts.html(immobrowse.euroHtml(this.preise.heizkosten));
+      }
+    }
+
+    if (priceElements.heatingCostsInServiceCharge != null) {
+      if (this.preise.heizkosten_enthalten != null) {
+        if (this.preise.heizkosten_enthalten == true) {
+          priceElements.heatingCostsInServiceCharge.html('Ja');
+        } else {
+          priceElements.heatingCostsInServiceCharge.html('Nein');
+        }
+      }
+    }
+
+    if (priceElements.securityDeposit != null) {
+      if (this.preise.kaution != null) {
+        priceElements.securityDeposit.html(immobrowse.euroHtml(this.preise.kaution));
+      }
+    }
+
+    if (priceElements.subjectToCommission != null) {
+      if (this.preise.provisionspflichtig != null) {
+        if (this.preise.provisionspflichtig) {
+          priceElements.subjectToCommission.html('Ja');
+        } else {
+          priceElements.subjectToCommission.html('Nein');
+        }
+      }
+    }
+  }
+
+  this.renderArea = function (areaElements) {
+    if (areaElements.livingArea != null) {
+      if (this.flaechen.wohnflaeche != null) {
+        areaElements.livingArea.html(immobrowse.squareMetersHtml(this.flaechen.wohnflaeche));
+      }
+    }
+
+    if (areaElements.rooms != null) {
+      if (this.flaechen.anzahl_zimmer != null) {
+        areaElements.rooms.html(this.rooms());
+      }
+    }
+  }
+
+  this.renderGeo = function (geoElements) {
+    if (geoElements.floor != null) {
+      if (this.geo.etage != null) {
+        geoElements.floor.html(this.geo.etage);
+      }
+    }
+  }
+
+  this.renderManagement = function (managementElements) {
+    if (this.verwaltung_objekt != null) {
+      if (managementElements.availableFrom != null) {
+        if (this.verwaltung_objekt.verfuegbar_ab != null) {
+          managementElements.availableFrom.html(this.verwaltung_objekt.verfuegbar_ab);
+        }
+      }
+
+      if (managementElements.councilFlat != null) {
+        if (this.verwaltung_objekt.wbs_sozialwohnung == true) {
+          managementElements.councilFlat.html('Ja');
+        }
+      }
+    }
+  }
+
+  this.renderState = function (stateElements) {
+    if (this.zustand_angaben != null) {
+      if (stateElements.constructionYear != null) {
+        if (this.zustand_angaben.baujahr != null) {
+          stateElements.constructionYear.html(this.zustand_angaben.baujahr);
+        }
+      }
+
+      if (stateElements.state != null) {
+        if (this.zustand_angaben.zustand != null) {
+          stateElements.state.html(this.zustand());
+        }
+      }
+
+      if (stateElements.lastModernization != null) {
+        if (this.zustand_angaben.letztemodernisierung != null) {
+          stateElements.lastModernization.html(this.zustand_angaben.letztemodernisierung);
+        }
+      }
+
+      if (stateElements.energyCertificate) {
+        if (this.zustand_angaben.energiepass != null) {
+          if (this.zustand_angaben.energiepass.length > 0) {
+            if (stateElements.energyCertificate.type != null) {
+              var energiepass = this.zustand_angaben.energiepass[0];
+
+              if (energiepass.epart == null) {
+                stateElements.energyCertificate.type.html('Nicht angegeben');
+              } else if (energiepass.epart == 'VERBRAUCH') {
+                stateElements.energyCertificate.type.html('Verbrauchsausweis');
+              } else {
+                stateElements.energyCertificate.type.html('Bedarfsausweis');
+              }
+            }
+
+            if (stateElements.energyCertificate.consumption != null) {
+              if (energiepass.energieverbrauchkennwert != '') {
+                stateElements.energyCertificate.consumption.html(energiepass.energieverbrauchkennwert + ' kWh/(m²*a)');
+              }
+            }
+
+            if (stateElements.energyCertificate.primaryEnergyCarrier != null) {
+              if (energiepass.primaerenergietraeger != null) {
+                stateElements.energyCertificate.primaryEnergyCarrier.html(this.primaerenergietraeger());
+              }
+            }
+
+            if (stateElements.energyCertificate.valueClass != null) {
+              if (energiepass.wertklasse != null) {
+                stateElements.energyCertificate.valueClass.html(energiepass.wertklasse);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   this.preview = function (baseUrl) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
@@ -764,68 +996,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     html += '<div class="ib-preview-freefrom-data">' + this.verwaltung_objekt.verfuegbar_ab + '</div>';
     html += '</div>';
     html += '</div>';
-
-    if (this.ausstattung != null) {
-      if (this.ausstattung.kueche != null || this.ausstattung.bad != null ||
-          this.ausstattung.kabel_sat_tv || this.ausstattung.stellplatzart != null ||
-          this.ausstattung.barrierefrei || this.ausstattung.fahrstuhl != null ||
-          this.flaechen.anzahl_balkone > 0 || this.ausstattung.bad != null ||
-          this.ausstattung.unterkellert || this.ausstattung.rollstuhlgerecht) {
-
-        if (this.flaechen.anzahl_balkone > 0) {
-          html += '<div class="ib-preview-oval"><div class="oval">Balkon</div></div>';
-        }
-
-        if (this.ausstattung.barrierefrei) {
-          html += '<div class="ib-preview-oval"><div class="oval">Barrierefrei</div></div>';
-        }
-
-        if (this.ausstattung.kabel_sat_tv) {
-          html += '<div class="ib-preview-oval"><div class="oval">Kabel/Sat/TV</div></div>';
-        }
-
-        if (this.ausstattung.unterkellert) {
-          html += '<div class="ib-preview-oval"><div class="oval">Keller</div></div>';
-        }
-
-        if (this.ausstattung.rollstuhlgerecht) {
-          html += '<div class="ib-preview-oval"><div class="oval">Rollstuhlgerecht</div></div>';
-        }
-
-        if (this.ausstattung.bad != null) {
-          if (this.ausstattung.bad.FENSTER) {
-            html += '<div class="ib-preview-oval"><div class="oval">Fenster im Bad</div></div>';
-          }
-
-          if (this.ausstattung.bad.WANNE) {
-            html += '<div class="ib-preview-oval"><div class="oval">Badewanne</div></div>';
-          }
-
-          if (this.ausstattung.bad.DUSCHE) {
-            html += '<div class="ib-preview-oval"><div class="oval">Dusche</div></div>';
-          }
-        }
-
-        if (this.ausstattung.kueche != null) {
-          if (this.ausstattung.kueche.EBK) {
-            html += '<div class="ib-preview-oval"><div class="oval">EBK</div></div>';
-          }
-        }
-
-        if (this.ausstattung.stellplatzart != null) {
-          if (this.ausstattung.stellplatzart.FREIPLATZ) {
-            html += '<div class="ib-preview-oval"><div class="oval">Stellplatz</div></div>';
-          }
-        }
-
-        if (this.ausstattung.fahrstuhl != null) {
-          if (this.ausstattung.fahrstuhl.PERSONEN) {
-            html += '<div class="ib-preview-oval"><div class="oval">Fahrstuhl</div></div>';
-          }
-        }
-      }
-    }
-
+    html += this.furnishingTags();
     html += '</div>';
     html += '</div>';
     return html;
@@ -907,104 +1078,10 @@ immobrowse.RealEstate = function (cid, realEstate) {
       }
     }
 
-    body += '<div class="ib-detail-row"></div><br><br>';
-    body += '<div class="ib-detail-prices">';
-    body += '<h3>PREISE & KOSTEN</h3>';
-    body += '<table width="420px">';
-
-    if (this.preise.nettokaltmiete != null) {
-      body += '<tr>';
-      body += '<td><strong>Nettokaltmiete</strong></td>';
-      body += '<td align="right">' + immobrowse.euroHtml(this.preise.nettokaltmiete) + '</td>';
-      body += '</tr>';
-    }
-
-    if (this.preise.nebenkosten != null) {
-      body += '<tr>';
-      body += '<td>Nebenkosten</td>';
-      body += '<td align="right">' + immobrowse.euroHtml(this.preise.nebenkosten) + '</td>';
-      body += '</tr>';
-    }
-
-    if (this.preise.heizkosten != null) {
-      body += '<tr>';
-      body += '<td>Heizkosten</td>';
-      body += '<td align="right">' + immobrowse.euroHtml(this.preise.heizkosten) + '</td>';
-      body += '</tr>';
-    }
-
-    if (this.preise.heizkosten_enthalten != null) {
-      body += '<tr>';
-      body += '<td>Heizkosten in Nebenkosten enthalten</td>';
-      body += '<td align="right">';
-
-      if (this.preise.heizkosten_enthalten == true) {
-        body += "Ja";
-      } else {
-        body += "Nein";
-      }
-
-      body += '</td></tr>';
-    }
-
-    if (this.preise.kaution != null) {
-      body += '<tr>';
-      body += '<td>Kaution oder Genossenschaftsanteile</td>';
-      body += '<td align="right">' + immobrowse.euroHtml(this.preise.kaution) + '</td>';
-      body += '</tr>';
-    }
-
-    if (this.preise.provisionspflichtig != null) {
-      body += '<tr>';
-      body += '<td><strong>Provisionsfrei</strong></td>';
-      if (this.preise.provisionspflichtig == true)
-      body += '<td align="right">Nein</td>';
-      else if (this.preise.provisionspflichtig == false)
-      body += '<td align="right">Ja</td>';
-      body += '</tr>';
-    }
-
-    body += '</table><br></div>';
     body += '<div class="ib-detail-properties">';
     body += '<h3>GRÖSSE & ZUSTAND</h3>';
     body += '<table width="420px" cellspacing="0">';
 
-    if (this.flaechen.wohnflaeche != null) {
-      body += '<tr><td><strong>Wohnfläche in m²</strong></td>';
-      body += '<td align="right">' + this.flaechen.wohnflaeche + '</td></tr>';
-    }
-
-    if (this.flaechen.anzahl_zimmer != null) {
-      body += '<tr><td><strong>Zimmer</strong></td>';
-      body += '<td align="right">' + this.flaechen.anzahl_zimmer.toString().replace(".", ","); + '</td></tr>';
-    }
-
-    if (this.geo.etage != null) {
-      body += '<tr><td>Etage</td>';
-      body += '<td align="right">' + this.geo.etage + '</td></tr>';
-    }
-
-    if (this.verwaltung_objekt.verfuegbar_ab != undefined) {
-      body += '<tr><td>Verfügbar ab</td>';
-      body += '<td align="right">' + this.verwaltung_objekt.verfuegbar_ab + '</td></tr>';
-    }
-
-    if (this.zustand_angaben != null) {
-      if (this.zustand_angaben.baujahr != null) {
-        body += '<tr><td>Baujahr</td>';
-        body += '<td align="right">' + this.zustand_angaben.baujahr + '</td></tr>';
-      }
-
-      if (this.zustand_angaben.zustand != null) {
-        body += '<tr><td>Zustand</td>';
-        body += '<td align="right">' + this.zustand() + '</td></tr>';
-      }
-    }
-
-    if (this.verwaltung_objekt.wbs_sozialwohnung == true) {
-      body += '<tr><td>WBS</td>';
-      body += '<td align="right">Erforderlich</td></tr>';
-    }
 
     body += '</table><br></div>';
     body += '<div class="ib-detail-row"></div>';
@@ -1425,7 +1502,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
 
   // Renders the respective real estates into the given HTML element
   this.render = function (listElement) {
-    listElement.innerHTML = this.htmlList();
+    listElement.html(this.htmlList();
   }
 }
 
@@ -1487,7 +1564,7 @@ immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
 
   // Renders the respective real estate into the given HTML element
   this.render = function (headerElement, exposeElement) {
-    headerElement.innerHTML = this.header();
-    exposeElement.innerHTML = this.realEstate.details();
+    headerElement.html(this.header();
+    exposeElement.html(this.realEstate.details();
   }
 }
