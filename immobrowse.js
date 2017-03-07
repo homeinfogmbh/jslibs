@@ -1362,7 +1362,7 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
 
 
 /*
-  Detailed expose peseudo-class
+  Detailed expose class
 */
 immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
   this.cid = cid;
