@@ -1142,10 +1142,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
-  this.preview = function (baseUrl) {
+  this.preview = function (elements) {
     var titleImageUrl = this.attachmentURL(this.titleImage());
     var rooms = this.rooms();
-    var url = baseUrl.replace('{cid}', this.cid).replace('{objektnr_extern}', this.objektnr_extern());
     html = '<div class="ib-preview-entry" onclick="immobrowse.open(\'' + url + '\');">';
 
     if (titleImageUrl != null) {
@@ -1182,76 +1181,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
     html += '</div>';
     html += '</div>';
     return html;
-  }
-
-  // Render real estate's HTML details
-  this.details = function () {
-    var rooms = this.rooms();
-    var html = '';
-    var documents = ''
-
-    var body = '';
-    var header = '<div class="ib-detail-id">';
-    header += 'Objektnummer: ' + this.objektnr_extern();
-    header += '</div>';
-    body += header;
-
-    var maxImageCounter = 0; // Complete count of images; needed for the button to hide all images
-    var i;
-
-    if (this.anhaenge != null) {
-      for (i = 0; i < this.anhaenge.anhang.length; i++) {
-        if (this.anhaenge.anhang[i].gruppe != "GRUNDRISS" && this.anhaenge.anhang[i].gruppe != "DOKUMENTE") {
-          maxImageCounter++;
-        }
-      }
-
-      // Get anhaenge (images and documents)
-      var imagesLeft = '';
-      var imagesLeftCounter = 0;
-      var floorplans = '';
-      var floorplansCounter = 0;
-
-      for (i = 0; i < this.anhaenge.anhang.length; i++) {
-        if (this.anhaenge.anhang[i].gruppe == "GRUNDRISS") {
-          floorplans += '<img src="' + this.attachmentURL(this.anhaenge.anhang[i])
-            + '" id="floorplan' + floorplansCounter + '" alt="Grundriss' + (floorplansCounter+1)
-            + '" class="ib-detail-image img-responsive"';
-
-          if (floorplansCounter > 0) {
-            floorplans += 'style="display: none;")';
-          }
-
-          floorplans += ' />';
-          floorplansCounter++;
-        } else if (this.anhaenge.anhang[i].gruppe == "DOKUMENTE") {
-          documents += '<a href="' + this.attachmentURL(this.anhaenge.anhang[i])
-            + '" target="_blank"><img src="img/pdf_icon.png" id="document class="img-responsive"' + i + '" alt="Dokument' + (i+1) + '" /> '
-            + this.titleImage().anhangtitel + '</a>';
-        } else {
-          imagesLeft += '<img src="' + this.attachmentURL(this.anhaenge.anhang[i])
-            + '" id="image' + imagesLeftCounter + '" alt="Bild' + (imagesLeftCounter+1)
-            + '" class="ib-detail-image img-responsive"';
-
-          if (imagesLeftCounter > 0) {
-            imagesLeft += 'style="display: none;")';
-          }
-
-          imagesLeft += ' />';
-          imagesLeftCounter++;
-        }
-      }
-
-      // Set the button for each image
-      if (imagesLeftCounter > 1) {
-        body += '<div class="ib-details-row"></div><br>';
-        for (i = 0; i < imagesLeftCounter; i++) {
-          if (this.anhaenge.anhang[i].gruppe != "GRUNDRISS" && this.anhaenge.anhang[i].gruppe != "DOKUMENTE") {
-            body += '<button class="showimage" id="button' + i + '" class="btn btn-success pull-right" type="button" data-nr="' + i + '" data-nrmax="' + maxImageCounter + '">' + (i+1) + '</button>';
-          }
-        }
-      }
-    }
   }
 }
 
