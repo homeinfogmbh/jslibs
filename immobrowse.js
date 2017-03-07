@@ -109,7 +109,7 @@ immobrowse.squareMetersHtml = function (area) {
 
 
 immobrowse.titleImageHtml = function (url) {
-  return '<img src="' + url + '" alt="Titelbild" class="ib-preview-image">';
+  return '<img src="' + url + '" alt="Titelbild" class="ib-preview-image img-responsive">';
 }
 
 
@@ -862,15 +862,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
         if (this.anhaenge.anhang[i].gruppe == "GRUNDRISS") {
           floorplans += '<img src="' + this.attachmentURL(this.anhaenge.anhang[i])
             + '" id="floorplan' + floorplansCounter + '" alt="Grundriss' + (floorplansCounter+1)
-            + '" class="ib-detail-image"' + ((floorplans != '') ?'style="display: none;")' :'') + ' />';
+            + '" class="ib-detail-image img-responsive"' + ((floorplans != '') ?'style="display: none;")' :'') + ' />';
           floorplansCounter++;
         } else if (this.anhaenge.anhang[i].gruppe == "DOKUMENTE") {
           documents += '<a href="' + this.attachmentURL(this.anhaenge.anhang[i])
-            + '" target="_blank"><img src="img/pdf_icon.png" id="document' + i + '" alt="Dokument' + (i+1) + '" /> '
+            + '" target="_blank"><img src="img/pdf_icon.png" id="document class="img-responsive"' + i + '" alt="Dokument' + (i+1) + '" /> '
             + this.titleImage().anhangtitel + '</a>';
         } else {
           imagesLeft += '<img src="' + this.attachmentURL(this.anhaenge.anhang[i])
-            + '" id="image' + imagesLeftCounter + '" alt="Bild' + (imagesLeftCounter+1) + '" class="ib-detail-image"'
+            + '" id="image' + imagesLeftCounter + '" alt="Bild' + (imagesLeftCounter+1) + '" class="ib-detail-image img-responsive"'
             + ((imagesLeft != '') ?'style="display: none;")' :'') + ' />';
           imagesLeftCounter++;
         }
