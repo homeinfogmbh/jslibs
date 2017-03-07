@@ -168,7 +168,7 @@ immobrowse.mkContactMail = function (
 
 
 /*
-  Mailer pseudo-class
+  Mailer class
 */
 immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
   this.baseUrl = 'https://tls.homeinfo.de/hisecon';
@@ -256,7 +256,7 @@ immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
 
 
 /*
-  Real estate wrapper pseudo-class
+  Real estate wrapper class
 */
 immobrowse.RealEstate = function (cid, realEstate) {
   for (var prop in realEstate) {
@@ -1165,7 +1165,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
 
 /*
-  Real estate list pseudo-class
+  Real estate list class
 */
 immobrowse.List = function (cid, sorting, exposeBaseUrl) {
   this.cid = cid;
