@@ -1444,12 +1444,14 @@ immobrowse.List = function (cid, realEstates) {
   this.render = function (listElement, listItemTemplate, elements) {
     listElement.html('');
 
+    immobrowse.logger.debug('Filtered real estates: ' + JSON.strinify(this.filteredRealEstates));
+
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
       this.filteredRealEstates[i].render(elements);
       var listItem = listItemTemplate.clone();
       listItem.attr('id', null);  // remove id on list item
       listItem.find('*').attr('id', null);  // remove id on all children of list item
-      listElement.html(listElement.html() + listItem.html());
+      listElement.html(listElement.html() + listItem.html() + i);
     }
   }
 }
