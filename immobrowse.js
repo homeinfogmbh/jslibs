@@ -1037,8 +1037,11 @@ immobrowse.RealEstate = function (cid, realEstate) {
       }
 
       if (elements.energyCertificate != null) {
+        console.log('DEBUG2');
         if (this.zustand_angaben.energiepass != null) {
+          console.log('DEBUG3');
           if (this.zustand_angaben.energiepass.length > 0) {
+            console.log('DEBUG4');
             this.renderEnergyCertificate(elements.energyCertificate);
           }
         }
@@ -1063,7 +1066,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     if (elements.consumption != null) {
+      console.log('DEBUG5');
       if (energiepass.energieverbrauchkennwert != '') {
+        console.log('DEBUG5');
         elements.consumption.html(energiepass.energieverbrauchkennwert + this.kwh);
       }
     }
@@ -1266,6 +1271,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     if (elements.state != null) {
+      console.log('DEBUG1');
       this.renderState(elements.state);
     }
 
