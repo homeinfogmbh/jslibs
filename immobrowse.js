@@ -125,7 +125,7 @@ immobrowse.getRealEstate = function (cid, objektnr_extern, callback) {
   $.ajax({
     url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + objektnr_extern + '?customer=' + cid,
     success: function (json) {
-      callback(new immobrowse.RealEstate(cid, json);
+      callback(new immobrowse.RealEstate(cid, json));
     },
     error: function() {
       swal({
