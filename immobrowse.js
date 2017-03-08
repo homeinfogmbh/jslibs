@@ -1183,7 +1183,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     if (elements.website != null) {
-      if (this.kontaktperson.url != null){
+      if (this.kontaktperson.url != null) {
         elements.website.html(this.kontaktperson.url);
       }
     }
