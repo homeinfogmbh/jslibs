@@ -1298,19 +1298,19 @@ immobrowse.List = function (cid, realEstates) {
   this.match = function (realEstate, filters) {
     var rent = realEstate.rent();
 
-    if (filters.priceMin >= rent) {
+    if (filters.priceMin > rent) {
       return false;
     }
 
-    if (filters.priceMax <= rent) {
+    if (filters.priceMax < rent) {
       return false;
     }
 
-    if (filters.areaMin >= realEstate.flaechen.wohnflaeche) {
+    if (filters.areaMin > realEstate.flaechen.wohnflaeche) {
       return false;
     }
 
-    if (filters.roomsMin >= realEstate.flaechen.anzahl_zimmer) {
+    if (filters.roomsMin > realEstate.flaechen.anzahl_zimmer) {
       return false;
     }
 
