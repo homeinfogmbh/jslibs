@@ -1116,7 +1116,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     Renders contact data into the respective elements.
   */
   this.renderContact = function (elements) {
-    if (elements.salutation != null)
+    if (elements.salutation != null) {
       if (this.kontaktperson.anrede != null) {
         elements.salutation.html(this.kontaktperson.anrede);
       }
