@@ -1439,12 +1439,14 @@ immobrowse.List = function (cid, realEstates) {
   /*
     Renders the respective real estates into the given HTML element.
   */
-  this.render = function (listElement, listItemTemplate) {
+  this.render = function (listElement, listItemTemplate, elements) {
+    listElement.html('');
+
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
-      this.filteredRealEstates[i].render(listItemTemplate);
+      this.filteredRealEstates[i].render(elements);
       var listItem = listItemTemplate.clone();
       listItem.attr('id', null);
-      listItem.html(listItem.html() + listElement);
+      listElement.html(listElement.html() + listItem.html());
     }
   }
 }
