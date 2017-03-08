@@ -1088,9 +1088,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (this.freitexte != null) {
       if (elements.objectTitle != null) {
         if (this.freitexte.objekttitel != null) {
-          immobrowse.logger.debug('Rendering objectTitle=' + this.freitexte.objekttitel);
           elements.objectTitle.html(this.freitexte.objekttitel);
-          immobrowse.logger.debug('Rendered objectTitle=' + elements.objectTitle.html());
         }
       }
 
