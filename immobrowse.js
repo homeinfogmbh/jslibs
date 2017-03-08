@@ -308,7 +308,7 @@ immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
 */
 immobrowse.RealEstate = function (cid, realEstate) {
   this.oval = '<div class="ib-preview-oval"><div class="oval">{}</div></div>';
-  this.kwh = '<sup>kWh</sup>&frasl;<sub>m<sup>2</sup>&middot;a</sub>';
+  this.kwh = '<span class="fraction"><span class="top">kWh</span><span class="bottom"><sub>m<sup>2</sup>&middot;a</sub></span></span>';
 
   for (var prop in realEstate) {
     if (realEstate.hasOwnProperty(prop)) {
