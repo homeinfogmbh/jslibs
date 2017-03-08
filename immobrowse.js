@@ -117,6 +117,53 @@ immobrowse.titleImageHtml = function (url) {
 /**TODO Mockup **/
 immobrowse.titleImageDummy = 'https://tls.homeinfo.de/does/not/exist';
 
+
+/*
+  Queries real estate data from the API and runs callback function.
+*/
+immobrowse.getRealEstate = function (cid, objektnr_extern, callback) {
+  $.ajax({
+    url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + objektnr_extern + '?customer=' + cid,
+    success: function (json) {
+      callback(new immobrowse.RealEstate(cid, json);
+    },
+    error: function() {
+      swal({
+        title: 'Immobilie konnten nicht geladen werden.',
+        text: 'Bitte versuchen Sie es später noch ein Mal.',
+        type: 'error'
+      });
+    }
+  });
+}
+
+
+/*
+  Queries API for real estate list and runs callback function.
+*/
+immobrowse.getRealEstates = function (cid, callback) {
+  $.ajax({
+    url: 'https://tls.homeinfo.de/immobrowse/list/' + cid,
+    success: function (json) {
+      var realEstates = [];
+
+      for (var i = 0; i < json.length; i++) {
+        realEstates.push(new immobrowse.RealEstate(cid, json[i]));
+      }
+
+      callback(realEstates)
+    },
+    error: function() {
+      swal({
+        title: 'Immobilien konnten nicht geladen werden.',
+        text: 'Bitte versuchen Sie es später noch ein Mal.',
+        type: 'error'
+      });
+    }
+  });
+}
+
+
 // Opens the respective URL
 immobrowse.open = function (url) {
   window.open(url, '_self');
@@ -307,7 +354,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return this.verwaltung_techn.objektnr_extern;
   }
 
-  this.objekttitel = function () {
+  this.objectTitle = function () {
     if (this.freitexte != null) {
       if (this.freitexte.objekttitel != null) {
         return this.freitexte.objekttitel;
@@ -870,248 +917,335 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return html;
   }
 
-  this.renderPrices = function (priceElements) {
-    if (priceElements.coldRent != null) {
+  /*
+    Renders prices into the respective elements.
+  */
+  this.renderPrices = function (elements) {
+    if (elements.coldRent != null) {
       if (this.preise.nettokaltmiete != null) {
-        priceElements.coldRent.html(immobrowse.euroHtml(this.preise.nettokaltmiete));
+        elements.coldRent.html(immobrowse.euroHtml(this.preise.nettokaltmiete));
       }
     }
 
-    if (priceElements.serviceCharge != null) {
+    if (elements.serviceCharge != null) {
       if (this.preise.nebenkosten != null) {
-        priceElements.serviceCharge.html(immobrowse.euroHtml(this.preise.nebenkosten));
+        elements.serviceCharge.html(immobrowse.euroHtml(this.preise.nebenkosten));
       }
     }
 
-    if (priceElements.heatingCosts != null) {
+    if (elements.heatingCosts != null) {
       if (this.preise.heizkosten != null) {
-        priceElements.heatingCosts.html(immobrowse.euroHtml(this.preise.heizkosten));
+        elements.heatingCosts.html(immobrowse.euroHtml(this.preise.heizkosten));
       }
     }
 
-    if (priceElements.heatingCostsInServiceCharge != null) {
+    if (elements.heatingCostsInServiceCharge != null) {
       if (this.preise.heizkosten_enthalten != null) {
         if (this.preise.heizkosten_enthalten == true) {
-          priceElements.heatingCostsInServiceCharge.html('Ja');
+          elements.heatingCostsInServiceCharge.html('Ja');
         } else {
-          priceElements.heatingCostsInServiceCharge.html('Nein');
+          elements.heatingCostsInServiceCharge.html('Nein');
         }
       }
     }
 
-    if (priceElements.securityDeposit != null) {
+    if (elements.securityDeposit != null) {
       if (this.preise.kaution != null) {
-        priceElements.securityDeposit.html(immobrowse.euroHtml(this.preise.kaution));
+        elements.securityDeposit.html(immobrowse.euroHtml(this.preise.kaution));
       }
     }
 
-    if (priceElements.subjectToCommission != null) {
+    if (elements.subjectToCommission != null) {
       if (this.preise.provisionspflichtig != null) {
         if (this.preise.provisionspflichtig) {
-          priceElements.subjectToCommission.html('Ja');
+          elements.subjectToCommission.html('Ja');
         } else {
-          priceElements.subjectToCommission.html('Nein');
+          elements.subjectToCommission.html('Nein');
         }
       }
     }
   }
 
-  this.renderArea = function (areaElements) {
-    if (areaElements.livingArea != null) {
+  /*
+    Renders area data into the respective elements.
+  */
+  this.renderArea = function (elements) {
+    if (elements.livingArea != null) {
       if (this.flaechen.wohnflaeche != null) {
-        areaElements.livingArea.html(immobrowse.squareMetersHtml(this.flaechen.wohnflaeche));
+        elements.livingArea.html(immobrowse.squareMetersHtml(this.flaechen.wohnflaeche));
       }
     }
 
-    if (areaElements.rooms != null) {
+    if (elements.rooms != null) {
       if (this.flaechen.anzahl_zimmer != null) {
-        areaElements.rooms.html(this.rooms());
+        elements.rooms.html(this.rooms());
       }
     }
   }
 
-  this.renderGeo = function (geoElements) {
-    if (geoElements.floor != null) {
+  /*
+    Renders geo data into the respective elements.
+  */
+  this.renderGeo = function (elements) {
+    if (elements.floor != null) {
       if (this.geo.etage != null) {
-        geoElements.floor.html(this.geo.etage);
+        elements.floor.html(this.geo.etage);
       }
     }
   }
 
-  this.renderManagement = function (managementElements) {
+  /*
+    Renders management information into the respective elements.
+  */
+  this.renderManagement = function (elements) {
     if (this.verwaltung_objekt != null) {
-      if (managementElements.availableFrom != null) {
+      if (elements.availableFrom != null) {
         if (this.verwaltung_objekt.verfuegbar_ab != null) {
-          managementElements.availableFrom.html(this.verwaltung_objekt.verfuegbar_ab);
+          elements.availableFrom.html(this.verwaltung_objekt.verfuegbar_ab);
         }
       }
 
-      if (managementElements.councilFlat != null) {
+      if (elements.councilFlat != null) {
         if (this.verwaltung_objekt.wbs_sozialwohnung == true) {
-          managementElements.councilFlat.html('Ja');
+          elements.councilFlat.html('Ja');
         }
       }
     }
   }
 
-  this.renderState = function (stateElements) {
+  /*
+    Renders state information into the respective elements.
+  */
+  this.renderState = function (elements) {
     if (this.zustand_angaben != null) {
-      if (stateElements.constructionYear != null) {
+      if (elements.constructionYear != null) {
         if (this.zustand_angaben.baujahr != null) {
-          stateElements.constructionYear.html(this.zustand_angaben.baujahr);
+          elements.constructionYear.html(this.zustand_angaben.baujahr);
         }
       }
 
-      if (stateElements.state != null) {
+      if (elements.state != null) {
         if (this.zustand_angaben.zustand != null) {
-          stateElements.state.html(this.zustand());
+          elements.state.html(this.zustand());
         }
       }
 
-      if (stateElements.lastModernization != null) {
+      if (elements.lastModernization != null) {
         if (this.zustand_angaben.letztemodernisierung != null) {
-          stateElements.lastModernization.html(this.zustand_angaben.letztemodernisierung);
+          elements.lastModernization.html(this.zustand_angaben.letztemodernisierung);
         }
       }
 
-      if (stateElements.energyCertificate != null) {
+      if (elements.energyCertificate != null) {
         if (this.zustand_angaben.energiepass != null) {
           if (this.zustand_angaben.energiepass.length > 0) {
-            this.renderEnergyCertificate(stateElements.energyCertificate);
+            this.renderEnergyCertificate(elements.energyCertificate);
           }
         }
       }
     }
   }
 
-  this.renderEnergyCertificate = function (energyCertificateElements) {
+  /*
+    Renders the energy certificate into the respective elements.
+  */
+  this.renderEnergyCertificate = function (elements) {
     var energiepass = this.zustand_angaben.energiepass[0];
 
-    if (energyCertificateElements.type != null) {
+    if (elements.type != null) {
       if (energiepass.epart == null) {
-        energyCertificateElements.type.html('Nicht angegeben');
+        elements.type.html('Nicht angegeben');
       } else if (energiepass.epart == 'VERBRAUCH') {
-        energyCertificateElements.type.html('Verbrauchsausweis');
+        elements.type.html('Verbrauchsausweis');
       } else {
-        energyCertificateElements.type.html('Bedarfsausweis');
+        elements.type.html('Bedarfsausweis');
       }
     }
 
-    if (energyCertificateElements.consumption != null) {
+    if (elements.consumption != null) {
       if (energiepass.energieverbrauchkennwert != '') {
-        energyCertificateElements.consumption.html(energiepass.energieverbrauchkennwert + this.kwh);
+        elements.consumption.html(energiepass.energieverbrauchkennwert + this.kwh);
       }
     }
 
-    if (energyCertificateElements.primaryEnergyCarrier != null) {
+    if (elements.primaryEnergyCarrier != null) {
       if (energiepass.primaerenergietraeger != null) {
-        energyCertificateElements.primaryEnergyCarrier.html(this.primaerenergietraeger());
+        elements.primaryEnergyCarrier.html(this.primaerenergietraeger());
       }
     }
 
-    if (energyCertificateElements.valueClass != null) {
+    if (elements.valueClass != null) {
       if (energiepass.wertklasse != null) {
-        energyCertificateElements.valueClass.html(energiepass.wertklasse);
+        elements.valueClass.html(energiepass.wertklasse);
       }
     }
   }
 
-  this.renderFreeTexts = function (freeTextElements) {
+  /*
+    Renders free texts into the respective elements.
+  */
+  this.renderFreeTexts = function (elements) {
     if (this.freitexte != null) {
-      if (freeTextElements.description != null) {
+      if (elements.objectTitle != null) {
+        if (this.freitexte.objekttitel != null) {
+          elements.objectTitle.html(this.freitexte.objekttitel);
+        }
+      }
+
+      if (elements.description != null) {
         if (this.freitexte.objektbeschreibung != null) {
-          freeTextElements.description.html(this.freitexte.objektbeschreibung);
+          elements.description.html(this.freitexte.objektbeschreibung);
         }
       }
 
-      if (freeTextElements.exposure != null) {
+      if (elements.exposure != null) {
         if (this.freitexte.lage != null) {
-          freeTextElements.exposure.html(this.freitexte.lage);
+          elements.exposure.html(this.freitexte.lage);
         }
       }
 
-      if (freeTextElements.miscellanea != null) {
+      if (elements.miscellanea != null) {
         if (this.freitexte.sonstige_angaben != null) {
-          freeTextElements.miscellanea.html(this.freitexte.sonstige_angaben);
+          elements.miscellanea.html(this.freitexte.sonstige_angaben);
         }
       }
     }
   }
 
-  this.renderContact = function (contactElements) {
-    if (contactElements.salutation != null)
+  /*
+    Renders contact data into the respective elements.
+  */
+  this.renderContact = function (elements) {
+    if (elements.salutation != null)
       if (this.kontaktperson.anrede != null) {
-        contactElements.salutation.html(this.kontaktperson.anrede);
+        elements.salutation.html(this.kontaktperson.anrede);
       }
     }
 
-    if (contactElements.firstName != null) {
+    if (elements.firstName != null) {
       if (this.kontaktperson.vorname != null) {
-        contactElements.firstName.html(this.kontaktperson.vorname);
+        elements.firstName.html(this.kontaktperson.vorname);
       }
     }
 
-    if (contactElements.lastName != null) {
-      contactElements.lastName.html(this.kontaktperson.name);
+    if (elements.lastName != null) {
+      elements.lastName.html(this.kontaktperson.name);
     }
 
-    if (contactElements.company != null) {
+    if (elements.company != null) {
       if (this.kontaktperson.firma != null) {
-        contactElements.company.html(this.kontaktperson.firma);
+        elements.company.html(this.kontaktperson.firma);
       }
     }
 
-    if (contactElements.street != null) {
+    if (elements.street != null) {
       if (this.kontaktperson.strasse != null) {
-        contactElements.street.html(this.kontaktperson.strasse);
+        elements.street.html(this.kontaktperson.strasse);
       }
     }
 
-    if (contactElements.houseNumber != null) {
+    if (elements.houseNumber != null) {
       if (this.kontaktperson.hausnummer != null) {
-        contactElements.houseNumber.html(this.kontaktperson.hausnummer);
+        elements.houseNumber.html(this.kontaktperson.hausnummer);
       }
     }
 
-    if (contactElements.streetAndHouseNumber != null) {
+    if (elements.streetAndHouseNumber != null) {
       if (this.kontaktperson.strasse != null && this.kontaktperson.hausnummer != null) {
-        contactElements.streetAndHouseNumber.html(this.kontaktperson.strasse + ' ' + this.kontaktperson.hausnummer);
+        elements.streetAndHouseNumber.html(this.kontaktperson.strasse + ' ' + this.kontaktperson.hausnummer);
       }
     }
 
-    if (contactElements.zipCode != null) {
+    if (elements.zipCode != null) {
       if (this.kontaktperson.plz != null) {
-        contactElements.zipCode.html(this.kontaktperson.plz);
+        elements.zipCode.html(this.kontaktperson.plz);
       }
     }
 
-    if (contactElements.city != null) {
+    if (elements.city != null) {
       if (this.kontaktperson.ort != null) {
-        contactElements.city.html(this.kontaktperson.ort);
+        elements.city.html(this.kontaktperson.ort);
       }
     }
 
-    if (contactElements.zipCodeAndCity != null) {
+    if (elements.zipCodeAndCity != null) {
       if (this.kontaktperson.plz != null && this.kontaktperson.ort != null) {
-        contactElements.zipCodeAndCity.html(this.kontaktperson.plz + ' ' + this.kontaktperson.ort);
+        elements.zipCodeAndCity.html(this.kontaktperson.plz + ' ' + this.kontaktperson.ort);
       }
     }
 
-    if (contactElements.phone != null) {
+    if (elements.phone != null) {
       if (this.kontaktperson.tel_durchw != null) {
-        contactElements.phone.html(this.kontaktperson.tel_durchw);
+        elements.phone.html(this.kontaktperson.tel_durchw);
       } else if (this.kontaktperson.tel_zentrale != null) {
-        contactElements.phone.html(this.kontaktperson.tel_direkt);
+        elements.phone.html(this.kontaktperson.tel_direkt);
       }
     }
 
-    if (contactElements.website != null) {
+    if (elements.website != null) {
       if (this.kontaktperson.url != null){
-        contactElements.website.html(this.kontaktperson.url);
+        elements.website.html(this.kontaktperson.url);
       }
     }
   }
 
+  /*
+    Renders the real estate data into the specified elements.
+    All elements are optional.
+
+    @param: elements = {
+      prices: {
+        coldRent: <coldRentElement>,
+        serviceCharge: <serviceChargeElement>,
+        heatingCosts: <heatingCostsElement>,
+        heatingCostsInServiceCharge: <heatingCostsInServiceChargeElement>,
+        securityDeposit: <securityDepositElement>,
+        subjectToCommission: <subjectToCommissionElement>
+      },
+      area: {
+        livingArea: <livingAreaElement>,
+        rooms: <roomsElement>
+      },
+      geo: {
+        floor: <floorElement>
+      },
+      management: {
+        availableFrom: <availableFromElement>,
+        councilFlat: <councilFlatElement>
+      },
+      state: {
+        constructionYear: <constructionYearElement>,
+        state: <stateElement>,
+        lastModernization: <lastModernizationElement>,
+        energyCertificate: {
+          type: <typeElement>,
+          consumption: <consumptionElement>,
+          primaryEnergyCarrier: <primaryEnergyCarrierElement>,
+          valueClass: <valueClassElement>
+        }
+      },
+      freeTexts: {
+        objectTitle: <objectTitleElement>,
+        description: <descriptionElement>,
+        exposure: <exposureElement>,
+        miscellanea: <miscellaneaElement>
+      }
+      contact: {
+        salutation: <salutationElement>,
+        firstName: <firstNameElement>,
+        lastName: <lastNameElement>,
+        company: <companyElement>,
+        street: <streetElement>,
+        houseNumber: <houseNumberElement>,
+        streetAndHouseNumber: <streetAndHouseNumberElement>,
+        zipCode: <zipCodeElement>,
+        city: <cityElement>,
+        zipCodeAndCity: <zipCodeAndCityElement>,
+        website: <websiteElement>
+      },
+      furnishingTags: <furnishingTagsElement>
+    };
+  */
   this.render = function (elements) {
     if (elements.prices != null) {
       this.renderPrices(elements.prices);
@@ -1140,47 +1274,10 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (elements.contact != null) {
       this.renderContact(elements.contact);
     }
-  }
 
-  this.preview = function (elements) {
-    var titleImageUrl = this.attachmentURL(this.titleImage());
-    var rooms = this.rooms();
-    html = '<div class="ib-preview-entry" onclick="immobrowse.open(\'' + url + '\');">';
-
-    if (titleImageUrl != null) {
-      html += immobrowse.titleImageHtml(titleImageUrl);
-    } else {
-      html += immobrowse.titleImageHtml(immobrowse.titleImageDummy);
+    if (elements.furnishingTags != null) {
+      elements.furnishingTags.html(this.furnishingTags());
     }
-
-    html += '<div class="ib-preview-data">';
-    html += '<div class="ib-preview-header">';
-    html += '<div class="ib-preview-header-title">';
-    html += '<h3><strong>' + this.objekttitel() + '</strong></h3>';
-    html += '</div>';
-    html += '</div>';
-    html += '<div class="ib-preview-body">';
-    html += '<div class="ib-preview-rent">';
-    html += '<div class="ib-preview-rent-caption">Nettokaltmiete</div>';
-    html += '<div class="ib-preview-rent-data">' + immobrowse.euroHtml(this.rent()) + '</div>';
-    html += '</div>';
-    html += '<div class="ib-preview-area">';
-    html += '<div class="ib-preview-area-caption">Wohnfläche</div>';
-    html += '<div class="ib-preview-area-data">' + this.flaechen.wohnflaeche + ' m²</div>';
-    html += '</div>';
-    html += '<div class="ib-preview-rooms">';
-    html += '<div class="ib-preview-rooms-caption">Zimmer</div>';
-    html += '<div class="ib-preview-rooms-data">' + rooms + '</div>';
-    html += '</div>';
-    html += '<div class="ib-preview-freefrom">';
-    html += '<div class="ib-preview-freefrom-caption">Verfügbar ab</div>';
-    html += '<div class="ib-preview-freefrom-data">' + this.verwaltung_objekt.verfuegbar_ab + '</div>';
-    html += '</div>';
-    html += '</div>';
-    html += this.furnishingTags();
-    html += '</div>';
-    html += '</div>';
-    return html;
   }
 }
 
@@ -1188,14 +1285,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
 /*
   Real estate list class
 */
-immobrowse.List = function (cid, sorting, exposeBaseUrl) {
+immobrowse.List = function (cid, realEstates) {
   this.cid = cid;
-  this.sorting = sorting;
-  this.exposeBaseUrl = exposeBaseUrl;
-  this.realEstates = null;
-  this.filteredRealEstates = null;
+  this.realEstates = realEstates;
+  this.filteredRealEstates = realEstates;
 
-  // Match filters on a real estate's JSON data
+  /*
+    Match filters on a real estate's JSON data.
+  */
   this.match = function (realEstate, filters) {
     var rent = realEstate.rent();
 
@@ -1254,7 +1351,9 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     return true;
   }
 
-  // Filters real estates
+  /*
+    Filters real estates.
+  */
   this.filter = function (filters) {
     this.filteredRealEstates = [];
 
@@ -1271,7 +1370,9 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     }
   }
 
-  // Sorts real estates
+  /*
+    Sorts real estates.
+  */
   this.sort = function (property, order) {
     immobrowse.logger.debug('Sorting by ' + property + ' ' + order + '.');
     this.filteredRealEstates.sort(this.getSorter(property, order));
@@ -1314,7 +1415,9 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     }
   }
 
-  // Gets the respective districts
+  /*
+    Returns the respective districts.
+  */
   this.districts = function () {
     var districts = [];
 
@@ -1333,111 +1436,15 @@ immobrowse.List = function (cid, sorting, exposeBaseUrl) {
     return districts;
   }
 
-  // Converts real estates to HTML
-  this.htmlList = function () {
-    var html = '';
-    var realEstates;
-
+  /*
+    Renders the respective real estates into the given HTML element.
+  */
+  this.render = function (listElement, listItemTemplate) {
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
-      html += this.filteredRealEstates[i].preview(this.exposeBaseUrl);
-      html += '<br>';
+      this.filteredRealEstates[i].render(listItemTemplate);
+      var listItem = listItemTemplate.clone();
+      listItem.attr('id', null);
+      listItem.html(listItem.html() + listElement);
     }
-
-    if (html == '') {
-     return 'Es konnten keine Angebote gefunden werden.';
-    } else {
-      return html;
-    }
-  }
-
-  this.getRealEstates = function (callback) {
-    self = this;
-
-    $.ajax({
-      url: 'https://tls.homeinfo.de/immobrowse/list/' + self.cid,
-      success: function (json) {
-        self.realEstates = [];
-
-        for (var i = 0; i < json.length; i++) {
-          self.realEstates.push(new immobrowse.RealEstate(self.cid, json[i]));
-        }
-
-        self.filteredRealEstates = self.realEstates;
-        callback()
-      },
-      error: function() {
-        swal({
-          title: 'Immobilien konnten nicht geladen werden.',
-          text: 'Bitte versuchen Sie es später noch ein Mal.',
-          type: 'error'
-        });
-      }
-    });
-  }
-
-  // Renders the respective real estates into the given HTML element
-  this.render = function (listElement) {
-
-  }
-}
-
-
-/*
-  Detailed expose class
-*/
-immobrowse.Expose = function (cid, objektnr_extern, listUrl) {
-  this.cid = cid;
-  this.objektnr_extern = objektnr_extern;
-  this.listUrl = listUrl;
-  this.realEstate = null;
-
-  this.getRealEstate = function (callback) {
-    self = this;
-
-    $.ajax({
-      url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + self.objektnr_extern + '?customer=' + self.cid,
-      success: function (json) {
-        self.realEstate = new immobrowse.RealEstate(self.cid, json);
-        callback();
-      },
-      error: function() {
-        swal({
-          title: 'Immobilie konnten nicht geladen werden.',
-          text: 'Bitte versuchen Sie es später noch ein Mal.',
-          type: 'error'
-        });
-      }
-    });
-  }
-
-  this.header = function () {
-    var header = '<div class="ib-header">';
-    header += '<h3 class="ib-detail-title">';
-    header += '<strong>';
-
-    if (this.realEstate.freitexte != null) {
-      if (this.realEstate.freitexte.objekttitel != null) {
-        header += this.realEstate.freitexte.objekttitel + '<br>';
-      }
-    }
-
-    var rooms = this.realEstate.rooms();
-
-    if (rooms == null) {
-      header += 'Wohnung | ';
-    } else {
-      header += rooms + ' Zimmer Wohnung | ';
-    }
-
-    header += this.realEstate.addressPreview();
-    header += ' | ';
-    header += this.realEstate.cityPreview();
-    header += '</strong><br>'
-    header += '<div></h3><br><br>';
-    return header;
-  }
-
-  // Renders the respective real estate into the given HTML element
-  this.render = function (headerElement, exposeElement) {
   }
 }
