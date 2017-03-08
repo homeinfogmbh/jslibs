@@ -1447,7 +1447,8 @@ immobrowse.List = function (cid, realEstates) {
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
       this.filteredRealEstates[i].render(elements);
       var listItem = listItemTemplate.clone();
-      listItem.attr('id', null);
+      listItem.attr('id', null);  // remove id on list item
+      listItem.find('*').attr('id', null);  // remove id on all children of list item
       listElement.html(listElement.html() + listItem.html());
     }
   }
