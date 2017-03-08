@@ -1444,7 +1444,7 @@ immobrowse.List = function (cid, realEstates) {
   this.render = function (listElement, listItemTemplate, elements) {
     listElement.html('');
 
-    immobrowse.logger.debug('Filtered real estates: ' + JSON.strinify(this.filteredRealEstates));
+    immobrowse.logger.debug('Filtered real estates: ' + JSON.stringify(this.filteredRealEstates));
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
       this.filteredRealEstates[i].render(elements);
