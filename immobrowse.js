@@ -917,21 +917,33 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return html;
   }
 
-  this.floor = function () {
+  this.floor = function (short) {
+    var dg = 'Dachgeschoss';
+    var og = 'Obergeschoss';
+    var eg = 'Erdgeschoss';
+    var ug = 'Untergeschoss';
+
+    if (short) {
+      dg = 'DG';
+      og = 'OG';
+      eg = 'EG';
+      ug = 'UG';
+    }
+
     if (this.geo != null) {
       if (this.geo.etage != null) {
         if (this.geo.anzahl_etagen != null) {
           if (this.geo.etage == this.geo.anzahl_etagen) {
-            return 'Dachgeschoss';
+            return dg;
           }
         }
 
         if (this.geo.etage < 0) {
-          return -this.geo.etage + '. Untergeschoss';
+          return -this.geo.etage + ug;
         } else if (this.geo.etage > 0)
-          return this.geo.etage + '. Obergeschoss';
+          return this.geo.etage + og;
         } else {
-          return 'Erdgeschoss';
+          return eg;
         }
       }
     }
