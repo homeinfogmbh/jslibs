@@ -1646,10 +1646,10 @@ immobrowse.List = function (cid, realEstates) {
     immobrowse.logger.debug('Filtered real estates: ' + JSON.stringify(this.filteredRealEstates));
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
-      this.clear(elements);
+      this.clear(elements); // Clear template elements
       this.filteredRealEstates[i].render(elements);
       var listItem = listItemTemplate.clone();
-      this.removeIds(listItem);
+      this.removeIds(listItem);   // Remove IDs from copied template elements in list
       listElement.html(listElement.html() + listItem.html() + i);
     }
   }
