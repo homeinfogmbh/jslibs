@@ -1120,9 +1120,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (this.freitexte != null) {
       if (elements.objectTitle != null) {
         if (this.freitexte.objekttitel != null) {
-          immobrowse.logger.debug('Rendering objectTitle=' + this.freitexte.objekttitel);
           elements.objectTitle.html(this.freitexte.objekttitel);
-          immobrowse.logger.debug('Rendered objectTitle=' + elements.objectTitle.html());
         }
       }
 
@@ -1471,6 +1469,175 @@ immobrowse.List = function (cid, realEstates) {
   }
 
   /*
+    Clears possibly previously rendered data from the template
+  */
+  this.clear = function (elements) {
+    if (elements.prices != null) {
+      if (elements.prices.coldRent != null) {
+        elements.prices.coldRent.html('');
+      }
+
+      if (elements.prices.serviceCharge != null) {
+        elements.prices.serviceCharge.html('');
+      }
+
+      if (elements.prices.heatingCosts != null) {
+        elements.prices.heatingCosts.html('');
+      }
+
+      if (elements.prices.heatingCostsInServiceCharge != null) {
+        elements.prices.heatingCostsInServiceCharge.html('');
+      }
+
+      if (elements.prices.securityDeposit != null) {
+        elements.prices.securityDeposit.html('');
+      }
+
+      if (elements.prices.subjectToCommission != null) {
+        elements.prices.subjectToCommission.html('');
+      }
+    }
+
+    if (elements.area != null) {
+      if (elements.area.livingArea != null) {
+        elements.area.livingArea.html('');
+      }
+
+      if (elements.rooms != null) {
+        elements.rooms.html('');
+      }
+    }
+
+    if (elements.geo != null) {
+      if (elements.geo.floor != null) {
+        elements.geo.floor.html('');
+      }
+    }
+
+    if (elements.management != null) {
+      if (elements.management.availableFrom != null) {
+        elements.management.availableFrom.html('');
+      }
+
+      if (elements.management.councilFlat != null) {
+        elements.management.councilFlat.html('');
+      }
+    }
+
+    if (elements.state != null) {
+      if (elements.state.constructionYear != null) {
+        elements.constructionYear.html('');
+      }
+
+      if (elements.state.state != null) {
+        elements.state.state.html('');
+      }
+
+      if (elements.state.lastModernization != null) {
+        elements.state.lastModernization.html('');
+      }
+
+      if (elements.state.energyCertificate != null) {
+        if (elements.state.energyCertificate.type != null) {
+          elements.state.energyCertificate.type.html('');
+        }
+
+        if (elements.state.energyCertificate.consumption != null) {
+          elements.state.energyCertificate.consumption.html('');
+        }
+
+        if (elements.state.energyCertificate.primaryEnergyCarrier != null) {
+          elements.state.energyCertificate.primaryEnergyCarrier.html('');
+        }
+
+        if (elements.state.energyCertificate.valueClass != null) {
+          elements.state.energyCertificate.valueClass.html('');
+        }
+      }
+    }
+
+    if (elements.freeTexts != null) {
+      if (elements.freeTexts.objectTitle != null) {
+        elements.freeTexts.objectTitle.html('');
+      }
+
+      if (elements.freeTexts.description != null) {
+        elements.freeTexts.description.html('');
+      }
+
+      if (elements.freeTexts.exposure != null) {
+        elements.freeTexts.exposure.html('');
+      }
+
+      if (elements.freeTexts.miscellanea != null) {
+        elements.freeTexts.miscellanea.html('');
+      }
+    }
+
+    if (elements.contact != null) {
+      if (elements.contact.salutation != null) {
+        elements.contact.salutation.html('');
+      }
+
+      if (elements.contact.firstName != null) {
+        elements.contact.firstName.html('');
+      }
+
+      if (elements.contact.lastName != null) {
+        elements.contact.lastName.html('');
+      }
+
+      if (elements.contact.company != null) {
+        elements.contact.company.html('');
+      }
+
+      if (elements.contact.street != null) {
+        elements.contact.street.html('');
+      }
+
+      if (elements.contact.houseNumber != null) {
+        elements.contact.houseNumber.html('');
+      }
+
+      if (elements.contact.streetAndHouseNumber != null) {
+        elements.contact.streetAndHouseNumber.html('');
+      }
+
+      if (elements.contact.zipCode != null) {
+        elements.contact.zipCode.html('');
+      }
+
+      if (elements.contact.city != null) {
+        elements.contact.city.html('');
+      }
+
+      if (elements.contact.zipCodeAndCity != null) {
+        elements.contact.zipCodeAndCity.html('');
+      }
+
+      if (elements.contact.phone != null) {
+        elements.contact.phone.html('');
+      }
+
+      if (elements.contact.website != null) {
+        elements.contact.website.html('');
+      }
+    }
+
+    if (elements.furnishingTags != null) {
+      elements.furnishingTags.html('');
+    }
+  }
+
+  /*
+    Recursively removes all IDs from the list items and sub-items
+  */
+  this.removeIds = function (listItem) {
+    listItem.attr('id', null);            // remove id on list item
+    listItem.find('*').attr('id', null);  // remove id on all children of list item
+  }
+
+  /*
     Renders the respective real estates into the given HTML element.
   */
   this.render = function (listElement, listItemTemplate, elements) {
@@ -1479,10 +1646,10 @@ immobrowse.List = function (cid, realEstates) {
     immobrowse.logger.debug('Filtered real estates: ' + JSON.stringify(this.filteredRealEstates));
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
+      this.clear(elements);
       this.filteredRealEstates[i].render(elements);
       var listItem = listItemTemplate.clone();
-      listItem.attr('id', null);  // remove id on list item
-      listItem.find('*').attr('id', null);  // remove id on all children of list item
+      this.removeIds(listItem);
       listElement.html(listElement.html() + listItem.html() + i);
     }
   }
