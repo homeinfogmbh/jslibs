@@ -927,7 +927,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
 
         if (this.geo.etage < 0) {
-          return (this.geo.etage * -1) + '. Untergeschoss';
+          return -this.geo.etage + '. Untergeschoss';
         } else if (this.geo.etage > 0)
           return this.geo.etage + '. Obergeschoss';
         } else {
