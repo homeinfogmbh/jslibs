@@ -917,6 +917,26 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return html;
   }
 
+  this.floor = function () {
+    if (this.geo != null) {
+      if (this.geo.etage != null) {
+        if (this.geo.anzahl_etagen != null) {
+          if (this.geo.etage == this.geo.anzahl_etagen) {
+            return 'Dachgeschoss';
+          }
+        }
+
+        if (this.geo.etage < 0) {
+          return (this.geo.etage * -1) + '. Untergeschoss';
+        } else if (this.geo.etage > 0)
+          return this.geo.etage + '. Obergeschoss';
+        } else {
+          return 'Erdgeschoss';
+        }
+      }
+    }
+  }
+
   /*
     Renders prices into the respective elements.
   */
