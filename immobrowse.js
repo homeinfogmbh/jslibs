@@ -1650,7 +1650,7 @@ immobrowse.List = function (cid, realEstates) {
       this.filteredRealEstates[i].render(elements);
       var listItem = listItemTemplate.clone();
       this.removeIds(listItem);   // Remove IDs from copied template elements in list
-      listElement.html(listElement.html() + listItem.html() + i);
+      listElement.html(listElement.html() + listItem.html());
     }
   }
 }
