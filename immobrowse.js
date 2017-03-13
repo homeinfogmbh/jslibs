@@ -1304,7 +1304,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     if (elements.titleImage != null) {
-      elements.titleImage.attr('src', this.titleImage().daten.pfad);
+      elements.titleImage.attr('src', this.attachmentURL(this.titleImage()));
     }
   }
 }
