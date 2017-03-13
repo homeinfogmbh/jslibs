@@ -771,6 +771,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
+  this.detailsURL = function (baseUrl) {
+    if (baseUrl == null) {
+      return null;
+    } else {
+      return baseUrl + '?customer=' + this.cid + '&objektnr_extern=' + this.objektnr_extern();
+    }
+  }
+
   this.miscNotes = function () {
     if (this.freitexte != null) {
       return this.freitexte.sonstige_angaben;
@@ -1211,6 +1219,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
     All elements are optional.
 
     @param: elements = {
+      linkElement: <linkElement>,
+      objectTitle: <objectTitleElement>,
       prices: {
         coldRent: <coldRentElement>,
         serviceCharge: <serviceChargeElement>,
@@ -1264,6 +1274,11 @@ immobrowse.RealEstate = function (cid, realEstate) {
     };
   */
   this.render = function (elements) {
+    if (elements.linkElement != null) {
+      //  TODO: Make details link dynamic by reading appropriate configuration.
+      elements.linkElement.attr('onclick', this.detailsURL('expose.html'));
+    }
+
     if (elements.objectTitle != null) {
       elements.objectTitle.html(this.objectTitle());
     }
@@ -1465,6 +1480,10 @@ immobrowse.List = function (cid, realEstates) {
     Clears possibly previously rendered data from the template
   */
   this.clear = function (elements) {
+    if (elements.linkElement != null) {
+      elements.linkElement.attr('onclick', null);
+    }
+
     if (elements.objectTitle != null) {
       elements.objectTitle.html('');
     }
