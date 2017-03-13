@@ -1505,165 +1505,169 @@ immobrowse.List = function (cid, realEstates) {
   /*
     Clears possibly previously rendered data from the template
   */
-  this.clear = function (elements) {
+  this.clear = function (elements, na) {
+    if (na == null) {
+      na = 'k.A.';
+    }
+
     if (elements.linkElement != null) {
       elements.linkElement.attr('onclick', null);
     }
 
     if (elements.objectTitle != null) {
-      elements.objectTitle.html('');
+      elements.objectTitle.html(na);
     }
 
     if (elements.prices != null) {
       if (elements.prices.coldRent != null) {
-        elements.prices.coldRent.html('');
+        elements.prices.coldRent.html(na);
       }
 
       if (elements.prices.serviceCharge != null) {
-        elements.prices.serviceCharge.html('');
+        elements.prices.serviceCharge.html(na);
       }
 
       if (elements.prices.heatingCosts != null) {
-        elements.prices.heatingCosts.html('');
+        elements.prices.heatingCosts.html(na);
       }
 
       if (elements.prices.heatingCostsInServiceCharge != null) {
-        elements.prices.heatingCostsInServiceCharge.html('');
+        elements.prices.heatingCostsInServiceCharge.html(na);
       }
 
       if (elements.prices.securityDeposit != null) {
-        elements.prices.securityDeposit.html('');
+        elements.prices.securityDeposit.html(na);
       }
 
       if (elements.prices.subjectToCommission != null) {
-        elements.prices.subjectToCommission.html('');
+        elements.prices.subjectToCommission.html(na);
       }
     }
 
     if (elements.area != null) {
       if (elements.area.livingArea != null) {
-        elements.area.livingArea.html('');
+        elements.area.livingArea.html(na);
       }
 
       if (elements.rooms != null) {
-        elements.rooms.html('');
+        elements.rooms.html(na);
       }
     }
 
     if (elements.geo != null) {
       if (elements.geo.floor != null) {
-        elements.geo.floor.html('');
+        elements.geo.floor.html(na);
       }
     }
 
     if (elements.management != null) {
       if (elements.management.availableFrom != null) {
-        elements.management.availableFrom.html('');
+        elements.management.availableFrom.html(na);
       }
 
       if (elements.management.councilFlat != null) {
-        elements.management.councilFlat.html('');
+        elements.management.councilFlat.html(na);
       }
     }
 
     if (elements.state != null) {
       if (elements.state.constructionYear != null) {
-        elements.constructionYear.html('');
+        elements.constructionYear.html(na);
       }
 
       if (elements.state.state != null) {
-        elements.state.state.html('');
+        elements.state.state.html(na);
       }
 
       if (elements.state.lastModernization != null) {
-        elements.state.lastModernization.html('');
+        elements.state.lastModernization.html(na);
       }
 
       if (elements.state.energyCertificate != null) {
         if (elements.state.energyCertificate.type != null) {
-          elements.state.energyCertificate.type.html('');
+          elements.state.energyCertificate.type.html(na);
         }
 
         if (elements.state.energyCertificate.consumption != null) {
-          elements.state.energyCertificate.consumption.html('');
+          elements.state.energyCertificate.consumption.html(na);
         }
 
         if (elements.state.energyCertificate.primaryEnergyCarrier != null) {
-          elements.state.energyCertificate.primaryEnergyCarrier.html('');
+          elements.state.energyCertificate.primaryEnergyCarrier.html(na);
         }
 
         if (elements.state.energyCertificate.valueClass != null) {
-          elements.state.energyCertificate.valueClass.html('');
+          elements.state.energyCertificate.valueClass.html(na);
         }
       }
     }
 
     if (elements.freeTexts != null) {
       if (elements.freeTexts.description != null) {
-        elements.freeTexts.description.html('');
+        elements.freeTexts.description.html(na);
       }
 
       if (elements.freeTexts.exposure != null) {
-        elements.freeTexts.exposure.html('');
+        elements.freeTexts.exposure.html(na);
       }
 
       if (elements.freeTexts.miscellanea != null) {
-        elements.freeTexts.miscellanea.html('');
+        elements.freeTexts.miscellanea.html(na);
       }
     }
 
     if (elements.contact != null) {
       if (elements.contact.salutation != null) {
-        elements.contact.salutation.html('');
+        elements.contact.salutation.html(na);
       }
 
       if (elements.contact.firstName != null) {
-        elements.contact.firstName.html('');
+        elements.contact.firstName.html(na);
       }
 
       if (elements.contact.lastName != null) {
-        elements.contact.lastName.html('');
+        elements.contact.lastName.html(na);
       }
 
       if (elements.contact.company != null) {
-        elements.contact.company.html('');
+        elements.contact.company.html(na);
       }
 
       if (elements.contact.street != null) {
-        elements.contact.street.html('');
+        elements.contact.street.html(na);
       }
 
       if (elements.contact.houseNumber != null) {
-        elements.contact.houseNumber.html('');
+        elements.contact.houseNumber.html(na);
       }
 
       if (elements.contact.streetAndHouseNumber != null) {
-        elements.contact.streetAndHouseNumber.html('');
+        elements.contact.streetAndHouseNumber.html(na);
       }
 
       if (elements.contact.zipCode != null) {
-        elements.contact.zipCode.html('');
+        elements.contact.zipCode.html(na);
       }
 
       if (elements.contact.city != null) {
-        elements.contact.city.html('');
+        elements.contact.city.html(na);
       }
 
       if (elements.contact.zipCodeAndCity != null) {
-        elements.contact.zipCodeAndCity.html('');
+        elements.contact.zipCodeAndCity.html(na);
       }
 
       if (elements.contact.phone != null) {
-        elements.contact.phone.html('');
+        elements.contact.phone.html(na);
       }
 
       if (elements.contact.website != null) {
-        elements.contact.website.html('');
+        elements.contact.website.html(na);
       }
     }
 
     if (elements.furnishingTags != null) {
-      elements.furnishingTags.html('');
+      elements.furnishingTags.html(na);
     }
 
     if (elements.titleImage != null) {
