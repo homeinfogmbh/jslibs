@@ -1344,40 +1344,66 @@ immobrowse.List = function (cid, realEstates) {
       return false;
     }
 
-    if (filters.areaMin > realEstate.flaechen.wohnflaeche) {
-      return false;
+    if (filters.areaMin != null) {
+      if (realEstate.flaechen == null) {
+        return false;
+      } else if (filters.areaMin > realEstate.flaechen.wohnflaeche) {
+        return false;
+      }
     }
 
-    if (filters.roomsMin > realEstate.flaechen.anzahl_zimmer) {
-      return false;
+    if (filters.roomsMin != null) {
+      if (realEstate.flaechen == null) {
+        return false;
+      } else if (filters.roomsMin > realEstate.flaechen.anzahl_zimmer) {
+        return false;
+      }
     }
 
     if (filters.ebk) {
-      if (! realEstate.ausstattung.kueche.EBK) {
+      if (realEstate.ausstattung == null) {
+        return false;
+      } else if (realEstate.ausstattung.kueche == null) {
+        return false;
+      } else if (! realEstate.ausstattung.kueche.EBK) {
         return false;
       }
     }
 
     if (filters.bathtub) {
-      if (! realEstate.ausstattung.bad.WANNE) {
+      if (realEstate.ausstattung == null) {
+        return false;
+      } else if (realEstate.ausstattung.bad == null) {
+        return false;
+      } else if (! realEstate.ausstattung.bad.WANNE) {
         return false;
       }
     }
 
     if (filters.carSpace) {
-      if (! realEstate.ausstattung.stellplatzart.TIEFGARAGE) {
+      if (realEstate.ausstattung == null) {
+        return false;
+      } else if (realEstate.ausstattung.stellplatzart == null) {
+        return false;
+      } else if (! realEstate.ausstattung.stellplatzart.TIEFGARAGE) {
         return false;
       }
     }
 
     if (filters.elevator) {
-      if (! realEstate.ausstattung.fahrstuhl.PERSONEN) {
+      if (realEstate.ausstattung == null) {
+        return false;
+      } else if (realEstate.ausstattung.fahrstuhl == null) {
+        return false;
+      } else if (! realEstate.ausstattung.fahrstuhl.PERSONEN) {
         return false;
       }
     }
 
     if (filters.garden) {
-      if (! realEstate.ausstattung.gartennutzung) {
+      if (realEstate.ausstattung == null) {
+        return false;
+      } else if (! realEstate.ausstattung.gartennutzung) {
         return false;
       }
     }
