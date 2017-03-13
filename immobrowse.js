@@ -1276,7 +1276,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   this.render = function (elements) {
     if (elements.linkElement != null) {
       //  TODO: Make details link dynamic by reading appropriate configuration.
-      elements.linkElement.attr('onclick', 'immbrowse.open("' + this.detailsURL('expose.html') + '");');
+      elements.linkElement.attr('onclick', 'immobrowse.open("' + this.detailsURL('expose.html') + '");');
     }
 
     if (elements.objectTitle != null) {
