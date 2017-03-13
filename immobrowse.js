@@ -1623,6 +1623,10 @@ immobrowse.List = function (cid, realEstates) {
     if (elements.furnishingTags != null) {
       elements.furnishingTags.html('');
     }
+
+    if (elements.titleImage != null) {
+      elements.titleImage.attr('src', null);
+    }
   }
 
   /*
