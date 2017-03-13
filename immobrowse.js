@@ -1261,7 +1261,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
         description: <descriptionElement>,
         exposure: <exposureElement>,
         miscellanea: <miscellaneaElement>
-      }
+      },
       contact: {
         salutation: <salutationElement>,
         firstName: <firstNameElement>,
