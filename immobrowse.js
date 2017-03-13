@@ -1658,10 +1658,6 @@ immobrowse.List = function (cid, realEstates) {
   */
   this.render = function (listElement, listItemTemplate, elements) {
     listElement.html('');
-    if (elements.linkElement == null) {
-      elements.linkElement = listItemTemplate;
-    }
-
     immobrowse.logger.debug('Filtered real estates: ' + JSON.stringify(this.filteredRealEstates));
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
