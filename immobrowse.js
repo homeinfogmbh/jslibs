@@ -1507,7 +1507,7 @@ immobrowse.List = function (cid, realEstates) {
   */
   this.clear = function (elements, na) {
     if (na == null) {
-      na = 'k.A.';
+      na = 'k. A.';
     }
 
     if (elements.linkElement != null) {
