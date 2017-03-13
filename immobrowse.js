@@ -940,7 +940,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
         if (this.geo.etage < 0) {
           return -this.geo.etage + ug;
-        } else if (this.geo.etage > 0)
+        } else if (this.geo.etage > 0) {
           return this.geo.etage + og;
         } else {
           return eg;
