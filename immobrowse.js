@@ -1633,8 +1633,8 @@ immobrowse.List = function (cid, realEstates) {
     Recursively removes all IDs from the list items and sub-items
   */
   this.removeIds = function (listItem) {
-    listItem.attr('id', null);            // remove id on list item
-    listItem.find('*').attr('id', null);  // remove id on all children of list item
+    listItem.attr('id', null);
+    listItem.find('*').attr('id', null);
   }
 
   /*
