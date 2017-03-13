@@ -1667,7 +1667,7 @@ immobrowse.List = function (cid, realEstates) {
     }
 
     if (elements.titleImage != null) {
-      elements.titleImage.attr('src', '');
+      elements.titleImage.attr('src', 'img/dummy.jpg');
     }
   }
 
