@@ -109,15 +109,6 @@ immobrowse.squareMetersHtml = function (area) {
 }
 
 
-immobrowse.titleImageHtml = function (url) {
-  return '<img src="' + url + '" alt="Titelbild" class="ib-preview-image img-responsive">';
-}
-
-
-/**TODO Mockup **/
-immobrowse.titleImageDummy = 'https://tls.homeinfo.de/does/not/exist';
-
-
 /*
   Queries real estate data from the API and runs callback function.
 */
@@ -1275,7 +1266,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
         zipCodeAndCity: <zipCodeAndCityElement>,
         website: <websiteElement>
       },
-      furnishingTags: <furnishingTagsElement>
+      furnishingTags: <furnishingTagsElement>,
+      titleImage: <titleImageElement>
     };
   */
   this.render = function (elements) {
@@ -1309,6 +1301,10 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     if (elements.furnishingTags != null) {
       elements.furnishingTags.html(this.furnishingTags());
+    }
+
+    if (elements.titleImage != null) {
+      elements.titleImage.attr('src', this.titleImage().daten.pfad);
     }
   }
 }
