@@ -231,7 +231,7 @@ immobrowse.Mailer = function (config, html, successMsg, errorMsg) {
   if (errorMsg == null) {
     this.errorMsg = {
       title: 'Fehler beim Versenden!',
-      text: 'Bitte versuchen Sie es später nochmal.',
+      text: 'Bitte versuchen Sie es später noch ein Mal.',
       type: 'error'
     };
   } else {
