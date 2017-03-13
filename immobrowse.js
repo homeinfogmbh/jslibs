@@ -1109,12 +1109,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderFreeTexts = function (elements) {
     if (this.freitexte != null) {
-      if (elements.objectTitle != null) {
-        if (this.freitexte.objekttitel != null) {
-          elements.objectTitle.html(this.freitexte.objekttitel);
-        }
-      }
-
       if (elements.description != null) {
         if (this.freitexte.objektbeschreibung != null) {
           elements.description.html(this.freitexte.objektbeschreibung);
@@ -1248,7 +1242,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
       },
       freeTexts: {
-        objectTitle: <objectTitleElement>,
         description: <descriptionElement>,
         exposure: <exposureElement>,
         miscellanea: <miscellaneaElement>
@@ -1271,6 +1264,10 @@ immobrowse.RealEstate = function (cid, realEstate) {
     };
   */
   this.render = function (elements) {
+    if (elements.objectTitle != null) {
+      elements.objectTitle.html(this.objectTitle());
+    }
+
     if (elements.prices != null) {
       this.renderPrices(elements.prices);
     }
@@ -1468,6 +1465,10 @@ immobrowse.List = function (cid, realEstates) {
     Clears possibly previously rendered data from the template
   */
   this.clear = function (elements) {
+    if (elements.objectTitle != null) {
+      elements.objectTitle.html('');
+    }
+
     if (elements.prices != null) {
       if (elements.prices.coldRent != null) {
         elements.prices.coldRent.html('');
@@ -1553,10 +1554,6 @@ immobrowse.List = function (cid, realEstates) {
     }
 
     if (elements.freeTexts != null) {
-      if (elements.freeTexts.objectTitle != null) {
-        elements.freeTexts.objectTitle.html('');
-      }
-
       if (elements.freeTexts.description != null) {
         elements.freeTexts.description.html('');
       }
