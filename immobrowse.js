@@ -969,7 +969,13 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderPrices = function (elements) {
     if (elements.coldRent != null) {
-      this.setValue(elements.coldRent, this.preise.nettokaltmiete, immobrowse.euroHtml(this.preise.nettokaltmiete));
+      var coldRent = this.rent();
+
+      if (coldRent != null) {
+        this.setValue(elements.coldRent, immobrowse.euroHtml(this.preise.nettokaltmiete));
+      } else {
+        this.setValue(elements.coldRent);
+      }
     }
 
     if (elements.serviceCharge != null) {
