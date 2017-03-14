@@ -1017,8 +1017,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var eg = 'Erdgeschoss';
     var ug = 'Untergeschoss';
 
-    immobrowse.logger.debug('shortFloorNames: ' + immobrowse.config.shortFloorNames);
-
     if (immobrowse.config.shortFloorNames) {
       dg = 'DG';
       og = 'OG';
