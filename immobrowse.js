@@ -945,15 +945,31 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   /*
+    Sets a value onto the respective element configuration
+  */
+  this.setValue = function (element, value) {
+    if (value == null) {
+      if (element.container != null) {
+        element.container.hide();
+      } else {
+        element.html(this.na);
+      }
+    } else {
+      if (element.value != null) {
+        element.value.html(value);
+      } else {
+        element.html(value);
+      }
+    }
+  }
+
+
+  /*
     Renders prices into the respective elements.
   */
   this.renderPrices = function (elements) {
     if (elements.coldRent != null) {
-      if (this.preise.nettokaltmiete != null) {
-        elements.coldRent.html(immobrowse.euroHtml(this.preise.nettokaltmiete));
-      } else {
-        elements.coldRent.html(this.na);
-      }
+      this.setValue(elements.coldRent, this.preise.nettokaltmiete, immobrowse.euroHtml(this.preise.nettokaltmiete));
     }
 
     if (elements.serviceCharge != null) {
@@ -979,6 +995,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
         } else {
           elements.heatingCostsInServiceCharge.html('Nein');
         }
+      } else {
+        elements.heatingCostsInServiceCharge.html(this.na);
       }
     }
 
@@ -1626,6 +1644,16 @@ immobrowse.List = function (cid, realEstates) {
     listItem.find('*').attr('id', null);
   }
 
+  this.copy = function (template, index) {
+    var clone = template.clone();
+    clone.find('*').map(function() {
+      if (this.id != null) {
+        this.id += '_' + index;
+      }
+    });
+    return clone;
+  }
+
   /*
     Renders the respective real estates into the given HTML element.
   */
@@ -1634,9 +1662,8 @@ immobrowse.List = function (cid, realEstates) {
     immobrowse.logger.debug('Filtered real estates: ' + JSON.stringify(this.filteredRealEstates));
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
-      this.filteredRealEstates[i].render(elements);
-      var listItem = listItemTemplate.clone();
-      this.removeIds(listItem);
+      var listItem = this.copy(listItemTemplate, i);
+      this.filteredRealEstates[i].render(elements(i));
       listElement.html(listElement.html() + listItem.html());
     }
   }
