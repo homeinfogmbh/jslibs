@@ -817,24 +817,24 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return attachments;
   }
 
-  this.pictures = function () {
+  this.images = function () {
     var attachments = this.attachments();
-    var pictures = [];
+    var images = [];
 
     for (var i = 0; i < attachments.length; i++) {
       switch(attachment[i].gruppe) {
         case 'BILD':
-          pictures.push(attachment[i]);
+          images.push(attachment[i]);
         case 'AUSSENANSICHTEN':
-          pictures.push(attachment[i]);
+          images.push(attachment[i]);
         case 'INNENANSICHTEN':
-          pictures.push(attachment[i]);
+          images.push(attachment[i]);
         default:
           continue;
       }
     }
 
-    return pictures;
+    return images;
   }
 
   this.floorplans = function () {
