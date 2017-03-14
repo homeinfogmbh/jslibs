@@ -1637,17 +1637,14 @@ immobrowse.List = function (cid, realEstates) {
   }
 
   /*
-    Recursively removes all IDs from the list items and sub-items
+    Copies the template and idexes the respective IDs.
   */
-  this.removeIds = function (listItem) {
-    listItem.attr('id', null);
-    listItem.find('*').attr('id', null);
-  }
-
   this.copy = function (template, index) {
     var clone = template.clone();
     clone.find('*').map(function() {
-      if (this.id != '') {
+      if (this.id == 'template') {
+        this.id = '';
+      } else if (this.id != '') {
         this.id += '_' + index;
       }
     });
