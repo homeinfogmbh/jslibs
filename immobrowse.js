@@ -849,36 +849,30 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (this.freitexte != null) {
       if (this.freitexte.sonstige_angaben != null && this.freitexte.sonstige_angaben != '') {
         return this.freitexte.sonstige_angaben;
-      } else {
-        return this.na;
       }
-    } else {
-      return this.na;
     }
+
+    return null;
   }
 
   this.description = function () {
     if (this.freitexte != null) {
       if (this.freitexte.objektbeschreibung != null && this.freitexte.objektbeschreibung != '') {
         return this.freitexte.objektbeschreibung;
-      } else {
-        return this.na;
       }
-    } else {
-      return this.na;
     }
+
+    return null;
   }
 
   this.exposure = function () {
     if (this.freitexte != null) {
       if (this.freitexte.lage != null && this.freitexte.lage != '') {
         return this.freitexte.lage;
-      } else {
-        return this.na;
       }
-    } else {
-      return this.na;
     }
+
+    return null;
   }
 
   this.attachments = function () {
@@ -1297,33 +1291,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderFreeTexts = function (elements) {
     if (elements.description != null) {
-      var description = this.description();
-
-      if (description != null) {
-        elements.description.html(this.freitexte.objektbeschreibung);
-      } else {
-        elements.description.html(this.na);
-      }
+      this.setValue(elements.coldRent, this.description());
     }
 
     if (elements.exposure != null) {
-      var exposure = this.exposure();
-
-      if (exposure != null) {
-        elements.exposure.html(this.freitexte.lage);
-      } else {
-        elements.exposure.html(this.na);
-      }
+      this.setValue(elements.coldRent, this.exposure());
     }
 
     if (elements.miscellanea != null) {
-      var miscellanea = this.miscellanea();
-
-      if (miscellanea != null) {
-        elements.miscellanea.html(this.freitexte.sonstige_angaben);
-      } else {
-        elements.miscellanea.html(this.na);
-      }
+      this.setValue(elements.coldRent, this.miscellanea());
     }
   }
 
