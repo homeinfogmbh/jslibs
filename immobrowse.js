@@ -847,7 +847,11 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.miscellanea = function () {
     if (this.freitexte != null) {
-      return this.freitexte.sonstige_angaben || this.na;
+      if (this.freitexte.sonstige_angaben != null && this.freitexte.sonstige_angaben != '') {
+        return this.freitexte.sonstige_angaben;
+      } else {
+        return this.na;
+      }
     } else {
       return this.na;
     }
@@ -855,7 +859,11 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.description = function () {
     if (this.freitexte != null) {
-      return this.freitexte.objektbeschreibung || this.na;
+      if (this.freitexte.objektbeschreibung != null && this.freitexte.objektbeschreibung != '') {
+        return this.freitexte.objektbeschreibung;
+      } else {
+        return this.na;
+      }
     } else {
       return this.na;
     }
@@ -863,7 +871,11 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.exposure = function () {
     if (this.freitexte != null) {
-      return this.freitexte.lage || this.na;
+      if (this.freitexte.lage != null && this.freitexte.lage != '') {
+        return this.freitexte.lage;
+      } else {
+        return this.na;
+      }
     } else {
       return this.na;
     }
