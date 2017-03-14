@@ -822,13 +822,13 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var images = [];
 
     for (var i = 0; i < attachments.length; i++) {
-      switch(attachment[i].gruppe) {
+      switch(attachments[i].gruppe) {
         case 'BILD':
-          images.push(attachment[i]);
+          images.push(attachments[i]);
         case 'AUSSENANSICHTEN':
-          images.push(attachment[i]);
+          images.push(attachments[i]);
         case 'INNENANSICHTEN':
-          images.push(attachment[i]);
+          images.push(attachments[i]);
         default:
           continue;
       }
