@@ -911,6 +911,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   this.floor = function (short) {
+    var ordinal = '. ';
     var dg = 'Dachgeschoss';
     var og = 'Obergeschoss';
     var eg = 'Erdgeschoss';
@@ -932,9 +933,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
 
         if (this.geo.etage < 0) {
-          return -this.geo.etage + ug;
+          return -this.geo.etage + ordinal + ug;
         } else if (this.geo.etage > 0) {
-          return this.geo.etage + og;
+          return this.geo.etage + ordinal + og;
         } else {
           return eg;
         }
