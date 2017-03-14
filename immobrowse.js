@@ -845,7 +845,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
-  this.miscNotes = function () {
+  this.miscellanea = function () {
     if (this.freitexte != null) {
       return this.freitexte.sonstige_angaben;
     } else {
@@ -1285,36 +1285,30 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderFreeTexts = function (elements) {
     if (elements.description != null) {
-      if (this.freitexte != null) {
-        if (this.freitexte.objektbeschreibung != null) {
-          elements.description.html(this.freitexte.objektbeschreibung);
-        } else {
-          elements.description.html(this.na);
-        }
+      var description = this.description();
+
+      if (description != null) {
+        elements.description.html(this.freitexte.objektbeschreibung);
       } else {
         elements.description.html(this.na);
       }
     }
 
     if (elements.exposure != null) {
-      if (this.freitexte != null) {
-        if (this.freitexte.lage != null) {
-          elements.exposure.html(this.freitexte.lage);
-        } else {
-          elements.exposure.html(this.na);
-        }
+      var exposure = this.exposure();
+
+      if (exposure != null) {
+        elements.exposure.html(this.freitexte.lage);
       } else {
         elements.exposure.html(this.na);
       }
     }
 
     if (elements.miscellanea != null) {
-      if (this.freitexte != null) {
-        if (this.freitexte.sonstige_angaben != null) {
-          elements.miscellanea.html(this.freitexte.sonstige_angaben);
-        } else {
-          elements.miscellanea.html(this.na);
-        }
+      var miscellanea = this.miscellanea();
+
+      if (miscellanea != null) {
+        elements.miscellanea.html(this.freitexte.sonstige_angaben);
       } else {
         elements.miscellanea.html(this.na);
       }
