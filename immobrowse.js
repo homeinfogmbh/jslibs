@@ -842,8 +842,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var floorplans = [];
 
     for (var i = 0; i < attachments.length; i++) {
-      if (attachment[i].gruppe == "GRUNDRISS") {
-        floorplans.push(attachment[i]);
+      if (attachments[i].gruppe == "GRUNDRISS") {
+        floorplans.push(attachments[i]);
       }
     }
 
