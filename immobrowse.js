@@ -868,6 +868,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   this.exposure = function () {
     if (this.freitexte != null) {
       if (this.freitexte.lage != null && this.freitexte.lage != '') {
+        immobrowse.logger.debug('Lage: ' + this.freitexte.lage);
         return this.freitexte.lage;
       }
     }
