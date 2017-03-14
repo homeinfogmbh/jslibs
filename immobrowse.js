@@ -819,20 +819,12 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.images = function () {
     var attachments = this.attachments();
+    var imageGroups = ['TITELBILD', 'BILD', 'AUSSENANSICHTEN', 'INNENANSICHTEN'];
     var images = [];
 
     for (var i = 0; i < attachments.length; i++) {
-      switch(attachments[i].gruppe) {
-        case 'TITELBILD':
-          images.push(attachments[i]);
-        case 'BILD':
-          images.push(attachments[i]);
-        case 'AUSSENANSICHTEN':
-          images.push(attachments[i]);
-        case 'INNENANSICHTEN':
-          images.push(attachments[i]);
-        default:
-          continue;
+      if (imageGroups.indexOf(attachments[i].gruppe) >= 0) {
+        images.push(attachments[i]);
       }
     }
 
