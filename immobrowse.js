@@ -1596,6 +1596,8 @@ immobrowse.List = function (cid, realEstates) {
         return this.sortByRooms(descending);
       case 'area':
         return this.sortByArea(descending);
+      case 'rent':
+        return this.sortByRent(descending);
       case 'street':
         return this.sortByStreet(descending);
       default:
@@ -1612,6 +1614,12 @@ immobrowse.List = function (cid, realEstates) {
   this.sortByArea = function (descending) {
     return function (immobilie1, immobilie2) {
       return immobrowse.compare(immobilie1.area(), immobilie2.area(), descending);
+    }
+  }
+
+  this.sortByRent = function (descending) {
+    return function (immobilie1, immobilie2) {
+      return immobrowse.compare(immobilie1.rent(), immobilie2.rent(), descending);
     }
   }
 
