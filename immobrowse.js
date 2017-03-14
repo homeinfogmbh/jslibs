@@ -132,6 +132,26 @@ immobrowse.sortByStreet = function (descending) {
 }
 
 
+/*
+  Sets a value onto the respective element configuration
+*/
+immobrowse.setValue = function (element, value) {
+  if (value == null) {
+    if (element.container != null) {
+      element.container.hide();
+    } else {
+      element.html(this.na);
+    }
+  } else {
+    if (element.value != null) {
+      element.value.html(value);
+    } else {
+      element.html(value);
+    }
+  }
+}
+
+
 /*** HTML formatting ***/
 
 immobrowse.escapeHtml = function (string) {
@@ -1021,26 +1041,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   /*
-    Sets a value onto the respective element configuration
-  */
-  this.setValue = function (element, value) {
-    if (value == null) {
-      if (element.container != null) {
-        element.container.hide();
-      } else {
-        element.html(this.na);
-      }
-    } else {
-      if (element.value != null) {
-        element.value.html(value);
-      } else {
-        element.html(value);
-      }
-    }
-  }
-
-
-  /*
     Renders prices into the respective elements.
   */
   this.renderPrices = function (elements) {
@@ -1048,9 +1048,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
       var coldRent = this.rent();
 
       if (coldRent != null) {
-        this.setValue(elements.coldRent, immobrowse.euroHtml(this.preise.nettokaltmiete));
+        immobrowse.setValue(elements.coldRent, immobrowse.euroHtml(this.preise.nettokaltmiete));
       } else {
-        this.setValue(elements.coldRent);
+        immobrowse.setValue(elements.coldRent);
       }
     }
 
@@ -1127,11 +1127,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderGeo = function (elements) {
     if (elements.floor != null) {
-      if (this.geo.etage != null) {
-        elements.floor.html(this.geo.etage);
-      } else {
-        elements.floor.html(this.na);
-      }
+      immobrowse.setValue(elements.floor, this.floor());
     }
   }
 
@@ -1295,15 +1291,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderFreeTexts = function (elements) {
     if (elements.description != null) {
-      this.setValue(elements.description, this.description());
+      immobrowse.setValue(elements.description, this.description());
     }
 
     if (elements.exposure != null) {
-      this.setValue(elements.exposure, this.exposure());
+      immobrowse.setValue(elements.exposure, this.exposure());
     }
 
     if (elements.miscellanea != null) {
-      this.setValue(elements.miscellanea, this.miscellanea());
+      immobrowse.setValue(elements.miscellanea, this.miscellanea());
     }
   }
 
