@@ -1247,10 +1247,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     if (elements.lastName != null) {
       elements.lastName.html(this.kontaktperson.name);
-    } else {
-        elements.lastName.html(this.na);
-      }
-
+    }
     if (elements.company != null) {
       if (this.kontaktperson.firma != null) {
         elements.company.html(this.kontaktperson.firma);
