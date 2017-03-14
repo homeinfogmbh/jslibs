@@ -858,6 +858,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   this.description = function () {
     if (this.freitexte != null) {
       if (this.freitexte.objektbeschreibung != null && this.freitexte.objektbeschreibung != '') {
+        immobrowse.logger.debug('Objektbeschreibung: ' + this.freitexte.objektbeschreibung);
         return this.freitexte.objektbeschreibung;
       }
     }
