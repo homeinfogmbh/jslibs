@@ -1676,9 +1676,7 @@ immobrowse.List = function (cid, realEstates) {
   this.copy = function (template, index) {
     var clone = template.clone();
     clone.find('*').map(function() {
-      if (this.id == 'template') {
-        this.id = '';
-      } else if (this.id != '') {
+      if (this.id != '') {
         this.id += '_' + index;
       }
     });
