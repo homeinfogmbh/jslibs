@@ -552,13 +552,17 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   this.rent = function () {
-    var netColdRent = this.netColdRent();
+    var rent = this.netColdRent();
 
-    if (netColdRent == null) {
-      return this.coldRent();
-    } else {
-      return netColdRent;
+    if (rent == null) {
+      rent = this.coldRent();
     }
+
+    if (rent != null) {
+      return immobrowse.euroHtml(rent);
+    }
+
+    return null;
   }
 
   this.cableSatTv = function () {
