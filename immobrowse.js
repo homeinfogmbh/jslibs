@@ -67,6 +67,71 @@ immobrowse.compare = function (alice, bob, descending) {
 }
 
 
+/*
+  Returns an appropriate sorting function
+*/
+immobrowse.getSorter = function (property, order) {
+  var descending = false;
+
+  if (order == 'descending') {
+    descending = true;
+  }
+
+  switch(property) {
+    case 'rooms':
+      return this.sortByRooms(descending);
+    case 'area':
+      return this.sortByArea(descending);
+    case 'rent':
+      return this.sortByRent(descending);
+    case 'street':
+      return this.sortByStreet(descending);
+    default:
+      throw 'Invalid sorting property: ' + property;
+  }
+}
+
+
+/*
+  Returns comparison for rooms
+*/
+immobrowse.sortByRooms = function (descending) {
+  return function (immobilie1, immobilie2) {
+    return immobrowse.compare(immobilie1.rooms(), immobilie2.rooms(), descending);
+  }
+}
+
+
+/*
+  Returns comparison for area
+*/
+immobrowse.sortByArea = function (descending) {
+  return function (immobilie1, immobilie2) {
+    return immobrowse.compare(immobilie1.area(), immobilie2.area(), descending);
+  }
+}
+
+
+/*
+  Returns comparison for rent
+*/
+immobrowse.sortByRent = function (descending) {
+  return function (immobilie1, immobilie2) {
+    return immobrowse.compare(immobilie1.rent(), immobilie2.rent(), descending);
+  }
+}
+
+
+/*
+  Returns comparison for streets
+*/
+immobrowse.sortByStreet = function (descending) {
+  return function (immobilie1, immobilie2) {
+    return immobrowse.compare(immobilie1.street(), immobilie2.street(), descending);
+  }
+}
+
+
 /*** HTML formatting ***/
 
 immobrowse.escapeHtml = function (string) {
@@ -1581,52 +1646,7 @@ immobrowse.List = function (cid, realEstates) {
   */
   this.sort = function (property, order) {
     immobrowse.logger.debug('Sorting by ' + property + ' ' + order + '.');
-    this.filteredRealEstates.sort(this.getSorter(property, order));
-  }
-
-  this.getSorter = function (property, order) {
-    var descending = false;
-
-    if (order == 'descending') {
-      descending = true;
-    }
-
-    switch(property) {
-      case 'rooms':
-        return this.sortByRooms(descending);
-      case 'area':
-        return this.sortByArea(descending);
-      case 'rent':
-        return this.sortByRent(descending);
-      case 'street':
-        return this.sortByStreet(descending);
-      default:
-        throw 'Invalid sorting property: ' + property;
-    }
-  }
-
-  this.sortByRooms = function (descending) {
-    return function (immobilie1, immobilie2) {
-      return immobrowse.compare(immobilie1.rooms(), immobilie2.rooms(), descending);
-    }
-  }
-
-  this.sortByArea = function (descending) {
-    return function (immobilie1, immobilie2) {
-      return immobrowse.compare(immobilie1.area(), immobilie2.area(), descending);
-    }
-  }
-
-  this.sortByRent = function (descending) {
-    return function (immobilie1, immobilie2) {
-      return immobrowse.compare(immobilie1.rent(), immobilie2.rent(), descending);
-    }
-  }
-
-  this.sortByStreet = function (descending) {
-    return function (immobilie1, immobilie2) {
-      return immobrowse.compare(immobilie1.street(), immobilie2.street(), descending);
-    }
+    this.filteredRealEstates.sort(immobrowse.getSorter(property, order));
   }
 
   /*
