@@ -858,7 +858,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
   this.description = function () {
     if (this.freitexte != null) {
       if (this.freitexte.objektbeschreibung != null && this.freitexte.objektbeschreibung != '') {
-        immobrowse.logger.debug('Objektbeschreibung: ' + this.freitexte.objektbeschreibung);
         return this.freitexte.objektbeschreibung;
       }
     }
@@ -1292,15 +1291,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderFreeTexts = function (elements) {
     if (elements.description != null) {
-      this.setValue(elements.coldRent, this.description());
+      this.setValue(elements.description, this.description());
     }
 
     if (elements.exposure != null) {
-      this.setValue(elements.coldRent, this.exposure());
+      this.setValue(elements.exposure, this.exposure());
     }
 
     if (elements.miscellanea != null) {
-      this.setValue(elements.coldRent, this.miscellanea());
+      this.setValue(elements.miscellanea, this.miscellanea());
     }
   }
 
@@ -1671,7 +1670,6 @@ immobrowse.List = function (cid, realEstates) {
   */
   this.render = function (listElement, listItemTemplate, elements, na) {
     listElement.html('');
-    immobrowse.logger.debug('Filtered real estates: ' + JSON.stringify(this.filteredRealEstates));
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
       var listItem = this.copy(listItemTemplate, i);
