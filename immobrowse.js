@@ -1127,7 +1127,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.renderGeo = function (elements) {
     if (elements.floor != null) {
-      immobrowse.setValue(elements.floor, this.floor(true));
+      immobrowse.setValue(elements.floor, this.floor());
     }
   }
 
