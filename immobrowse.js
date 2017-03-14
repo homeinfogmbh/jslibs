@@ -1113,7 +1113,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
     Renders the energy certificate into the respective elements.
   */
   this.renderEnergyCertificate = function (elements) {
-    var energiepass = this.zustand_angaben.energiepass[0];
+    var energiepass;
+
+    try {
+      energiepass = this.zustand_angaben.energiepass[0];
+    } catch(err) {
+      immobrowse.logger.warning(err);
+      energiepass = {};
+    }
 
     if (elements.type != null) {
       if (energiepass.epart == null) {
