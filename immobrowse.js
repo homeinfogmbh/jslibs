@@ -823,6 +823,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     for (var i = 0; i < attachments.length; i++) {
       switch(attachments[i].gruppe) {
+        case 'TITELBILD':
+          images.push(attachments[i]);
         case 'BILD':
           images.push(attachments[i]);
         case 'AUSSENANSICHTEN':
