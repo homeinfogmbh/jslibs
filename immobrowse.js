@@ -29,6 +29,9 @@ var immobrowse = immobrowse || {};
 // Logger
 immobrowse.logger = new homeinfo.logging.Logger('immobrowse', homeinfo.logging.DEBUG);
 
+// Configuration
+immobrowse.config = {};
+
 
 /*** Miscellaneous functions ***/
 
@@ -1007,14 +1010,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return html;
   }
 
-  this.floor = function (short) {
+  this.floor = function () {
     var ordinal = '. ';
     var dg = 'Dachgeschoss';
     var og = 'Obergeschoss';
     var eg = 'Erdgeschoss';
     var ug = 'Untergeschoss';
 
-    if (short) {
+    if (immobrowse.config.shortFloorNames) {
       dg = 'DG';
       og = 'OG';
       eg = 'EG';
