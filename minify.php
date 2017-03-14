@@ -19,7 +19,8 @@
 
   The original script can be found at:
     %url%
-*/';
+*/
+';
     $BASE_URL = 'https://tls.homeinfo.de/jslibs/';
 
     if (! empty($script)) {
