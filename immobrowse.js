@@ -1213,7 +1213,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
     try {
       energiepass = this.zustand_angaben.energiepass[0];
     } catch(err) {
-      immobrowse.logger.warning(err);
       energiepass = {};
     }
 
