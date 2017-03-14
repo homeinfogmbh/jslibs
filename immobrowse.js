@@ -1106,7 +1106,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
         if (elements.demand != null) {
           if (energiepass.endenergiebedarf != '') {
-            elements.consumption.html(energiepass.endenergiebedarf + this.kwh);
+            elements.demand.html(energiepass.endenergiebedarf + this.kwh);
           }
         }
 
