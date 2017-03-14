@@ -30,7 +30,7 @@ var immobrowse = immobrowse || {};
 immobrowse.logger = new homeinfo.logging.Logger('immobrowse', homeinfo.logging.DEBUG);
 
 // Configuration
-immobrowse.config = immobrowse.config || {};
+immobrowse.config = {};
 
 
 /*** Miscellaneous functions ***/
