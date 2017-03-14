@@ -847,25 +847,25 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.miscellanea = function () {
     if (this.freitexte != null) {
-      return this.freitexte.sonstige_angaben;
+      return this.freitexte.sonstige_angaben || this.na;
     } else {
-      return null;
+      return this.na;
     }
   }
 
   this.description = function () {
     if (this.freitexte != null) {
-      return this.freitexte.objektbeschreibung;
+      return this.freitexte.objektbeschreibung || this.na;
     } else {
-      return null;
+      return this.na;
     }
   }
 
   this.exposure = function () {
     if (this.freitexte != null) {
-      return this.freitexte.lage;
+      return this.freitexte.lage || this.na;
     } else {
-      return null;
+      return this.na;
     }
   }
 
