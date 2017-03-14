@@ -42,6 +42,12 @@ homeinfo.str.NEW_LINE = new RegExp('\r?\n','g');
 homeinfo.str.EMAIL = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
 
+// Determines whether the string is considered empty
+homeinfo.str.empty = function(s) {
+  return s == null || s.trim() == '';
+}
+
+
 // Capitalize First Letter
 homeinfo.str.capitalizeFirstLetter = function(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
