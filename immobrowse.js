@@ -1617,6 +1617,10 @@ immobrowse.List = function (cid, realEstates) {
           elements.state.energyCertificate.consumption.html(na);
         }
 
+        if (elements.state.energyCertificate.demand != null) {
+          elements.state.energyCertificate.demand.html(na);
+        }
+
         if (elements.state.energyCertificate.primaryEnergyCarrier != null) {
           elements.state.energyCertificate.primaryEnergyCarrier.html(na);
         }
