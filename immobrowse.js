@@ -1663,8 +1663,8 @@ immobrowse.List = function (cid, realEstates) {
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
       var listItem = this.copy(listItemTemplate, i);
-      this.filteredRealEstates[i].render(elements(i));
       listElement.html(listElement.html() + listItem.html());
+      this.filteredRealEstates[i].render(elements(i));
     }
   }
 }
