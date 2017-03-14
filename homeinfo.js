@@ -43,7 +43,7 @@ homeinfo.str.EMAIL = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
 
 // Determines whether the string is considered empty
-homeinfo.str.empty = function(s) {
+homeinfo.str.isEmpty = function(s) {
   return s == null || s.trim() == '';
 }
 
