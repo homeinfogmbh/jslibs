@@ -1093,7 +1093,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
         elements.type.html('Verbrauchsausweis');
 
         if (elements.consumption != null) {
-          if (energiepass.energieverbrauchkennwert != '') {
+          if (energiepass.energieverbrauchkennwert != null && energiepass.energieverbrauchkennwert != '') {
             elements.consumption.html(energiepass.energieverbrauchkennwert + this.kwh);
           }
         }
@@ -1105,7 +1105,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
         elements.type.html('Bedarfsausweis');
 
         if (elements.demand != null) {
-          if (energiepass.endenergiebedarf != '') {
+          if (energiepass.endenergiebedarf != null && energiepass.endenergiebedarf != '') {
             elements.demand.html(energiepass.endenergiebedarf + this.kwh);
           }
         }
