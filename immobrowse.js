@@ -1081,16 +1081,38 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (elements.type != null) {
       if (energiepass.epart == null) {
         elements.type.html('Nicht angegeben');
+
+        if (elements.demandContainer != null) {
+          elements.demandContainer.hide();
+        }
+
+        if (elements.consumptionContainer != null) {
+          elements.consumptionContainer.hide();
+        }
       } else if (energiepass.epart == 'VERBRAUCH') {
         elements.type.html('Verbrauchsausweis');
+
+        if (elements.consumption != null) {
+          if (energiepass.energieverbrauchkennwert != '') {
+            elements.consumption.html(energiepass.energieverbrauchkennwert + this.kwh);
+          }
+        }
+
+        if (elements.demandContainer != null) {
+          elements.demandContainer.hide();
+        }
       } else {
         elements.type.html('Bedarfsausweis');
-      }
-    }
 
-    if (elements.consumption != null) {
-      if (energiepass.energieverbrauchkennwert != '') {
-        elements.consumption.html(energiepass.energieverbrauchkennwert + this.kwh);
+        if (elements.demand != null) {
+          if (energiepass.endenergiebedarf != '') {
+            elements.consumption.html(energiepass.endenergiebedarf + this.kwh);
+          }
+        }
+
+        if (elements.consumptionContainer != null) {
+          elements.consumptionContainer.hide();
+        }
       }
     }
 
@@ -1581,6 +1603,14 @@ immobrowse.List = function (cid, realEstates) {
       if (elements.state.energyCertificate != null) {
         if (elements.state.energyCertificate.type != null) {
           elements.state.energyCertificate.type.html(na);
+        }
+
+        if (elements.state.energyCertificate.demandContainer != null) {
+          elements.state.energyCertificate.demandContainer.show();
+        }
+
+        if (elements.state.energyCertificate.consumptionContainer != null) {
+          elements.state.energyCertificate.consumptionContainer.show();
         }
 
         if (elements.state.energyCertificate.consumption != null) {
