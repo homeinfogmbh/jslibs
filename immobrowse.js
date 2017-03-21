@@ -190,6 +190,8 @@ immobrowse.germanDecimal = function (number, decimals) {
       decimals = 2;
     }
 
+    immobrowse.logger.debug('number = ' + number);
+    immobrowse.logger.debug('typeof(number) = ' + typeof(number));
     return number.toFixed(decimals).replace('.',',');
   }
 
@@ -600,17 +602,12 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   this.rent = function () {
-    var rent = this.netColdRent();
+    var netColdRent = this.netColdRent();
 
-    if (rent == null) {
-      rent = this.coldRent();
-    }
-
-    if (rent != null) {
-      return immobrowse.euro(rent);
-    }
-
-    return null;
+    if (netColdRent != null) {
+      return netColdRent;
+    } else {
+      return this.coldRent();
   }
 
   this.cableSatTv = function () {
