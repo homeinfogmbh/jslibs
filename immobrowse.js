@@ -143,6 +143,7 @@ immobrowse.setValue = function (element, value) {
   if (element != null) {
     if (value == null) {
       if (element.container == undefined) {
+        print('N/A-ing: ' + element.name);
         element.html(this.na);
       } else {
         element.value.html(this.na);
