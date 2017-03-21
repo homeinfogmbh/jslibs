@@ -934,7 +934,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     if (this.anhaenge != null) {
       if (this.anhaenge.anhang != null) {
-        for (i = 0; i < this.anhaenge.anhang.length; i++) {
+        for (var i = 0; i < this.anhaenge.anhang.length; i++) {
           attachments.push(this.anhaenge.anhang[i]);
         }
       }
