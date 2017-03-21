@@ -580,10 +580,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var coldRent = this.coldRent();
 
     if (netColdRent != null && netColdRent != '') {
-      immobrowse.logger.debug('netColdRent = ' + netColdRent);
       return netColdRent;
     } else if (coldRent != null && coldRent != '') {
-      immobrowse.logger.debug('coldRent = ' + coldRent);
       return coldRent;
     }
 
@@ -1235,19 +1233,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (element != null) {
       if (value == null) {
         if (element.container == undefined) {
-          immobrowse.logger.debug('N/A plain: <' + element + '>: <' + value + '>');
           element.html(this.na);
         } else {
-          immobrowse.logger.debug('N/A container: <' + element + '>: <' + value + '>');
           element.value.html(this.na);
           element.container.hide();
         }
       } else {
         if (element.value == undefined) {
-          immobrowse.logger.debug('Setting plain: <' + element + '>: <' + value + '>');
           element.html(value);
         } else {
-          immobrowse.logger.debug('Setting container: <' + element + '>: <' + value + '>');
           element.value.html(value);
           element.container.show();
         }
