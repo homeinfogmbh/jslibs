@@ -1250,32 +1250,36 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   this.renderEnergyCertificate = function (elements) {
-    var energyCertificate = this.energyCertificate();
+    if (elements != null) {
+      var energyCertificate = this.energyCertificate();
 
-    if (energyCertificate != null) {
-      immobrowse.setValue(elements.type, energyCertificate.type);
-      immobrowse.setValue(elements.demand, energyCertificate.demand);
-      immobrowse.setValue(elements.consumption, energyCertificate.consumption);
-      immobrowse.setValue(elements.primaryEnergyCarrier, energyCertificate.primaryEnergyCarrier);
-      immobrowse.setValue(elements.valueClass, energyCertificate.valueClass);
+      if (energyCertificate != null) {
+        immobrowse.setValue(elements.type, energyCertificate.type);
+        immobrowse.setValue(elements.demand, energyCertificate.demand);
+        immobrowse.setValue(elements.consumption, energyCertificate.consumption);
+        immobrowse.setValue(elements.primaryEnergyCarrier, energyCertificate.primaryEnergyCarrier);
+        immobrowse.setValue(elements.valueClass, energyCertificate.valueClass);
+      }
     }
   }
 
   this.renderContact = function (elements) {
-    var contact = this.contact();
+    if (elements != null) {
+      var contact = this.contact();
 
-    immobrowse.setValue(elements.salutation, contact.salutation);
-    immobrowse.setValue(elements.firstName, contact.firstName);
-    immobrowse.setValue(elements.lastName, contact.lastName);
-    immobrowse.setValue(elements.company, contact.company);
-    immobrowse.setValue(elements.street, contact.street);
-    immobrowse.setValue(elements.houseNumber, contact.houseNumber);
-    immobrowse.setValue(elements.streetAndHouseNumber, contact.streetAndHouseNumber);
-    immobrowse.setValue(elements.zipCode, contact.zipCode);
-    immobrowse.setValue(elements.city, contact.city);
-    immobrowse.setValue(elements.zipCodeAndCity, contact.zipCodeAndCity);
-    immobrowse.setValue(elements.phone, contact.phone);
-    immobrowse.setValue(elements.website, contact.website);
+      immobrowse.setValue(elements.salutation, contact.salutation);
+      immobrowse.setValue(elements.firstName, contact.firstName);
+      immobrowse.setValue(elements.lastName, contact.lastName);
+      immobrowse.setValue(elements.company, contact.company);
+      immobrowse.setValue(elements.street, contact.street);
+      immobrowse.setValue(elements.houseNumber, contact.houseNumber);
+      immobrowse.setValue(elements.streetAndHouseNumber, contact.streetAndHouseNumber);
+      immobrowse.setValue(elements.zipCode, contact.zipCode);
+      immobrowse.setValue(elements.city, contact.city);
+      immobrowse.setValue(elements.zipCodeAndCity, contact.zipCodeAndCity);
+      immobrowse.setValue(elements.phone, contact.phone);
+      immobrowse.setValue(elements.website, contact.website);
+    }
   }
 
   /*
