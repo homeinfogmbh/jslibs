@@ -190,8 +190,6 @@ immobrowse.germanDecimal = function (number, decimals) {
       decimals = 2;
     }
 
-    immobrowse.logger.debug('number = ' + number);
-    immobrowse.logger.debug('typeof(number) = ' + typeof(number));
     return number.toFixed(decimals).replace('.',',');
   }
 
