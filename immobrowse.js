@@ -601,12 +601,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.rent = function () {
     var netColdRent = this.netColdRent();
+    var coldRent = this.coldRent();
 
-    if (netColdRent != null) {
+    if (netColdRent != null && netColdRent != '') {
       return netColdRent;
-    } else {
-      return this.coldRent();
+    } else if (coldRent != null && coldRent != '') {
+      return coldRent;
     }
+
+    return null;
   }
 
   this.cableSatTv = function () {
@@ -1071,7 +1074,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.serviceCharge = function () {
     if (this.preise != null) {
-      return this.preise.nebenkosten;
+      if (this.preise.nebenkosten != null && this.preise.nebenkosten != '') {
+        return this.preise.nebenkosten;
+      }
     }
 
     return null;
