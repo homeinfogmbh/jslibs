@@ -604,8 +604,10 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var coldRent = this.coldRent();
 
     if (netColdRent != null && netColdRent != '') {
+      immobrowse.logger.debug('netColdRent = ' + netColdRent);
       return netColdRent;
     } else if (coldRent != null && coldRent != '') {
+      immobrowse.logger.debug('coldRent = ' + coldRent);
       return coldRent;
     }
 
