@@ -18,6 +18,7 @@
 
   Maintainer: Richard Neumann <r dot neumann at homeinfo period de>
 */
+"use strict";
 
 /* Initialize namespace */
 var homeinfo = homeinfo || {};

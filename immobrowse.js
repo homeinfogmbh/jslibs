@@ -23,6 +23,7 @@
     * jquery.js
     * sweetalert.js
 */
+"use strict";
 
 var immobrowse = immobrowse || {};
 
