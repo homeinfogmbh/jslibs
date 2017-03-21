@@ -1258,6 +1258,23 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
+  this.renderContact = function (elements) {
+    var contact = this.contact();
+
+    immobrowse.setValue(elements.salutation, contact.salutation);
+    immobrowse.setValue(elements.firstName, contact.firstName);
+    immobrowse.setValue(elements.lastName, contact.lastName);
+    immobrowse.setValue(elements.company, contact.company);
+    immobrowse.setValue(elements.street, contact.street);
+    immobrowse.setValue(elements.houseNumber, contact.houseNumber);
+    immobrowse.setValue(elements.streetAndHouseNumber, contact.streetAndHouseNumber);
+    immobrowse.setValue(elements.zipCode, contact.zipCode);
+    immobrowse.setValue(elements.city, contact.city);
+    immobrowse.setValue(elements.zipCodeAndCity, contact.zipCodeAndCity);
+    immobrowse.setValue(elements.phone, contact.phone);
+    immobrowse.setValue(elements.website, contact.website);
+  }
+
   /*
     Renders the real estate data into the specified elements.
     All elements are optional.
@@ -1345,10 +1362,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     immobrowse.setValue(elements.description, this.description());
     immobrowse.setValue(elements.exposure, this.exposure());
     immobrowse.setValue(elements.miscellanea, this.miscellanea());
-
-    if (elements.contact != null) {
-      this.renderContact(elements.contact);
-    }
+    this.renderContact(elements.contact);
 
     if (elements.furnishingTags != null) {
       elements.furnishingTags.html(this.furnishingTags());
