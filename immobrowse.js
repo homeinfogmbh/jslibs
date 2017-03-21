@@ -143,16 +143,19 @@ immobrowse.setValue = function (element, value) {
   if (element != null) {
     if (value == null) {
       if (element.container == undefined) {
-        immobrowse.logger.debug('N/A-ing: ' + element.name);
+        immobrowse.logger.debug('N/A plain: <' + element + '>: <' + value + '>');
         element.html(this.na);
       } else {
+        immobrowse.logger.debug('N/A container: <' + element + '>: <' + value + '>');
         element.value.html(this.na);
         element.container.hide();
       }
     } else {
       if (element.value == undefined) {
+        immobrowse.logger.debug('Setting plain: <' + element + '>: <' + value + '>');
         element.html(value);
       } else {
+        immobrowse.logger.debug('Setting container: <' + element + '>: <' + value + '>');
         element.value.html(value);
         element.container.show();
       }
