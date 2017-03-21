@@ -608,6 +608,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       return netColdRent;
     } else {
       return this.coldRent();
+    }
   }
 
   this.cableSatTv = function () {
