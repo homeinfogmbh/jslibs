@@ -136,34 +136,6 @@ immobrowse.sortByStreet = function (descending) {
 }
 
 
-/*
-  Sets a value onto the respective element configuration
-*/
-immobrowse.setValue = function (element, value) {
-  if (element != null) {
-    if (value == null) {
-      if (element.container == undefined) {
-        immobrowse.logger.debug('N/A plain: <' + element + '>: <' + value + '>');
-        element.html(this.na);
-      } else {
-        immobrowse.logger.debug('N/A container: <' + element + '>: <' + value + '>');
-        element.value.html(this.na);
-        element.container.hide();
-      }
-    } else {
-      if (element.value == undefined) {
-        immobrowse.logger.debug('Setting plain: <' + element + '>: <' + value + '>');
-        element.html(value);
-      } else {
-        immobrowse.logger.debug('Setting container: <' + element + '>: <' + value + '>');
-        element.value.html(value);
-        element.container.show();
-      }
-    }
-  }
-}
-
-
 /*** HTML formatting ***/
 
 immobrowse.escapeHtml = function (string) {
@@ -1256,16 +1228,43 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return contact;
   }
 
+  /*
+    Sets a value onto the respective element configuration
+  */
+  this.setValue = function (element, value) {
+    if (element != null) {
+      if (value == null) {
+        if (element.container == undefined) {
+          immobrowse.logger.debug('N/A plain: <' + element + '>: <' + value + '>');
+          element.html(this.na);
+        } else {
+          immobrowse.logger.debug('N/A container: <' + element + '>: <' + value + '>');
+          element.value.html(this.na);
+          element.container.hide();
+        }
+      } else {
+        if (element.value == undefined) {
+          immobrowse.logger.debug('Setting plain: <' + element + '>: <' + value + '>');
+          element.html(value);
+        } else {
+          immobrowse.logger.debug('Setting container: <' + element + '>: <' + value + '>');
+          element.value.html(value);
+          element.container.show();
+        }
+      }
+    }
+  }
+
   this.renderEnergyCertificate = function (elements) {
     if (elements != null) {
       var energyCertificate = this.energyCertificate();
 
       if (energyCertificate != null) {
-        immobrowse.setValue(elements.type, energyCertificate.type);
-        immobrowse.setValue(elements.demand, energyCertificate.demand);
-        immobrowse.setValue(elements.consumption, energyCertificate.consumption);
-        immobrowse.setValue(elements.primaryEnergyCarrier, energyCertificate.primaryEnergyCarrier);
-        immobrowse.setValue(elements.valueClass, energyCertificate.valueClass);
+        this.setValue(elements.type, energyCertificate.type);
+        this.setValue(elements.demand, energyCertificate.demand);
+        this.setValue(elements.consumption, energyCertificate.consumption);
+        this.setValue(elements.primaryEnergyCarrier, energyCertificate.primaryEnergyCarrier);
+        this.setValue(elements.valueClass, energyCertificate.valueClass);
       }
     }
   }
@@ -1274,18 +1273,18 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (elements != null) {
       var contact = this.contact();
 
-      immobrowse.setValue(elements.salutation, contact.salutation);
-      immobrowse.setValue(elements.firstName, contact.firstName);
-      immobrowse.setValue(elements.lastName, contact.lastName);
-      immobrowse.setValue(elements.company, contact.company);
-      immobrowse.setValue(elements.street, contact.street);
-      immobrowse.setValue(elements.houseNumber, contact.houseNumber);
-      immobrowse.setValue(elements.streetAndHouseNumber, contact.streetAndHouseNumber);
-      immobrowse.setValue(elements.zipCode, contact.zipCode);
-      immobrowse.setValue(elements.city, contact.city);
-      immobrowse.setValue(elements.zipCodeAndCity, contact.zipCodeAndCity);
-      immobrowse.setValue(elements.phone, contact.phone);
-      immobrowse.setValue(elements.website, contact.website);
+      this.setValue(elements.salutation, contact.salutation);
+      this.setValue(elements.firstName, contact.firstName);
+      this.setValue(elements.lastName, contact.lastName);
+      this.setValue(elements.company, contact.company);
+      this.setValue(elements.street, contact.street);
+      this.setValue(elements.houseNumber, contact.houseNumber);
+      this.setValue(elements.streetAndHouseNumber, contact.streetAndHouseNumber);
+      this.setValue(elements.zipCode, contact.zipCode);
+      this.setValue(elements.city, contact.city);
+      this.setValue(elements.zipCodeAndCity, contact.zipCodeAndCity);
+      this.setValue(elements.phone, contact.phone);
+      this.setValue(elements.website, contact.website);
     }
   }
 
@@ -1358,24 +1357,24 @@ immobrowse.RealEstate = function (cid, realEstate) {
       elements.objectTitle.html(this.objectTitle());
     }
 
-    immobrowse.setValue(elements.coldRent, immobrowse.euro(this.rent()));
-    immobrowse.setValue(elements.serviceCharge, immobrowse.euro(this.serviceCharge()));
-    immobrowse.setValue(elements.heatingCosts, immobrowse.euro(this.heatingCosts()));
-    immobrowse.setValue(elements.heatingCostsInServiceCharge, immobrowse.yesNo(this.heatingCostsInServiceCharge()));
-    immobrowse.setValue(elements.securityDeposit, immobrowse.euro(this.securityDeposit()));
-    immobrowse.setValue(elements.subjectToCommission, immobrowse.yesNo(this.subjectToCommission()));
-    immobrowse.setValue(elements.livingArea, immobrowse.squareMeters(this.livingArea()));
-    immobrowse.setValue(elements.rooms, this.rooms());
-    immobrowse.setValue(elements.floor, this.floor());
-    immobrowse.setValue(elements.availableFrom, this.availableFrom());
-    immobrowse.setValue(elements.councilFlat, this.councilFlat());
-    immobrowse.setValue(elements.constructionYear, this.constructionYear());
-    immobrowse.setValue(elements.state, this.state());
-    immobrowse.setValue(elements.lastModernization, this.lastModernization());
+    this.setValue(elements.coldRent, immobrowse.euro(this.rent()));
+    this.setValue(elements.serviceCharge, immobrowse.euro(this.serviceCharge()));
+    this.setValue(elements.heatingCosts, immobrowse.euro(this.heatingCosts()));
+    this.setValue(elements.heatingCostsInServiceCharge, immobrowse.yesNo(this.heatingCostsInServiceCharge()));
+    this.setValue(elements.securityDeposit, immobrowse.euro(this.securityDeposit()));
+    this.setValue(elements.subjectToCommission, immobrowse.yesNo(this.subjectToCommission()));
+    this.setValue(elements.livingArea, immobrowse.squareMeters(this.livingArea()));
+    this.setValue(elements.rooms, this.rooms());
+    this.setValue(elements.floor, this.floor());
+    this.setValue(elements.availableFrom, this.availableFrom());
+    this.setValue(elements.councilFlat, this.councilFlat());
+    this.setValue(elements.constructionYear, this.constructionYear());
+    this.setValue(elements.state, this.state());
+    this.setValue(elements.lastModernization, this.lastModernization());
     this.renderEnergyCertificate(elements.energyCertificate);
-    immobrowse.setValue(elements.description, this.description());
-    immobrowse.setValue(elements.exposure, this.exposure());
-    immobrowse.setValue(elements.miscellanea, this.miscellanea());
+    this.setValue(elements.description, this.description());
+    this.setValue(elements.exposure, this.exposure());
+    this.setValue(elements.miscellanea, this.miscellanea());
     this.renderContact(elements.contact);
 
     if (elements.furnishingTags != null) {
