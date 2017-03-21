@@ -140,19 +140,21 @@ immobrowse.sortByStreet = function (descending) {
   Sets a value onto the respective element configuration
 */
 immobrowse.setValue = function (element, value) {
-  if (value == null) {
-    if (element.container == undefined) {
-      element.html(this.na);
+  if (element != null) {
+    if (value == null) {
+      if (element.container == undefined) {
+        element.html(this.na);
+      } else {
+        element.value.html(this.na);
+        element.container.hide();
+      }
     } else {
-      element.value.html(this.na);
-      element.container.hide();
-    }
-  } else {
-    if (element.value == undefined) {
-      element.html(value);
-    } else {
-      element.value.html(value);
-      element.container.show();
+      if (element.value == undefined) {
+        element.html(value);
+      } else {
+        element.value.html(value);
+        element.container.show();
+      }
     }
   }
 }
