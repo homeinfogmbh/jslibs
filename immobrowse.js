@@ -1168,12 +1168,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
       if (energiepass.energieverbrauchkennwert != null && energiepass.energieverbrauchkennwert != '') {
         energyCertificate.value = energiepass.energieverbrauchkennwert;
+        energyCertificate.consumption = energiepass.energieverbrauchkennwert;
       }
     } else {
       energyCertificate.type = 'Bedarfsausweis';
 
       if (energiepass.endenergiebedarf != null && energiepass.endenergiebedarf != '') {
         energyCertificate.value = energiepass.endenergiebedarf;
+        energyCertificate.demand = energiepass.endenergiebedarf;
       }
     }
 
