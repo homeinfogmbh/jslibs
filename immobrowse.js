@@ -1279,6 +1279,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
         this.setValue(elements.consumption, energyCertificate.consumption);
         this.setValue(elements.primaryEnergyCarrier, energyCertificate.primaryEnergyCarrier);
         this.setValue(elements.valueClass, energyCertificate.valueClass);
+      } else {
+        immobrowse.logger.debug('energyCertificate is null');
       }
     }
   }
