@@ -1167,15 +1167,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
       energyCertificate.type = 'Verbrauchsausweis';
 
       if (energiepass.energieverbrauchkennwert != null && energiepass.energieverbrauchkennwert != '') {
-        energyCertificate.value = energiepass.energieverbrauchkennwert;
-        energyCertificate.consumption = energiepass.energieverbrauchkennwert;
+        energyCertificate.value = energiepass.energieverbrauchkennwert + this.kwh;
+        energyCertificate.consumption = energiepass.energieverbrauchkennwert + this.kwh;
       }
     } else {
       energyCertificate.type = 'Bedarfsausweis';
 
       if (energiepass.endenergiebedarf != null && energiepass.endenergiebedarf != '') {
-        energyCertificate.value = energiepass.endenergiebedarf;
-        energyCertificate.demand = energiepass.endenergiebedarf;
+        energyCertificate.value = energiepass.endenergiebedarf + this.kwh;
+        energyCertificate.demand = energiepass.endenergiebedarf + this.kwh;
       }
     }
 
