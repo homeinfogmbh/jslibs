@@ -248,9 +248,21 @@ immobrowse.getRealEstates = function (cid, callback) {
 }
 
 
-// Opens the respective URL
+/*
+  Opens the respective URL
+*/
 immobrowse.open = function (url) {
   window.open(url, '_self');
+}
+
+
+/*
+  Prints a div
+*/
+immobrowse.printDiv = function (div, frame) {
+  frame.document.body.innerHTML = div.html();
+  frame.window.focus();
+  frame.window.print();
 }
 
 
