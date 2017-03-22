@@ -947,7 +947,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return this.floorplans()[0];
   }
 
-  this.furnishingTags = function () {
+  this.amenitiesTags = function () {
     var amenities = this.amenities();
     var html = '';
 
@@ -1342,7 +1342,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
         zipCodeAndCity: <zipCodeAndCityElement>,
         website: <websiteElement>
       },
-      furnishingTags: <furnishingTagsElement>,
+      amenitiesTags: <amenitiesTagsElement>,
       titleImage: <titleImageElement>
     };
   */
@@ -1373,7 +1373,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     this.setValue(elements.exposure, this.exposure());
     this.setValue(elements.miscellanea, this.miscellanea());
     this.renderContact(elements.contact);
-    this.setValue(elements.furnishingTags, this.furnishingTags());
+    this.setValue(elements.amenitiesTags, this.amenitiesTags());
     this.setValue(elements.amenitiesList, this.amenitiesList());
 
     if (elements.titleImage != null) {
