@@ -1231,6 +1231,12 @@ immobrowse.RealEstate = function (cid, realEstate) {
       contact.zipCodeAndCity = this.kontaktperson.plz + ' ' + this.kontaktperson.ort;
     }
 
+    if (this.kontaktperson.email_direkt != null) {
+      contact.email = this.kontaktperson.email_direkt;
+    } else if (this.kontaktperson.email_zentrale != null) {
+      contact.email = this.kontaktperson.email_zentrale;
+    }
+
     if (this.kontaktperson.tel_durchw != null) {
       contact.phone = this.kontaktperson.tel_durchw;
     } else if (this.kontaktperson.tel_zentrale != null) {
