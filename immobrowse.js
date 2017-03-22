@@ -1270,17 +1270,17 @@ immobrowse.RealEstate = function (cid, realEstate) {
       var energyCertificate = this.energyCertificate();
 
       if (energyCertificate != null) {
-        immobrowse.logger.debug('Rendering energyCertificate');
-        immobrowse.logger.debug('type = ' + elements.type);
-        immobrowse.logger.debug('demand = ' + elements.demand);
-        immobrowse.logger.debug('consumption = ' + elements.consumption);
         this.setValue(elements.type, energyCertificate.type);
         this.setValue(elements.demand, energyCertificate.demand);
         this.setValue(elements.consumption, energyCertificate.consumption);
         this.setValue(elements.primaryEnergyCarrier, energyCertificate.primaryEnergyCarrier);
         this.setValue(elements.valueClass, energyCertificate.valueClass);
       } else {
-        immobrowse.logger.debug('energyCertificate is null');
+        this.setValue(elements.type, null);
+        this.setValue(elements.demand, null);
+        this.setValue(elements.consumption, null);
+        this.setValue(elements.primaryEnergyCarrier, null);
+        this.setValue(elements.valueClass, null);
       }
     }
   }
