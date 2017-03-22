@@ -1061,6 +1061,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       }
     }
 
+    return amenities;
   }
 
   this.serviceCharge = function () {
