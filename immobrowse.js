@@ -435,10 +435,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
-  this.objektnr_extern = function () {
-    return this.verwaltung_techn.objektnr_extern;
-  }
-
   this.objectTitle = function () {
     if (this.freitexte != null) {
       if (this.freitexte.objekttitel != null) {
@@ -855,18 +851,16 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
-  /**************************
-  *                         *
-  *  Renderable properties  *
-  *                         *
-  ***************************/
+  this.objectId = function () {
+    return this.verwaltung_techn.objektnr_extern;
+  }
 
   this.attachmentURL = function (anhang) {
     if (anhang == null) {
       return null;
     } else {
       return 'https://tls.homeinfo.de/immobrowse/attachment/' + anhang.id
-        + '?customer=' + this.cid + '&objektnr_extern=' + this.objektnr_extern();
+        + '?customer=' + this.cid + '&objektnr_extern=' + this.objectId();
     }
   }
 
@@ -874,7 +868,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (baseUrl == null) {
       return null;
     } else {
-      return baseUrl + '?customer=' + this.cid + '&objektnr_extern=' + this.objektnr_extern();
+      return baseUrl + '?customer=' + this.cid + '&objektnr_extern=' + this.objectId();
     }
   }
 
@@ -1347,10 +1341,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
       elements.linkElement.attr('onclick', 'immobrowse.open("' + this.detailsURL('expose.html') + '");');
     }
 
-    if (elements.objectTitle != null) {
-      elements.objectTitle.html(this.objectTitle());
-    }
-
+    this.setValue(elements.objectId, this.objectId());
+    this.setValue(elements.objectTitle, this.objectTitle());
     this.setValue(elements.coldRent, immobrowse.euro(this.rent()));
     this.setValue(elements.serviceCharge, immobrowse.euro(this.serviceCharge()));
     this.setValue(elements.heatingCosts, immobrowse.euro(this.heatingCosts()));
