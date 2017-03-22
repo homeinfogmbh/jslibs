@@ -1373,10 +1373,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
     this.setValue(elements.exposure, this.exposure());
     this.setValue(elements.miscellanea, this.miscellanea());
     this.renderContact(elements.contact);
-
-    if (elements.furnishingTags != null) {
-      elements.furnishingTags.html(this.furnishingTags());
-    }
+    this.setValue(elements.furnishingTags, this.furnishingTags());
+    this.setValue(elements.amenitiesList, this.amenitiesList());
 
     if (elements.titleImage != null) {
       elements.titleImage.attr('src', this.attachmentURL(this.titleImage()));
