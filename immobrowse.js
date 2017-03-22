@@ -1054,11 +1054,11 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
       }
 
-      if (this.ausstattung.wasch_trockenraum)
+      if (this.ausstattung.wasch_trockenraum) {
         amenities.push('Wasch- / Trockenraum');
       }
 
-      if (this.ausstattung.gaestewc)
+      if (this.ausstattung.gaestewc) {
         amenities.push('Gäste WC');
       }
     }
