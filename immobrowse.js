@@ -1270,6 +1270,10 @@ immobrowse.RealEstate = function (cid, realEstate) {
       var energyCertificate = this.energyCertificate();
 
       if (energyCertificate != null) {
+        immobrowse.logger.debug('Rendering energyCertificate');
+        immobrowse.logger.debug('type = ' + elements.type);
+        immobrowse.logger.debug('demand = ' + elements.demand);
+        immobrowse.logger.debug('consumption = ' + elements.consumption);
         this.setValue(elements.type, energyCertificate.type);
         this.setValue(elements.demand, energyCertificate.demand);
         this.setValue(elements.consumption, energyCertificate.consumption);
