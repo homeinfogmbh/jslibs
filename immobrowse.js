@@ -256,16 +256,6 @@ immobrowse.open = function (url) {
 }
 
 
-/*
-  Prints a div
-*/
-immobrowse.printDiv = function (div, frame) {
-  frame.document.body.innerHTML = div.html();
-  frame.window.focus();
-  frame.window.print();
-}
-
-
 immobrowse.mkContactMail = function (
     objektnr_extern, salutation, forename, surname, phone,
     street, house_number, zip_code, city, message) {
