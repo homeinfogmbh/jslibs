@@ -1006,12 +1006,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var amenities = [];
 
     if (this.ausstattung != null) {
-      if (this.flaechen != null) {
-        if (this.flaechen.anzahl_balkone > 0) {
-          amenities.push('Balkon');
-        }
-      }
-
       if (this.ausstattung.barrierefrei) {
         amenities.push('Barrierefrei');
       }
@@ -1058,6 +1052,28 @@ immobrowse.RealEstate = function (cid, realEstate) {
         if (this.ausstattung.fahrstuhl.PERSONEN) {
           amenities.push('Personenaufzug');
         }
+      }
+
+      if (this.ausstattung.wasch_trockenraum)
+        amenities.push('Wasch- / Trockenraum');
+      }
+
+      if (this.ausstattung.gaestewc)
+        amenities.push('Gäste WC');
+      }
+    }
+
+    if (this.flaechen != null) {
+      if (this.flaechen.anzahl_balkone > 0) {
+        amenities.push('Balkon');
+      }
+
+      if (this.flaechen.anzahl_terrassen > 0) {
+        amenities.push('Terrasse');
+      }
+
+      if (this.flaechen.einliegerwohnung) {
+        amenities.push('Einliegerwohnung');
       }
     }
 
