@@ -948,65 +948,25 @@ immobrowse.RealEstate = function (cid, realEstate) {
   }
 
   this.furnishingTags = function () {
+    var amenities = this.amenities();
     var html = '';
 
-    if (this.ausstattung != null) {
-      if (this.flaechen != null) {
-        if (this.flaechen.anzahl_balkone > 0) {
-          html += this.oval.replace('{}', 'Balkon');
-        }
-      }
-
-      if (this.ausstattung.barrierefrei) {
-        html += this.oval.replace('{}', 'Barrierefrei');
-      }
-
-      if (this.ausstattung.kabel_sat_tv) {
-        html += this.oval.replace('{}', 'Kabel / Sat. / TV');
-      }
-
-      if (this.ausstattung.unterkellert) {
-        html += this.oval.replace('{}', 'Keller');
-      }
-
-      if (this.ausstattung.rollstuhlgerecht) {
-        html += this.oval.replace('{}', 'Rollstuhlgerecht');
-      }
-
-      if (this.ausstattung.bad != null) {
-        if (this.ausstattung.bad.FENSTER) {
-          html += this.oval.replace('{}', 'Fenster im Bad');
-        }
-
-        if (this.ausstattung.bad.WANNE) {
-          html += this.oval.replace('{}', 'Badewanne');
-        }
-
-        if (this.ausstattung.bad.DUSCHE) {
-          html += this.oval.replace('{}', 'Dusche');
-        }
-      }
-
-      if (this.ausstattung.kueche != null) {
-        if (this.ausstattung.kueche.EBK) {
-          html += this.oval.replace('{}', 'Einbauk&uuml;che');
-        }
-      }
-
-      if (this.ausstattung.stellplatzart != null) {
-        if (this.ausstattung.stellplatzart.FREIPLATZ) {
-          html += this.oval.replace('{}', 'Stellplatz');
-        }
-      }
-
-      if (this.ausstattung.fahrstuhl != null) {
-        if (this.ausstattung.fahrstuhl.PERSONEN) {
-          html += this.oval.replace('{}', 'Personenaufzug');
-        }
-      }
+    for (var i = 0; i < amenities.length; i++) {
+      html += this.oval.replace('{}', amenities[i]);
     }
 
     return html;
+  }
+
+  this.amenitiesList = function () {
+    var amenities = this.amenities();
+    var html = '<ul class="ib-amenities-list">';
+
+    for (var i = 0; i < amenities.length; i++) {
+      html += '<li>' + amenities[i] + '</li>';
+    }
+
+    return html + '</ul>';
   }
 
   this.floor = function () {
@@ -1040,6 +1000,67 @@ immobrowse.RealEstate = function (cid, realEstate) {
         }
       }
     }
+  }
+
+  this.amenities = function () {
+    var amenities = [];
+
+    if (this.ausstattung != null) {
+      if (this.flaechen != null) {
+        if (this.flaechen.anzahl_balkone > 0) {
+          amenities.push('Balkon');
+        }
+      }
+
+      if (this.ausstattung.barrierefrei) {
+        amenities.push('Barrierefrei');
+      }
+
+      if (this.ausstattung.kabel_sat_tv) {
+        amenities.push('Kabel / Sat. / TV');
+      }
+
+      if (this.ausstattung.unterkellert) {
+        amenities.push('Keller');
+      }
+
+      if (this.ausstattung.rollstuhlgerecht) {
+        amenities.push('Rollstuhlgerecht');
+      }
+
+      if (this.ausstattung.bad != null) {
+        if (this.ausstattung.bad.FENSTER) {
+          amenities.push('Fenster im Bad');
+        }
+
+        if (this.ausstattung.bad.WANNE) {
+          amenities.push('Badewanne');
+        }
+
+        if (this.ausstattung.bad.DUSCHE) {
+          amenities.push('Dusche');
+        }
+      }
+
+      if (this.ausstattung.kueche != null) {
+        if (this.ausstattung.kueche.EBK) {
+          amenities.push('Einbauk&uuml;che');
+        }
+      }
+
+      if (this.ausstattung.stellplatzart != null) {
+        if (this.ausstattung.stellplatzart.FREIPLATZ) {
+          amenities.push('Stellplatz');
+        }
+      }
+
+      if (this.ausstattung.fahrstuhl != null) {
+        if (this.ausstattung.fahrstuhl.PERSONEN) {
+          amenities.push('Personenaufzug');
+        }
+      }
+    }
+
   }
 
   this.serviceCharge = function () {
@@ -1282,42 +1303,31 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     @param: elements = {
       linkElement: <linkElement>,
+      objectIf: <objectIdElement>,
       objectTitle: <objectTitleElement>,
-      prices: {
-        coldRent: <coldRentElement>,
-        serviceCharge: <serviceChargeElement>,
-        heatingCosts: <heatingCostsElement>,
-        heatingCostsInServiceCharge: <heatingCostsInServiceChargeElement>,
-        securityDeposit: <securityDepositElement>,
-        subjectToCommission: <subjectToCommissionElement>
+      coldRent: <coldRentElement>,
+      serviceCharge: <serviceChargeElement>,
+      heatingCosts: <heatingCostsElement>,
+      heatingCostsInServiceCharge: <heatingCostsInServiceChargeElement>,
+      securityDeposit: <securityDepositElement>,
+      subjectToCommission: <subjectToCommissionElement>,
+      livingArea: <livingAreaElement>,
+      rooms: <roomsElement>,
+      floor: <floorElement>,
+      availableFrom: <availableFromElement>,
+      councilFlat: <councilFlatElement>,
+      constructionYear: <constructionYearElement>,
+      state: <stateElement>,
+      lastModernization: <lastModernizationElement>,
+      energyCertificate: {
+        type: <typeElement>,
+        consumption: <consumptionElement>,
+        primaryEnergyCarrier: <primaryEnergyCarrierElement>,
+        valueClass: <valueClassElement>
       },
-      area: {
-        livingArea: <livingAreaElement>,
-        rooms: <roomsElement>
-      },
-      geo: {
-        floor: <floorElement>
-      },
-      management: {
-        availableFrom: <availableFromElement>,
-        councilFlat: <councilFlatElement>
-      },
-      state: {
-        constructionYear: <constructionYearElement>,
-        state: <stateElement>,
-        lastModernization: <lastModernizationElement>,
-        energyCertificate: {
-          type: <typeElement>,
-          consumption: <consumptionElement>,
-          primaryEnergyCarrier: <primaryEnergyCarrierElement>,
-          valueClass: <valueClassElement>
-        }
-      },
-      freeTexts: {
-        description: <descriptionElement>,
-        exposure: <exposureElement>,
-        miscellanea: <miscellaneaElement>
-      },
+      description: <descriptionElement>,
+      exposure: <exposureElement>,
+      miscellanea: <miscellaneaElement>,
       contact: {
         salutation: <salutationElement>,
         firstName: <firstNameElement>,
