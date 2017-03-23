@@ -1409,7 +1409,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
     this.setValue(elements.amenitiesList, this.amenitiesList());
 
     if (elements.titleImage != null) {
-      elements.titleImage.attr('src', this.attachmentURL(this.titleImage()));
+      var titleImage = this.titleImage();
+      elements.titleImage.image.attr('src', this.attachmentURL(titleImage));
+      elements.titleImage.caption.html(titleImage.anhangtitel);
     }
   }
 }
