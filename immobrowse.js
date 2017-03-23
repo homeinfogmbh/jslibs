@@ -257,7 +257,7 @@ immobrowse.open = function (url) {
 
 
 immobrowse.mkContactMail = function (
-    objectTitle, address, salutation, forename, surname, phone,
+    objectTitle, objectAddress, salutation, forename, surname, phone,
     street, houseNumber, zipCode, city, message) {
   var html = '<!DOCTYPE HTML>\n';
   html += '<h1>Anfrage zu Objekt</h1>';
