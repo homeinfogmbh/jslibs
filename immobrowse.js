@@ -1330,6 +1330,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       this.setValue(elements.salutation, contact.salutation);
       this.setValue(elements.firstName, contact.firstName);
       this.setValue(elements.lastName, contact.lastName);
+      this.setValue(elements.name, contact.name);
       this.setValue(elements.company, contact.company);
       this.setValue(elements.street, contact.street);
       this.setValue(elements.houseNumber, contact.houseNumber);
@@ -1337,6 +1338,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       this.setValue(elements.zipCode, contact.zipCode);
       this.setValue(elements.city, contact.city);
       this.setValue(elements.zipCodeAndCity, contact.zipCodeAndCity);
+      this.setValue(elements.address, contact.address);
       this.setValue(elements.phone, contact.phone);
       this.setValue(elements.website, contact.website);
     }
