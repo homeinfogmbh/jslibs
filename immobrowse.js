@@ -205,9 +205,9 @@ immobrowse.yesNo = function (boolean) {
 /*
   Queries real estate data from the API and runs callback function.
 */
-immobrowse.getRealEstate = function (cid, objektnr_extern, callback) {
+immobrowse.getRealEstate = function (cid, objectId, callback) {
   $.ajax({
-    url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + objektnr_extern + '?customer=' + cid,
+    url: 'https://tls.homeinfo.de/immobrowse/real_estate/' + objectId + '?customer=' + cid,
     success: function (json) {
       callback(new immobrowse.RealEstate(cid, json));
     },
@@ -257,10 +257,10 @@ immobrowse.open = function (url) {
 
 
 immobrowse.mkContactMail = function (
-    objektnr_extern, salutation, forename, surname, phone,
+    objectId, salutation, forename, surname, phone,
     street, house_number, zip_code, city, message) {
   var html = '<!DOCTYPE HTML>\n';
-  html += '<h1>Anfrage zu Objekt Nr. <strong>' + objektnr_extern + '</strong></h1>\n<br>\n';
+  html += '<h1>Anfrage zu Objekt Nr. <strong>' + objectId + '</strong></h1>\n<br>\n';
   html += salutation + ' ' + forename + ' ' + surname + '\n<br>\n';
 
   if (street) {
@@ -1520,7 +1520,7 @@ immobrowse.List = function (cid, realEstates) {
       if (this.match(this.realEstates[i], filters)) {
         this.filteredRealEstates.push(this.realEstates[i]);
       } else {
-        immobrowse.logger.debug('Discarding: ' + this.realEstates[i].objektnr_extern());
+        immobrowse.logger.debug('Discarding: ' + this.realEstates[i].objectId());
       }
     }
 
