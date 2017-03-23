@@ -1210,16 +1210,22 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.contact = function () {
     var contact = {};
+    var name = [];
+    var address = [];
 
     if (this.kontaktperson.anrede != null) {
       contact.salutation = this.kontaktperson.anrede;
+      name.push(contact.salutation);
     }
 
     if (this.kontaktperson.vorname != null) {
       contact.firstName = this.kontaktperson.vorname;
+      name.push(contact.firstName);
     }
 
     contact.lastName = this.kontaktperson.name;
+    name.push(contact.lastName);
+    contact.name = name.join(' ');
 
     if (this.kontaktperson.firma != null) {
       contact.company = this.kontaktperson.firma;
@@ -1235,6 +1241,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     if (this.kontaktperson.strasse != null && this.kontaktperson.hausnummer != null) {
       contact.streetAndHouseNumber = this.kontaktperson.strasse + ' ' + this.kontaktperson.hausnummer;
+      address.push(contact.streetAndHouseNumber);
     }
 
     if (this.kontaktperson.plz != null) {
@@ -1247,6 +1254,11 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     if (this.kontaktperson.plz != null && this.kontaktperson.ort != null) {
       contact.zipCodeAndCity = this.kontaktperson.plz + ' ' + this.kontaktperson.ort;
+      address.push(contact.zipCodeAndCity);
+    }
+
+    if (address.length > 0) {
+      contact.address = address.join(', ');
     }
 
     if (this.kontaktperson.email_direkt != null) {
@@ -1410,7 +1422,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     if (elements.titleImage != null) {
       var titleImage = this.titleImage();
-      if (elements.titleImage.caption != null) {
+      if (elements.titleImage.image != null) {
         elements.titleImage.image.attr('src', this.attachmentURL(titleImage));
         elements.titleImage.caption.html(titleImage.anhangtitel);
       } else {
