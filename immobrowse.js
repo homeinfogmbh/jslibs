@@ -257,46 +257,55 @@ immobrowse.open = function (url) {
 
 
 immobrowse.mkContactMail = function (
-    objectId, salutation, forename, surname, phone,
-    street, house_number, zip_code, city, message) {
+    objectTitle, address, salutation, forename, surname, phone,
+    street, houseNumber, zipCode, city, message) {
   var html = '<!DOCTYPE HTML>\n';
-  html += '<h1>Anfrage zu Objekt Nr. <strong>' + objectId + '</strong></h1>\n<br>\n';
-  html += salutation + ' ' + forename + ' ' + surname + '\n<br>\n';
+  html += '<h1>Anfrage zu Objekt</h1>';
+  html += '<h2>' + objectTitle + '</h2>';
+  html += '<h3>' + objectAddress + '</h4>';
+  html += [salutation, forename, surname].join(' ');
+
+  var inquirerInfo = ''
 
   if (street) {
-    html += street;
+    inquirerInfo += street;
+
+    if (houseNumber) {
+      inquirerInfo += ' ' + houseNumber;
+    }
+
+    inquirerInfo += '<br>\n';
   }
 
-  if (house_number) {
-    html += house_number;
-  }
-
-  if (street || house_number) {
-    html += '<br>\n';
-  }
-
-  if (zip_code) {
-    html += zip_code;
+  if (zipCode) {
+    inquirerInfo += zipCode;
   }
 
   if (city) {
-    if (zip_code) {
-      html += ' ';
+    if (zipCode) {
+      inquirerInfo += ' ';
     }
 
-    html += ' ' + city;
+    inquirerInfo += city;
   }
 
-  if (zip_code || city) {
-    html += '<br>\n';
+  if (zipCode || city) {
+    inquirerInfo += '<br>\n';
   }
 
   if (phone) {
-    html += 'Tel.: ' + phone  + '\n<br>\n';
+    inquirerInfo += 'Tel.: ' + phone  + '\n<br>\n';
   }
 
+  if (inquirerInfo != '') {
+    inquirerInfo += '\n<br>\n';
+  } else {
+    inquirerInfo += ' ';
+  }
+
+  html += inquirerInfo;
   html += 'hat folgende Anfrage an Sie:\n<br>\n<br>\n';
-  html += '<p>' + message.replace('\n', '\n<br>\n') + '</p>';
+  html += '<div style="font-style:italic;">' + message.replace('\n', '\n<br>\n') + '</div>';
   return html;
 }
 
