@@ -263,7 +263,7 @@ immobrowse.mkContactMail = function (
   html += '<h1>Anfrage zu Objekt</h1>';
   html += '<h2>' + objectTitle + '</h2>';
   html += '<h3>' + objectAddress + '</h4>';
-  html += [salutation, forename, surname].join(' ');
+  html += [salutation, '<span style="font-variant:small-caps;">' + forename, surname + '</span>'].join(' ');
 
   var inquirerInfo = ''
 
