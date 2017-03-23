@@ -297,13 +297,12 @@ immobrowse.mkContactMail = function (
     inquirerInfo += 'Tel.: ' + phone  + '\n<br>\n';
   }
 
-  if (inquirerInfo != '') {
-    inquirerInfo += '\n<br>\n';
+  if (inquirerInfo == '') {
+    html += ' ';
   } else {
-    inquirerInfo += ' ';
+    html += '\n<br>\n' + inquirerInfo + '\n<br>\n';
   }
 
-  html += inquirerInfo;
   html += 'hat folgende Anfrage an Sie:\n<br>\n<br>\n';
   html += '<div style="font-style:italic;">' + message.replace('\n', '\n<br>\n') + '</div>';
   return html;
