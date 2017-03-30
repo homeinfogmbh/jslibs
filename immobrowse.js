@@ -28,7 +28,7 @@
 var immobrowse = immobrowse || {};
 
 // Logger
-immobrowse.logger = new homeinfo.logging.Logger('immobrowse', homeinfo.logging.DEBUG);
+immobrowse.logger = new homeinfo.logging.Logger('immobrowse', homeinfo.logging.WARNING);
 
 // Configuration
 immobrowse.config = {};
