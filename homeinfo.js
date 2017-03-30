@@ -139,6 +139,15 @@ homeinfo.num.isEven = function(num) {
   return ! homeinfo.num.isOdd(num);
 }
 
+// Padds a leading zero
+homeinfo.num.padd = function(num) {
+  if (num < 10) {
+    return '0' + num;
+  } else {
+    return '' + num;
+  }
+}
+
 
 /* Array library */
 
