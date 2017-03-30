@@ -32,3 +32,15 @@ trias.logger = new homeinfo.logging.Logger('trias', homeinfo.logging.DEBUG);
 
 // Configuration
 trias.config = {};
+
+trias.TriasClient = function (url, requestorRef) {
+  this.url = url;
+  this.requestorRef = requestorRef;
+
+  this.getLocation = function (locationName, numberOfResults, language) {
+    var xml = document.implementation.createDocument('trias', 'Trias');
+    xml.writeAttributeString('version', '1.0');
+    xml.createElement("ServiceRequest");
+    console.log(xml.flush());
+  }
+}
