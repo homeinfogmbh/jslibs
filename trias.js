@@ -29,7 +29,7 @@ var trias = trias || {};
 
 
 // Logger
-trias.logger = new homeinfo.logging.Logger('trias', homeinfo.logging.INFO);
+trias.logger = new homeinfo.logging.Logger('trias', homeinfo.logging.DEBUG);
 
 
 // Configuration
@@ -382,27 +382,65 @@ trias.StopEvents = function (locationName, radius, results) {
 
   this.render = function (elements) {
     var this_ = this;
+    var stops = {};
 
-    function stopEventCallback(xml) {
-      var stopEventResults = xml.getElementsByTagName("StopEventResult");
-      var stops = {};
+    function renderCallback() {
+      var text = '';
 
-      for (var i = 0; i < stopEventResults.length; i++) {
-        var stopEventResult = stopEventResults[i];
-        var stop = {};
-        var stopPointName = stopEventResult.getElementsByTagName('StopPointName')[0]
-          .getElementsByTagName('Text')[0].textContent;
-        trias.logger.debug('Got stop point: ' + stopPointName);
-        var departure = stopEventResult.getElementsByTagName('TimetabledTime')[0].textContent;
+      for (var stopPointName in stops) {
+        if (stops.hasOwnProperty(stopPointName)) {
+          var stopEvents = stops[stopPointName];
+          var stopDesc = '<h1>' + stopPointName + '</h1>';
 
-        if (stopPointName in stops) {
-          stops[stopPointName].push(departure);
-        } else {
-          stops[stopPointName] = [departure];
+          for (var i = 0; i < stopEvents.length; i++) {
+            var stopEvent = stopEvents[i];
+            var stopEventText = '  <li>Linie ' + stopEvent.line
+              + ' nach ' + stopEvent.destination
+              + ' um ' + stopEvent.timetabledTime;
+
+            if (stopEvent.estimatedTime != null) {
+              stopEventText += ' heute voraussichtlich um ' + stopEvent.estimatedTime + '.';
+            } else {
+              stopEventText += '.';
+            }
+
+            stopEventText += '\n  </li>';
+            stopDesc += '\n<ul>\n' + stopEventText + '\n</ul>\n';
+          }
+
+          text += stopDesc + '\n\n';
         }
       }
 
-      trias.logger.info('Got stops:\n' + JSON.stringify(stops));
+      $('#result').html(text);
+    }
+
+    function stopEventCallback(xml) {
+      var stopEventResults = xml.getElementsByTagName("StopEventResult");
+
+      for (var i = 0; i < stopEventResults.length; i++) {
+        var stopEventResult = stopEventResults[i];
+        var stopPointName = stopEventResult.getElementsByTagName('StopPointName')[0]
+          .getElementsByTagName('Text')[0].textContent;
+        trias.logger.debug('Got stop point: ' + stopPointName);
+        var estimatedTimes = stopEventResult.getElementsByTagName('EstimatedTime');
+        var stop = {
+          timetabledTime: stopEventResult.getElementsByTagName('TimetabledTime')[0].textContent,
+          estimatedTime: estimatedTimes.length > 0 ? estimatedTimes[0].textContent : null,
+          line: stopEventResult.getElementsByTagName('PublishedLineName')[0]
+            .getElementsByTagName('Text')[0].textContent,
+          destination: stopEventResult.getElementsByTagName('DestinationText')[0]
+            .getElementsByTagName('Text')[0].textContent
+        };
+
+        if (stopPointName in stops) {
+          stops[stopPointName].push(stop);
+        } else {
+          stops[stopPointName] = [stop];
+        }
+      }
+
+      renderCallback();
     }
 
     function stopsCallback(xml) {
