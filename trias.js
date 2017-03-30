@@ -48,147 +48,152 @@ trias.timestamp = function (datetime) {
     + datetime.getHours() + ':' + datetime.getMinutes() + ':' + datetime.getSeconds();
 }
 
-trias.TriasClient = function (url, requestor) {
+
+trias.trias = function (serviceRequest) {
+  var xmlDoc = document.implementation.createDocument('trias', 'Trias');
+  var root = xmlDoc.getElementsByTagName("Trias")[0];
+  var version = xmlDoc.createAttribute('version');
+  version.nodeValue = '1.0';
+  root.setAttributeNode(version);
+
+  if (serviceRequest != null) {
+    root.appendChild(serviceRequest);
+  }
+
+  return xmlDoc;
+}
+
+trias.siriElement = function (name) {
+  return document.createElementNS('http://www.siri.org.uk/siri', 'siri:' + name);
+}
+
+trias.requestTimestamp = function (datetime) {
+  var requestTimestamp = trias.siriElement('RequestTimestamp');
+  requestTimestamp.textContent = trias.timestamp(datetime);
+  return requestTimestamp;
+}
+
+trias.requestorRef = function (requestor) {
+  var requestorRef = trias.siriElement('RequestorRef');
+  requestorRef.textContent = requestor;
+  return requestorRef;
+}
+
+trias.requestPayload = function (content) {
+  var requestPayload = document.createElementNS('trias', 'RequestPayload');
+
+  if (content != null) {
+    requestPayload.appendChild(content);
+  }
+
+  return requestPayload;
+}
+
+trias.serviceRequest = function (requestTimestamp, requestorRef, payload) {
+  var serviceRequest = document.createElementNS('trias', 'ServiceRequest');
+  serviceRequest.appendChild(requestTimestamp);
+  serviceRequest.appendChild(requestorRef);
+
+  if (payload != null) {
+    serviceRequest.appendChild(payload);
+  }
+
+  return serviceRequest;
+}
+
+trias.locationName = function (name) {
+  var locationName = document.createElementNS('trias', 'LocationName');
+  locationName.textContent = name;
+  return locationName;
+}
+
+trias.initialInput = function (locationName) {
+  var initialInput = document.createElementNS('trias', 'InitialInput');
+
+  if (locationName != null) {
+    initialInput.appendChild(trias.locationName(locationName));
+  }
+
+  return initialInput;
+}
+
+trias.type = function (name) {
+  var type = document.createElementNS('trias', 'Type');
+
+  if (name == null) {
+    name = 'address';
+  }
+
+  type.textContent = name;
+  return type;
+}
+
+trias.language = function (name) {
+  var language = document.createElementNS('trias', 'Language');
+
+  if (name == null) {
+    name = 'de';
+  }
+
+  language.textContent = name;
+  return language;
+}
+
+trias.numberOfResults = function (number) {
+  var numberOfResults = document.createElementNS('trias', 'NumberOfResults');
+
+  if (number == null) {
+    number = 1;
+  }
+
+  numberOfResults.textContent = number;
+  return numberOfResults;
+}
+
+trias.restrictions = function (type, language, numberOfResults) {
+  var restrictions = document.createElementNS('trias', 'Restrictions');
+  restrictions.appendChild(trias.type(type));
+  restrictions.appendChild(trias.language(language));
+  restrictions.appendChild(trias.numberOfResults(numberOfResults));
+  return restrictions;
+}
+
+trias.locationInformationRequest = function (initialInput, restrictions) {
+  var locationInformationRequest = document.createElementNS('trias', 'LocationInformationRequest');
+
+  if (initialInput != null) {
+    locationInformationRequest.appendChild(initialInput);
+  }
+
+  if (restrictions != null) {
+    locationInformationRequest.appendChild(restrictions);
+  }
+
+  return locationInformationRequest;
+}
+
+
+trias.TriasClient = function (url, requestorRef) {
   this.url = url;
-  this.requestor = requestor;
-
-  this.trias = function (serviceRequest) {
-    var xmlDoc = document.implementation.createDocument('trias', 'Trias');
-    var root = xmlDoc.getElementsByTagName("Trias")[0];
-    var version = xmlDoc.createAttribute('version');
-    version.nodeValue = '1.0';
-    root.setAttributeNode(version);
-
-    if (serviceRequest != null) {
-      root.appendChild(serviceRequest);
-    }
-
-    return xmlDoc;
-  }
-
-  this.siriElement = function (name) {
-    return document.createElementNS('http://www.siri.org.uk/siri', 'siri:' + name);
-  }
-
-  this.requestTimestamp = function (datetime) {
-    var requestTimestamp = this.siriElement('RequestTimestamp');
-    requestTimestamp.textContent = trias.timestamp(datetime);
-    return requestTimestamp;
-  }
-
-  this.requestorRef = function () {
-    var requestorRef = this.siriElement('RequestorRef');
-    requestorRef.textContent = this.requestor;
-    return requestorRef;
-  }
-
-  this.requestPayload = function (content) {
-    var requestPayload = document.createElementNS('trias', 'RequestPayload');
-
-    if (content != null) {
-      requestPayload.appendChild(content);
-    }
-
-    return requestPayload;
-  }
-
-  this.serviceRequest = function (payload) {
-    var serviceRequest = document.createElementNS('trias', 'ServiceRequest');
-    serviceRequest.appendChild(this.requestTimestamp());
-    serviceRequest.appendChild(this.requestorRef());
-
-    if (payload != null) {
-      serviceRequest.appendChild(payload);
-    }
-
-    return serviceRequest;
-  }
-
-  this.locationName = function (name) {
-    var locationName = document.createElementNS('trias', 'LocationName');
-    locationName.textContent = name;
-    return locationName;
-  }
-
-  this.initialInput = function (locationName) {
-    var initialInput = document.createElementNS('trias', 'InitialInput');
-
-    if (locationName != null) {
-      initialInput.appendChild(this.locationName(locationName));
-    }
-
-    return initialInput;
-  }
-
-  this.type = function (name) {
-    var type = document.createElementNS('trias', 'Type');
-
-    if (name == null) {
-      name = 'address';
-    }
-
-    type.textContent = name;
-    return type;
-  }
-
-  this.language = function (name) {
-    var language = document.createElementNS('trias', 'Language');
-
-    if (name == null) {
-      name = 'de';
-    }
-
-    language.textContent = name;
-    return language;
-  }
-
-  this.numberOfResults = function (number) {
-    var numberOfResults = document.createElementNS('trias', 'NumberOfResults');
-
-    if (number == null) {
-      number = 1;
-    }
-
-    numberOfResults.textContent = number;
-    return numberOfResults;
-  }
-
-  this.restrictions = function (type, language, numberOfResults) {
-    var restrictions = document.createElementNS('trias', 'Restrictions');
-    restrictions.appendChild(this.type(type));
-    restrictions.appendChild(this.language(language));
-    restrictions.appendChild(this.numberOfResults(numberOfResults));
-    return restrictions;
-  }
-
-  this.locationInformationRequest = function (initialInput, restrictions) {
-    var locationInformationRequest = document.createElementNS('trias', 'LocationInformationRequest');
-
-    if (initialInput != null) {
-      locationInformationRequest.appendChild(initialInput);
-    }
-
-    if (restrictions != null) {
-      locationInformationRequest.appendChild(restrictions);
-    }
-
-    return locationInformationRequest;
-  }
+  this.requestorRef = requestorRef;
 
   this.getLocation = function (locationName) {
-    var self = this;
-    var initialInput = this.initialInput(locationName);
-    var restrictions = this.restrictions();
-    var locationInformationRequest = this.locationInformationRequest(initialInput, restrictions);
-    var requestPayload = this.requestPayload(locationInformationRequest);
-    var serviceRequest = this.serviceRequest(requestPayload);
-    var xmlDoc = this.trias(serviceRequest);
+    var url = this.url;
+    var initialInput = trias.initialInput(locationName);
+    var restrictions = trias.restrictions();
+    var locationInformationRequest = trias.locationInformationRequest(initialInput, restrictions);
+    var requestPayload = trias.requestPayload(locationInformationRequest);
+    var serviceRequest = trias.serviceRequest(
+      trias.requestTimestamp(),
+      trias.requestorRef(this.requestorRef),
+      requestPayload);
+    var xmlDoc = trias.trias(serviceRequest);
     var xmlText = trias.xmlSerializer.serializeToString(xmlDoc);
     console.log('Query:\n' + xmlText);
 
     $.ajax({
-      url: self.url,
-      method: 'POST',
+      url: url,
+      type: 'POST',
       data: xmlText,
       success: function (xml) {
         console.log('Yay.');
