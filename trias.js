@@ -442,7 +442,6 @@ trias.StopEvents = function (locationName, radius, results) {
         if (delay > 0) {
           stopTime.innerHTML = '<s>' + stopTime.innerHTML + '</s>';
           stopTime.innerHTML += ' ' + homeinfo.date.time(stopEvent.estimatedTime) + ' (+' + delay + ' min.)';
-        } else {
         }
 
         stopEventRow.appendChild(stopTime);
