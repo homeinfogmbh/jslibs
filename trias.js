@@ -42,9 +42,7 @@ trias.xmlSerializer = new XMLSerializer();
 trias.trias = function (serviceRequest) {
   var xmlDoc = document.implementation.createDocument('trias', 'Trias');
   var root = xmlDoc.getElementsByTagName("Trias")[0];
-  var version = xmlDoc.createAttribute('version');
-  version.nodeValue = '1.0';
-  root.setAttributeNode(version);
+  root.setAttribute('version', '1.0');
 
   if (serviceRequest != null) {
     root.appendChild(serviceRequest);
@@ -373,6 +371,35 @@ trias.TriasClient = function (url, requestorRef) {
   }
 }
 
+/*
+  Stop event data wrapper
+*/
+trias.StopEvent = function (xml) {
+  this.timetabledTime = new Date(xml.getElementsByTagName('TimetabledTime')[0].textContent);
+  var estimatedTimes = xml.getElementsByTagName('EstimatedTime');
+
+  if (estimatedTimes.length > 0) {
+    this.estimatedTime = new Date(estimatedTimes[0].textContent);
+  }
+
+  this.line = xml.getElementsByTagName('PublishedLineName')[0].getElementsByTagName('Text')[0].textContent;
+  this.destination = xml.getElementsByTagName('DestinationText')[0].getElementsByTagName('Text')[0].textContent;
+
+  this.delay = function () {
+    if (this.estimatedTime != null) {
+      return (this.estimatedTime.getTime() - this.timetabledTime.getTime()) / 60000;
+    } else {
+      return 0;
+    }
+  }
+}
+
+
+trias.StopPoint = function (name) {
+  this.name = name;
+  this.stopEvents = [];
+}
+
 
 trias.StopEvents = function (locationName, radius, results) {
   this.locationName = locationName;
@@ -382,65 +409,65 @@ trias.StopEvents = function (locationName, radius, results) {
 
   this.render = function (elements) {
     var this_ = this;
-    var stops = {};
+    var stopNumber = null;
 
-    function renderCallback() {
-      var text = '';
+    function renderCallback(stopPoint) {
+      var stopPointBlock = document.createElement('div');
+      stopPointBlock.setAttribute('id', stopPoint.name);
+      stopPointBlock.setAttribute('class', 'col col-md-6');
+      var stopPointTitleRow = document.createElement('div');
+      stopPointTitleRow.setAttribute('class', 'row');
+      var stopPointTitle = document.createElement('div');
+      stopPointTitle.setAttribute('class', 'col col-md-12');
+      stopPointTitle.innerHTML = stopPoint.name;
+      stopPointTitleRow.appendChild(stopPointTitle);
+      stopPointBlock.appendChild(stopPointTitleRow);
 
-      for (var stopPointName in stops) {
-        if (stops.hasOwnProperty(stopPointName)) {
-          var stopEvents = stops[stopPointName];
-          var stopDesc = '<h1>' + stopPointName + '</h1>';
+      var stopEventsRow = document.createElement('div');
+      stopEventsRow.setAttribute('class', 'row');
+      var stopEvents = document.createElement('div');
+      stopEvents.setAttribute('class', 'col col-md-12');
+      stopEventsRow.appendChild(stopEvents);
 
-          for (var i = 0; i < stopEvents.length; i++) {
-            var stopEvent = stopEvents[i];
-            var stopEventText = '  <li>Linie ' + stopEvent.line
-              + ' nach ' + stopEvent.destination
-              + ' um ' + stopEvent.timetabledTime;
+      for (var i = 0; i < stopPoint.stopEvents.length; i++) {
+        var stopEvent = stopPoint.stopEvents[i];
+        var stopEventRow = document.createElement('div');
+        stopEventRow.setAttribute('class', 'row');
+        var stopTime = document.createElement('div');
+        stopTime.setAttribute('class', 'col col-sm-4');
+        stopTime.innerHTML += homeinfo.date.time(stopEvent.timetabledTime);
 
-            if (stopEvent.estimatedTime != null) {
-              stopEventText += ' heute voraussichtlich um ' + stopEvent.estimatedTime + '.';
-            } else {
-              stopEventText += '.';
-            }
+        var delay = stopEvent.delay();
 
-            stopEventText += '\n  </li>';
-            stopDesc += '\n<ul>\n' + stopEventText + '\n</ul>\n';
-          }
-
-          text += stopDesc + '\n\n';
+        if (delay > 0) {
+          stopTime.innerHTML = '<s>' + stopTime.innerHTML + '</s>';
+          stopTime.innerHTML += ' ' + homeinfo.date.time(stopEvent.estimatedTime) + ' (+' + delay + ' min.)';
+        } else {
         }
+
+        stopEventRow.appendChild(stopTime);
+        var lineInfo = document.createElement('div');
+        lineInfo.setAttribute('class', 'col col-sm-8');
+        lineInfo.innerHTML = 'Linie ' + stopEvent.line + ' nach ' + stopEvent.destination;
+        stopEvents.appendChild(stopTime);
+        stopEvents.appendChild(lineInfo);
       }
 
-      $('#result').html(text);
+      stopPointBlock.appendChild(stopEventsRow);
+      document.getElementById('result').appendChild(stopPointBlock);
     }
 
     function stopEventCallback(xml) {
+      var stopPoint = new trias.StopPoint(
+        xml.getElementsByTagName('StopPointName')[0]
+        .getElementsByTagName('Text')[0].textContent);
       var stopEventResults = xml.getElementsByTagName("StopEventResult");
 
       for (var i = 0; i < stopEventResults.length; i++) {
-        var stopEventResult = stopEventResults[i];
-        var stopPointName = stopEventResult.getElementsByTagName('StopPointName')[0]
-          .getElementsByTagName('Text')[0].textContent;
-        trias.logger.debug('Got stop point: ' + stopPointName);
-        var estimatedTimes = stopEventResult.getElementsByTagName('EstimatedTime');
-        var stop = {
-          timetabledTime: stopEventResult.getElementsByTagName('TimetabledTime')[0].textContent,
-          estimatedTime: estimatedTimes.length > 0 ? estimatedTimes[0].textContent : null,
-          line: stopEventResult.getElementsByTagName('PublishedLineName')[0]
-            .getElementsByTagName('Text')[0].textContent,
-          destination: stopEventResult.getElementsByTagName('DestinationText')[0]
-            .getElementsByTagName('Text')[0].textContent
-        };
-
-        if (stopPointName in stops) {
-          stops[stopPointName].push(stop);
-        } else {
-          stops[stopPointName] = [stop];
-        }
+        stopPoint.stopEvents.push(new trias.StopEvent(stopEventResults[i]));
       }
 
-      renderCallback();
+      renderCallback(stopPoint);
     }
 
     function stopsCallback(xml) {
