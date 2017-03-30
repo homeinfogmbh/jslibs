@@ -39,16 +39,6 @@ trias.config = {};
 trias.xmlSerializer = new XMLSerializer();
 
 
-trias.timestamp = function (datetime) {
-  if (datetime == null) {
-    datetime = new Date();
-  }
-
-  return datetime.getFullYear() + '-' + datetime.getMonth() + '-' + datetime.getDay() + 'T'
-    + datetime.getHours() + ':' + datetime.getMinutes() + ':' + datetime.getSeconds();
-}
-
-
 trias.trias = function (serviceRequest) {
   var xmlDoc = document.implementation.createDocument('trias', 'Trias');
   var root = xmlDoc.getElementsByTagName("Trias")[0];
@@ -63,21 +53,30 @@ trias.trias = function (serviceRequest) {
   return xmlDoc;
 }
 
+
 trias.siriElement = function (name) {
   return document.createElementNS('http://www.siri.org.uk/siri', 'siri:' + name);
 }
 
+
 trias.requestTimestamp = function (datetime) {
   var requestTimestamp = trias.siriElement('RequestTimestamp');
-  requestTimestamp.textContent = trias.timestamp(datetime);
+
+  if (datetime == null) {
+    datetime = new Date();
+  }
+
+  requestTimestamp.textContent = datetime.toISOString();
   return requestTimestamp;
 }
+
 
 trias.requestorRef = function (requestor) {
   var requestorRef = trias.siriElement('RequestorRef');
   requestorRef.textContent = requestor;
   return requestorRef;
 }
+
 
 trias.requestPayload = function (content) {
   var requestPayload = document.createElementNS('trias', 'RequestPayload');
@@ -88,6 +87,7 @@ trias.requestPayload = function (content) {
 
   return requestPayload;
 }
+
 
 trias.serviceRequest = function (requestTimestamp, requestorRef, payload) {
   var serviceRequest = document.createElementNS('trias', 'ServiceRequest');
@@ -101,11 +101,13 @@ trias.serviceRequest = function (requestTimestamp, requestorRef, payload) {
   return serviceRequest;
 }
 
+
 trias.locationName = function (name) {
   var locationName = document.createElementNS('trias', 'LocationName');
   locationName.textContent = name;
   return locationName;
 }
+
 
 trias.initialInput = function (locationName) {
   var initialInput = document.createElementNS('trias', 'InitialInput');
@@ -116,6 +118,7 @@ trias.initialInput = function (locationName) {
 
   return initialInput;
 }
+
 
 trias.type = function (name) {
   var type = document.createElementNS('trias', 'Type');
@@ -128,6 +131,7 @@ trias.type = function (name) {
   return type;
 }
 
+
 trias.language = function (name) {
   var language = document.createElementNS('trias', 'Language');
 
@@ -138,6 +142,7 @@ trias.language = function (name) {
   language.textContent = name;
   return language;
 }
+
 
 trias.numberOfResults = function (number) {
   var numberOfResults = document.createElementNS('trias', 'NumberOfResults');
@@ -150,6 +155,7 @@ trias.numberOfResults = function (number) {
   return numberOfResults;
 }
 
+
 trias.restrictions = function (type, language, numberOfResults) {
   var restrictions = document.createElementNS('trias', 'Restrictions');
   restrictions.appendChild(trias.type(type));
@@ -157,6 +163,7 @@ trias.restrictions = function (type, language, numberOfResults) {
   restrictions.appendChild(trias.numberOfResults(numberOfResults));
   return restrictions;
 }
+
 
 trias.locationInformationRequest = function (initialInput, restrictions) {
   var locationInformationRequest = document.createElementNS('trias', 'LocationInformationRequest');
@@ -174,11 +181,10 @@ trias.locationInformationRequest = function (initialInput, restrictions) {
 
 
 trias.TriasClient = function (url, requestorRef) {
-  this.url = url;
-  this.requestorRef = requestorRef;
+  this.url = url || 'https://tls.homeinfo.de/trias';
+  this.requestorRef = requestorRef || 'homeinfo.de';
 
-  this.getLocation = function (locationName) {
-    var url = this.url;
+  this.getLocation = function (locationName, callback) {
     var initialInput = trias.initialInput(locationName);
     var restrictions = trias.restrictions();
     var locationInformationRequest = trias.locationInformationRequest(initialInput, restrictions);
@@ -188,24 +194,53 @@ trias.TriasClient = function (url, requestorRef) {
       trias.requestorRef(this.requestorRef),
       requestPayload);
     var xmlDoc = trias.trias(serviceRequest);
+    this.query(xmlDoc, callback);
+  }
+
+  this.query = function (xmlDoc, callback) {
+    var url = this.url;
     var xmlText = trias.xmlSerializer.serializeToString(xmlDoc);
-    console.log('Query:\n' + xmlText);
+    trias.logger.debug('Sending:\n' + xmlText);
 
     $.ajax({
       url: url,
       type: 'POST',
       data: xmlText,
       success: function (xml) {
-        console.log('Yay.');
-        console.log('Response:\n' + trias.xmlSerializer.serializeToString(xml));
+        trias.logger.success('API query succeeded');
+        trias.logger.debug('Received:\n' + trias.xmlSerializer.serializeToString(xml));
+
+        if (callback != null) {
+          callback(xml);
+        }
       },
-      error: function(a, b, c) {
+      error: function() {
         swal({
           title: 'Fehler.',
-          text: JSON.stringify(a) + '\n' + b + '\n' + c,
+          text: 'Konnte Daten nicht von API abfragen.',
           type: 'error'
         });
       }
     });
+  }
+}
+
+
+trias.StopEvents = function (locationName, radius, amount) {
+  this.locationName = locationName;
+  this.radius = radius;
+  this.amount = amount;
+  this.client = new trias.TriasClient();
+
+  this.render = function (elements) {
+    function renderCallback(data) {
+      swal({
+        title: 'Yay.',
+        text: 'Redering ' + data + ' into ' + JSON.stringify(elements) + '.',
+        type: 'success'
+      });
+    }
+
+    this.client.getLocation(this.locationName, renderCallback);
   }
 }
