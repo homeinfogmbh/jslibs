@@ -480,9 +480,15 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
     return lineInfo;
   }
 
-  this.stopEventRow = function (stopTime, lineInfo) {
+  this.stopEventRow = function (stopTime, lineInfo, i) {
     var stopEventRow = document.createElement('div');
-    stopEventRow.setAttribute('class', 'row stopEventRow');
+    var cssClass = 'stopEventRow';
+
+    if (i % 2) {
+      cssClass = 'stopEventRowOdd'
+    }
+
+    stopEventRow.setAttribute('class', 'row ' + cssClass);
     stopEventRow.appendChild(stopTime);
     stopEventRow.appendChild(lineInfo);
     return stopEventRow;
@@ -541,7 +547,8 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
         stopEvents.appendChild(
           this_.stopEventRow(
             this_.stopTime(stopEvent.departure()),
-            this_.lineInfo(stopEvent.lineInfo())
+            this_.lineInfo(stopEvent.lineInfo()),
+            i
           )
         );
       }
