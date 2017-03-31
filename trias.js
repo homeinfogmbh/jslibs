@@ -392,6 +392,22 @@ trias.StopEvent = function (xml) {
       return 0;
     }
   }
+
+  this.departure = function () {
+    var departure = homeinfo.date.time(stopEvent.timetabledTime);
+    var delay = this.delay();
+
+    if (delay > 0) {
+      departure = '<s>' + departure + '</s>' + ' ' + homeinfo.date.time(stopEvent.estimatedTime)
+        + ' (+' + delay + ' min.)';
+    }
+
+    return departure;
+  }
+
+  this.lineInfo = function () {
+    return 'Linie ' + this.line + ' nach ' + this.destination;
+  }
 }
 
 
@@ -436,19 +452,11 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
         stopEventRow.setAttribute('class', 'row');
         var stopTime = document.createElement('div');
         stopTime.setAttribute('class', 'col col-sm-4');
-        stopTime.innerHTML += homeinfo.date.time(stopEvent.timetabledTime);
-
-        var delay = stopEvent.delay();
-
-        if (delay > 0) {
-          stopTime.innerHTML = '<s>' + stopTime.innerHTML + '</s>';
-          stopTime.innerHTML += ' ' + homeinfo.date.time(stopEvent.estimatedTime) + ' (+' + delay + ' min.)';
-        }
-
+        stopTime.innerHTML = stopEvent.departure();
         stopEventRow.appendChild(stopTime);
         var lineInfo = document.createElement('div');
         lineInfo.setAttribute('class', 'col col-sm-8');
-        lineInfo.innerHTML = 'Linie ' + stopEvent.line + ' nach ' + stopEvent.destination;
+        lineInfo.innerHTML = stopEvent.lineInfo();
         stopEvents.appendChild(stopTime);
         stopEvents.appendChild(lineInfo);
       }
