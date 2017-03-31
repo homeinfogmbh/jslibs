@@ -482,13 +482,13 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
 
   this.stopEventRow = function (stopTime, lineInfo, i) {
     var stopEventRow = document.createElement('div');
-    var cssClass = 'stopEventRow';
+    var oddEvenClass = 'stopEventRowOdd';
 
-    if (i % 2) {
-      cssClass = 'stopEventRowOdd'
+    if (i % 2) {  // compensate for counter starting at 0
+      oddEvenClass = 'stopEventRowEven'
     }
 
-    stopEventRow.setAttribute('class', 'row ' + cssClass);
+    stopEventRow.setAttribute('class', 'row stopEventRow' + oddEvenClass);
     stopEventRow.appendChild(stopTime);
     stopEventRow.appendChild(lineInfo);
     return stopEventRow;
