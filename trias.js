@@ -488,7 +488,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       oddEvenClass = 'stopEventRowEven'
     }
 
-    stopEventRow.setAttribute('class', 'row stopEventRow' + oddEvenClass);
+    stopEventRow.setAttribute('class', 'row stopEventRow ' + oddEvenClass);
     stopEventRow.appendChild(stopTime);
     stopEventRow.appendChild(lineInfo);
     return stopEventRow;
