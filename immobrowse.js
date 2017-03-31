@@ -1535,6 +1535,14 @@ immobrowse.List = function (cid, realEstates) {
       }
     }
 
+    if (filters.balcony) {
+      if (realEstate.flaechen == null) {
+        return false;
+      } else if (realEstate.flaechen.anzahl_balkone == null || realEstate.flaechen.anzahl_balkone == 0) {
+        return false;
+      }
+    }
+
     return true;
   }
 
