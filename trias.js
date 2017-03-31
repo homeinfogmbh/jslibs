@@ -487,10 +487,8 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       var stopEvents = this_.stopEvents();
       var stopPointBlock = this_.stopPointBlock(
         stopPoint.name,
-        this_.stopPointTitleRow(
-          this_.stopPointTitle(stopPoint.name),
-          this_.stopEventsRow(stopEvents)
-        )
+        this_.stopPointTitleRow(this_.stopPointTitle(stopPoint.name)),
+        this_.stopEventsRow(stopEvents)
       );
 
       for (var i = 0; i < stopPoint.stopEvents.length; i++) {
