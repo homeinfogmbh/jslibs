@@ -284,38 +284,25 @@ trias.numberOfResults = function (number) {
 }
 
 
-trias.stopEventPolicy = function (numberOfResults, timeWindow, stopEventType) {
-  var stopEventPolicy = trias.triasElement('StopEventPolicy');
-
-  if (numberOfResults != null) {
-    stopEventPolicy.appendChild(numberOfResults);
-  }
-
-  if (timeWindow != null) {
-    stopEventPolicy.appendChild(timeWindow);
-  }
-
-  if (stopEventType != null) {
-    stopEventPolicy.appendChild(stopEventType);
-  }
-
-  return stopEventPolicy;
-}
-
-
-trias.stopEventParam = function (stopEventDataFilter, stopEventPolicy, stopEventContentFilter) {
+trias.stopEventParam = function (stopEventDataFilterGroup, stopEventPolicyGroup, stopEventContentFilterGroup) {
   var stopEventParam = trias.triasElement('Params');
 
-  if (stopEventDataFilter != null) {
-    stopEventParam.appendChild(stopEventDataFilter);
+  if (stopEventDataFilterGroup != null) {
+    for (var i = 0; i < stopEventDataFilterGroup.length; i++) {
+      stopEventParam.appendChild(stopEventDataFilterGroup[i]);
+    }
   }
 
-  if (stopEventPolicy != null) {
-    stopEventParam.appendChild(stopEventPolicy);
+  if (stopEventPolicyGroup != null) {
+    for (var i = 0; i < stopEventPolicyGroup.length; i++) {
+      stopEventParam.appendChild(stopEventPolicyGroup[i]);
+    }
   }
 
-  if (stopEventContentFilter != null) {
-    stopEventParam.appendChild(stopEventContentFilter);
+  if (stopEventContentFilterGroup != null) {
+    for (var i = 0; i < stopEventContentFilterGroup.length; i++) {
+      stopEventParam.appendChild(stopEventContentFilterGroup[i]);
+    }
   }
 
   return stopEventParam;
@@ -415,9 +402,7 @@ trias.TriasClient = function (url, requestorRef) {
               )
             ),
             trias.stopEventParam(
-              trias.stopEventPolicy(
-                trias.numberOfResults(results)
-              )
+              [trias.numberOfResults(results)]
             )
           )
         )
