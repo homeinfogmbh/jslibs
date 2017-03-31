@@ -300,8 +300,8 @@ trias.TriasClient = function (url, requestorRef) {
     });
   }
 
-  this.getLocation = function (locationName, callback) {
-    var xmlDoc = trias.trias(
+  this.locationRequest = function (locationName) {
+    return trias.trias(
       trias.serviceRequest(
         trias.requestTimestamp(),
         trias.requestorRef(this.requestorRef),
@@ -317,11 +317,10 @@ trias.TriasClient = function (url, requestorRef) {
         )
       )
     );
-    this.query(xmlDoc, callback);
   }
 
-  this.getStops = function (longitude, latitude, radius, results, callback) {
-    var xmlDoc = trias.trias(
+  this.stopsRequest = function (longitude, latitude, radius, results) {
+    return trias.trias(
       trias.serviceRequest(
         trias.requestTimestamp(),
         trias.requestorRef(this.requestorRef),
@@ -347,11 +346,10 @@ trias.TriasClient = function (url, requestorRef) {
         )
       )
     );
-    this.query(xmlDoc, callback);
   }
 
-  this.getStopEvents = function (stopPointRef, callback) {
-    var xmlDoc = trias.trias(
+  this.stopEventsRequest = function (stopPointRef, callback) {
+    return trias.trias(
       trias.serviceRequest(
         trias.requestTimestamp(),
         trias.requestorRef(this.requestorRef),
@@ -367,7 +365,6 @@ trias.TriasClient = function (url, requestorRef) {
         )
       )
     );
-    this.query(xmlDoc, callback);
   }
 }
 
@@ -394,11 +391,11 @@ trias.StopEvent = function (xml) {
   }
 
   this.departure = function () {
-    var departure = homeinfo.date.time(stopEvent.timetabledTime);
+    var departure = homeinfo.date.time(this.timetabledTime);
     var delay = this.delay();
 
     if (delay > 0) {
-      departure = '<s>' + departure + '</s>' + ' ' + homeinfo.date.time(stopEvent.estimatedTime)
+      departure = '<s>' + departure + '</s>' + ' ' + homeinfo.date.time(this.estimatedTime)
         + ' (+' + delay + ' min.)';
     }
 
@@ -489,18 +486,25 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       for (var i = 0; i < stopPointRefNodes.length; i++) {
         var stopPointRef = stopPointRefNodes[i].textContent
         trias.logger.debug('Got StopPointRef: ' + stopPointRef);
-        this_.client.getStopEvents(stopPointRef, stopEventCallback);
+        this_.client.query(this_.client.stopEventsRequest(stopPointRef), stopEventCallback);
       }
     }
 
     function locationCallback(xml) {
-      var longitude = xml.getElementsByTagName("Longitude")[0].textContent;
-      trias.logger.debug('Longitude: ' + longitude);
-      var latitude = xml.getElementsByTagName("Latitude")[0].textContent;
-      trias.logger.debug('Latitude: ' + latitude);
-      this_.client.getStops(longitude, latitude, this_.radius, this_.stops, stopsCallback);
+      var longitudes = xml.getElementsByTagName("Longitude");
+      var latitudes = xml.getElementsByTagName("Latitude");
+
+      if (longitudes.length == 0 || latitudes.length == 0) {
+        target.html('No locations found for "' + this_.locationName + '".');
+      } else {
+        var longitude = longitudes[0].textContent;
+        trias.logger.debug('Longitude: ' + longitude);
+        var latitude = latitudes[0].textContent;
+        trias.logger.debug('Latitude: ' + latitude);
+        this_.client.query(this_.client.stopsRequest(longitude, latitude, this_.radius, this_.stops), stopsCallback);
+      }
     }
 
-    this.client.getLocation(this.locationName, locationCallback);
+    this.client.query(this.client.locationRequest(this.locationName), locationCallback);
   }
 }
