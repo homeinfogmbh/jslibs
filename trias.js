@@ -288,15 +288,15 @@ trias.stopEventPolicy = function (numberOfResults, timeWindow, stopEventType) {
   var stopEventPolicy = trias.triasElement('StopEventPolicy');
 
   if (numberOfResults != null) {
-    stopEventParam.appendChild(numberOfResults);
+    stopEventPolicy.appendChild(numberOfResults);
   }
 
   if (timeWindow != null) {
-    stopEventParam.appendChild(timeWindow);
+    stopEventPolicy.appendChild(timeWindow);
   }
 
   if (stopEventType != null) {
-    stopEventParam.appendChild(stopEventType);
+    stopEventPolicy.appendChild(stopEventType);
   }
 
   return stopEventPolicy;
