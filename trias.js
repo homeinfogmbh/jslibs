@@ -468,21 +468,21 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
 
   this.stopTime = function (departure) {
     var stopTime = document.createElement('div');
-    stopTime.setAttribute('class', 'col col-sm-4');
+    stopTime.setAttribute('class', 'col col-sm-4 stopTime');
     stopTime.innerHTML = departure;
     return stopTime;
   }
 
   this.lineInfo = function (text) {
     var lineInfo = document.createElement('div');
-    lineInfo.setAttribute('class', 'col col-sm-8');
+    lineInfo.setAttribute('class', 'col col-sm-8 lineInfo');
     lineInfo.innerHTML = text;
     return lineInfo;
   }
 
   this.stopEventRow = function (stopTime, lineInfo) {
     var stopEventRow = document.createElement('div');
-    stopEventRow.setAttribute('class', 'row');
+    stopEventRow.setAttribute('class', 'row stopEventRow');
     stopEventRow.appendChild(stopTime);
     stopEventRow.appendChild(lineInfo);
     return stopEventRow;
@@ -490,27 +490,27 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
 
   this.stopEvents = function () {
     var stopEvents = document.createElement('div');
-    stopEvents.setAttribute('class', 'col col-md-12');
+    stopEvents.setAttribute('class', 'col col-md-12 stopEvents');
     return stopEvents;
   }
 
   this.stopEventsRow = function (stopEvents) {
     var stopEventsRow = document.createElement('div');
-    stopEventsRow.setAttribute('class', 'row');
+    stopEventsRow.setAttribute('class', 'row stopEventsRow');
     stopEventsRow.appendChild(stopEvents);
     return stopEventsRow;
   }
 
   this.stopPointTitle = function (name) {
     var stopPointTitle = document.createElement('div');
-    stopPointTitle.setAttribute('class', 'col col-md-12');
+    stopPointTitle.setAttribute('class', 'col col-md-12 stopPointTitle');
     stopPointTitle.innerHTML = name;
     return stopPointTitle;
   }
 
   this.stopPointTitleRow = function (stopPointTitle) {
     var stopPointTitleRow = document.createElement('div');
-    stopPointTitleRow.setAttribute('class', 'row');
+    stopPointTitleRow.setAttribute('class', 'row stopPointTitleRow');
     stopPointTitleRow.appendChild(stopPointTitle);
     return stopPointTitleRow;
   }
@@ -518,7 +518,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
   this.stopPointBlock = function (id, stopPointTitleRow, stopEventsRow) {
     var stopPointBlock = document.createElement('div');
     stopPointBlock.setAttribute('id', id);
-    stopPointBlock.setAttribute('class', 'col col-md-6');
+    stopPointBlock.setAttribute('class', 'col col-md-6 stopPointBlock');
     stopPointBlock.appendChild(stopPointTitleRow);
     stopPointBlock.appendChild(stopEventsRow);
     return stopPointBlock;
