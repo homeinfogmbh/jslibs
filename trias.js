@@ -569,7 +569,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       for (var i = 0; i < stopPointRefNodes.length; i++) {
         var stopPointRef = stopPointRefNodes[i].textContent
         trias.logger.debug('Got StopPointRef: ' + stopPointRef);
-        this_.client.query(this_.client.stopEventsRequest(stopPointRef, this.eventsPerStop), stopEventCallback);
+        this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.eventsPerStop), stopEventCallback);
       }
     }
 
