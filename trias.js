@@ -408,7 +408,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
   this.eventsPerStop = eventsPerStop;
   this.client = new trias.TriasClient();
 
-  this.render = function (elements) {
+  this.render = function (target) {
     var this_ = this;
     var stopNumber = null;
 
@@ -454,7 +454,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       }
 
       stopPointBlock.appendChild(stopEventsRow);
-      document.getElementById('result').appendChild(stopPointBlock);
+      target.append(stopPointBlock);   // jQuery!
     }
 
     function stopEventCallback(xml) {
