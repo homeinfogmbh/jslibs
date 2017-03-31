@@ -1501,6 +1501,24 @@ immobrowse.List = function (cid, realEstates) {
       }
     }
 
+    if (filters.window) {
+      if (realEstate.ausstattung == null) {
+        return false;
+      } else if (realEstate.ausstattung.bad == null) {
+        return false;
+      } else if (! realEstate.ausstattung.bad.FENSTER) {
+        return false;
+      }
+    }
+
+    if (filters.guestwc) {
+      if (realEstate.ausstattung == null) {
+        return false;
+      } else if (! realEstate.ausstattung.gaestewc) {
+        return false;
+      }
+    }
+
     if (filters.carSpace) {
       if (realEstate.ausstattung == null) {
         return false;
@@ -1529,16 +1547,16 @@ immobrowse.List = function (cid, realEstates) {
       }
     }
 
-    if (filters.districts.length > 0) {
-      if (filters.districts.indexOf(realEstate.district()) < 0) {
-        return false;
-      }
-    }
-
     if (filters.balcony) {
       if (realEstate.flaechen == null) {
         return false;
       } else if (realEstate.flaechen.anzahl_balkone == null || realEstate.flaechen.anzahl_balkone == 0) {
+        return false;
+      }
+    }
+
+    if (filters.districts.length > 0) {
+      if (filters.districts.indexOf(realEstate.district()) < 0) {
         return false;
       }
     }
