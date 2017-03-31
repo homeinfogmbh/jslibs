@@ -262,10 +262,63 @@ trias.location = function (locationRef) {
 }
 
 
-trias.stopEventRequest = function (location) {
+trias.stopEventRequest = function (location, params) {
   var stopEventRequest = trias.triasElement('StopEventRequest');
-  stopEventRequest.appendChild(location);
+
+  if (location != null) {
+    stopEventRequest.appendChild(location);
+  }
+
+  if (params != null) {
+    stopEventRequest.appendChild(params);
+  }
+
   return stopEventRequest;
+}
+
+
+trias.numberOfResults = function (number) {
+  var numberOfResults = trias.triasElement('NumberOfResults');
+  numberOfResults.textContent = number;
+  return numberOfResults;
+}
+
+
+trias.stopEventPolicy = function (numberOfResults, timeWindow, stopEventType) {
+  var stopEventPolicy = trias.triasElement('StopEventPolicy');
+
+  if (numberOfResults != null) {
+    stopEventParam.appendChild(numberOfResults);
+  }
+
+  if (timeWindow != null) {
+    stopEventParam.appendChild(timeWindow);
+  }
+
+  if (stopEventType != null) {
+    stopEventParam.appendChild(stopEventType);
+  }
+
+  return stopEventPolicy;
+}
+
+
+trias.stopEventParam = function (stopEventDataFilter, stopEventPolicy, stopEventContentFilter) {
+  var stopEventParam = trias.triasElement('Params');
+
+  if (stopEventDataFilter != null) {
+    stopEventParam.appendChild(stopEventDataFilter);
+  }
+
+  if (stopEventPolicy != null) {
+    stopEventParam.appendChild(stopEventPolicy);
+  }
+
+  if (stopEventContentFilter != null) {
+    stopEventParam.appendChild(stopEventContentFilter);
+  }
+
+  return stopEventParam;
 }
 
 
@@ -348,7 +401,7 @@ trias.TriasClient = function (url, requestorRef) {
     );
   }
 
-  this.stopEventsRequest = function (stopPointRef, callback) {
+  this.stopEventsRequest = function (stopPointRef, results, callback) {
     return trias.trias(
       trias.serviceRequest(
         trias.requestTimestamp(),
@@ -359,6 +412,11 @@ trias.TriasClient = function (url, requestorRef) {
               trias.locationRef(
                 trias.stopPointRef(stopPointRef),
                 trias.locationName(trias.text())
+              )
+            ),
+            trias.stopEventParam(
+              stopEventPolicy(
+                trias.numberOfResults(results)
               )
             )
           )
@@ -511,11 +569,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       var stopEventResults = xml.getElementsByTagName("StopEventResult");
 
       for (var i = 0; i < stopEventResults.length; i++) {
-        if (i < this_.eventsPerStop) {
-          stopPoint.stopEvents.push(new trias.StopEvent(stopEventResults[i]));
-        } else {
-          break;
-        }
+        stopPoint.stopEvents.push(new trias.StopEvent(stopEventResults[i]));
       }
 
       renderCallback(stopPoint);
@@ -547,6 +601,6 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       }
     }
 
-    this.client.query(this.client.locationRequest(this.locationName), locationCallback);
+    this.client.query(this.client.locationRequest(this.locationName, this.eventsPerStop), locationCallback);
   }
 }
