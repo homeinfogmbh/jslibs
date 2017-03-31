@@ -402,7 +402,9 @@ trias.TriasClient = function (url, requestorRef) {
               )
             ),
             trias.stopEventParam(
-              [trias.numberOfResults(results)]
+              null,
+              [trias.numberOfResults(results)],
+              null
             )
           )
         )
