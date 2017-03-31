@@ -388,7 +388,7 @@ trias.TriasClient = function (url, requestorRef) {
     );
   }
 
-  this.stopEventsRequest = function (stopPointRef, results, callback) {
+  this.stopEventsRequest = function (stopPointRef, results) {
     return trias.trias(
       trias.serviceRequest(
         trias.requestTimestamp(),
@@ -569,7 +569,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       for (var i = 0; i < stopPointRefNodes.length; i++) {
         var stopPointRef = stopPointRefNodes[i].textContent
         trias.logger.debug('Got StopPointRef: ' + stopPointRef);
-        this_.client.query(this_.client.stopEventsRequest(stopPointRef), stopEventCallback);
+        this_.client.query(this_.client.stopEventsRequest(stopPointRef, this.eventsPerStop), stopEventCallback);
       }
     }
 
@@ -588,6 +588,6 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       }
     }
 
-    this.client.query(this.client.locationRequest(this.locationName, this.eventsPerStop), locationCallback);
+    this.client.query(this.client.locationRequest(this.locationName), locationCallback);
   }
 }
