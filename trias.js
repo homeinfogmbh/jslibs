@@ -421,44 +421,88 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
   this.eventsPerStop = eventsPerStop;
   this.client = new trias.TriasClient();
 
+  this.stopTime = function (departure) {
+    var stopTime = document.createElement('div');
+    stopTime.setAttribute('class', 'col col-sm-4');
+    stopTime.innerHTML = departure;
+    return stopTime;
+  }
+
+  this.lineInfo = function (text) {
+    var lineInfo = document.createElement('div');
+    lineInfo.setAttribute('class', 'col col-sm-8');
+    lineInfo.innerHTML = text;
+    return lineInfo;
+  }
+
+  this.stopEventRow = function (stopTime, lineInfo) {
+    var stopEventRow = document.createElement('div');
+    stopEventRow.setAttribute('class', 'row');
+    stopEventRow.appendChild(stopTime);
+    stopEventRow.appendChild(lineInfo);
+    return stopEventRow;
+  }
+
+  this.stopEvents = function () {
+    var stopEvents = document.createElement('div');
+    stopEvents.setAttribute('class', 'col col-md-12');
+    return stopEvents;
+  }
+
+  this.stopEventsRow = function (stopEvents) {
+    var stopEventsRow = document.createElement('div');
+    stopEventsRow.setAttribute('class', 'row');
+    stopEventsRow.appendChild(stopEvents);
+    return stopEventsRow;
+  }
+
+  this.stopPointTitle = function (name) {
+    var stopPointTitle = document.createElement('div');
+    stopPointTitle.setAttribute('class', 'col col-md-12');
+    stopPointTitle.innerHTML = name;
+    return stopPointTitle;
+  }
+
+  this.stopPointTitleRow = function (stopPointTitle) {
+    var stopPointTitleRow = document.createElement('div');
+    stopPointTitleRow.setAttribute('class', 'row');
+    stopPointTitleRow.appendChild(stopPointTitle);
+    return stopPointTitleRow;
+  }
+
+  this.stopPointBlock = function (id, stopPointTitleRow, stopEventsRow) {
+    var stopPointBlock = document.createElement('div');
+    stopPointBlock.setAttribute('id', id);
+    stopPointBlock.setAttribute('class', 'col col-md-6');
+    stopPointBlock.appendChild(stopPointTitleRow);
+    stopPointBlock.appendChild(stopEventsRow);
+    return stopPointBlock;
+  }
+
   this.render = function (target) {
     var this_ = this;
     var stopNumber = null;
 
     function renderCallback(stopPoint) {
-      var stopPointBlock = document.createElement('div');
-      stopPointBlock.setAttribute('id', stopPoint.name);
-      stopPointBlock.setAttribute('class', 'col col-md-6');
-      var stopPointTitleRow = document.createElement('div');
-      stopPointTitleRow.setAttribute('class', 'row');
-      var stopPointTitle = document.createElement('div');
-      stopPointTitle.setAttribute('class', 'col col-md-12');
-      stopPointTitle.innerHTML = stopPoint.name;
-      stopPointTitleRow.appendChild(stopPointTitle);
-      stopPointBlock.appendChild(stopPointTitleRow);
-
-      var stopEventsRow = document.createElement('div');
-      stopEventsRow.setAttribute('class', 'row');
-      var stopEvents = document.createElement('div');
-      stopEvents.setAttribute('class', 'col col-md-12');
-      stopEventsRow.appendChild(stopEvents);
+      var stopEvents = this_.stopEvents();
+      var stopPointBlock = this_.stopPointBlock(
+        stopPoint.name,
+        this_.stopPointTitleRow(
+          this_.stopPointTitle(stopPoint.name),
+          this_.stopEventsRow(stopEvents)
+        )
+      );
 
       for (var i = 0; i < stopPoint.stopEvents.length; i++) {
         var stopEvent = stopPoint.stopEvents[i];
-        var stopEventRow = document.createElement('div');
-        stopEventRow.setAttribute('class', 'row');
-        var stopTime = document.createElement('div');
-        stopTime.setAttribute('class', 'col col-sm-4');
-        stopTime.innerHTML = stopEvent.departure();
-        stopEventRow.appendChild(stopTime);
-        var lineInfo = document.createElement('div');
-        lineInfo.setAttribute('class', 'col col-sm-8');
-        lineInfo.innerHTML = stopEvent.lineInfo();
-        stopEvents.appendChild(stopTime);
-        stopEvents.appendChild(lineInfo);
+        stopEvents.appendChild(
+          this_.stopEventRow(
+            this_.stopTime(stopEvent.departure()),
+            this_.lineInfo(stopEvent.lineInfo())
+          )
+        );
       }
 
-      stopPointBlock.appendChild(stopEventsRow);
       target.append(stopPointBlock);   // jQuery!
     }
 
