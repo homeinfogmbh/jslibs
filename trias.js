@@ -533,6 +533,10 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       }
 
       target.append(stopPointBlock);   // jQuery!
+
+      if (callback != null) {
+        callback();
+      }
     }
 
     function stopEventCallback(xml) {
@@ -575,9 +579,5 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
     }
 
     this.client.query(this.client.locationRequest(this.locationName), locationCallback);
-
-    if (callback != null) {
-      callback();
-    }
   }
 }
