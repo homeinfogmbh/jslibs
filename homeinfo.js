@@ -41,6 +41,21 @@ homeinfo.str = homeinfo.str || {};
 
 homeinfo.str.NEW_LINE = new RegExp('\r?\n','g');
 homeinfo.str.EMAIL = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+homeinfo.str.ENTITYMAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  'ä': '&auml;',
+  'ö': '&#ouml;',
+  'ü': '&#uuml;',
+  'Ä': '&#Auml;',
+  'Ö': '&#Ouml;',
+  'Ü': '&#Uuml;',
+  'ß': '&#szlig;'
+};
 
 
 // Determines whether the string is considered empty
@@ -126,23 +141,8 @@ homeinfo.str.lf2html = function(s) {
 
 // Escape HTML special characters
 homeinfo.str.escapeHtml = function (string) {
-  var entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-    '/': '&#x2F;',
-    'ä': '&auml;',
-    'ö': '&#ouml;',
-    'ü': '&#uuml;',
-    'Ä': '&#Auml;',
-    'Ö': '&#Ouml;',
-    'Ü': '&#Uuml;',
-    'ß': '&#szlig;'
-  };
-  return String(string).replace(/[&<>"'\/äöüÄÖÜß]/g, function (s) {
-    return entityMap[s];
+  return string.replace(/[&<>"'\/äöüÄÖÜß]/g, function (s) {
+    return homeinfo.str.ENTITYMAP[s];
   });
 }
 
