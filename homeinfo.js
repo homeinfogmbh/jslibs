@@ -63,20 +63,20 @@ homeinfo.str.isEmail = function(s) {
 
 // Fix for American-style -> German-style float interpunctuation
 homeinfo.str.dot2comma = function(s) {
-  return s.replace(".", ",");
+  return s.replace('.', ',');
 }
 
 
 // Fix for German-style -> American-style float interpunctuation
 homeinfo.str.comma2dot = function(s) {
-  return s.replace(",", ".");
+  return s.replace(',', '.');
 }
 
 
 // Padds a zero to a digit string if it has exactly one zero after the comma
 homeinfo.str.padd0 = function(s) {
-  if (s.substr(s.indexOf(",") + 1).length == 1) {
-    return s + "0";
+  if (s.substr(s.indexOf(',') + 1).length == 1) {
+    return s + '0';
   } else {
     return s;
   }
@@ -99,8 +99,8 @@ homeinfo.str.terminate = function(s, character) {
 
 // Converts umlaut descriptions to actual umlauts
 homeinfo.str.umlauts = function(s) {
-  return s.replace(/Ae/g, "Ä").replace(/Oe/g, "Ö").replace(/Ue/g, "Ü")
-    .replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü");
+  return s.replace(/Ae/g, 'Ä').replace(/Oe/g, 'Ö').replace(/Ue/g, 'Ü')
+    .replace(/ae/g, 'ä').replace(/oe/g, 'ö').replace(/ue/g, 'ü');
 }
 
 
@@ -109,7 +109,7 @@ homeinfo.str.strplz = function(s) {
   var i = 0;
 
   for (i; i < this.length; i++) {
-    if (s[i] != "0") {
+    if (s[i] != '0') {
       break;
     }
   }
@@ -120,7 +120,7 @@ homeinfo.str.strplz = function(s) {
 
 // Replace line feed for HTML
 homeinfo.str.lf2html = function(s) {
-  return s.replace(homeinfo.str.NEW_LINE, "<br/>");
+  return s.replace(homeinfo.str.NEW_LINE, '<br/>');
 }
 
 
