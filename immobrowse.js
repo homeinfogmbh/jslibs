@@ -730,33 +730,33 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     switch (pet) {
       case 'OEL':
-        return "Öl";
+        return 'Öl';
       case 'GAS':
-        return "Gas";
+        return 'Gas';
       case 'ELEKTRO':
-        return "Elektisch";
+        return 'Elektisch';
       case 'ALTERNATIV':
-        return "Alternativ";
+        return 'Alternativ';
       case 'SOLAR':
-        return "Solar";
+        return 'Solar';
       case 'ERDWAERME':
-        return "Erdwärme";
+        return 'Erdwärme';
       case 'LUFTWP':
-        return "Wärmepumpe Luft-Wasser";
+        return 'Wärmepumpe Luft-Wasser';
       case 'FERN':
-        return "Fernwärme";
+        return 'Fernwärme';
       case 'BLOCK':
-        return "Blockheizkraftwerk";
+        return 'Blockheizkraftwerk';
       case 'WASSER-ELEKTRO':
-        return "Ergänzendes dezentrales Warmwasser";
+        return 'Ergänzendes dezentrales Warmwasser';
       case 'PELLET':
-        return "Pellet";
+        return 'Pellet';
       case 'KOHLE':
-        return "Kohle";
+        return 'Kohle';
       case 'HOLZ':
-        return "Holz";
+        return 'Holz';
       case 'FLUESSIGGAS':
-        return "Flüssiggas";
+        return 'Flüssiggas';
     }
 
     return pet;
@@ -767,35 +767,35 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
     switch (zustand) {
       case 'ERSTBEZUG':
-        return "Erstbezug";
+        return 'Erstbezug';
       case 'TEIL_VOLLRENOVIERUNGSBED':
-        return "Teil-/Vollrenovierungsbedürftig";
+        return 'Teil-/Vollrenovierungsbedürftig';
       case 'NEUWERTIG':
-        return "Neuwertig";
+        return 'Neuwertig';
       case 'TEIL_VOLLRENOVIERT':
-        return "Teil-/Vollrenoviert";
+        return 'Teil-/Vollrenoviert';
       case 'TEIL_SANIERT':
-        return "Teilsaniert";
+        return 'Teilsaniert';
       case 'VOLL_SANIERT':
-        return "Vollsaniert";
+        return 'Vollsaniert';
       case 'SANIERUNGSBEDUERFTIG':
-        return "Sanierungsbedürftig";
+        return 'Sanierungsbedürftig';
       case 'BAUFAELLIG':
-        return "Baufällig";
+        return 'Baufällig';
       case 'NACH_VEREINBARUNG':
-        return "Nach Vereinbarung";
+        return 'Nach Vereinbarung';
       case 'MODERNISIERT':
-        return "Modernisiert";
+        return 'Modernisiert';
       case 'GEPFLEGT':
-        return "Gepflegt";
+        return 'Gepflegt';
       case 'ROHBAU':
-        return "Rohbau";
+        return 'Rohbau';
       case 'ENTKERNT':
-        return "Entkernt";
+        return 'Entkernt';
       case 'ABRISSOBJEKT':
-        return "Abrissobjekt";
+        return 'Abrissobjekt';
       case 'PROJEKTIERT':
-        return "Projektiert";
+        return 'Projektiert';
     }
 
     return zustand;
@@ -921,7 +921,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     var floorplans = [];
 
     for (var i = 0; i < attachments.length; i++) {
-      if (attachments[i].gruppe == "GRUNDRISS") {
+      if (attachments[i].gruppe == 'GRUNDRISS') {
         floorplans.push(attachments[i]);
       }
     }
