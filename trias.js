@@ -41,7 +41,7 @@ trias.xmlSerializer = new XMLSerializer();
 
 trias.trias = function (serviceRequest) {
   var xmlDoc = document.implementation.createDocument('trias', 'Trias');
-  var root = xmlDoc.getElementsByTagName("Trias")[0];
+  var root = xmlDoc.getElementsByTagName('Trias')[0];
   root.setAttribute('version', '1.0');
 
   if (serviceRequest != null) {
@@ -560,7 +560,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       var stopPoint = new trias.StopPoint(
         xml.getElementsByTagName('StopPointName')[0]
         .getElementsByTagName('Text')[0].textContent);
-      var stopEventResults = xml.getElementsByTagName("StopEventResult");
+      var stopEventResults = xml.getElementsByTagName('StopEventResult');
 
       for (var i = 0; i < stopEventResults.length; i++) {
         stopPoint.stopEvents.push(new trias.StopEvent(stopEventResults[i]));
@@ -571,7 +571,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
 
     function stopsCallback(xml) {
       var stopPointRefs = [];
-      var stopPointRefNodes = xml.getElementsByTagName("StopPointRef");
+      var stopPointRefNodes = xml.getElementsByTagName('StopPointRef');
 
       for (var i = 0; i < stopPointRefNodes.length; i++) {
         var stopPointRef = stopPointRefNodes[i].textContent
@@ -581,8 +581,8 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
     }
 
     function locationCallback(xml) {
-      var longitudes = xml.getElementsByTagName("Longitude");
-      var latitudes = xml.getElementsByTagName("Latitude");
+      var longitudes = xml.getElementsByTagName('Longitude');
+      var latitudes = xml.getElementsByTagName('Latitude');
 
       if (longitudes.length == 0 || latitudes.length == 0) {
         target.html('No locations found for "' + this_.locationName + '".');
