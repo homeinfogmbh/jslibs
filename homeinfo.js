@@ -52,25 +52,25 @@ homeinfo.str.isEmpty = function(s) {
 // Capitalize First Letter
 homeinfo.str.capitalizeFirstLetter = function(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
-};
+}
 
 
 // Validates email addresses
 homeinfo.str.isEmail = function(s) {
   return homeinfo.str.EMAIL.test(s);
-};
+}
 
 
 // Fix for American-style -> German-style float interpunctuation
 homeinfo.str.dot2comma = function(s) {
   return s.replace(".", ",");
-};
+}
 
 
 // Fix for German-style -> American-style float interpunctuation
 homeinfo.str.comma2dot = function(s) {
   return s.replace(",", ".");
-};
+}
 
 
 // Padds a zero to a digit string if it has exactly one zero after the comma
@@ -80,7 +80,7 @@ homeinfo.str.padd0 = function(s) {
   } else {
     return s;
   }
-};
+}
 
 
 // Capitalizes a string
@@ -88,20 +88,20 @@ homeinfo.str.capitalize = function(s) {
   return s.replace(/\w\S*/g, function(txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   })
-};
+}
 
 
 // Removes the string after the first occurence of character
 homeinfo.str.terminate = function(s, character) {
   return s.substring(0, s.indexOf(character));
-};
+}
 
 
 // Converts umlaut descriptions to actual umlauts
 homeinfo.str.umlauts = function(s) {
   return s.replace(/Ae/g, "Ä").replace(/Oe/g, "Ö").replace(/Ue/g, "Ü")
     .replace(/ae/g, "ä").replace(/oe/g, "ö").replace(/ue/g, "ü");
-};
+}
 
 
 // Strips leading zeros from number-like strings
@@ -115,13 +115,36 @@ homeinfo.str.strplz = function(s) {
   }
 
   return s.substr(i);
-};
+}
 
 
 // Replace line feed for HTML
 homeinfo.str.lf2html = function(s) {
   return s.replace(homeinfo.str.NEW_LINE, "<br/>");
-};
+}
+
+
+// Escape HTML special characters
+homeinfo.str.escapeHtml = function (string) {
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    'ä': '&auml;',
+    'ö': '&#ouml;',
+    'ü': '&#uuml;',
+    'Ä': '&#Auml;',
+    'Ö': '&#Ouml;',
+    'Ü': '&#Uuml;',
+    'ß': '&#szlig;'
+  };
+  return String(string).replace(/[&<>"'\/äöüÄÖÜß]/g, function (s) {
+    return entityMap[s];
+  });
+}
 
 
 /* Numbers library */
@@ -174,7 +197,7 @@ homeinfo.arr.group = function(a) {
   }
 
   return result;
-};
+}
 
 
 /* Date library */
@@ -200,7 +223,7 @@ homeinfo.dom.getElements = function(d, element_name) {
   } else {
     return [];
   }
-};
+}
 
 
 // Gets a DOM element by its name
@@ -216,7 +239,7 @@ homeinfo.dom.getElement = function(d, element_name) {
   } else {
     throw 'Element not found: ' + element_name;
   }
-};
+}
 
 
 // Gets value of a DOM element by its name
@@ -232,7 +255,7 @@ homeinfo.dom.getElementValue = function(d, element_name) {
   } else {
     return null;
   }
-};
+}
 
 
 /* Logging facility */
