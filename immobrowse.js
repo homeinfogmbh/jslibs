@@ -136,30 +136,6 @@ immobrowse.sortByStreet = function (descending) {
 }
 
 
-/*** HTML formatting ***/
-
-immobrowse.escapeHtml = function (string) {
-  var entityMap = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': '&quot;',
-    "'": '&#39;',
-    "/": '&#x2F;',
-    "ä": '&auml;',
-    "ö": '&#ouml;',
-    "ü": '&#uuml;',
-    "Ä": '&#Auml;',
-    "Ö": '&#Ouml;',
-    "Ü": '&#Uuml;',
-    "ß": '&#szlig;'
-  };
-  return String(string).replace(/[&<>"'\/äöüÄÖÜß]/g, function (s) {
-    return entityMap[s];
-  });
-}
-
-
 immobrowse.germanDecimal = function (number, decimals) {
   if (number != null) {
     if (decimals == null) {
