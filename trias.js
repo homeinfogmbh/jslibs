@@ -509,7 +509,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
     return stopPointBlock;
   }
 
-  this.render = function (target) {
+  this.render = function (target, callback) {
     var this_ = this;
     var stopNumber = null;
 
@@ -575,5 +575,9 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
     }
 
     this.client.query(this.client.locationRequest(this.locationName), locationCallback);
+
+    if (callback != null) {
+      callback();
+    }
   }
 }
