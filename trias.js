@@ -351,12 +351,7 @@ trias.TriasClient = function (url, requestorRef) {
             trias.restrictions(
               trias.type('address'),
               trias.language(),
-              trias.numberOfResults(1)
-            )
-          )
-        )
-      )
-    );
+              trias.numberOfResults(1))))));
   }
 
   this.stopsRequest = function (longitude, latitude, radius, results) {
@@ -371,21 +366,12 @@ trias.TriasClient = function (url, requestorRef) {
                 trias.circle(
                   trias.center(
                     trias.longitude(longitude),
-                    trias.latitude(latitude)
-                  ),
-                  trias.radius(radius)
-                )
-              )
-            ),
+                    trias.latitude(latitude)),
+                  trias.radius(radius)))),
             trias.restrictions(
               trias.type('stop'),
               trias.language(),
-              trias.numberOfResults(results)
-            )
-          )
-        )
-      )
-    );
+              trias.numberOfResults(results))))));
   }
 
   this.stopEventsRequest = function (stopPointRef, results) {
@@ -398,18 +384,11 @@ trias.TriasClient = function (url, requestorRef) {
             trias.location(
               trias.locationRef(
                 trias.stopPointRef(stopPointRef),
-                trias.locationName(trias.text())
-              )
-            ),
+                trias.locationName(trias.text()))),
             trias.stopEventParam(
               null,
               [trias.numberOfResults(results)],
-              null
-            )
-          )
-        )
-      )
-    );
+              null)))));
   }
 }
 
