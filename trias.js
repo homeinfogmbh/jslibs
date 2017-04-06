@@ -263,7 +263,7 @@ trias.depArrTime = function (datetime) {
 
 
 trias.location = function (locationRef, tripLocation, depArrTime, individualTransportOptions) {
-  var locationContext = trias.triasElement('LocationContext');
+  var locationContext = trias.triasElement('Location');
   var ambigErr = 'Must specify either locationRef xor tripLocation';
 
   if (locationRef != null && tripLocation != null) {
