@@ -256,7 +256,7 @@ trias.locationRef = function (stopPointRef, locationName) {
 
 
 trias.location = function (locationRef, tripLocation, depArrTime, individualTransportOptions) {
-  var locationContext = triasElement('LocationContext');
+  var locationContext = trias.triasElement('LocationContext');
   var ambigErr = 'Must specify either locationRef xor tripLocation';
 
   if (locationRef != null && tripLocation != null) {
