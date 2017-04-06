@@ -255,10 +255,31 @@ trias.locationRef = function (stopPointRef, locationName) {
 }
 
 
-trias.location = function (locationRef) {
-  var location = trias.triasElement('Location');
-  location.appendChild(locationRef);
-  return location;
+trias.location = function (locationRef, tripLocation, depArrTime, individualTransportOptions) {
+  var locationContext = triasElement('LocationContext');
+  var ambigErr = 'Must specify either locationRef xor tripLocation';
+
+  if (locationRef != null && tripLocation != null) {
+    throw ambigErr;
+  } else if (locationRef!= null) {
+    locationContext.appendChild(locationRef);
+  } else if (tripLocation!= null) {
+    locationContext.appendChild(tripLocation);
+  } else {
+    throw ambigErr;
+  }
+
+  if (depArrTime != null) {
+    locationContext.appendChild(depArrTime);
+  }
+
+  if (individualTransportOptions != null) {
+    for (var i = 0; i < individualTransportOptions.length; i++) {
+      locationContext.appendChild(individualTransportOptions[i]);
+    }
+  }
+
+  return locationContext;
 }
 
 
@@ -374,7 +395,7 @@ trias.TriasClient = function (url, requestorRef) {
               trias.numberOfResults(results))))));
   }
 
-  this.stopEventsRequest = function (stopPointRef, results) {
+  this.stopEventsRequest = function (stopPointRef, depArrTime, results) {
     return trias.trias(
       trias.serviceRequest(
         trias.requestTimestamp(),
@@ -384,7 +405,10 @@ trias.TriasClient = function (url, requestorRef) {
             trias.location(
               trias.locationRef(
                 trias.stopPointRef(stopPointRef),
-                trias.locationName(trias.text()))),
+                trias.locationName(trias.text())),
+              null,
+              depArrTime,
+              null),
             trias.stopEventParam(
               null,
               [trias.numberOfResults(results)],
@@ -438,8 +462,9 @@ trias.StopPoint = function (name) {
 }
 
 
-trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
+trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerStop) {
   this.locationName = locationName;
+  this.depArrTime = depArrTime;
   this.radius = radius;
   this.stops = stops;
   this.eventsPerStop = eventsPerStop;
@@ -559,7 +584,7 @@ trias.StopEvents = function (locationName, radius, stops, eventsPerStop) {
       for (var i = 0; i < stopPointRefNodes.length; i++) {
         var stopPointRef = stopPointRefNodes[i].textContent
         trias.logger.debug('Got StopPointRef: ' + stopPointRef);
-        this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.eventsPerStop), stopEventCallback);
+        this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
       }
     }
 
