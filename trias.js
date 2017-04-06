@@ -600,8 +600,12 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       var latitudes = xml.getElementsByTagName('Latitude');
 
       if (longitudes.length == 0 || latitudes.length == 0) {
-        target.html('No locations found for "' + this_.locationName + '".');
         callback();
+        swal({
+          title: 'Fehler!',
+          text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
+          type: 'error'
+        });
       } else {
         var longitude = longitudes[0].textContent;
         trias.logger.debug('Longitude: ' + longitude);
