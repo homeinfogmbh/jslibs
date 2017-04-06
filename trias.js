@@ -621,7 +621,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
   this.noStopsFound = function () {
     swal({
       title: 'Achtung!',
-      text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
+      text: 'Keine Abfahrten ab "' + this.locationName + '" gefunden.',
       type: 'warning'
     });
   }
