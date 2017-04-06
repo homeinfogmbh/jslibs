@@ -601,6 +601,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
 
       if (longitudes.length == 0 || latitudes.length == 0) {
         target.html('No locations found for "' + this_.locationName + '".');
+        callback();
       } else {
         var longitude = longitudes[0].textContent;
         trias.logger.debug('Longitude: ' + longitude);
