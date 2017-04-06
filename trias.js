@@ -255,6 +255,13 @@ trias.locationRef = function (stopPointRef, locationName) {
 }
 
 
+trias.depArrTime = function (datetime) {
+  var depArrTime = trias.triasElement('DepArrTime');
+  depArrTime.textContent = datetime.toISOString();
+  return depArrTime;
+}
+
+
 trias.location = function (locationRef, tripLocation, depArrTime, individualTransportOptions) {
   var locationContext = trias.triasElement('LocationContext');
   var ambigErr = 'Must specify either locationRef xor tripLocation';
@@ -407,7 +414,7 @@ trias.TriasClient = function (url, requestorRef) {
                 trias.stopPointRef(stopPointRef),
                 trias.locationName(trias.text())),
               null,
-              depArrTime,
+              trias.depArrTime(depArrTime),
               null),
             trias.stopEventParam(
               null,
