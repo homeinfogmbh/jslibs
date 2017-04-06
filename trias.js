@@ -588,10 +588,18 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       var stopPointRefs = [];
       var stopPointRefNodes = xml.getElementsByTagName('StopPointRef');
 
-      for (var i = 0; i < stopPointRefNodes.length; i++) {
-        var stopPointRef = stopPointRefNodes[i].textContent
-        trias.logger.debug('Got StopPointRef: ' + stopPointRef);
-        this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
+      if (stopPointRefNodes.length > 0) {
+        for (var i = 0; i < stopPointRefNodes.length; i++) {
+          var stopPointRef = stopPointRefNodes[i].textContent
+          trias.logger.debug('Got StopPointRef: ' + stopPointRef);
+          this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
+        }
+      } else {
+        swal({
+          title: 'Achtung!',
+          text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
+          type: 'warning'
+        });
       }
     }
 
