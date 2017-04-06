@@ -602,7 +602,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       if (longitudes.length == 0 || latitudes.length == 0) {
         callback();
         swal({
-          title: 'Fehler!',
+          title: 'Achtung!',
           text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
           type: 'warning'
         });
