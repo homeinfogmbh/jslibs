@@ -595,11 +595,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
           this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
         }
       } else {
-        swal({
-          title: 'Achtung!',
-          text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
-          type: 'warning'
-        });
+        this_.noStopsFound();
       }
     }
 
@@ -609,11 +605,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
 
       if (longitudes.length == 0 || latitudes.length == 0) {
         callback();
-        swal({
-          title: 'Achtung!',
-          text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
-          type: 'warning'
-        });
+        this_.noStopsFound();
       } else {
         var longitude = longitudes[0].textContent;
         trias.logger.debug('Longitude: ' + longitude);
@@ -624,5 +616,13 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
     }
 
     this.client.query(this.client.locationRequest(this.locationName), locationCallback);
+  }
+
+  this.noStopsFound = function () {
+    swal({
+      title: 'Achtung!',
+      text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
+      type: 'warning'
+    });
   }
 }
