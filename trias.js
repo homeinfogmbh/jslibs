@@ -595,7 +595,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
           this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
         }
       } else {
-        this_.noStopsFound();
+        this_.noStopsFound(callback);
       }
     }
 
@@ -604,8 +604,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       var latitudes = xml.getElementsByTagName('Latitude');
 
       if (longitudes.length == 0 || latitudes.length == 0) {
-        callback();
-        this_.noStopsFound();
+        this_.noStopsFound(callback);
       } else {
         var longitude = longitudes[0].textContent;
         trias.logger.debug('Longitude: ' + longitude);
@@ -618,7 +617,8 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
     this.client.query(this.client.locationRequest(this.locationName), locationCallback);
   }
 
-  this.noStopsFound = function () {
+  this.noStopsFound = function (callback) {
+    callback();
     swal({
       title: 'Achtung!',
       text: 'Keine Abfahrten ab "' + this.locationName + '" gefunden.',
