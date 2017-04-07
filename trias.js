@@ -568,6 +568,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       target.append(stopPointBlock);  // jQuery!
 
       if (addClearfix) {
+        trias.logger.debug('addClearfix* = ' + addClearfix);
         var clearfix = document.createElement('div');
         clearfix.setAttribute('class', 'clearfix');
         target.append(clearfix);  // jQuery!
