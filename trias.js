@@ -599,7 +599,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
         for (var i = 0; i < stopPointRefNodes.length; i++) {
           var stopPointRef = stopPointRefNodes[i].textContent
           trias.logger.debug('Got StopPointRef: ' + stopPointRef);
-          addClearfix = (i > 0 && i % 2);
+          addClearfix = (i > 0 && i % 2 != 0);
           trias.logger.debug('i = ' + i);
           trias.logger.debug('i % 2 = ' + i % 2);
           trias.logger.debug('addClearfix = ' + addClearfix);
