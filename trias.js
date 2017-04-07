@@ -602,6 +602,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
           addClearfix = (i > 0 && i % 2);
           trias.logger.debug('i = ' + i);
           trias.logger.debug('i % 2 = ' + i % 2);
+          trias.logger.debug('addClearfix = ' + addClearfix);
           this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
         }
       } else {
