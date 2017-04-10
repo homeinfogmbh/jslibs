@@ -553,6 +553,8 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
     var this_ = this;
     var stopNumber = null;
     var stopCounter = 0;
+    var stopPoints = 0;
+    var renderedStops = 0;
 
     function renderCallback(stopPoint) {
       var stopEvents = this_.stopEvents();
@@ -583,7 +585,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
         target.append(clearfix);  // jQuery!
       }
 
-      if (callback != null) {
+      if (callback != null && renderedStops == stopPoints) {
         callback();
       }
     }
@@ -599,14 +601,16 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       }
 
       renderCallback(stopPoint);
+      renderedStops++;
     }
 
     function stopsCallback(xml) {
       var stopPointRefs = [];
       var stopPointRefNodes = xml.getElementsByTagName('StopPointRef');
+      stopPoints = stopPointRefNodes.length;
 
-      if (stopPointRefNodes.length > 0) {
-        for (var i = 0; i < stopPointRefNodes.length; i++) {
+      if (stopPoints > 0) {
+        for (var i = 0; i < stopPoints; i++) {
           var stopPointRef = stopPointRefNodes[i].textContent
           trias.logger.debug('Got StopPointRef: ' + stopPointRef);
           this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
