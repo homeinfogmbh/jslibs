@@ -472,6 +472,11 @@ trias.StopPoint = function (name) {
 
 
 trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerStop) {
+  trias.logger.debug('Location name: ' + locationName);
+  trias.logger.debug('Time: ' + depArrTime);
+  trias.logger.debug('Radius: ' + radius);
+  trias.logger.debug('Stops: ' + stops);
+  trias.logger.debug('Events per stop: ' + eventsPerStop);
   this.locationName = locationName;
   this.depArrTime = depArrTime;
   this.radius = radius;
