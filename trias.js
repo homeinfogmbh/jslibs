@@ -22,6 +22,7 @@
     * homeinfo.js
     * jquery.js
     * sweetalert.js
+    * moment.js
 */
 "use strict"
 
