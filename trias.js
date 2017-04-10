@@ -257,6 +257,7 @@ trias.locationRef = function (stopPointRef, locationName) {
 
 trias.depArrTime = function (datetime) {
   var depArrTime = trias.triasElement('DepArrTime');
+  depArrTime.setMinutes(depArrTime.getMinutes() + depArrTime.getTimezoneOffset());
   depArrTime.textContent = datetime.toISOString();
   return depArrTime;
 }
