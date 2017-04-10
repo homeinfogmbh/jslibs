@@ -600,7 +600,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
     function renderStop(xml) {
       var stopPointRefs = [];
       var stopPointRefNodes = xml.getElementsByTagName('StopPointRef');
-      stopPoints = stopPointRefNodes.length;
+      var stopPoints = stopPointRefNodes.length;
 
       if (stopPoints > 0) {
         for (var i = 0; i < stopPoints; i++) {
