@@ -585,7 +585,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
         target.append(clearfix);  // jQuery!
       }
 
-      if (callback != null && renderedStops == stopPoints) {
+      if (callback != null && renderedStops == stopPoints + 1) {
         callback();
       }
     }
