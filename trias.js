@@ -553,6 +553,15 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
     var this_ = this;
     var stopCounter = 0;
 
+    function noStopsFound () {
+      callback();
+      swal({
+        title: 'Achtung!',
+        text: 'Keine Abfahrten ab "' + this_.locationName + '" gefunden.',
+        type: 'warning'
+      });
+    }
+
     function renderStopPoint(stopPoint) {
       var stopEvents = this_.stopEvents();
       var stopPointBlock = this_.stopPointBlock(
@@ -610,10 +619,10 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
             stopPointRef, this_.depArrTime, this_.eventsPerStop), renderStopPoints));
         }
       } else {
-        this_.noStopsFound();
+        noStopsFound();
       }
 
-      $.when.apply($, promises).then(callback, this_.noStopsFound);
+      $.when.apply($, promises).then(callback, noStopsFound);
     }
 
     function renderLocation(xml) {
@@ -621,7 +630,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       var latitudes = xml.getElementsByTagName('Latitude');
 
       if (longitudes.length == 0 || latitudes.length == 0) {
-        this_.noStopsFound();
+        noStopsFound();
       } else {
         var longitude = longitudes[0].textContent;
         trias.logger.debug('Longitude: ' + longitude);
@@ -633,14 +642,5 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
     }
 
     this.client.query(this.client.locationRequest(this.locationName), renderLocation);
-  }
-
-  this.noStopsFound = function () {
-    callback();
-    swal({
-      title: 'Achtung!',
-      text: 'Keine Abfahrten ab "' + this.locationName + '" gefunden.',
-      type: 'warning'
-    });
   }
 }
