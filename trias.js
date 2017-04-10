@@ -552,7 +552,6 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
   this.render = function (target, callback) {
     var this_ = this;
     var stopCounter = 0;
-    var promises = [];
 
     function renderStopPoint(stopPoint) {
       var stopEvents = this_.stopEvents();
@@ -601,6 +600,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       var stopPointRefs = [];
       var stopPointRefNodes = xml.getElementsByTagName('StopPointRef');
       var stopPoints = stopPointRefNodes.length;
+      var promises = [];
 
       if (stopPoints > 0) {
         for (var i = 0; i < stopPoints; i++) {
@@ -612,6 +612,8 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
       } else {
         this_.noStopsFound();
       }
+
+      $.when.apply($, promises).then(callback, this_.noStopsFound);
     }
 
     function renderLocation(xml) {
@@ -631,7 +633,6 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
     }
 
     this.client.query(this.client.locationRequest(this.locationName), renderLocation);
-    $.when.apply($, promises).then(callback, this.noStopsFound);
   }
 
   this.noStopsFound = function () {
