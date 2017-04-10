@@ -347,7 +347,7 @@ trias.TriasClient = function (url, requestorRef) {
     var xmlText = trias.xmlSerializer.serializeToString(xmlDoc);
     trias.logger.debug('Sending:\n' + xmlText);
 
-    $.ajax({
+    return $.ajax({
       url: url,
       type: 'POST',
       data: xmlText,
@@ -622,6 +622,7 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
         noStopsFound();
       }
 
+      trias.logger.debug('Pending promises: ' + promises);
       $.when.apply($, promises).then(callback, noStopsFound);
     }
 
