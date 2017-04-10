@@ -551,12 +551,10 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
 
   this.render = function (target, callback) {
     var this_ = this;
-    var stopNumber = null;
     var stopCounter = 0;
-    var stopPoints = 0;
-    var renderedStops = 0;
+    var promises = [];
 
-    function renderCallback(stopPoint) {
+    function renderStopPoint(stopPoint) {
       var stopEvents = this_.stopEvents();
       var stopPointBlock = this_.stopPointBlock(
         stopPoint.name,
@@ -584,13 +582,9 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
         clearfix.setAttribute('class', 'clearfix');
         target.append(clearfix);  // jQuery!
       }
-
-      if (callback != null && renderedStops == stopPoints + 1) {
-        callback();
-      }
     }
 
-    function stopEventCallback(xml) {
+    function renderStopPoints(xml) {
       var stopPoint = new trias.StopPoint(
         xml.getElementsByTagName('StopPointName')[0]
         .getElementsByTagName('Text')[0].textContent);
@@ -600,11 +594,10 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
         stopPoint.stopEvents.push(new trias.StopEvent(stopEventResults[i]));
       }
 
-      renderCallback(stopPoint);
-      renderedStops++;
+      renderStopPoint(stopPoint);
     }
 
-    function stopsCallback(xml) {
+    function renderStop(xml) {
       var stopPointRefs = [];
       var stopPointRefNodes = xml.getElementsByTagName('StopPointRef');
       stopPoints = stopPointRefNodes.length;
@@ -613,32 +606,35 @@ trias.StopEvents = function (locationName, depArrTime, radius, stops, eventsPerS
         for (var i = 0; i < stopPoints; i++) {
           var stopPointRef = stopPointRefNodes[i].textContent
           trias.logger.debug('Got StopPointRef: ' + stopPointRef);
-          this_.client.query(this_.client.stopEventsRequest(stopPointRef, this_.depArrTime, this_.eventsPerStop), stopEventCallback);
+          promises.push(this_.client.query(this_.client.stopEventsRequest(
+            stopPointRef, this_.depArrTime, this_.eventsPerStop), renderStopPoints));
         }
       } else {
-        this_.noStopsFound(callback);
+        this_.noStopsFound();
       }
     }
 
-    function locationCallback(xml) {
+    function renderLocation(xml) {
       var longitudes = xml.getElementsByTagName('Longitude');
       var latitudes = xml.getElementsByTagName('Latitude');
 
       if (longitudes.length == 0 || latitudes.length == 0) {
-        this_.noStopsFound(callback);
+        this_.noStopsFound();
       } else {
         var longitude = longitudes[0].textContent;
         trias.logger.debug('Longitude: ' + longitude);
         var latitude = latitudes[0].textContent;
         trias.logger.debug('Latitude: ' + latitude);
-        this_.client.query(this_.client.stopsRequest(longitude, latitude, this_.radius, this_.stops), stopsCallback);
+        this_.client.query(this_.client.stopsRequest(
+          longitude, latitude, this_.radius, this_.stops), renderStop);
       }
     }
 
-    this.client.query(this.client.locationRequest(this.locationName), locationCallback);
+    this.client.query(this.client.locationRequest(this.locationName), renderLocation);
+    $.when.apply($, promises).then(callback, this.noStopsFound);
   }
 
-  this.noStopsFound = function (callback) {
+  this.noStopsFound = function () {
     callback();
     swal({
       title: 'Achtung!',
