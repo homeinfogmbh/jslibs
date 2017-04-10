@@ -450,8 +450,10 @@ trias.StopEvent = function (xml) {
     var delay = this.delay();
 
     if (delay > 0) {
-      departure = '<s>' + departure + '</s>' + ' ' + homeinfo.date.time(this.estimatedTime)
-        + ' (+' + delay + ' min.)';
+      var strike = document.createElement('s');
+      strike.textContent = departure;
+      departure = trias.xmlSerializer.serializeToString(strike);
+      departure += ' ' + homeinfo.date.time(this.estimatedTime) + ' (+' + delay + ' min.)';
     }
 
     return departure;
