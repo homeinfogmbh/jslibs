@@ -436,17 +436,11 @@ trias.StopEvent = function (xml, timeZone) {
     this.timeZone = timeZone;
   }
 
-  var timetabledTimeString = xml.getElementsByTagName('TimetabledTime')[0].textContent + this.timeZone;
-  trias.logger.debug('Timetabled time string: ' + timetabledTimeString);
-  this.timetabledTime = new Date(timetabledTimeString);
-  trias.logger.debug('Timetabled time: ' + this.timetabledTime);
+  this.timetabledTime = new Date(xml.getElementsByTagName('TimetabledTime')[0].textContent + this.timeZone);
   var estimatedTimes = xml.getElementsByTagName('EstimatedTime');
 
   if (estimatedTimes.length > 0) {
-    var estimatedTimeString = estimatedTimes[0].textContent + this.timeZone;
-    trias.logger.debug('Estimated time string: ' + estimatedTimeString);
-    this.estimatedTime = new Date(estimatedTimeString);
-    trias.logger.debug('Estimated time: ' + this.estimatedTime);
+    this.estimatedTime = new Date(estimatedTimes[0].textContent + this.timeZone);
   }
 
   this.line = xml.getElementsByTagName('PublishedLineName')[0].getElementsByTagName('Text')[0].textContent;
