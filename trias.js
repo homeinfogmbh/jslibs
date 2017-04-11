@@ -455,8 +455,6 @@ trias.StopEvent = function (xml, timeZone) {
   }
 
   this.departure = function () {
-    trias.logger.debug('Timetabled time: ' + this.timetabledTime.toISOString());
-    trias.logger.debug('Estimated time: ' + this.estimatedTime.toISOString());
     var departure = homeinfo.date.time(this.timetabledTime);
     var delay = this.delay();
 
