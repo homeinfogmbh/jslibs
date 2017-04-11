@@ -429,12 +429,18 @@ trias.TriasClient = function (url, requestorRef) {
 /*
   Stop event data wrapper
 */
-trias.StopEvent = function (xml) {
-  this.timetabledTime = new Date(xml.getElementsByTagName('TimetabledTime')[0].textContent);
+trias.StopEvent = function (xml, timeZone) {
+  if (timeZone == null) {
+    this.timeZone = '+02:00';
+  } else {
+    this.timeZone = timeZone;
+  }
+
+  this.timetabledTime = new Date(xml.getElementsByTagName('TimetabledTime')[0].textContent + ' ' + this.timeZone);
   var estimatedTimes = xml.getElementsByTagName('EstimatedTime');
 
   if (estimatedTimes.length > 0) {
-    this.estimatedTime = new Date(estimatedTimes[0].textContent);
+    this.estimatedTime = new Date(estimatedTimes[0].textContent + ' ' + this.timeZone);
   }
 
   this.line = xml.getElementsByTagName('PublishedLineName')[0].getElementsByTagName('Text')[0].textContent;
@@ -449,8 +455,8 @@ trias.StopEvent = function (xml) {
   }
 
   this.departure = function () {
-    trias.logger.debug('Timetabled time: ' + this.timetabledTime);
-    trias.logger.debug('Estimated time: ' + this.estimatedTime);
+    trias.logger.debug('Timetabled time: ' + this.timetabledTime.toISOString());
+    trias.logger.debug('Estimated time: ' + this.estimatedTime.toISOString());
     var departure = homeinfo.date.time(this.timetabledTime);
     var delay = this.delay();
 
