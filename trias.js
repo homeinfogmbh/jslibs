@@ -41,7 +41,7 @@ trias.xmlSerializer = new XMLSerializer();
 
 
 trias.trias = function (serviceRequest) {
-  var xmlDoc = document.implementation.createDocument('trias', 'Trias');
+  var xmlDoc = document.implementation.createDocument('trias', 'Trias', null);
   var root = xmlDoc.getElementsByTagName('Trias')[0];
   root.setAttribute('version', '1.0');
 
