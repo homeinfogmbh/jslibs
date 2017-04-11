@@ -200,16 +200,6 @@ homeinfo.arr.group = function(a) {
 }
 
 
-/* Date library */
-
-homeinfo.date = homeinfo.date || {};
-
-// Returns time of date like <hh:mm>
-homeinfo.date.time = function(date) {
-  return homeinfo.num.padd(date.getHours()) + ':' + homeinfo.num.padd(date.getMinutes());
-}
-
-
 /* DOM elements */
 
 homeinfo.dom = homeinfo.dom || {};

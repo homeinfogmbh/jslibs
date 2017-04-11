@@ -449,6 +449,8 @@ trias.StopEvent = function (xml) {
   }
 
   this.departure = function () {
+    trias.logger.debug('Timetabled time: ' + this.timetabledTime);
+    trias.logger.debug('Estimated time: ' + this.estimatedTime);
     var departure = homeinfo.date.time(this.timetabledTime);
     var delay = this.delay();
 
