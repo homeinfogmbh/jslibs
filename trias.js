@@ -256,9 +256,9 @@ trias.locationRef = function (stopPointRef, locationName) {
 }
 
 
-trias.depArrTime = function (datetime) {
+trias.depArrTime = function (datetimeString) {
   var depArrTime = trias.triasElement('DepArrTime');
-  depArrTime.textContent = datetime.format();   // moment from moment.js
+  depArrTime.textContent = datetimeString;
   return depArrTime;
 }
 
