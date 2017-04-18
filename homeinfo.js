@@ -47,11 +47,7 @@ homeinfo.Range = function (lowerBoundary, upperBoundary) {
   this.upperBoundary = upperBoundary;
 
   this.contains = function (number) {
-    if (this.lowerBoundary > this.upperBoundary) {
-      return number >= this.lowerBoundary || number < this.upperBoundary;
-    } else {
-      return number >= this.lowerBoundary && number < this.upperBoundary;
-    }
+    return number >= this.lowerBoundary && number < this.upperBoundary;
   }
 }
 
