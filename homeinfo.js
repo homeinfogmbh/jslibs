@@ -36,6 +36,26 @@ homeinfo.isNull = function(element) {
 }
 
 
+// Range object
+homeinfo.Range = function (lowerBoundary, upperBoundary) {
+  if (upperBoundary == null) {
+    upperBoundary = lowerBoundary;
+    lowerBoundary = 0;
+  }
+
+  this.lowerBoundary = lowerBoundary;
+  this.upperBoundary = upperBoundary;
+
+  this.contains = function (number) {
+    if (this.lowerBoundary > this.upperBoundary) {
+      return number >= this.lowerBoundary || number < this.upperBoundary;
+    } else {
+      return number >= this.lowerBoundary && number < this.upperBoundary;
+    }
+  }
+}
+
+
 /* String library */
 homeinfo.str = homeinfo.str || {};
 
