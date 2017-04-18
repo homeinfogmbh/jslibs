@@ -33,7 +33,7 @@ var weather = weather || {};
   Degrees to cardinal point
 */
 weather.deg2cp = function (degrees) {
-  var N = new homeinfo.Range(348.75, 11.25);
+  var N1 = new homeinfo.Range(11.25);
   var NNO = new homeinfo.Range(11.25, 33.75);
   var NO = new homeinfo.Range(33.75, 56.25);
   var ONO = new homeinfo.Range(56.25, 78.75);
@@ -49,38 +49,39 @@ weather.deg2cp = function (degrees) {
   var WNW = new homeinfo.Range(281.25, 303.75);
   var NW = new homeinfo.Range(303.75, 326.25);
   var NNW = new homeinfo.Range(326.25, 348.75);
+  var N2 = new homeinfo.Range(348.75, 360.01);
 
-  if N.contains(degrees) {
+  if (N1.contains(degrees) || N2.contains(degrees)) {
     return 'N';
-  } else if NNO.contains(degrees) {
+  } else if (NNO.contains(degrees)) {
     return 'NNO';
-  } else if NO.contains(degrees) {
+  } else if (NO.contains(degrees)) {
     return 'NO';
-  } else if ONO.contains(degrees) {
+  } else if (ONO.contains(degrees)) {
     return 'ONO';
-  } else if O.contains(degrees) {
+  } else if (O.contains(degrees)) {
     return 'O';
-  } else if OSO.contains(degrees) {
+  } else if (OSO.contains(degrees)) {
     return 'OSO';
-  } else if SO.contains(degrees) {
+  } else if (SO.contains(degrees)) {
     return 'SO';
-  } else if SSO.contains(degrees) {
+  } else if (SSO.contains(degrees)) {
     return 'SSO';
-  } else if S.contains(degrees) {
+  } else if (S.contains(degrees)) {
     return 'S';
-  } else if SSW.contains(degrees) {
+  } else if (SSW.contains(degrees)) {
     return 'SSW';
-  } else if SW.contains(degrees) {
+  } else if (SW.contains(degrees)) {
     return 'SW';
-  } else if WSW.contains(degrees) {
+  } else if (WSW.contains(degrees)) {
     return 'WSW';
-  } else if W.contains(degrees) {
+  } else if (W.contains(degrees)) {
     return 'W';
-  } else if WNW.contains(degrees) {
+  } else if (WNW.contains(degrees) {
     return 'WNW';
-  } else if NW.contains(degrees) {
+  } else if (NW.contains(degrees)) {
     return 'NW';
-  } else if NNW.contains(degrees) {
+  } else if (NNW.contains(degrees)) {
     return 'NNW';
   } else {
     throw 'Invalid degrees: ' + degrees + '.';
