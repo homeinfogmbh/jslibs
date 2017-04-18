@@ -33,37 +33,54 @@ var weather = weather || {};
   Degrees to cardinal point
 */
 weather.deg2cp = function (degrees) {
-  if (degrees > 348.75 || degrees <= 11.25) {
+  var N = new homeinfo.Range(348.75, 11.25);
+  var NNO = new homeinfo.Range(11.25, 33.75);
+  var NO = new homeinfo.Range(33.75, 56.25);
+  var ONO = new homeinfo.Range(56.25, 78.75);
+  var O = new homeinfo.Range(78.75, 101.25);
+  var OSO = new homeinfo.Range(101.25, 123.75);
+  var SO = new homeinfo.Range(123.75, 146.25);
+  var SSO = new homeinfo.Range(146.25, 168.75);
+  var S = new homeinfo.Range(168.75, 191.25);
+  var SSW = new homeinfo.Range(191.25, 213.75);
+  var SW = new homeinfo.Range(213.75, 236.25);
+  var WSW = new homeinfo.Range(236.25, 258.75);
+  var W = new homeinfo.Range(258.75, 281.25);
+  var WNW = new homeinfo.Range(281.25, 303.75);
+  var NW = new homeinfo.Range(303.75, 326.25);
+  var NNW = new homeinfo.Range(326.25, 348.75);
+
+  if N.contains(degrees) {
     return 'N';
-  } else if (degrees > 11.25 && degrees <= 33.75) {
+  } else if NNO.contains(degrees) {
     return 'NNO';
-  } else if (degrees > 33.75 && degrees <= 56.25) {
+  } else if NO.contains(degrees) {
     return 'NO';
-  } else if (degrees > 56.25 && degrees <= 78.75) {
+  } else if ONO.contains(degrees) {
     return 'ONO';
-  } else if (degrees > 78.75 && degrees <= 101.25) {
+  } else if O.contains(degrees) {
     return 'O';
-  } else if (degrees > 101.25 && degrees <= 123.75) {
+  } else if OSO.contains(degrees) {
     return 'OSO';
-  } else if (degrees > 123.75 && degrees <= 146.25) {
+  } else if SO.contains(degrees) {
     return 'SO';
-  } else if (degrees > 146.25 && degrees <= 168.75) {
+  } else if SSO.contains(degrees) {
     return 'SSO';
-  } else if (degrees > 168.75 && degrees <= 191.25) {
+  } else if S.contains(degrees) {
     return 'S';
-  } else if (degrees > 191.25 && degrees <= 213.75) {
+  } else if SSW.contains(degrees) {
     return 'SSW';
-  } else if (degrees > 213.75 && degrees <= 236.25) {
+  } else if SW.contains(degrees) {
     return 'SW';
-  } else if (degrees > 236.25 && degrees <= 258.75) {
+  } else if WSW.contains(degrees) {
     return 'WSW';
-  } else if (degrees > 258.75 && degrees <= 281.25) {
+  } else if W.contains(degrees) {
     return 'W';
-  } else if (degrees > 281.25 && degrees <= 303.75) {
+  } else if WNW.contains(degrees) {
     return 'WNW';
-  } else if (degrees > 303.75 && degrees <= 326.25) {
+  } else if NW.contains(degrees) {
     return 'NW';
-  } else if (degrees > 326.25 && degrees <= 348.75) {
+  } else if NNW.contains(degrees) {
     return 'NNW';
   } else {
     throw 'Invalid degrees: ' + degrees + '.';
