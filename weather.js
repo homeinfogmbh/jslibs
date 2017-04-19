@@ -224,8 +224,12 @@ weather.Forecast = function (weather) {
       var icon;
 
       if (this.weather != null) {
-        if (this.weather.icon != null) {
-          icon = weather.icons[this.weather.icon];
+        var weather = this.weather[0];
+
+        if (weather != null) {
+          if (weather.icon != null) {
+            icon = weather.icons[weather.icon];
+          }
         }
       }
 
