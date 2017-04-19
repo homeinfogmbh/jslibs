@@ -159,9 +159,9 @@ weather.Forecast = function (weather) {
   this.title = function () {
     var now = new Date();
     var tomorrow = new Date();
-    tomorrow.setDay(tomorrow.getDay() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 1);
     var dayAftertomorrow = new Date();
-    dayAftertomorrow.setDay(dayAftertomorrow.getDay() + 2);
+    dayAftertomorrow.setDate(dayAftertomorrow.getDate() + 2);
     var dateTime = this.dateTime();
     var prefix;
 
