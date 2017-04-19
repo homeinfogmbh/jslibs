@@ -48,26 +48,25 @@ weather.cardinalPoint.NNW = new homeinfo.Range(326.25, 348.75);
 weather.cardinalPoint.N2 = new homeinfo.Range(348.75, 360.01);  // Compensate for lower <= degrees < upper
 
 
-weather.iconMap = {
-  '01d': 22,
-  '01n': 22,
-  '02d': 14,
-  '02n': 5,
-  '03d': 3,
-  '03n': 9,
-  '04d': 6,
-  '04n': 6,
-  '09d': 21,
-  '09n': 21,
-  '10d': 2,
-  '10n': 11,
-  '11d': 1,
-  '11n': 1,
-  '13d': 7,
-  '13n': 7,
-  '50d': 8,
-  '50n': 8
-};
+/*
+  Get relative date from today's perspective
+*/
+weather.realativeDate = function (date) {
+    var now = new Date();
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var dayAftertomorrow = new Date();
+    dayAftertomorrow.setDate(dayAftertomorrow.getDate() + 2);
+    var dateTime = this.dateTime();
+
+    if (now.toDateString() == date.toDateString()) {
+      return 'Heute';
+    } else if (tomorrow.toDateString() == date.toDateString()) {
+      return 'Morgen';
+    } else if (dayAftertomorrow.toDateString() == date.toDateString()) {
+      return 'Übermorgen';
+    }
+}
 
 
 /*
@@ -157,21 +156,8 @@ weather.Forecast = function (weather) {
   }
 
   this.title = function () {
-    var now = new Date();
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    var dayAftertomorrow = new Date();
-    dayAftertomorrow.setDate(dayAftertomorrow.getDate() + 2);
     var dateTime = this.dateTime();
-    var prefix;
-
-    if (now.toDateString() == dateTime.toDateString()) {
-      prefix = 'Heute';
-    } else if (tomorrow.toDateString() == dateTime.toDateString()) {
-      prefix = 'Morgen';
-    } else if (dayAftertomorrow.toDateString() == dateTime.toDateString()) {
-      prefix = 'Übermorgen';
-    }
+    var prefix = weather.realativeDate(dateTime);
 
     if (prefix != null) {
       return prefix + ' ' + dateTime.toLocaleString();
@@ -212,6 +198,18 @@ weather.Forecast = function (weather) {
     return baseURL + icon + suffix;
   }
 
+  this.icon = function () {
+    if (this.weather != null) {
+      var weather = this.weather[0];
+
+      if (weather != null) {
+        if (weather.icon != null) {
+          return this.translateIcon(weather.icon);
+        }
+      }
+    }
+  }
+
   /*
     Renders the weather data accorting to the mapping
   */
@@ -221,17 +219,7 @@ weather.Forecast = function (weather) {
     }
 
     if (mapping.icon != null) {
-      var icon;
-
-      if (this.weather != null) {
-        var weather = this.weather[0];
-
-        if (weather != null) {
-          if (weather.icon != null) {
-            icon = this.translateIcon(weather.icon);
-          }
-        }
-      }
+      var icon = this.icon();
 
       if (icon != null) {
         mapping.icon.attr('src', this.iconURL(icon));
@@ -269,7 +257,7 @@ weather.Forecast = function (weather) {
 weather.DayForecast = function (forecasts) {
   this.forecasts = forecasts
 
-  this.weather.maxTemp = function () {
+  this.maxTemp = function () {
     var tempMax = -Infinity;
 
     for (var i = 0; i < this.forecasts.length; i++) {
@@ -287,8 +275,7 @@ weather.DayForecast = function (forecasts) {
     return tempMax;
   }
 
-
-  this.weather.minTemp = function () {
+  this.minTemp = function () {
     var tempMin = Infinity;
 
     for (var i = 0; i < this.forecasts.length; i++) {
@@ -304,5 +291,56 @@ weather.DayForecast = function (forecasts) {
     }
 
     return tempMin;
+  }
+
+  this.dateTime = function () {
+    return this.forecasts[0].dateTime();
+  }
+
+  this.title = function () {
+    var dateTime = this.dateTime();
+    var prefix = weather.realativeDate(dateTime);
+
+    if (prefix != null) {
+      return prefix + ' ' + dateTime.toDateString();
+    } else {
+      return dateTime.toDateString();
+    }
+  }
+
+  this.icon = function () {
+    return this.forecasts[0].icon();
+  }
+
+  this.render = function (mapping) {
+    if (mapping.title != null) {
+      mapping.title.html(this.title());
+    }
+
+    if (mapping.icon != null) {
+      var icon = this.icon();
+
+      if (icon != null) {
+        mapping.icon.attr('src', this.iconURL(icon));
+      } else {
+        mapping.icon.attr('src', this.iconURL('dummy'));
+      }
+    }
+
+    if (mapping.type != null) {
+      if (this.weather != null) {
+        var weather = this.forecasts[0].weather[0];
+
+        if (weather != null) {
+          if (weather.description != null) {
+            mapping.type.html(weather.description);
+          }
+        }
+      }
+    }
+
+    if (mapping.temperature != null) {
+      mapping.temperature.html(this.maxTemp() + ' / ' + this.minTemp() + ' °C');
+    }
   }
 }
