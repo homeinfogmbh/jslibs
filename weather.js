@@ -228,13 +228,13 @@ weather.Forecast = function (weather) {
 
         if (weather != null) {
           if (weather.icon != null) {
-            icon = weather.icons[weather.icon];
+            icon = this.translateIcon(weather.icon);
           }
         }
       }
 
       if (icon != null) {
-        mapping.icon.attr('src', this.iconURL(this.translateIcon(icon)));
+        mapping.icon.attr('src', this.iconURL(icon));
       } else {
         mapping.icon.attr('src', this.iconURL('dummy'));
       }
