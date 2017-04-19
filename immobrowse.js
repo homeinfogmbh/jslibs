@@ -1604,7 +1604,7 @@ immobrowse.List = function (cid, realEstates) {
   /*
     Renders the respective real estates into the given HTML element.
   */
-  this.render = function (listElement, listItemTemplate, elements, na) {
+  this.render = function (listElement, listItemTemplate, elements) {
     listElement.html('');
 
     for (var i = 0; i < this.filteredRealEstates.length; i++) {
