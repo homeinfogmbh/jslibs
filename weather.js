@@ -188,7 +188,7 @@ weather.Forecast = function (weather) {
     if (icon == '01d' || icon == '01n') {
       return 22;
     } else if (icon == '02d' || icon == '02n') {
-      return 13;
+      return 0;
     } else if (icon == '03d' || icon == '03n') {
       return 5;
     } else if (icon == '04d' || icon == '04n') {
