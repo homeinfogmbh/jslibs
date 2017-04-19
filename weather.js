@@ -193,6 +193,7 @@ weather.Forecast = function (weather) {
     }
 
     if (mapping.type != null) {
+      console.log('Type provided.');
       if (this.weather != null) {
         if (this.weather.description != null) {
           mapping.type.html(this.weather.description);
@@ -207,5 +208,50 @@ weather.Forecast = function (weather) {
         }
       }
     }
+  }
+}
+
+
+/*
+  Day forecast group
+*/
+weather.DayForecast = function (forecasts) {
+  this.forecasts = forecasts
+
+  this.weather.maxTemp = function () {
+    var tempMax = -Infinity;
+
+    for (var i = 0; i < this.forecasts.length; i++) {
+      var forecast = this.forecasts[i];
+
+      if (forecast.main != null) {
+        if (forecast.main.temp_max != null) {
+          if (forecast.main.temp_max > tempMax) {
+            tempMax = forecast.main.temp_max;
+          }
+        }
+      }
+    }
+
+    return tempMax;
+  }
+
+
+  this.weather.minTemp = function () {
+    var tempMin = Infinity;
+
+    for (var i = 0; i < this.forecasts.length; i++) {
+      var forecast = this.forecasts[i];
+
+      if (forecast.main != null) {
+        if (forecast.main.temp_min != null) {
+          if (forecast.main.temp_min < tempMin) {
+            tempMin = forecast.main.temp_min;
+          }
+        }
+      }
+    }
+
+    return tempMin;
   }
 }
