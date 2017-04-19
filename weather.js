@@ -193,12 +193,13 @@ weather.Forecast = function (weather) {
     }
 
     if (mapping.type != null) {
-      console.log('Type provided.');
       if (this.weather != null) {
-        console.log('weather provided.');
-        if (this.weather.description != null) {
-          console.log('description provided.');
-          mapping.type.html(this.weather.description);
+        var weather = this.weather[0];
+
+        if (weather != null) {
+          if (weather.description != null) {
+            mapping.type.html(weather.description);
+          }
         }
       }
     }
