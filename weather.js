@@ -192,7 +192,7 @@ weather.Forecast = function (weather) {
     } else if (icon == '03d' || icon == '03n') {
       return 12;
     } else if (icon == '04d' || icon == '04n') {
-      return 6;
+      return 9;
     } else if (icon == '09d' || icon == '09n') {
       return 21;
     } else if (icon == '10d' || icon == '10n') {
