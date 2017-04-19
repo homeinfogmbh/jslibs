@@ -180,8 +180,8 @@ weather.Forecast = function (weather) {
 
     if (mapping.temperature != null) {
       if (this.main != null) {
-        if (this.main.temp != null) {
-          mapping.temperature.html(this.main.temp);
+        if (this.main.temp_min != null && this.main.temp_max != null) {
+          mapping.temperature.html(this.main.temp_min + ' / ' + this.main.temp_max + ' °C');
         }
       }
     }
