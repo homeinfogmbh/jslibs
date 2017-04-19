@@ -181,6 +181,38 @@ weather.Forecast = function (weather) {
   }
 
   /*
+    Translates OpenWeatherMap icon codes
+    to HOMEINFO weather icon codes.
+  */
+  this.translateIcon = function (icon) {
+    if (icon == '01d' || icon == '01n') {
+      return 22;
+    } else if (icon == '02d' || icon == '02n') {
+      return 13;
+    } else if (icon == '03d' || icon == '03n') {
+      return 5;
+    } else if (icon == '04d' || icon == '04n') {
+      return 6;
+    } else if (icon == '09d' || icon == '09n') {
+      return 21;
+    } else if (icon == '10d' || icon == '10n') {
+      return 2;
+    } else if (icon == '11d' || icon == '11n') {
+      return 1;
+    } else if (icon == '13d' || icon == '13n') {
+      return 10;
+    } else if (icon == '50d' || icon == '50n') {
+      return 19;
+    }
+  }
+
+  this.iconURL = function (icon) {
+    var baseURL = 'icons/';
+    var suffix = '.png';
+    return baseURL + icon + suffix;
+  }
+
+  /*
     Renders the weather data accorting to the mapping
   */
   this.render = function (mapping) {
@@ -189,7 +221,19 @@ weather.Forecast = function (weather) {
     }
 
     if (mapping.icon != null) {
-      // TODO: Set URL.
+      var icon;
+
+      if (this.weather != null) {
+        if (this.weather.icon != null) {
+          icon = weather.icons[this.weather.icon];
+        }
+      }
+
+      if (icon != null) {
+        mapping.icon.attr('src', this.iconURL(this.translateIcon(icon)));
+      } else {
+        mapping.icon.attr('src', this.iconURL('dummy'));
+      }
     }
 
     if (mapping.type != null) {
