@@ -98,9 +98,9 @@ weather.Client = function (city, maxForecasts) {
 
 
 /*
-  Weather data wrapper
+  Weather forecast wrapper
 */
-weather.Weather = function (weather) {
+weather.Forecast = function (weather) {
   for (var prop in weather) {
     if (weather.hasOwnProperty(prop)) {
         this[prop] = weather[prop];
