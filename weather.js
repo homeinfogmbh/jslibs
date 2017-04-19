@@ -30,13 +30,13 @@ var weather = weather || {};
 
 weather.cardinalPoint = weather.cardinalPoint || {};
 weather.cardinalPoint.N1 = new homeinfo.Range(11.25);
-weather.cardinalPoint.NNO = new homeinfo.Range(11.25, 33.75);
-weather.cardinalPoint.NO = new homeinfo.Range(33.75, 56.25);
-weather.cardinalPoint.ONO = new homeinfo.Range(56.25, 78.75);
-weather.cardinalPoint.O = new homeinfo.Range(78.75, 101.25);
-weather.cardinalPoint.OSO = new homeinfo.Range(101.25, 123.75);
-weather.cardinalPoint.SO = new homeinfo.Range(123.75, 146.25);
-weather.cardinalPoint.SSO = new homeinfo.Range(146.25, 168.75);
+weather.cardinalPoint.NNE = new homeinfo.Range(11.25, 33.75);
+weather.cardinalPoint.NE = new homeinfo.Range(33.75, 56.25);
+weather.cardinalPoint.ENE = new homeinfo.Range(56.25, 78.75);
+weather.cardinalPoint.E = new homeinfo.Range(78.75, 101.25);
+weather.cardinalPoint.ESE = new homeinfo.Range(101.25, 123.75);
+weather.cardinalPoint.SE = new homeinfo.Range(123.75, 146.25);
+weather.cardinalPoint.SSE = new homeinfo.Range(146.25, 168.75);
 weather.cardinalPoint.S = new homeinfo.Range(168.75, 191.25);
 weather.cardinalPoint.SSW = new homeinfo.Range(191.25, 213.75);
 weather.cardinalPoint.SW = new homeinfo.Range(213.75, 236.25);
@@ -48,18 +48,45 @@ weather.cardinalPoint.NNW = new homeinfo.Range(326.25, 348.75);
 weather.cardinalPoint.N2 = new homeinfo.Range(348.75, 360.01);  // Compensate for lower <= degrees < upper
 
 
+weather.iconMap = {
+  '01d': 22,
+  '01n': 22,
+  '02d': 14,
+  '02n': 5,
+  '03d': 3,
+  '03n': 9,
+  '04d': 6,
+  '04n': 6,
+  '09d': 21,
+  '09n': 21,
+  '10d': 2,
+  '10n': 11,
+  '11d': 1,
+  '11n': 1,
+  '13d': 7,
+  '13n': 7,
+  '50d': 8,
+  '50n': 8
+};
+
+
 /*
   Weather API client
 */
-var weather.Client = function (city, maxForecasts) {
+weather.Client = function (city, maxForecasts) {
   this.city = city;
-  this.maxForecasts = maxForecasts;
+
+  if (maxForecasts == null) {
+    this.maxForecasts = 3;
+  } else {
+    this.maxForecasts = maxForecasts;
+  }
 
   this.retrieve = function (callback) {
     return $.ajax({
       url: 'https://tls.homeinfo.de/ferengi/weather/' + self.city,
-      success = callback,
-      error = function (jqXHR, textStatus, errorThrown) {
+      success: callback,
+      error: function (jqXHR, textStatus, errorThrown) {
         weather.logger.error(jqXHR);
         weather.logger.debug(textStatus);
         weather.logger.debug(errorThrown);
@@ -73,7 +100,7 @@ var weather.Client = function (city, maxForecasts) {
 /*
   Weather data wrapper
 */
-var weather.Weather = function (weather) {
+weather.Weather = function (weather) {
   for (var prop in weather) {
     if (weather.hasOwnProperty(prop)) {
         this[prop] = weather[prop];
@@ -90,19 +117,19 @@ var weather.Weather = function (weather) {
         if (weather.cardinalPoint.N1.contains(this.wind.deg) ||
             weather.cardinalPoint.N2.contains(this.wind.deg)) {
           return 'N';
-        } else if (weather.cardinalPoint.NNO.contains(this.wind.deg)) {
+        } else if (weather.cardinalPoint.NNE.contains(this.wind.deg)) {
           return 'NNO';
-        } else if (weather.cardinalPoint.NO.contains(this.wind.deg)) {
+        } else if (weather.cardinalPoint.NE.contains(this.wind.deg)) {
           return 'NO';
-        } else if (weather.cardinalPoint.ONO.contains(this.wind.deg)) {
+        } else if (weather.cardinalPoint.ENE.contains(this.wind.deg)) {
           return 'ONO';
-        } else if (weather.cardinalPoint.O.contains(this.wind.deg)) {
+        } else if (weather.cardinalPoint.E.contains(this.wind.deg)) {
           return 'O';
-        } else if (weather.cardinalPoint.OSO.contains(this.wind.deg)) {
+        } else if (weather.cardinalPoint.ESE.contains(this.wind.deg)) {
           return 'OSO';
-        } else if (weather.cardinalPoint.SO.contains(this.wind.deg)) {
+        } else if (weather.cardinalPoint.SE.contains(this.wind.deg)) {
           return 'SO';
-        } else if (weather.cardinalPoint.SSO.contains(this.wind.deg)) {
+        } else if (weather.cardinalPoint.SSE.contains(this.wind.deg)) {
           return 'SSO';
         } else if (weather.cardinalPoint.S.contains(this.wind.deg)) {
           return 'S';
@@ -114,7 +141,7 @@ var weather.Weather = function (weather) {
           return 'WSW';
         } else if (weather.cardinalPoint.W.contains(this.wind.deg)) {
           return 'W';
-        } else if (weather.cardinalPoint.WNW.contains(this.wind.deg) {
+        } else if (weather.cardinalPoint.WNW.contains(this.wind.deg)) {
           return 'WNW';
         } else if (weather.cardinalPoint.NW.contains(this.wind.deg)) {
           return 'NW';
@@ -133,69 +160,29 @@ var weather.Weather = function (weather) {
     Renders the weather data accorting to the mapping
   */
   this.render = function (mapping) {
-    if (mapping.dt != null) {
-      mapping.dt.html(this.dt);
-    }
-
-    if (mapping.clouds != null) {
-      mapping.clouds.html(this.clouds.all);
-    }
-
-    if (mapping.wind != null) {
-      if (mapping.wind.deg != null) {
-        mapping.wind.deg.html(this.wind.deg);
-      }
-
-      if (mapping.wind.speed != null) {
-        mapping.wind.speed.html(this.wind.speed);
+    if (mapping.title != null) {
+      if (this.dt != null) {
+        mapping.title.html(this.dt)
       }
     }
 
-    if (mapping.weather != null) {
-      if (mapping.weather.description != null) {
-        mapping.weather.description.html(this.weather.description);
-      }
+    if (mapping.icon != null) {
+      // TODO: Set URL.
+    }
 
-      if (mapping.weather.main != null) {
-        mapping.weather.main.html(this.weather.main);
-      }
-
-      if (mapping.weather.icon != null) {
-        mapping.weather.icon.html(this.weather.icon);
-      }
-
-      if (mapping.weather.id != null) {
-        mapping.weather.id.html(this.weather.id);
+    if (mapping.type != null) {
+      if (this.weather != null) {
+        if (this.weather.description != null) {
+          mapping.type.html(this.weather.description);
+        }
       }
     }
 
-    if (mapping.main != null) {
-      if (mapping.main.pressure != null) {
-        mapping.main.pressure.html(this.main.pressure);
-      }
-
-      if (mapping.main.humidity != null) {
-        mapping.main.humidity.html(this.main.humidity);
-      }
-
-      if (mapping.main.temp_min != null) {
-        mapping.main.temp_min.html(this.main.temp_min);
-      }
-
-      if (mapping.main.temp_max != null) {
-        mapping.main.temp_max.html(this.main.temp_max);
-      }
-
-      if (mapping.main.sea_level != null) {
-        mapping.main.sea_level.html(this.main.sea_level);
-      }
-
-      if (mapping.main.temp != null) {
-        mapping.main.temp.html(this.main.temp);
-      }
-
-      if (mapping.main.grnd_level != null) {
-        mapping.main.grnd_level.html(this.main.grnd_level);
+    if (mapping.temperature != null) {
+      if (this.main != null) {
+        if (this.main.temp != null) {
+          mapping.temperature.html(this.main.temp);
+        }
       }
     }
   }
