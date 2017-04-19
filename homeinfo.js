@@ -27,7 +27,7 @@ var homeinfo = homeinfo || {};
 /* General stuff */
 
 // Check if element exists and return boolean
-homeinfo.isNull = function(element) {
+homeinfo.isNull = function (element) {
   if (element === undefined || element === null) {
     return true;
   } else {
@@ -75,37 +75,37 @@ homeinfo.str.ENTITYMAP = {
 
 
 // Determines whether the string is considered empty
-homeinfo.str.isEmpty = function(s) {
+homeinfo.str.isEmpty = function (s) {
   return s == null || s.trim() == '';
 }
 
 
 // Capitalize First Letter
-homeinfo.str.capitalizeFirstLetter = function(s) {
+homeinfo.str.capitalizeFirstLetter = function (s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 
 // Validates email addresses
-homeinfo.str.isEmail = function(s) {
+homeinfo.str.isEmail = function (s) {
   return homeinfo.str.EMAIL.test(s);
 }
 
 
 // Fix for American-style -> German-style float interpunctuation
-homeinfo.str.dot2comma = function(s) {
+homeinfo.str.dot2comma = function (s) {
   return s.replace('.', ',');
 }
 
 
 // Fix for German-style -> American-style float interpunctuation
-homeinfo.str.comma2dot = function(s) {
+homeinfo.str.comma2dot = function (s) {
   return s.replace(',', '.');
 }
 
 
 // Padds a zero to a digit string if it has exactly one zero after the comma
-homeinfo.str.padd0 = function(s) {
+homeinfo.str.padd0 = function (s) {
   if (s.substr(s.indexOf(',') + 1).length == 1) {
     return s + '0';
   } else {
@@ -115,28 +115,28 @@ homeinfo.str.padd0 = function(s) {
 
 
 // Capitalizes a string
-homeinfo.str.capitalize = function(s) {
-  return s.replace(/\w\S*/g, function(txt) {
+homeinfo.str.capitalize = function (s) {
+  return s.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   })
 }
 
 
 // Removes the string after the first occurence of character
-homeinfo.str.terminate = function(s, character) {
+homeinfo.str.terminate = function (s, character) {
   return s.substring(0, s.indexOf(character));
 }
 
 
 // Converts umlaut descriptions to actual umlauts
-homeinfo.str.umlauts = function(s) {
+homeinfo.str.umlauts = function (s) {
   return s.replace(/Ae/g, 'Ä').replace(/Oe/g, 'Ö').replace(/Ue/g, 'Ü')
     .replace(/ae/g, 'ä').replace(/oe/g, 'ö').replace(/ue/g, 'ü');
 }
 
 
 // Strips leading zeros from number-like strings
-homeinfo.str.strplz = function(s) {
+homeinfo.str.strplz = function (s) {
   var i = 0;
 
   for (i; i < this.length; i++) {
@@ -150,7 +150,7 @@ homeinfo.str.strplz = function(s) {
 
 
 // Replace line feed for HTML
-homeinfo.str.lf2html = function(s) {
+homeinfo.str.lf2html = function (s) {
   return s.replace(homeinfo.str.NEW_LINE, '<br/>');
 }
 
@@ -168,18 +168,18 @@ homeinfo.str.escapeHtml = function (string) {
 homeinfo.num = homeinfo.num || {};
 
 // Determines whether a number is odd
-homeinfo.num.isOdd = function(num) {
+homeinfo.num.isOdd = function (num) {
   return num % 2;
 }
 
 
 // Determines whether a number is even
-homeinfo.num.isEven = function(num) {
+homeinfo.num.isEven = function (num) {
   return ! homeinfo.num.isOdd(num);
 }
 
 // Padds a leading zero
-homeinfo.num.padd = function(num) {
+homeinfo.num.padd = function (num) {
   if (num < 10) {
     return '0' + num;
   } else {
@@ -193,7 +193,7 @@ homeinfo.num.padd = function(num) {
 homeinfo.arr = homeinfo.arr || {};
 
 // Groups an iterable and counts occurences
-homeinfo.arr.group = function(a) {
+homeinfo.arr.group = function (a) {
   var result = {};
 
   for (var i = 0; i < a.length; i++) {
@@ -221,7 +221,7 @@ homeinfo.arr.group = function(a) {
 homeinfo.date = homeinfo.date || {};
 
 // Returns time of date like <hh:mm>
-homeinfo.date.time = function(date) {
+homeinfo.date.time = function (date) {
   return homeinfo.num.padd(date.getHours()) + ':' + homeinfo.num.padd(date.getMinutes());
 }
 
@@ -231,7 +231,7 @@ homeinfo.date.time = function(date) {
 homeinfo.dom = homeinfo.dom || {};
 
 // Gets DOM elements by a name
-homeinfo.dom.getElements = function(d, element_name) {
+homeinfo.dom.getElements = function (d, element_name) {
   var elements = d.getElementsByTagName(element_name);
 
   if (elements.length > 0) {
@@ -243,7 +243,7 @@ homeinfo.dom.getElements = function(d, element_name) {
 
 
 // Gets a DOM element by its name
-homeinfo.dom.getElement = function(d, element_name) {
+homeinfo.dom.getElement = function (d, element_name) {
   var elements = d.getElements(element_name);
 
   if (elements.length > 0) {
@@ -259,7 +259,7 @@ homeinfo.dom.getElement = function(d, element_name) {
 
 
 // Gets value of a DOM element by its name
-homeinfo.dom.getElementValue = function(d, element_name) {
+homeinfo.dom.getElementValue = function (d, element_name) {
   var element = d.getElement(element_name);
 
   if (element !== null) {
@@ -299,35 +299,35 @@ homeinfo.logging.Logger = function (name, level) {
     this.level = level;
   }
 
-  this.log = function(prefix, msg) {
+  this.log = function (prefix, msg) {
     console.log(prefix + ' ' + this.name + ': ' + msg);
   }
 
-  this.error = function(msg) {
+  this.error = function (msg) {
     if (this.level >= homeinfo.logging.ERROR) {
       this.log('[ fail ]', msg);
     }
   }
 
-  this.warning = function(msg) {
+  this.warning = function (msg) {
     if (this.level >= homeinfo.logging.WARNING) {
       this.log('[ warn ]', msg);
     }
   }
 
-  this.info = function(msg) {
+  this.info = function (msg) {
     if (this.level >= homeinfo.logging.INFO) {
       this.log('[ info ]', msg);
     }
   }
 
-  this.success = function(msg) {
+  this.success = function (msg) {
     if (this.level >= homeinfo.logging.SUCCESS) {
       this.log('[  ok  ]', msg);
     }
   }
 
-  this.debug = function(msg) {
+  this.debug = function (msg) {
     if (this.level >= homeinfo.logging.DEBUG) {
       this.log('[debug!]', msg);
     }
