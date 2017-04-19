@@ -156,14 +156,36 @@ weather.Forecast = function (weather) {
     return 'N/A';
   }
 
+  this.title = function () {
+    var now = new Date();
+    var tomorrow = new Date();
+    tomorrow.setDay(tomorrow.getDay() + 1);
+    var dayAftertomorrow = new Date();
+    dayAftertomorrow.setDay(dayAftertomorrow.getDay() + 2);
+    var dateTime = this.dateTime();
+    var prefix;
+
+    if (now.toDateString() == dateTime.toDateString()) {
+      prefix = 'Heute';
+    } else if (tomorrow.toDateString() == dateTime.toDateString()) {
+      prefix = 'Morgen';
+    } else if (dayAftertomorrow.toDateString() == dateTime.toDateString()) {
+      prefix = 'Übermorgen';
+    }
+
+    if (prefix != null) {
+      return prefix + ' ' + dateTime.toLocaleString();
+    } else {
+      return dateTime.toLocaleString();
+    }
+  }
+
   /*
     Renders the weather data accorting to the mapping
   */
   this.render = function (mapping) {
     if (mapping.title != null) {
-      if (this.dt != null) {
-        mapping.title.html(this.dt)
-      }
+      mapping.title.html(this.title());
     }
 
     if (mapping.icon != null) {
