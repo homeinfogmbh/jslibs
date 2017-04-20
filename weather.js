@@ -101,7 +101,7 @@ weather.Client = function (city, maxForecasts) {
         weather.logger.debug(errorThrown);
         swal({
           title: 'Fehler!',
-          text: 'Konnte Wetterdaten für ' + self.city + ' nicht abrufen.';
+          text: 'Konnte Wetterdaten für ' + self.city + ' nicht abrufen.',
           type: 'error'
         });
       }
