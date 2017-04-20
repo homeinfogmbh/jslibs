@@ -22,11 +22,16 @@
     * homeinfo.js
     * jquery.js
     * moment.js
+    * sweetalert.js
 */
 "use strict"
 
 var weather = weather || {};
 
+/* Logger */
+weather.logger = new homeinfo.Logger('weather');
+
+/* Cardinal points */
 weather.cardinalPoint = weather.cardinalPoint || {};
 weather.cardinalPoint.N1 = new homeinfo.Range(11.25);
 weather.cardinalPoint.NNE = new homeinfo.Range(11.25, 33.75);
@@ -94,7 +99,11 @@ weather.Client = function (city, maxForecasts) {
         weather.logger.error(jqXHR);
         weather.logger.debug(textStatus);
         weather.logger.debug(errorThrown);
-        callback();
+        swal({
+          title: 'Fehler!',
+          text: 'Konnte Wetterdaten für ' + self.city + ' nicht abrufen.';
+          type: 'error'
+        });
       }
     });
   }
