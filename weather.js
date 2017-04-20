@@ -314,6 +314,8 @@ weather.DayForecast = function (forecasts) {
         text: 'Konnte keine Wetterdaten finden.',
         type: 'error'
       });
+
+      throw 'No forecast data available.';
     }
 
     return forecast;
@@ -352,6 +354,8 @@ weather.DayForecast = function (forecasts) {
         text: 'Konnte keine Wetterdaten finden.',
         type: 'error'
       });
+
+      throw 'No weather data available.';
     }
 
     return weather;
