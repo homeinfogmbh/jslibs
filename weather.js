@@ -21,6 +21,7 @@
   Requires:
     * homeinfo.js
     * jquery.js
+    * moment.js
 */
 "use strict"
 
