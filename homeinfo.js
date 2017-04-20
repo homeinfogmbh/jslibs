@@ -45,7 +45,7 @@ homeinfo.QueryString = function () {
     var assignment = vars[i].split("=");
 
     if (this[assignment[0]] == null) {
-      this[assignment[0]] = decodeURIComponent(pair[1]);
+      this[assignment[0]] = decodeURIComponent(assignment[1]);
     } else if (typeof this[assignment[0]] === "string") {
       this[assignment[0]] = [this[assignment[0]], decodeURIComponent(assignment[1])];
     } else {
