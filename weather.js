@@ -29,7 +29,7 @@
 var weather = weather || {};
 
 /* Logger */
-weather.logger = new homeinfo.Logger('weather');
+weather.logger = new homeinfo.logging.Logger('weather');
 
 /* Cardinal points */
 weather.cardinalPoint = weather.cardinalPoint || {};
