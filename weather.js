@@ -301,8 +301,24 @@ weather.DayForecast = function (forecasts) {
     return tempMin;
   }
 
+  this.forecast = function (index) {
+    if (index == null) {
+      index = 0;
+    }
+
+    try {
+      return this.forecasts[index];
+    } catch (error) {
+      swal({
+        title: 'Fehler!',
+        text: 'Konnte keine Wetterdaten finden.',
+        type: 'error'
+      })
+    }
+  }
+
   this.dateTime = function () {
-    return this.forecasts[0].dateTime();
+    return this.forecast().dateTime();
   }
 
   this.title = function () {
@@ -318,11 +334,15 @@ weather.DayForecast = function (forecasts) {
   }
 
   this.icon = function () {
-    return this.forecasts[0].icon();
+    return this.forecast().icon();
   }
 
-  this.weather = function () {
-    return this.forecasts[0].weather[0];
+  this.weather = function (index) {
+    if (index == null) {
+      index = 0;
+    }
+
+    return this.forecast().weather[index];
   }
 
   this.render = function (mapping) {
