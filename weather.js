@@ -310,6 +310,10 @@ weather.DayForecast = function (forecasts) {
     return this.forecasts[0].icon();
   }
 
+  this.weather = function () {
+    return this.forecasts[0].weather[0];
+  }
+
   this.render = function (mapping) {
     if (mapping.title != null) {
       mapping.title.html(this.title());
@@ -325,14 +329,17 @@ weather.DayForecast = function (forecasts) {
       }
     }
 
-    if (mapping.type != null) {
-      if (this.weather != null) {
-        var weatherData = this.forecasts[0].weather[0];
+    console.log("Okay, let's go.");
 
-        if (weatherData != null) {
-          if (weatherData.description != null) {
-            mapping.type.html(weatherData.description);
-          }
+    if (mapping.type != null) {
+      console.log('Mapping type is not null.');
+      var weather_ = this.weather();
+
+      if (weather_ != null) {
+        console.log('weather_ is not null.');
+        if (weather_.description != null) {
+          console.log('Description is not null.');
+          mapping.type.html(weather_.description);
         }
       }
     }
