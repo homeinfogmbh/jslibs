@@ -340,7 +340,7 @@ weather.DayForecast = function (forecasts) {
     }
 
     if (mapping.temperature != null) {
-      mapping.temperature.html(this.maxTemp() + ' / ' + this.minTemp() + ' °C');
+      mapping.temperature.html(Math.round(this.maxTemp()) + ' / ' + Math.round(this.minTemp()) + ' °C');
     }
   }
 }
