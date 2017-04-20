@@ -1,5 +1,5 @@
 /*
-  weather.js - JavaScript library for the Trias API
+  weather.js - JavaScript library for OpenWeatherMap parsing
 
   (C) 2017 HOMEINFO - Digitale Informationssysteme GmbH
 
@@ -21,8 +21,6 @@
   Requires:
     * homeinfo.js
     * jquery.js
-    * sweetalert.js
-    * moment.js
 */
 "use strict"
 
