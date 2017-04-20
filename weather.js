@@ -68,6 +68,13 @@ weather.realativeDate = function (date) {
 }
 
 
+weather.iconURL = function (icon) {
+  var baseURL = 'icons/';
+  var suffix = '.png';
+  return baseURL + icon + suffix;
+}
+
+
 /*
   Weather API client
 */
@@ -191,12 +198,6 @@ weather.Forecast = function (weather) {
     }
   }
 
-  this.iconURL = function (icon) {
-    var baseURL = 'icons/';
-    var suffix = '.png';
-    return baseURL + icon + suffix;
-  }
-
   this.icon = function () {
     if (this.weather != null) {
       var weather = this.weather[0];
@@ -221,9 +222,9 @@ weather.Forecast = function (weather) {
       var icon = this.icon();
 
       if (icon != null) {
-        mapping.icon.attr('src', this.iconURL(icon));
+        mapping.icon.attr('src', weather.iconURL(icon));
       } else {
-        mapping.icon.attr('src', this.iconURL('dummy'));
+        mapping.icon.attr('src', weather.iconURL('dummy'));
       }
     }
 
@@ -320,9 +321,9 @@ weather.DayForecast = function (forecasts) {
       var icon = this.icon();
 
       if (icon != null) {
-        mapping.icon.attr('src', this.iconURL(icon));
+        mapping.icon.attr('src', weather.iconURL(icon));
       } else {
-        mapping.icon.attr('src', this.iconURL('dummy'));
+        mapping.icon.attr('src', weather.iconURL('dummy'));
       }
     }
 
