@@ -297,7 +297,8 @@ weather.DayForecast = function (forecasts) {
   }
 
   this.title = function () {
-    var localeDate = moment(this.dateTime()).format('LL');
+    var dateTime = this.dateTime();
+    var localeDate = moment(dateTime).format('LL');
     var prefix = weather.realativeDate(dateTime);
 
     if (prefix != null) {
