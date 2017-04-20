@@ -57,7 +57,6 @@ weather.realativeDate = function (date) {
     tomorrow.setDate(tomorrow.getDate() + 1);
     var dayAftertomorrow = new Date();
     dayAftertomorrow.setDate(dayAftertomorrow.getDate() + 2);
-    var dateTime = this.dateTime();
 
     if (now.toDateString() == date.toDateString()) {
       return 'Heute';
