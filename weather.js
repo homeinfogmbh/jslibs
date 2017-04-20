@@ -296,13 +296,13 @@ weather.DayForecast = function (forecasts) {
   }
 
   this.title = function () {
-    var dateTime = this.dateTime();
+    var localeDate = moment(this.dateTime()).format('LL');
     var prefix = weather.realativeDate(dateTime);
 
     if (prefix != null) {
-      return prefix + ' ' + dateTime.toDateString();
+      return prefix + ' ' + localeDate;
     } else {
-      return dateTime.toDateString();
+      return localeDate;
     }
   }
 
