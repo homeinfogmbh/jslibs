@@ -36,6 +36,25 @@ homeinfo.isNull = function (element) {
 }
 
 
+// Query string class
+homeinfo.QueryString = function () {
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+
+  for (var i = 0; i < vars.length; i++) {
+    var assignment = vars[i].split("=");
+
+    if (this[assignment[0]] == null) {
+      this[assignment[0]] = decodeURIComponent(pair[1]);
+    } else if (typeof this[assignment[0]] === "string") {
+      this[assignment[0]] = [this[assignment[0]], decodeURIComponent(assignment[1])];
+    } else {
+      this[assignment[0]].push(decodeURIComponent(assignment[1]));
+    }
+  }
+}
+
+
 // Range object
 homeinfo.Range = function (lowerBoundary, upperBoundary) {
   if (upperBoundary == null) {
