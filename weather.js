@@ -329,11 +329,11 @@ weather.DayForecast = function (forecasts) {
 
     if (mapping.type != null) {
       if (this.weather != null) {
-        var weather = this.forecasts[0].weather[0];
+        var weatherData = this.forecasts[0].weather[0];
 
-        if (weather != null) {
-          if (weather.description != null) {
-            mapping.type.html(weather.description);
+        if (weatherData != null) {
+          if (weatherData.description != null) {
+            mapping.type.html(weatherData.description);
           }
         }
       }
