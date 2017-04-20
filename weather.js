@@ -329,16 +329,11 @@ weather.DayForecast = function (forecasts) {
       }
     }
 
-    console.log("Okay, let's go.");
-
     if (mapping.type != null) {
-      console.log('Mapping type is not null.');
       var weather_ = this.weather();
 
       if (weather_ != null) {
-        console.log('weather_ is not null.');
         if (weather_.description != null) {
-          console.log('Description is not null.');
           mapping.type.html(weather_.description);
         }
       }
