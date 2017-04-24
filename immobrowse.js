@@ -1378,8 +1378,15 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.render = function (elements) {
     if (elements.linkElement != null) {
-      // TODO: Make details link dynamic by reading appropriate configuration.
-      elements.linkElement.attr('onclick', 'immobrowse.open("' + this.detailsURL('expose.html') + '");');
+      var detailsURL;
+
+      if (immobrowse.config.detailsURL == null) {
+        detailsURL = this.detailsURL('expose.html');
+      } else {
+        detailsURL = this.detailsURL(immobrowse.config.detailsURL);
+      }
+
+      elements.linkElement.attr('onclick', 'immobrowse.open("' + detailsURL + '");');
     }
 
     this.setValue(elements.objectId, this.objectId());
