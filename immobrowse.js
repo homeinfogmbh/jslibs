@@ -1380,10 +1380,12 @@ immobrowse.RealEstate = function (cid, realEstate) {
     if (elements.linkElement != null) {
       var detailsURL;
 
-      if (immobrowse.config.detailsURL == null) {
-        detailsURL = this.detailsURL('expose.html');
-      } else {
+      if (immobrowse.config.exposeURLCallback != null) {
+        detailsURL = exposeURLCallback(this.cid, this.objectId());
+      } else if (immobrowse.config.detailsURL != null) {
         detailsURL = this.detailsURL(immobrowse.config.detailsURL);
+      } else {
+        detailsURL = this.detailsURL('expose.html');
       }
 
       elements.linkElement.attr('onclick', 'immobrowse.open("' + detailsURL + '");');
