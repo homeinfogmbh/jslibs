@@ -1602,7 +1602,7 @@ immobrowse.List = function (cid, realEstates) {
   }
 
   /*
-    Copies the template and idexes the respective IDs.
+    Copies the template and idices the respective IDs.
   */
   this.copy = function (template, index) {
     var clone = template.clone();
