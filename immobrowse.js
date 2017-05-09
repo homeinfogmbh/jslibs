@@ -1076,6 +1076,16 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return null;
   }
 
+  this.operationalCosts = function () {
+    if (this.preise != null) {
+      if (this.preise.betriebskotennetto != null && this.preise.betriebskotennetto != '') {
+        return this.preise.betriebskotennetto;
+      }
+    }
+
+    return null;
+  }
+
   this.heatingCosts = function () {
     if (this.preise != null) {
       return this.preise.heizkosten;
@@ -1337,6 +1347,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       objectIf: <objectIdElement>,
       objectTitle: <objectTitleElement>,
       coldRent: <coldRentElement>,
+      operationalCosts: <operationalCostsElement>,
       serviceCharge: <serviceChargeElement>,
       heatingCosts: <heatingCostsElement>,
       heatingCostsInServiceCharge: <heatingCostsInServiceChargeElement>,
@@ -1399,6 +1410,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     this.setValue(elements.objectTitle, this.objectTitle());
     this.setValue(elements.coldRent, immobrowse.euro(this.rent()));
     this.setValue(elements.serviceCharge, immobrowse.euro(this.serviceCharge()));
+    this.setValue(elements.operationalCosts, immobrowse.euro(this.operationalCosts()));
     this.setValue(elements.heatingCosts, immobrowse.euro(this.heatingCosts()));
     this.setValue(elements.heatingCostsInServiceCharge, immobrowse.yesNo(this.heatingCostsInServiceCharge()));
     this.setValue(elements.securityDeposit, immobrowse.euro(this.securityDeposit()));
