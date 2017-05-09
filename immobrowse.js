@@ -1078,8 +1078,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.operationalCosts = function () {
     if (this.preise != null) {
-      if (this.preise.betriebskotennetto != null && this.preise.betriebskotennetto != '') {
-        return this.preise.betriebskotennetto;
+      if (this.preise.betriebskostennetto != null && this.preise.betriebskostennetto != '') {
+        return this.preise.betriebskostennetto;
       }
     }
 
