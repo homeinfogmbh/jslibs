@@ -1384,7 +1384,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
         immobrowse.config.exposeLinkSetter(elements.linkElement, this.objectId(), this.cid);
       } else {
         if (immobrowse.config.exposeURLCallback != null) {
-          detailsURL = exposeURLCallback(this.cid, this.objectId());
+          detailsURL = immobrowse.config.exposeURLCallback(this.cid, this.objectId());
         } else if (immobrowse.config.detailsURL != null) {
           detailsURL = this.detailsURL(immobrowse.config.detailsURL);
         } else {
