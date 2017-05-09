@@ -39,7 +39,6 @@ homeinfo.isNull = function (element) {
 // Query string class
 homeinfo.QueryString = function () {
   var query = window.location.search.substring(1);
-  console.log('query=' + query);
   var vars = query.split("&");
 
   for (var i = 0; i < vars.length; i++) {
