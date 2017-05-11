@@ -1421,7 +1421,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     this.setValue(elements.rooms, this.rooms());
     this.setValue(elements.floor, this.floor());
     this.setValue(elements.availableFrom, this.availableFrom());
-    this.setValue(elements.councilFlat, this.councilFlat());
+    this.setValue(elements.councilFlat, immobrowse.yesNo(this.councilFlat()));
     this.setValue(elements.constructionYear, this.constructionYear());
     this.setValue(elements.state, this.state());
     this.setValue(elements.lastModernization, this.lastModernization());
