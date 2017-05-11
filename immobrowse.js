@@ -725,10 +725,8 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
   }
 
-  this.primaerenergietraeger = function () {
-    var pet = this.zustand_angaben.energiepass[0].primaerenergietraeger;
-
-    switch (pet) {
+  this.translatePrimaerenergietraeger = function (primaerenergietraeger) {
+    switch (primaerenergietraeger) {
       case 'OEL':
         return 'Öl';
       case 'GAS':
@@ -759,7 +757,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
         return 'Flüssiggas';
     }
 
-    return pet;
+    return primaerenergietraeger;
   }
 
   this.district = function () {
@@ -1192,7 +1190,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     if (energiepass.primaerenergietraeger != null) {
-      energyCertificate.primaryEnergyCarrier = energiepass.primaerenergietraeger;
+      energyCertificate.primaryEnergyCarrier = this.translatePrimaerenergietraeger(energiepass.primaerenergietraeger);
     }
 
     if (energiepass.wertklasse != null) {
