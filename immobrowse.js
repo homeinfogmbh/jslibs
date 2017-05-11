@@ -1156,7 +1156,9 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.heatingType = function () {
     if (this.ausstattung != null) {
-      return this.ausstattung.heizungsart;
+      if (this.ausstattung.heizungsart != '') {
+        return this.ausstattung.heizungsart;
+      }
     }
 
     return null;
@@ -1193,7 +1195,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
       energyCertificate.primaryEnergyCarrier = this.translatePrimaerenergietraeger(energiepass.primaerenergietraeger);
     }
 
-    if (energiepass.wertklasse != null) {
+    if (energiepass.wertklasse != null && energiepass.wertklasse != '') {
       energyCertificate.valueClass = energiepass.wertklasse;
     }
 
