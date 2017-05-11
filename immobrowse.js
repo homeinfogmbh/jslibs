@@ -1069,6 +1069,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return null;
   }
 
+  this.provision = function () {
+    if (this.preise != null) {
+      return this.preise.provisionnetto;
+    }
+
+    return null;
+  }
+
   this.subjectToCommission = function () {
     if (this.preise != null) {
       return this.preise.provisionspflichtig;
@@ -1448,6 +1456,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     this.setValue(elements.heatingCosts, immobrowse.euro(this.heatingCosts()));
     this.setValue(elements.heatingCostsInServiceCharge, immobrowse.yesNo(this.heatingCostsInServiceCharge()));
     this.setValue(elements.securityDeposit, immobrowse.euro(this.securityDeposit()));
+    this.setValue(elements.provision, immobrowse.euro(this.provision()));
     this.setValue(elements.subjectToCommission, immobrowse.yesNo(this.subjectToCommission()));
     this.setValue(elements.livingArea, immobrowse.squareMeters(this.livingArea()));
     this.setValue(elements.rooms, this.rooms());
