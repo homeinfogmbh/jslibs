@@ -762,45 +762,6 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return pet;
   }
 
-  this.zustand = function () {
-    var zustand = this.zustand_angaben.zustand;
-
-    switch (zustand) {
-      case 'ERSTBEZUG':
-        return 'Erstbezug';
-      case 'TEIL_VOLLRENOVIERUNGSBED':
-        return 'Teil-/Vollrenovierungsbedürftig';
-      case 'NEUWERTIG':
-        return 'Neuwertig';
-      case 'TEIL_VOLLRENOVIERT':
-        return 'Teil-/Vollrenoviert';
-      case 'TEIL_SANIERT':
-        return 'Teilsaniert';
-      case 'VOLL_SANIERT':
-        return 'Vollsaniert';
-      case 'SANIERUNGSBEDUERFTIG':
-        return 'Sanierungsbedürftig';
-      case 'BAUFAELLIG':
-        return 'Baufällig';
-      case 'NACH_VEREINBARUNG':
-        return 'Nach Vereinbarung';
-      case 'MODERNISIERT':
-        return 'Modernisiert';
-      case 'GEPFLEGT':
-        return 'Gepflegt';
-      case 'ROHBAU':
-        return 'Rohbau';
-      case 'ENTKERNT':
-        return 'Entkernt';
-      case 'ABRISSOBJEKT':
-        return 'Abrissobjekt';
-      case 'PROJEKTIERT':
-        return 'Projektiert';
-    }
-
-    return zustand;
-  }
-
   this.district = function () {
     return this.geo.regionaler_zusatz;
   }
@@ -1150,7 +1111,38 @@ immobrowse.RealEstate = function (cid, realEstate) {
 
   this.state = function () {
     if (this.zustand_angaben != null) {
-      return this.zustand_angaben.zustand;
+      switch (this.zustand_angaben.zustand) {
+        case 'ERSTBEZUG':
+          return 'Erstbezug';
+        case 'TEIL_VOLLRENOVIERUNGSBED':
+          return 'Teil-/Vollrenovierungsbedürftig';
+        case 'NEUWERTIG':
+          return 'Neuwertig';
+        case 'TEIL_VOLLRENOVIERT':
+          return 'Teil-/Vollrenoviert';
+        case 'TEIL_SANIERT':
+          return 'Teilsaniert';
+        case 'VOLL_SANIERT':
+          return 'Vollsaniert';
+        case 'SANIERUNGSBEDUERFTIG':
+          return 'Sanierungsbedürftig';
+        case 'BAUFAELLIG':
+          return 'Baufällig';
+        case 'NACH_VEREINBARUNG':
+          return 'Nach Vereinbarung';
+        case 'MODERNISIERT':
+          return 'Modernisiert';
+        case 'GEPFLEGT':
+          return 'Gepflegt';
+        case 'ROHBAU':
+          return 'Rohbau';
+        case 'ENTKERNT':
+          return 'Entkernt';
+        case 'ABRISSOBJEKT':
+          return 'Abrissobjekt';
+        case 'PROJEKTIERT':
+          return 'Projektiert';
+      }
     }
 
     return null;
@@ -1159,6 +1151,14 @@ immobrowse.RealEstate = function (cid, realEstate) {
   this.lastModernization = function () {
     if (this.zustand_angaben != null) {
       return this.zustand_angaben.letztemodernisierung;
+    }
+
+    return null;
+  }
+
+  this.heatingType = function () {
+    if (this.ausstattung != null) {
+      return this.ausstattung.heizungsart;
     }
 
     return null;
@@ -1272,6 +1272,24 @@ immobrowse.RealEstate = function (cid, realEstate) {
     }
 
     return contact;
+  }
+
+  this.renderLink = function (linkElement) {
+    var detailsURL;
+
+    if (immobrowse.config.exposeLinkSetter != null) {
+      immobrowse.config.exposeLinkSetter(linkElement, this.objectId(), this.cid);
+    } else {
+      if (immobrowse.config.exposeURLCallback != null) {
+        detailsURL = immobrowse.config.exposeURLCallback(this.cid, this.objectId());
+      } else if (immobrowse.config.detailsURL != null) {
+        detailsURL = this.detailsURL(immobrowse.config.detailsURL);
+      } else {
+        detailsURL = this.detailsURL('expose.html');
+      }
+
+      linkElement.attr('onclick', 'immobrowse.open("' + detailsURL + '");');
+    }
   }
 
   /*
@@ -1389,21 +1407,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   */
   this.render = function (elements) {
     if (elements.linkElement != null) {
-      var detailsURL;
-
-      if (immobrowse.config.exposeLinkSetter != null) {
-        immobrowse.config.exposeLinkSetter(elements.linkElement, this.objectId(), this.cid);
-      } else {
-        if (immobrowse.config.exposeURLCallback != null) {
-          detailsURL = immobrowse.config.exposeURLCallback(this.cid, this.objectId());
-        } else if (immobrowse.config.detailsURL != null) {
-          detailsURL = this.detailsURL(immobrowse.config.detailsURL);
-        } else {
-          detailsURL = this.detailsURL('expose.html');
-        }
-
-        elements.linkElement.attr('onclick', 'immobrowse.open("' + detailsURL + '");');
-      }
+      this.renderLink(elements.linkElement);
     }
 
     this.setValue(elements.objectId, this.objectId());
@@ -1423,6 +1427,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
     this.setValue(elements.constructionYear, this.constructionYear());
     this.setValue(elements.state, this.state());
     this.setValue(elements.lastModernization, this.lastModernization());
+    this.setValue(elements.heatingType, this.heatingType());
     this.renderEnergyCertificate(elements.energyCertificate);
     this.setValue(elements.description, this.description());
     this.setValue(elements.exposure, this.exposure());
