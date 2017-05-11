@@ -1154,14 +1154,44 @@ immobrowse.RealEstate = function (cid, realEstate) {
     return null;
   }
 
-  this.heatingType = function () {
+  this.heatingTypes = function () {
+    var heatingTypes = [];
+
     if (this.ausstattung != null) {
-      if (this.ausstattung.heizungsart != '') {
-        return this.ausstattung.heizungsart;
+      if (this.ausstattung.heizungsart != null) {
+        if (this.ausstattung.heizungsart.OFEN) {
+          heatingTypes.push('Ofen');
+        }
+
+        if (this.ausstattung.heizungsart.ETAGE) {
+          heatingTypes.push('Etagenheizung');
+        }
+
+        if (this.ausstattung.heizungsart.ZENTRAL) {
+          heatingTypes.push('Zentralheizung');
+        }
+
+        if (this.ausstattung.heizungsart.FERN) {
+          heatingTypes.push('Fernwärme');
+        }
+
+        if (this.ausstattung.heizungsart.FUSSBODEN) {
+          heatingTypes.push('Fussbodenheizung');
+        }
       }
     }
 
-    return null;
+    return heatingTypes;
+  }
+
+  this.heatingType = function () {
+    var heatingTypes = this.heatingTypes();
+
+    if (heatingType.length == 0) {
+      return this.na;
+    } else {
+      return heatingTypes.join(', ');
+    }
   }
 
   this.energyCertificate = function () {
