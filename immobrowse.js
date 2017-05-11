@@ -1195,7 +1195,7 @@ immobrowse.RealEstate = function (cid, realEstate) {
   this.heatingType = function () {
     var heatingTypes = this.heatingTypes();
 
-    if (heatingType.length == 0) {
+    if (heatingTypes.length == 0) {
       return this.na;
     } else {
       return heatingTypes.join(', ');
