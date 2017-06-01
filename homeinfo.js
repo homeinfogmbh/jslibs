@@ -55,6 +55,7 @@ homeinfo.QueryString = function () {
 }
 
 
+// Generates query args from
 homeinfo.queryArgs = function (options) {
   var args = [];
 
@@ -65,6 +66,16 @@ homeinfo.queryArgs = function (options) {
   }
 
   return args;
+}
+
+
+// Genrates a query string from query args list
+homeinfo.queryString = function (queryArgs) {
+  if (queryArgs.length > 0) {
+    return '?' + queryArgs.join('&');
+  } else {
+    return '';
+  }
 }
 
 
