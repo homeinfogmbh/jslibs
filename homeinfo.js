@@ -55,6 +55,19 @@ homeinfo.QueryString = function () {
 }
 
 
+homeinfo.queryArgs = function (options) {
+  var args = [];
+
+  for (option in options) {
+    if (options.hasOwnProperty(option)) {
+      args.push(option + '=' + options[option]);
+    }
+  }
+
+  return args;
+}
+
+
 // Range object
 homeinfo.Range = function (lowerBoundary, upperBoundary) {
   if (upperBoundary == null) {
