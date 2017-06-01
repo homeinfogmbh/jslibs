@@ -55,11 +55,11 @@ homeinfo.QueryString = function () {
 }
 
 
-// Generates query args from
+// Generates query args list from
 homeinfo.queryArgs = function (options) {
   var args = [];
 
-  for (option in options) {
+  for (var option in options) {
     if (options.hasOwnProperty(option)) {
       args.push(option + '=' + options[option]);
     }
