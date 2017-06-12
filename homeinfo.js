@@ -271,7 +271,7 @@ homeinfo.date.time = function (date) {
 // Returns date like <%d.%m.%Y>
 homeinfo.date.date = function (date) {
   var month = date.getMonth() + 1;
-  return homeinfo.num.padd(date.getDay())
+  return homeinfo.num.padd(date.getDate())
     + '.' + homeinfo.num.padd(month)
     + '.' + homeinfo.num.padd(date.getFullYear());
 }
