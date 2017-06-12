@@ -263,9 +263,17 @@ homeinfo.arr.group = function (a) {
 
 homeinfo.date = homeinfo.date || {};
 
-// Returns time of date like <hh:mm>
+// Returns time of date like <%H:%M>
 homeinfo.date.time = function (date) {
   return homeinfo.num.padd(date.getHours()) + ':' + homeinfo.num.padd(date.getMinutes());
+}
+
+// Returns date like <%d.%m.%Y>
+homeinfo.date.date = function (date) {
+  var month = date.getMonth() + 1;
+  return homeinfo.num.padd(date.getDate())
+    + '.' + homeinfo.num.padd(month)
+    + '.' + homeinfo.num.padd(date.getFullYear());
 }
 
 
