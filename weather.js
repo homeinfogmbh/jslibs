@@ -93,7 +93,7 @@ weather.Client = function (city, maxForecasts) {
 
   this.retrieve = function (callback) {
     return $.ajax({
-      url: 'https://tls.homeinfo.de/ferengi/weather/' + self.city,
+      url: 'https://ferengi.homeinfo.de/weather/' + self.city,
       success: callback,
       error: function (jqXHR, textStatus, errorThrown) {
         weather.logger.error(jqXHR);

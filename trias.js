@@ -341,7 +341,7 @@ trias.stopEventParam = function (stopEventDataFilterGroup, stopEventPolicyGroup,
 
 
 trias.TriasClient = function (url, requestorRef) {
-  this.url = url || 'https://tls.homeinfo.de/trias';
+  this.url = url || 'https://backend.homeinfo.de/trias';
   this.requestorRef = requestorRef || 'homeinfo.de';
 
   this.query = function (xmlDoc, callback) {
