@@ -325,32 +325,6 @@ homeinfo.dom.getElementValue = function (d, element_name) {
 }
 
 
-// Creates a DIV element
-homeinfo.dom.Div = function (id, classes, content, children) {
-  div = document.createElement('div');
-
-  if (id != null) {
-    div.setAttribute('id', id);
-  }
-
-  if (classes != null) {
-    div.setAttribute('class', classes.join(' '));
-  }
-
-  if (content != null) {
-    div.innerHTML = content;
-  }
-
-  if (children != null) {
-    for (var i = 0; i < children.length; i++) {
-      div.appendChild(children[i]);
-    }
-  }
-
-  return div;
-}
-
-
 /* Logging facility */
 
 homeinfo.logging = homeinfo.logging || {};
