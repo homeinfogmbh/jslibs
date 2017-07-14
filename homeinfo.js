@@ -82,12 +82,12 @@ homeinfo.queryString = function (queryArgs) {
 // Range object
 homeinfo.Range = function (lowerBoundary, upperBoundary) {
   if (upperBoundary == null) {
-    upperBoundary = lowerBoundary;
-    lowerBoundary = 0;
+    this.upperBoundary = lowerBoundary;
+    this.lowerBoundary = 0;
+  } else {
+    this.lowerBoundary = lowerBoundary;
+    this.upperBoundary = upperBoundary;
   }
-
-  this.lowerBoundary = lowerBoundary;
-  this.upperBoundary = upperBoundary;
 
   this.contains = function (number) {
     return number >= this.lowerBoundary && number < this.upperBoundary;
@@ -322,6 +322,32 @@ homeinfo.dom.getElementValue = function (d, element_name) {
   } else {
     return null;
   }
+}
+
+
+// Creates a DIV element
+homeinfo.dom.Div = function (id, classes, content, children) {
+  div = document.createElement('div');
+
+  if (id != null) {
+    div.setAttribute('id', id);
+  }
+
+  if (classes != null) {
+    div.setAttribute('class', classes.join(' '));
+  }
+
+  if (content != null) {
+    div.innerHTML = content;
+  }
+
+  if (children != null) {
+    for (var i = 0; i < children.length; i++) {
+      div.appendChild(children[i]);
+    }
+  }
+
+  return div;
 }
 
 
