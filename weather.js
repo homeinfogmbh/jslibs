@@ -219,7 +219,7 @@ weather.Forecast = function (weather) {
   }
 
   /*
-    Renders the weather data accorting to the mapping
+    Renders the weather data according to the mapping
   */
   this.render = function (mapping) {
     if (mapping.title != null) {
