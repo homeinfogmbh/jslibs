@@ -59,14 +59,14 @@ weather.realativeDate = function (date) {
     var now = new Date();
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    var dayAftertomorrow = new Date();
-    dayAftertomorrow.setDate(dayAftertomorrow.getDate() + 2);
+    var dayAfterTomorrow = new Date();
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
     if (now.toDateString() == date.toDateString()) {
       return 'Heute';
     } else if (tomorrow.toDateString() == date.toDateString()) {
       return 'Morgen';
-    } else if (dayAftertomorrow.toDateString() == date.toDateString()) {
+    } else if (dayAfterTomorrow.toDateString() == date.toDateString()) {
       return 'Übermorgen';
     }
 }
