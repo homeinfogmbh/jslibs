@@ -1,20 +1,20 @@
 /*
-  HOMEINFO general-purpose Javascript library
+  HOMEINFO general-purpose JavaScript library
 
   (C) 2015-2017 HOMEINFO - Digitale Informationssysteme GmbH
 
-  This program is free software: you can redistribute it and/or modify
+  This library is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
+  This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
   Maintainer: Richard Neumann <r dot neumann at homeinfo period de>
 */
@@ -55,7 +55,7 @@ homeinfo.QueryString = function () {
 }
 
 
-// Generates query args list from
+// Generates query args list from a QueryString instance
 homeinfo.queryArgs = function (options) {
   var args = [];
 
@@ -97,7 +97,6 @@ homeinfo.Range = function (lowerBoundary, upperBoundary) {
 
 /* String library */
 homeinfo.str = homeinfo.str || {};
-
 homeinfo.str.NEW_LINE = new RegExp('\r?\n','g');
 homeinfo.str.EMAIL = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 homeinfo.str.ENTITYMAP = {
