@@ -290,6 +290,19 @@ homeinfo.date.date = function (date) {
 
 homeinfo.dom = homeinfo.dom || {};
 
+// Creates a DOM element
+homeinfo.dom.createElement = function (type, attributes) {
+  var element = document.createElement(type);
+
+  if (attributes != null) {
+    for (var attribute in attributes) {
+      if (attributes.hasOwnProperty(attribute)) {
+        element.setAttribute(attribute, attributes[attribute]);
+      }
+    }
+  }
+}
+
 // Gets DOM elements by a name
 homeinfo.dom.getElements = function (d, element_name) {
   var elements = d.getElementsByTagName(element_name);
