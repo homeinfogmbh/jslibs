@@ -80,7 +80,7 @@ homeinfo.queryString = function (queryArgs) {
 
 
 // Range object
-homeinfo.Range = function (lowerBoundary, upperBoundary) {
+homeinfo.Range = function (lowerBoundary, upperBoundary, includeUpperBoundary) {
   if (upperBoundary == null) {
     this.upperBoundary = lowerBoundary;
     this.lowerBoundary = 0;
@@ -89,8 +89,18 @@ homeinfo.Range = function (lowerBoundary, upperBoundary) {
     this.upperBoundary = upperBoundary;
   }
 
+  if (includeUpperBoundary) {
+    this.includeUpperBoundary = true;
+  } else {
+    this.includeUpperBoundary = false;
+  }
+
   this.contains = function (number) {
-    return number >= this.lowerBoundary && number < this.upperBoundary;
+    if (this.includeUpperBoundary) {
+      return number >= this.lowerBoundary && number <= this.upperBoundary;
+    } else {
+      return number >= this.lowerBoundary && number < this.upperBoundary;
+    }
   }
 }
 
