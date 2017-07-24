@@ -291,7 +291,7 @@ homeinfo.date.date = function (date) {
 homeinfo.dom = homeinfo.dom || {};
 
 // Creates a DOM element
-homeinfo.dom.createElement = function (type, attributes) {
+homeinfo.dom.createElement = function (type, attributes, children) {
   var element = document.createElement(type);
 
   if (attributes != null) {
@@ -301,6 +301,14 @@ homeinfo.dom.createElement = function (type, attributes) {
       }
     }
   }
+
+  if (children != null) {
+    for (var i = 0; i < children.length; i++) {
+      element.appendChild(children[i]);
+    }
+  }
+
+  return element;
 }
 
 // Gets DOM elements by a name
