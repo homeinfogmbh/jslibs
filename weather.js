@@ -387,3 +387,82 @@ weather.DayForecast = function (forecasts) {
     }
   }
 }
+
+
+/*
+  DOM models for element rendering
+*/
+weather.dom = weather.dom || {};
+
+weather.dom.temperature = function (temperature) {
+  element = document.createElement('div');
+  element.setAttribute('id', 'temperature');
+  element.setAttribute('class', 'row row-centered temperature');
+  element.innerHTML = temperature;
+  return element;
+}
+
+weather.dom.icon = function (src) {
+  element = document.createElement('img');
+  element.setAttribute('id', 'icon');
+  element.setAttribute('class', 'icon');
+  element.setAttribute('src', src || 'icons/0.png');
+  return element;
+}
+
+weather.dom.type = function (type) {
+  element = document.createElement('div');
+  element.setAttribute('id', 'type');
+  element.setAttribute('class', 'type');
+  element.innerHTML = type;
+  return element;
+}
+
+weather.dom.iconContainer = function (icon, type) {
+  element = document.createElement('div');
+  element.setAttribute('id', 'iconContainer');
+  element.setAttribute('class', 'row row-centered iconContainer');
+  element.appendChild(icon);
+  element.appendChild(type);
+  return element;
+}
+
+weather.dom.title = function (title) {
+  element = document.createElement('div');
+  element.setAttribute('id', 'title');
+  element.setAttribute('class', 'row row-centered title');
+  element.innerHTML = title;
+  return element;
+}
+
+weather.dom.weatherDataContainer = function (title, iconContainer, temperature) {
+  element = document.createElement('div');
+  element.setAttribute('class', 'col col-md-12 weatherDataContainer');
+  element.appendChild(title);
+  element.appendChild(document.createElement('hr'));
+  element.appendChild(iconContainer);
+  element.appendChild(document.createElement('hr'));
+  element.appendChild(temperature);
+  return element;
+}
+
+weather.dom.weatherChart = function (weatherDataContainer) {
+  element = document.createElement('div');
+  element.setAttribute('class', 'col col-md-12 weatherChart');
+  element.appendChild(weatherDataContainer);
+  return element;
+}
+
+weather.dom.weatherRow = function (weatherChart) {
+  element = document.createElement('div');
+  element.setAttribute('class', 'row row-centered');
+  element.appendChild(weatherChart);
+  return element;
+}
+
+weather.dom.weatherContainer = function (weatherRow) {
+  element = document.createElement('div');
+  element.setAttribute('class', 'col col-md-4 container');
+  element.appendChild(weatherRow);
+  return element;
+}
