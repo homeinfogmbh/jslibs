@@ -398,7 +398,7 @@ weather.DayForecast = function (forecasts) {
 weather.dom = weather.dom || {};
 
 weather.dom.temperature = function (temperature) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('id', 'temperature');
   element.setAttribute('class', 'row row-centered temperature');
   element.innerHTML = temperature;
@@ -406,7 +406,7 @@ weather.dom.temperature = function (temperature) {
 }
 
 weather.dom.type = function (type) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('id', 'type');
   element.setAttribute('class', 'type');
   element.innerHTML = type;
@@ -414,7 +414,7 @@ weather.dom.type = function (type) {
 }
 
 weather.dom.icon = function (src) {
-  element = document.createElement('img');
+  var element = document.createElement('img');
   element.setAttribute('id', 'icon');
   element.setAttribute('class', 'icon');
   element.setAttribute('src', src || 'icons/0.png');
@@ -422,7 +422,7 @@ weather.dom.icon = function (src) {
 }
 
 weather.dom.iconContainer = function (icon, type) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('id', 'iconContainer');
   element.setAttribute('class', 'row row-centered iconContainer');
   element.appendChild(icon);
@@ -431,7 +431,7 @@ weather.dom.iconContainer = function (icon, type) {
 }
 
 weather.dom.title = function (title) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('id', 'title');
   element.setAttribute('class', 'row row-centered title');
   element.innerHTML = title;
@@ -439,7 +439,7 @@ weather.dom.title = function (title) {
 }
 
 weather.dom.weatherDataContainer = function (title, iconContainer, temperature) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('class', 'col col-md-12 weatherDataContainer');
   element.appendChild(title);
   element.appendChild(document.createElement('hr'));
@@ -450,21 +450,21 @@ weather.dom.weatherDataContainer = function (title, iconContainer, temperature) 
 }
 
 weather.dom.weatherChart = function (weatherDataContainer) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('class', 'col col-md-12 weatherChart');
   element.appendChild(weatherDataContainer);
   return element;
 }
 
 weather.dom.weatherRow = function (weatherChart) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('class', 'row row-centered');
   element.appendChild(weatherChart);
   return element;
 }
 
 weather.dom.weatherContainer = function (weatherRow) {
-  element = document.createElement('div');
+  var element = document.createElement('div');
   element.setAttribute('class', 'col col-md-4 container');
   element.appendChild(weatherRow);
   return element;
