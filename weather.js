@@ -49,7 +49,7 @@ weather.cardinalPoint.W = new homeinfo.Range(258.75, 281.25);
 weather.cardinalPoint.WNW = new homeinfo.Range(281.25, 303.75);
 weather.cardinalPoint.NW = new homeinfo.Range(303.75, 326.25);
 weather.cardinalPoint.NNW = new homeinfo.Range(326.25, 348.75);
-weather.cardinalPoint.N2 = new homeinfo.Range(348.75, 360, true);  // Compensate for lower <= degrees < upper
+weather.cardinalPoint.N2 = new homeinfo.Range(348.75, 360, true);
 
 
 /*
