@@ -380,7 +380,7 @@ weather.DayForecast = function (forecasts) {
           weather.dom.weatherDataContainer(
             weather.dom.title(this.title()),
             weather.dom.iconContainer(
-              weather.dom.icon(weather.iconURL(icon)),
+              weather.dom.icon(weather.iconURL(this.icon())),
               weather.dom.type(this.type())
             ),
             weather.dom.temperature(this.temperature())
