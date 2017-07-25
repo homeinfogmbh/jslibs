@@ -357,34 +357,37 @@ weather.DayForecast = function (forecasts) {
     return weather;
   }
 
-  this.render = function (mapping) {
-    if (mapping.title != null) {
-      mapping.title.html(this.title());
-    }
+  this.type = function () {
+    var weather_ = this.weather();
 
-    if (mapping.icon != null) {
-      var icon = this.icon();
-
-      if (icon != null) {
-        mapping.icon.attr('src', weather.iconURL(icon));
-      } else {
-        mapping.icon.attr('src', weather.iconURL('dummy'));
+    if (weather_ != null) {
+      if (weather_.description != null) {
+        return weather_.description;
       }
     }
 
-    if (mapping.type != null) {
-      var weather_ = this.weather();
+    return null;
+  }
 
-      if (weather_ != null) {
-        if (weather_.description != null) {
-          mapping.type.html(weather_.description);
-        }
-      }
-    }
+  this.temperature = function () {
+    return Math.round(this.maxTemp()) + ' / ' + Math.round(this.minTemp()) + ' °C';
+  }
 
-    if (mapping.temperature != null) {
-      mapping.temperature.html(Math.round(this.maxTemp()) + ' / ' + Math.round(this.minTemp()) + ' °C');
-    }
+  this.render = function () {
+    return weather.dom.weatherContainer(
+      weather.dom.weatherRow(
+        weather.dom.weatherChart(
+          weather.dom.weatherDataContainer(
+            weather.dom.title(this.title()),
+            weather.dom.iconContainer(
+              weather.dom.icon(weather.iconURL(icon)),
+              weather.dom.type(this.type())
+            ),
+            weather.dom.temperature(this.temperature())
+          )
+        )
+      )
+    );
   }
 }
 
@@ -402,19 +405,19 @@ weather.dom.temperature = function (temperature) {
   return element;
 }
 
-weather.dom.icon = function (src) {
-  element = document.createElement('img');
-  element.setAttribute('id', 'icon');
-  element.setAttribute('class', 'icon');
-  element.setAttribute('src', src || 'icons/0.png');
-  return element;
-}
-
 weather.dom.type = function (type) {
   element = document.createElement('div');
   element.setAttribute('id', 'type');
   element.setAttribute('class', 'type');
   element.innerHTML = type;
+  return element;
+}
+
+weather.dom.icon = function (src) {
+  element = document.createElement('img');
+  element.setAttribute('id', 'icon');
+  element.setAttribute('class', 'icon');
+  element.setAttribute('src', src || 'icons/0.png');
   return element;
 }
 
