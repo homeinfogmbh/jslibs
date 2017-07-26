@@ -32,6 +32,18 @@ homeinfo.isNull = function (element) {
 
 
 /*
+  Sanitize value
+*/
+homeinfo.sanitize = function (value) {
+  if (typeof value == 'string') {
+    return homeinfo.str.escapeHtml(value);
+  } else {
+    return value;
+  }
+}
+
+
+/*
   Prototype to parse query strings
 */
 homeinfo.QueryString = function () {
