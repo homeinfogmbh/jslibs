@@ -27,16 +27,8 @@
 "use strict"
 
 var trias = trias || {};
-
-
-// Logger
 trias.logger = new homeinfo.logging.Logger('trias', homeinfo.logging.DEBUG);
-
-
-// Configuration
 trias.config = {};
-
-
 trias.xmlSerializer = new XMLSerializer();
 
 
