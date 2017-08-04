@@ -117,7 +117,7 @@ navigation.Sites = class {
     /*
       Put current instance into a variable
       and encapsulate invocation of load()
-      into a function, since this will be
+      into a function, since "this" will be
       overridden in windows scope.
     */
     var self = this;
