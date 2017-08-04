@@ -49,6 +49,7 @@ navigation.Site = class {
       dataType: 'html',
       success: function (html) {
         targetElement.html(html);
+        window.document.title = self.title;
       },
       error: function () {
         swal('Fehler!', 'Konnte Seite "' + self.name + '" nicht laden.', 'error');
