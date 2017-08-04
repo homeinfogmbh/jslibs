@@ -1,5 +1,5 @@
 /*
-  navigation.js - Window hash based navigation library
+  navigation.js - URL hash based navigation library
 
   (C) 2015-2017 HOMEINFO - Digitale Informationssysteme GmbH
 
@@ -21,6 +21,7 @@
 "use strict";
 
 var navigation = navigation || {};
+
 
 /*
   Class to represent a single site
@@ -61,6 +62,7 @@ navigation.Site = class {
   }
 }
 
+
 /*
   Class to represent a set of sites
 */
@@ -88,7 +90,7 @@ navigation.Sites = class {
     Returns the respective site for the provided hash
   */
   getSite(hash) {
-    for (var site of this.sites) {
+    for (let site of this.sites) {
       if (site.hash == hash) {
         return site;
       }
