@@ -101,7 +101,7 @@ navigation.Sites = class {
     */
     var self = this;
     $(window).on('hashchange', function() {
-      var site = this.load();
+      var site = self.load();
 
       if (site != null) {
         document.title = site.title;
