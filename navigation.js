@@ -39,17 +39,6 @@ navigation.Site = class {
   get hash() {
     return '#' + this.name;
   }
-
-  /*
-    Renders the site into the provided target element
-  */
-  render(targetElement) {
-    if (self.title != null) {
-      window.document.title = self.title;
-    }
-
-    targetElement.load(this.url);
-  }
 }
 
 
@@ -94,7 +83,7 @@ navigation.Sites = class {
     var site = this.current;
 
     if (site != null) {
-      site.render($('#content'));
+      return site;
     } else {
       swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error')
     }
@@ -103,7 +92,7 @@ navigation.Sites = class {
   /*
     Binds to the window.hashchange event
   */
-  bind() {
+  bind(targetElement) {
     /*
       Put current instance into a variable
       and encapsulate invocation of load()
@@ -112,7 +101,12 @@ navigation.Sites = class {
     */
     var self = this;
     $(window).on('hashchange', function() {
-      self.load();
+      var site = this.load();
+
+      if (site != null) {
+        document.title = site.title;
+        targetElement.load(site.url);
+      }
     });
   }
 }
