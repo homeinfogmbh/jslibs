@@ -84,10 +84,7 @@ navigation.Sites = class {
 
     if (site != null) {
       document.title = site.title;
-      console.log('BEFORE LOAD.');
-      targetElement.load(site.url, null, function() {
-        console.log('AFTER LOAD.');
-      });
+      targetElement.load(site.url);
     } else {
       swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error')
     }
@@ -101,7 +98,7 @@ navigation.Sites = class {
       Put current instance into a variable
       and encapsulate invocation of load()
       into a function, since "this" will be
-      overridden in windows scope.
+      overridden in window's scope.
     */
     var self = this;
     $(window).on('hashchange', function() {
