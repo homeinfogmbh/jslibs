@@ -44,21 +44,11 @@ navigation.Site = class {
     Renders the site into the provided target element
   */
   render(targetElement) {
-    var self = this;
-    $.ajax({
-      url: self.url,
-      dataType: 'html',
-      success: function (html) {
-        targetElement.html(html);
+    if (self.title != null) {
+      window.document.title = self.title;
+    }
 
-        if (self.title != null) {
-          window.document.title = self.title;
-        }
-      },
-      error: function () {
-        swal('Fehler!', 'Konnte Seite "' + self.name + '" nicht laden.', 'error');
-      }
-    });
+    targetElement.load(this.url);
   }
 }
 
