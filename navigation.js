@@ -30,7 +30,7 @@ navigation.Site = class {
   constructor(name, title, url) {
     this.name = name;
     this.title = title;
-    this.url =url;
+    this.url = url;
   }
 
   /*
