@@ -79,11 +79,12 @@ navigation.Sites = class {
   /*
     Loads the respective site from the current window's hash
   */
-  load() {
+  load(targetElement) {
     var site = this.current;
 
     if (site != null) {
-      return site;
+      document.title = site.title;
+      targetElement.load(site.url);
     } else {
       swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error')
     }
@@ -101,12 +102,7 @@ navigation.Sites = class {
     */
     var self = this;
     $(window).on('hashchange', function() {
-      var site = self.load();
-
-      if (site != null) {
-        document.title = site.title;
-        targetElement.load(site.url);
-      }
+      self.load(targetElement);
     });
   }
 }
