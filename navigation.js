@@ -91,7 +91,8 @@ navigation.Sites = class {
   }
 
   /*
-    Binds to the window.hashchange event
+    Binds loading of sites into the respective
+    target element on the window.hashchange event.
   */
   bind(targetElement) {
     /*
