@@ -84,7 +84,10 @@ navigation.Sites = class {
 
     if (site != null) {
       document.title = site.title;
-      targetElement.load(site.url);
+      console.log('BEFORE LOAD.');
+      targetElement.load(site.url, null, function() {
+        console.log('AFTER LOAD.');
+      });
     } else {
       swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error')
     }
