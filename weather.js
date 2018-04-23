@@ -92,7 +92,11 @@ weather.Client = function (city, maxForecasts) {
     }
 
     this.retrieve = function () {
-        return jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + self.city});
+        var result = jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + self.city});
+        console.log('Result: ' + result);
+        console.log('Result type: ' + typeof result);
+        return result;
+        //return jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + self.city});
     };
 };
 
