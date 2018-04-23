@@ -23,11 +23,7 @@
 var homeinfo = homeinfo || {};
 
 homeinfo.isNull = function (element) {
-    if (element === undefined || element === null) {
-        return true;
-    } else {
-        return false;
-    }
+    return  element === undefined || element === null;
 };
 
 
@@ -143,51 +139,51 @@ homeinfo.str.ENTITYMAP = {
 /*
     Determines whether the string is considered empty.
 */
-homeinfo.str.isEmpty = function (s) {
-    return s == null || s.trim() == '';
+homeinfo.str.isEmpty = function (string) {
+    return homeinfo.isNull(string) || string.trim() == '';
 };
 
 
-homeinfo.str.capitalizeFirstLetter = function (s) {
-    return s.charAt(0).toUpperCase() + s.slice(1);
+homeinfo.str.capitalizeFirstLetter = function (string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 
-homeinfo.str.isEmail = function (s) {
-    return homeinfo.str.EMAIL.test(s);
+homeinfo.str.isEmail = function (string) {
+    return homeinfo.str.EMAIL.test(string);
 };
 
 
 /*
     Fixes American-style -> German-style decimal interpunctuation.
 */
-homeinfo.str.dot2comma = function (s) {
-    return s.replace('.', ',');
+homeinfo.str.dot2comma = function (string) {
+    return string.replace('.', ',');
 };
 
 
 /*
     Fixes German-style -> American-style float interpunctuation.
 */
-homeinfo.str.comma2dot = function (s) {
-    return s.replace(',', '.');
+homeinfo.str.comma2dot = function (string) {
+    return string.replace(',', '.');
 };
 
 
 /*
     Padds a zero to a digit string if it has exactly one zero after the comma.
 */
-homeinfo.str.padd0 = function (s) {
-    if (s.substr(s.indexOf(',') + 1).length == 1) {
-        return s + '0';
+homeinfo.str.padd0 = function (string) {
+    if (string.substr(string.indexOf(',') + 1).length == 1) {
+        return string + '0';
     } else {
-        return s;
+        return string;
     }
 };
 
 
-homeinfo.str.capitalize = function (s) {
-    return s.replace(/\w\S*/g, function (txt) {
+homeinfo.str.capitalize = function (string) {
+    return string.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 };
@@ -196,16 +192,16 @@ homeinfo.str.capitalize = function (s) {
 /*
     Removes the string after the first occurence of the specified character.
 */
-homeinfo.str.terminate = function (s, character) {
-    return s.substring(0, s.indexOf(character));
+homeinfo.str.terminate = function (string, character) {
+    return string.substring(0, string.indexOf(character));
 };
 
 
 /*
     Converts umlaut descriptions to actual umlauts.
 */
-homeinfo.str.umlauts = function (s) {
-    return s.replace(/Ae/g, 'Ä').replace(/Oe/g, 'Ö').replace(/Ue/g, 'Ü')
+homeinfo.str.umlauts = function (string) {
+    return string.replace(/Ae/g, 'Ä').replace(/Oe/g, 'Ö').replace(/Ue/g, 'Ü')
         .replace(/ae/g, 'ä').replace(/oe/g, 'ö').replace(/ue/g, 'ü');
 };
 
@@ -213,24 +209,22 @@ homeinfo.str.umlauts = function (s) {
 /*
     Strips leading zeros from number-like strings.
 */
-homeinfo.str.strplz = function (s) {
-    var i = 0;
-
-    for (i; i < this.length; i++) {
-        if (s[i] != '0') {
+homeinfo.str.strplz = function (string) {
+    for (var i = 0; i < this.length; i++) {
+        if (string[i] != '0') {
             break;
         }
     }
 
-    return s.substr(i);
+    return string.substr(i);
 };
 
 
 /*
     Replace line feed for HTML.
 */
-homeinfo.str.lf2html = function (s) {
-    return s.replace(homeinfo.str.NEW_LINE, '<br/>');
+homeinfo.str.lf2html = function (string) {
+    return string.replace(homeinfo.str.NEW_LINE, '<br/>');
 };
 
 
@@ -238,8 +232,8 @@ homeinfo.str.lf2html = function (s) {
     Escapes HTML special characters.
 */
 homeinfo.str.escapeHtml = function (string) {
-    return string.replace(/[&<>"'\/äöüÄÖÜß]/g, function (s) {
-        return homeinfo.str.ENTITYMAP[s];
+    return string.replace(/[&<>"'\/äöüÄÖÜß]/g, function (string) {
+        return homeinfo.str.ENTITYMAP[string];
     });
 };
 
@@ -332,17 +326,8 @@ homeinfo.logging.DEBUG = 40;
     Logger prototype.
 */
 homeinfo.logging.Logger = function (name, level) {
-    if (name == null) {
-        this.name = 'logger';
-    } else {
-        this.name = name;
-    }
-
-    if (level == null) {
-        this.level = homeinfo.logging.WARNING;
-    } else {
-        this.level = level;
-    }
+    this.name = name || 'logger';
+    this.level = level || homeinfo.logging.WARNING;
 
     this.log = function (prefix, msg) {
         /* eslint-disable no-console */
@@ -370,7 +355,7 @@ homeinfo.logging.Logger = function (name, level) {
 
     this.success = function (msg) {
         if (this.level >= homeinfo.logging.SUCCESS) {
-            this.log('[    ok    ]', msg);
+            this.log('[  ok  ]', msg);
         }
     };
 
