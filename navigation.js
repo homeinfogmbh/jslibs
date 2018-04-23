@@ -15,95 +15,99 @@
 
   You should have received a copy of the GNU General Public License
   along with this library.  If not, see <http://www.gnu.org/licenses/>.
-
   Maintainer: Richard Neumann <r dot neumann at homeinfo period de>
+
+  Requires:
+        * jQuery.
 */
-"use strict";
+'use strict';
 
 var navigation = navigation || {};
 
+/* eslint-enable classes */
+
 
 /*
-  Class to represent a single site
+    Class to represent a single site.
 */
 navigation.Site = class {
-  constructor(name, title, url) {
-    this.name = name;
-    this.title = title;
-    this.url = url;
-  }
+    constructor(name, title, url) {
+        this.name = name;
+        this.title = title;
+        this.url = url;
+    }
 
-  /*
-    Returns the hash for this site
-  */
-  get hash() {
-    return '#' + this.name;
-  }
-}
+    /*
+        Returns the hash for this site.
+    */
+    get hash() {
+        return '#' + this.name;
+    }
+};
 
 
 /*
-  Class to represent a set of sites
+    Class to represent a set of sites.
 */
 navigation.Sites = class {
-  constructor(sites, defaultHash) {
-    this.sites = sites;
-    this.defaultHash = defaultHash || '#startseite';
-  }
-
-  /*
-    Returns the hash
-  */
-  get hash() {
-    return window.location.hash || this.defaultHash;
-  }
-
-  /*
-    Returns the current site
-  */
-  get current() {
-    return this.getSite(this.hash);
-  }
-
-  /*
-    Returns the respective site for the provided hash
-  */
-  getSite(hash) {
-    for (let site of this.sites) {
-      if (site.hash == hash) {
-        return site;
-      }
+    constructor(sites, defaultHash) {
+        this.sites = sites;
+        this.defaultHash = defaultHash || '#startseite';
     }
-  }
 
-  /*
-    Loads the respective site from the current window's hash
-  */
-  load(targetElement) {
-    var site = this.current;
-
-    if (site != null) {
-      document.title = site.title;
-      targetElement.load(site.url);
-    } else {
-      swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error')
-    }
-  }
-
-  /*
-    Binds loading of sites into the respective
-    target element on the window.hashchange event.
-  */
-  bind(targetElement) {
     /*
-      Put current instance into a variable
-      and encapsulate invocation of load()
-      into a function, since "this" will be
-      overridden in window's scope.
+        Returns the hash.
     */
-    var self = this;
-    $(window).on('hashchange', function() {
-      self.load(targetElement);
-    });
-  }
-}
+    get hash() {
+        return window.location.hash || this.defaultHash;
+    }
+
+    /*
+        Returns the current site.
+    */
+    get current() {
+        return this.getSite(this.hash);
+    }
+
+    /*
+        Returns the respective site for the provided hash.
+    */
+    getSite(hash) {
+        for (let site of this.sites) {
+            if (site.hash == hash) {
+                return site;
+            }
+        }
+    }
+
+    /*
+        Loads the respective site from the current window's hash.
+    */
+    load(targetElement) {
+        var site = this.current;
+
+        if (site != null) {
+            document.title = site.title;
+            targetElement.load(site.url);
+        } else {
+            swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error')
+        }
+    }
+
+    /*
+        Binds loading of sites into the respective
+        target element on the window.hashchange event.
+    */
+    bind(targetElement) {
+        /*
+            Put current instance into a variable
+            and encapsulate invocation of load()
+            into a function, since "this" will be
+            overridden in window's scope.
+        */
+        var self = this;
+        jQuery(window).on('hashchange', function() {
+            self.load(targetElement);
+        });
+    }
+};
