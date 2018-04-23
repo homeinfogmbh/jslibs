@@ -92,7 +92,7 @@ weather.Client = function (city, maxForecasts) {
     }
 
     this.retrieve = function () {
-        var result = jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + self.city}).promise();
+        var result = Promise.resolve(jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + self.city}));
         console.log('Result: ' + result);
         console.log('Result type: ' + typeof result);
         console.log('Result class: ' + result.constructor);
