@@ -91,22 +91,9 @@ weather.Client = function (city, maxForecasts) {
         this.maxForecasts = maxForecasts;
     }
 
-    this.retrieve = function (callback) {
-        return jQuery.ajax({
-            url: 'https://ferengi.homeinfo.de/weather/' + self.city,
-            success: callback,
-            error: function (jqXHR, textStatus, errorThrown) {
-                weather.logger.error(jqXHR);
-                weather.logger.debug(textStatus);
-                weather.logger.debug(errorThrown);
-                swal({
-                    title: 'Fehler!',
-                    text: 'Konnte Wetterdaten für "' + self.city + '" nicht abrufen.',
-                    type: 'error'
-                });
-            }
-        });
-    }
+    this.retrieve = function () {
+        return jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + self.city});
+    };
 };
 
 
