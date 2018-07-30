@@ -90,7 +90,7 @@ navigation.Sites = class {
             document.title = site.title;
             targetElement.load(site.url);
         } else {
-            swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error')
+            swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error');
         }
     }
 
