@@ -90,7 +90,10 @@ weather.Client = class {
 
     retrieve () {
         const city = this.city;
-        return jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + city});
+        return jQuery.ajax({
+            url: 'https://ferengi.homeinfo.de/weather/' + city,
+            dataType: 'json'
+        });
     }
 };
 
