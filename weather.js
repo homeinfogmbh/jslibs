@@ -308,7 +308,7 @@ weather.DayForecast = class {
     }
 
     get icon () {
-        return this.forecast().icon();
+        return this.forecast().icon;
     }
 
     get type () {
