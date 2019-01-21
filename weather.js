@@ -292,7 +292,7 @@ weather.DayForecast = class {
     }
 
     get dateTime () {
-        return this.forecast().dateTime();
+        return this.forecast().dateTime;
     }
 
     get title () {
