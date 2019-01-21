@@ -84,7 +84,7 @@ navigation.Sites = class {
         Loads the respective site from the current window's hash.
     */
     load(targetElement) {
-        var site = this.current;
+        const site = this.current;
 
         if (site != null) {
             document.title = site.title;
@@ -99,15 +99,6 @@ navigation.Sites = class {
         target element on the window.hashchange event.
     */
     bind(targetElement) {
-        /*
-            Put current instance into a variable
-            and encapsulate invocation of load()
-            into a function, since "this" will be
-            overridden in window's scope.
-        */
-        var self = this;
-        jQuery(window).on('hashchange', function() {
-            self.load(targetElement);
-        });
+        jQuery(window).on('hashchange', this.load.bind(this, targetElement));
     }
 };

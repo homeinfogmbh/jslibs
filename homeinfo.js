@@ -33,83 +33,87 @@ homeinfo.isNull = function (element) {
 homeinfo.sanitize = function (value) {
     if (typeof value == 'string') {
         return homeinfo.str.escapeHtml(value);
-    } else {
-        return value;
     }
+
+    return value;
 };
 
 
 /*
     Prototype to parse query strings.
 */
-homeinfo.QueryString = function () {
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
+homeinfo.QueryString = class {
+    constructor () {
+        const query = window.location.search.substring(1);
+        const assignments = query.split('&');
 
-    for (var i = 0; i < vars.length; i++) {
-        var assignment = vars[i].split('=');
+        for (let assignment of assignments) {
+            let key, value;
+            [key, value] = assignment.split('=');
 
-        if (this[assignment[0]] == null) {
-            this[assignment[0]] = decodeURIComponent(assignment[1]);
-        } else if (typeof this[assignment[0]] === 'string') {
-            this[assignment[0]] = [this[assignment[0]], decodeURIComponent(assignment[1])];
-        } else {
-            this[assignment[0]].push(decodeURIComponent(assignment[1]));
-        }
-    }
-};
-
-
-/*
-    Generates query args list from a QueryString instance.
-*/
-homeinfo.queryArgs = function (options) {
-    var args = [];
-
-    for (var option in options) {
-        if (options.hasOwnProperty(option)) {
-            args.push(option + '=' + options[option]);
+            if (this[key] == null) {
+                this[key] = decodeURIComponent(value);
+            } else if (typeof this[key] === 'string') {
+                this[key] = [this[key], decodeURIComponent(value)];
+            } else {
+                this[key].push(decodeURIComponent(value));
+            }
         }
     }
 
-    return args;
-};
+    /*
+        Generates query args list from a QueryString instance.
+    */
+    *getAssignments () {
+        for (let property in this) {
+            if (this.hasOwnProperty(property)) {
+                yield property + '=' + this[property];
+            }
+        }
+    }
 
+    get assignments () {
+        return this.getAssignments();
+    }
 
-/*
-    Genrates a query string from query args list.
-*/
-homeinfo.queryString = function (queryArgs) {
-    if (queryArgs.length > 0) {
-        return '?' + queryArgs.join('&');
-    } else {
+    /*
+        Genrates a query string from query args list.
+    */
+    toString () {
+        const assignments = Array.from(this.assignments);
+
+        if (assignments.length > 0) {
+            return '?' + assignments.join('&');
+        }
+
         return '';
     }
 };
 
 
-homeinfo.Range = function (lowerBoundary, upperBoundary, includeUpperBoundary) {
-    if (upperBoundary == null) {
-        this.upperBoundary = lowerBoundary;
-        this.lowerBoundary = 0;
-    } else {
-        this.lowerBoundary = lowerBoundary;
-        this.upperBoundary = upperBoundary;
+/*
+    Represents a range within boundaries.
+*/
+homeinfo.Range = class {
+    constructor (lowerBoundary, upperBoundary = null, includeUpperBoundary = false) {
+        if (upperBoundary == null) {
+            this.upperBoundary = lowerBoundary;
+            this.lowerBoundary = 0;
+        } else {
+            this.lowerBoundary = lowerBoundary;
+            this.upperBoundary = upperBoundary;
+        }
+
+        this.includeUpperBoundary = includeUpperBoundary;
     }
 
-    if (includeUpperBoundary) {
-        this.includeUpperBoundary = true;
-    } else {
-        this.includeUpperBoundary = false;
-    }
-
-    this.contains = function (number) {
+    contains (number) {
         if (this.includeUpperBoundary) {
             return number >= this.lowerBoundary && number <= this.upperBoundary;
-        } else {
-            return number >= this.lowerBoundary && number < this.upperBoundary;
         }
-    };
+
+        return number >= this.lowerBoundary && number < this.upperBoundary;
+    }
 };
 
 
@@ -210,7 +214,9 @@ homeinfo.str.umlauts = function (string) {
     Strips leading zeros from number-like strings.
 */
 homeinfo.str.strplz = function (string) {
-    for (var i = 0; i < this.length; i++) {
+    let i = 0;
+
+    for (i; i < string.length; i++) {
         if (string[i] != '0') {
             break;
         }
@@ -254,9 +260,9 @@ homeinfo.num.isEven = function (num) {
 homeinfo.num.padd = function (num) {
     if (num < 10) {
         return '0' + num;
-    } else {
-        return '' + num;
     }
+
+    return '' + num;
 };
 
 
@@ -266,14 +272,14 @@ homeinfo.arr = homeinfo.arr || {};
 /*
     Groups an iterable and counts occurences.
 */
-homeinfo.arr.group = function (a) {
-    var result = {};
+homeinfo.arr.group = function (array) {
+    const result = {};
 
-    for (var i = 0; i < a.length; i++) {
-        var match = false;
+    for (let i = 0; i < array.length; i++) {
+        let match = false;
 
-        for (var key in result) {
-            if (key == a[i]) {
+        for (let key in result) {
+            if (key == array[i]) {
                 result[key] = result[key] + 1;
                 match = true;
                 break;
@@ -281,7 +287,7 @@ homeinfo.arr.group = function (a) {
         }
 
         if (match == false) {
-            result[a[i]] = 1;
+            result[array[i]] = 1;
         }
     }
 
@@ -304,9 +310,8 @@ homeinfo.date.time = function (date) {
     Returns date like <%d.%m.%Y>.
 */
 homeinfo.date.date = function (date) {
-    var month = date.getMonth() + 1;
     return homeinfo.num.padd(date.getDate())
-        + '.' + homeinfo.num.padd(month)
+        + '.' + homeinfo.num.padd(date.getMonth() + 1)
         + '.' + homeinfo.num.padd(date.getFullYear());
 };
 
@@ -323,45 +328,47 @@ homeinfo.logging.DEBUG = 40;
 
 
 /*
-    Logger prototype.
+    A logger to conditionally log formatted messages to the console.
 */
-homeinfo.logging.Logger = function (name, level) {
-    this.name = name || 'logger';
-    this.level = level || homeinfo.logging.WARNING;
+homeinfo.logging.Logger = class {
+    constructor (name = 'Logger', level = homeinfo.logging.WARNING) {
+        this.name = name;
+        this.level = level;
+    }
 
-    this.log = function (prefix, msg) {
+    log (prefix, msg) {
         /* eslint-disable no-console */
         console.log(prefix + ' ' + this.name + ': ' + msg);
         /* eslint-enable no-console */
-    };
+    }
 
-    this.error = function (msg) {
+    error (msg) {
         if (this.level >= homeinfo.logging.ERROR) {
             this.log('[ fail ]', msg);
         }
-    };
+    }
 
-    this.warning = function (msg) {
+    warning (msg) {
         if (this.level >= homeinfo.logging.WARNING) {
             this.log('[ warn ]', msg);
         }
-    };
+    }
 
-    this.info = function (msg) {
+    info (msg) {
         if (this.level >= homeinfo.logging.INFO) {
             this.log('[ info ]', msg);
         }
-    };
+    }
 
-    this.success = function (msg) {
+    success (msg) {
         if (this.level >= homeinfo.logging.SUCCESS) {
             this.log('[  ok  ]', msg);
         }
-    };
+    }
 
-    this.debug = function (msg) {
+    debug (msg) {
         if (this.level >= homeinfo.logging.DEBUG) {
             this.log('[debug!]', msg);
         }
-    };
+    }
 };

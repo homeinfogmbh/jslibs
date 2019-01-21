@@ -56,10 +56,10 @@ weather.cardinalPoint.N2 = new homeinfo.Range(348.75, 360, true);
   Get relative date from today's perspective.
 */
 weather.realativeDate = function (date) {
-    var now = new Date();
-    var tomorrow = new Date();
+    const now = new Date();
+    const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    var dayAfterTomorrow = new Date();
+    const dayAfterTomorrow = new Date();
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
     if (now.toDateString() == date.toDateString()) {
@@ -73,8 +73,8 @@ weather.realativeDate = function (date) {
 
 
 weather.iconURL = function (icon) {
-    var baseURL = 'icons/';
-    var suffix = '.png';
+    const baseURL = 'icons/';
+    const suffix = '.png';
     return baseURL + icon + suffix;
 };
 
@@ -82,36 +82,36 @@ weather.iconURL = function (icon) {
 /*
   Weather API client.
 */
-weather.Client = function (city, maxForecasts) {
-    this.city = city;
-
-    if (maxForecasts == null) {
-        this.maxForecasts = 3;
-    } else {
+weather.Client = class {
+    constructor (city, maxForecasts = 3) {
+        this.city = city;
         this.maxForecasts = maxForecasts;
     }
 
-    this.retrieve = function () {
-        return jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + self.city});
-    };
+    retrieve () {
+        const city = this.city;
+        return jQuery.ajax({url: 'https://ferengi.homeinfo.de/weather/' + city});
+    }
 };
 
 
 /*
   Weather forecast wrapper.
 */
-weather.Forecast = function (weather) {
-    for (var prop in weather) {
-        if (weather.hasOwnProperty(prop)) {
-            this[prop] = weather[prop];
+weather.Forecast = class {
+    constructor (weather) {
+        for (let prop in weather) {
+            if (weather.hasOwnProperty(prop)) {
+                this[prop] = weather[prop];
+            }
         }
     }
 
-    this.dateTime = function () {
+    get dateTime () {
         return new Date(this.dt);
-    };
+    }
 
-    this.cardinalPoint = function () {
+    get cardinalPoint () {
         if (this.wind != null) {
             if (this.wind.deg != null) {
                 if (weather.cardinalPoint.N1.contains(this.wind.deg) ||
@@ -154,24 +154,38 @@ weather.Forecast = function (weather) {
         }
 
         return 'N/A';
-    };
+    }
 
-    this.title = function () {
-        var dateTime = this.dateTime();
-        var prefix = weather.realativeDate(dateTime);
+    get title () {
+        const dateTime = this.dateTime;
+        const prefix = weather.realativeDate(dateTime);
 
         if (prefix != null) {
             return prefix + ' ' + dateTime.toLocaleString();
-        } else {
-            return dateTime.toLocaleString();
         }
-    };
+
+        return dateTime.toLocaleString();
+    }
+
+    get icon () {
+        if (this.weather != null) {
+            const weather = this.weather[0];
+
+            if (weather != null) {
+                if (weather.icon != null) {
+                    return this.translateIcon(weather.icon);
+                }
+            }
+        }
+
+        return null;
+    }
 
     /*
         Translates OpenWeatherMap icon codes
         to HOMEINFO weather icon codes.
     */
-    this.translateIcon = function (icon) {
+    translateIcon (icon) {
         if (icon == '01d' || icon == '01n') {
             return 22;
         } else if (icon == '02d' || icon == '02n') {
@@ -191,30 +205,18 @@ weather.Forecast = function (weather) {
         } else if (icon == '50d' || icon == '50n') {
             return 19;
         }
-    };
-
-    this.icon = function () {
-        if (this.weather != null) {
-            var weather = this.weather[0];
-
-            if (weather != null) {
-                if (weather.icon != null) {
-                    return this.translateIcon(weather.icon);
-                }
-            }
-        }
-    };
+    }
 
     /*
         Renders the weather data according to the mapping.
     */
-    this.render = function (mapping) {
+    render (mapping) {
         if (mapping.title != null) {
-            mapping.title.html(this.title());
+            mapping.title.html(this.title);
         }
 
         if (mapping.icon != null) {
-            var icon = this.icon();
+            const icon = this.icon;
 
             if (icon != null) {
                 mapping.icon.attr('src', weather.iconURL(icon));
@@ -225,7 +227,7 @@ weather.Forecast = function (weather) {
 
         if (mapping.type != null) {
             if (this.weather != null) {
-                var weather = this.weather[0];
+                const weather = this.weather[0];
 
                 if (weather != null) {
                     if (weather.description != null) {
@@ -242,22 +244,22 @@ weather.Forecast = function (weather) {
                 }
             }
         }
-    };
+    }
 };
 
 
 /*
   Day forecast group.
 */
-weather.DayForecast = function (forecasts) {
-    this.forecasts = forecasts
+weather.DayForecast = class {
+    constructor (forecasts) {
+        this.forecasts = forecasts;
+    }
 
-    this.maxTemp = function () {
-        var tempMax = -Infinity;
+    get maxTemp () {
+        let tempMax = -Infinity;
 
-        for (var i = 0; i < this.forecasts.length; i++) {
-            var forecast = this.forecasts[i];
-
+        for (let forecast of this.forecasts) {
             if (forecast.main != null) {
                 if (forecast.main.temp_max != null) {
                     if (forecast.main.temp_max > tempMax) {
@@ -268,14 +270,12 @@ weather.DayForecast = function (forecasts) {
         }
 
         return tempMax;
-    };
+    }
 
-    this.minTemp = function () {
-        var tempMin = Infinity;
+    get minTemp () {
+        let tempMin = Infinity;
 
-        for (var i = 0; i < this.forecasts.length; i++) {
-            var forecast = this.forecasts[i];
-
+        for (let forecast of this.forecasts) {
             if (forecast.main != null) {
                 if (forecast.main.temp_min != null) {
                     if (forecast.main.temp_min < tempMin) {
@@ -286,14 +286,46 @@ weather.DayForecast = function (forecasts) {
         }
 
         return tempMin;
-    };
+    }
 
-    this.forecast = function (index) {
-        if (index == null) {
-            index = 0;
+    get dateTime () {
+        return this.forecast().dateTime();
+    }
+
+    get title () {
+        const dateTime = this.dateTime;
+        const localeDate = moment(dateTime).format('LL');
+        const prefix = weather.realativeDate(dateTime);
+
+        if (prefix != null) {
+            return prefix + ' ' + localeDate;
         }
 
-        var forecast = this.forecasts[index];
+        return localeDate;
+    }
+
+    get icon () {
+        return this.forecast().icon();
+    }
+
+    get type () {
+        const weather_ = this.weather();
+
+        if (weather_ != null) {
+            if (weather_.description != null) {
+                return weather_.description;
+            }
+        }
+
+        return null;
+    }
+
+    get temperature () {
+        return Math.round(this.maxTemp) + ' / ' + Math.round(this.minTemp) + ' °C';
+    }
+
+    forecast (index = 0) {
+        const forecast = this.forecasts[index];
 
         if (forecast == null) {
             swal({
@@ -304,34 +336,10 @@ weather.DayForecast = function (forecasts) {
         }
 
         return forecast;
-    };
+    }
 
-    this.dateTime = function () {
-        return this.forecast().dateTime();
-    };
-
-    this.title = function () {
-        var dateTime = this.dateTime();
-        var localeDate = moment(dateTime).format('LL');
-        var prefix = weather.realativeDate(dateTime);
-
-        if (prefix != null) {
-            return prefix + ' ' + localeDate;
-        } else {
-            return localeDate;
-        }
-    };
-
-    this.icon = function () {
-        return this.forecast().icon();
-    };
-
-    this.weather = function (index, forecastIndex) {
-        if (index == null) {
-            index = 0;
-        }
-
-        var weather = this.forecast(forecastIndex).weather[index];
+    weather (index = 0, forecastIndex = 0) {
+        const weather = this.forecast(forecastIndex).weather[index];
 
         if (weather == null) {
             swal({
@@ -342,40 +350,24 @@ weather.DayForecast = function (forecasts) {
         }
 
         return weather;
-    };
+    }
 
-    this.type = function () {
-        var weather_ = this.weather();
-
-        if (weather_ != null) {
-            if (weather_.description != null) {
-                return weather_.description;
-            }
-        }
-
-        return null;
-    };
-
-    this.temperature = function () {
-        return Math.round(this.maxTemp()) + ' / ' + Math.round(this.minTemp()) + ' °C';
-    };
-
-    this.render = function () {
+    render () {
         return weather.dom.weatherContainer(
             weather.dom.weatherRow(
                 weather.dom.weatherChart(
                     weather.dom.weatherDataContainer(
-                        weather.dom.title(this.title()),
+                        weather.dom.title(this.title),
                         weather.dom.iconContainer(
-                            weather.dom.icon(weather.iconURL(this.icon())),
-                            weather.dom.type(this.type())
+                            weather.dom.icon(weather.iconURL(this.icon)),
+                            weather.dom.type(this.type)
                         ),
-                        weather.dom.temperature(this.temperature())
+                        weather.dom.temperature(this.temperature)
                     )
                 )
             )
         );
-    };
+    }
 };
 
 
@@ -385,7 +377,7 @@ weather.DayForecast = function (forecasts) {
 weather.dom = weather.dom || {};
 
 weather.dom.temperature = function (temperature) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('id', 'temperature');
     element.setAttribute('class', 'row row-centered temperature');
     element.innerHTML = temperature;
@@ -393,7 +385,7 @@ weather.dom.temperature = function (temperature) {
 };
 
 weather.dom.type = function (type) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('id', 'type');
     element.setAttribute('class', 'type');
     element.innerHTML = type;
@@ -401,7 +393,7 @@ weather.dom.type = function (type) {
 };
 
 weather.dom.icon = function (src) {
-    var element = document.createElement('img');
+    const element = document.createElement('img');
     element.setAttribute('id', 'icon');
     element.setAttribute('class', 'icon');
     element.setAttribute('src', src || 'icons/0.png');
@@ -409,7 +401,7 @@ weather.dom.icon = function (src) {
 };
 
 weather.dom.iconContainer = function (icon, type) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('id', 'iconContainer');
     element.setAttribute('class', 'row row-centered iconContainer');
     element.appendChild(icon);
@@ -418,7 +410,7 @@ weather.dom.iconContainer = function (icon, type) {
 };
 
 weather.dom.title = function (title) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('id', 'title');
     element.setAttribute('class', 'row row-centered title');
     element.innerHTML = title;
@@ -426,7 +418,7 @@ weather.dom.title = function (title) {
 };
 
 weather.dom.weatherDataContainer = function (title, iconContainer, temperature) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('class', 'col col-md-12 weatherDataContainer');
     element.appendChild(title);
     element.appendChild(document.createElement('hr'));
@@ -437,21 +429,21 @@ weather.dom.weatherDataContainer = function (title, iconContainer, temperature) 
 };
 
 weather.dom.weatherChart = function (weatherDataContainer) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('class', 'col col-md-12 weatherChart');
     element.appendChild(weatherDataContainer);
     return element;
 };
 
 weather.dom.weatherRow = function (weatherChart) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('class', 'row row-centered');
     element.appendChild(weatherChart);
     return element;
 };
 
 weather.dom.weatherContainer = function (weatherRow) {
-    var element = document.createElement('div');
+    const element = document.createElement('div');
     element.setAttribute('class', 'col col-md-4 container');
     element.appendChild(weatherRow);
     return element;
