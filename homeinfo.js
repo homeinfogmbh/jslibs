@@ -1,7 +1,7 @@
 /*
-  HOMEINFO general-purpose JavaScript library
+  homeinfo.js - HOMEINFO general-purpose JavaScript library
 
-  (C) 2015-2017 HOMEINFO - Digitale Informationssysteme GmbH
+  (C) 2015-2020 HOMEINFO - Digitale Informationssysteme GmbH
 
   This library is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
