@@ -40,58 +40,6 @@ homeinfo.sanitize = function (value) {
 
 
 /*
-    Prototype to parse query strings.
-*/
-homeinfo.QueryString = class {
-    constructor () {
-        const query = window.location.search.substring(1);
-        const assignments = query.split('&');
-
-        for (let assignment of assignments) {
-            let key, value;
-            [key, value] = assignment.split('=');
-
-            if (this[key] == null) {
-                this[key] = decodeURIComponent(value);
-            } else if (typeof this[key] === 'string') {
-                this[key] = [this[key], decodeURIComponent(value)];
-            } else {
-                this[key].push(decodeURIComponent(value));
-            }
-        }
-    }
-
-    /*
-        Generates query args list from a QueryString instance.
-    */
-    *getAssignments () {
-        for (let property in this) {
-            if (this.hasOwnProperty(property)) {
-                yield property + '=' + this[property];
-            }
-        }
-    }
-
-    get assignments () {
-        return this.getAssignments();
-    }
-
-    /*
-        Genrates a query string from query args list.
-    */
-    toString () {
-        const assignments = Array.from(this.assignments);
-
-        if (assignments.length > 0) {
-            return '?' + assignments.join('&');
-        }
-
-        return '';
-    }
-};
-
-
-/*
     Represents a range within boundaries.
 */
 homeinfo.Range = class {
@@ -180,9 +128,9 @@ homeinfo.str.comma2dot = function (string) {
 homeinfo.str.padd0 = function (string) {
     if (string.substr(string.indexOf(',') + 1).length == 1) {
         return string + '0';
-    } else {
-        return string;
     }
+
+    return string;
 };
 
 
