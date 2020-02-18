@@ -104,7 +104,7 @@ weather.Client = class {
 weather.Forecast = class {
     constructor (weather) {
         for (let prop in weather) {
-            if (weather.hasOwnProperty(prop)) {
+            if (Object.prototype.hasOwnProperty.call(weather, prop)) {
                 this[prop] = weather[prop];
             }
         }
