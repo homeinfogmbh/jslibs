@@ -24,8 +24,6 @@
 
 var navigation = navigation || {};
 
-/* eslint-enable classes */
-
 
 /*
     Class to represent a single site.
@@ -72,7 +70,7 @@ navigation.Sites = class {
     /*
         Returns the respective site for the provided hash.
     */
-    getSite(hash) {
+    getSite (hash) {
         for (let site of this.sites) {
             if (site.hash == hash) {
                 return site;
@@ -83,7 +81,7 @@ navigation.Sites = class {
     /*
         Loads the respective site from the current window's hash.
     */
-    load(targetElement) {
+    load (targetElement) {
         const site = this.current;
 
         if (site != null) {
@@ -98,7 +96,7 @@ navigation.Sites = class {
         Binds loading of sites into the respective
         target element on the window.hashchange event.
     */
-    bind(targetElement) {
+    bind (targetElement) {
         jQuery(window).on('hashchange', this.load.bind(this, targetElement));
     }
 };
