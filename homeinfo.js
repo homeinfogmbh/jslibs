@@ -40,6 +40,17 @@ homeinfo.sanitize = function (value) {
 
 
 /*
+    Enumerates an iterable.
+*/
+homeinfo.enumerate = function* (iterable, start = 0) {
+    for (const item of iterable) {
+        yield [start, item];
+        start++;
+    }
+};
+
+
+/*
     Represents a range within boundaries.
 */
 homeinfo.Range = class {
