@@ -334,11 +334,12 @@ homeinfo.logging.Logger = class {
 
 
 /* Caching. */
+homeinfo.caching = homeinfo.caching || {};
 
 /*
     Updates the respective cache.
 */
-homeinfo.updateCache = function (cache) {
+homeinfo.caching.update = function (cache) {
     return function (value) {
         const now = new Date();
         const json = {'timestamp': now.toString(), 'value': value};
@@ -352,7 +353,7 @@ homeinfo.updateCache = function (cache) {
 /*
     JSON data cache.
 */
-homeinfo.Cache = class {
+homeinfo.caching.Cache = class {
     constructor (key, refreshFunction, lifetime = 3600000, logLevel = homeinfo.logging.WARNING) {
         this.key = key;
         this.refreshFunction = refreshFunction;
@@ -369,7 +370,7 @@ homeinfo.Cache = class {
     }
 
     refresh () {
-        return this.refreshFunction().then(homeinfo.updateCache(this));
+        return this.refreshFunction().then(homeinfo.caching.update(this));
     }
 
     load (force = false) {
