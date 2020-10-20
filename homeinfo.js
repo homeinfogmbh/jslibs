@@ -506,15 +506,25 @@ homeinfo.requests.delete = function (url, headers = {}) {
 };
 
 /*
-    Modifies a JSON object and headers for argument usage.
-
-    Example:
-        const url = 'https://example.com/';
-        const headers = {'My-Header': 'someValue'};
-        const json = {'foo': 'bar', 'spamm': 42};
-        promise = requests.post(url, ...requests.jsonify(json));
+    Makes a POST request with JSON data.
 */
-homeinfo.requests.jsonify = function (data, headers = {}) {
+homeinfo.requests.postJSON = function (url, data, headers = {}) {
     headers['Content-Type'] = 'application/json';
-    return [JSON.stringify(data), headers];
+    return homeinfo.requests.post(url, JSON.stringify(data), headers);
+};
+
+/*
+    Makes a PUT request with JSON data.
+*/
+homeinfo.requests.putJSON = function (url, data, headers = {}) {
+    headers['Content-Type'] = 'application/json';
+    return homeinfo.requests.put(url, JSON.stringify(data), headers);
+};
+
+/*
+    Makes a PATCH request with JSON data.
+*/
+homeinfo.requests.patchJSON = function (url, data, headers = {}) {
+    headers['Content-Type'] = 'application/json';
+    return homeinfo.requests.patch(url, JSON.stringify(data), headers);
 };
