@@ -418,3 +418,114 @@ homeinfo.caching.Cache = class {
         localStorage.removeItem(this.key);
     }
 };
+
+
+/* Aync requests. */
+homeinfo.requests = homeinfo.requests || {};
+
+/*
+  Makes a request returning a promise.
+*/
+homeinfo.requests.make = function (method, url, data = null, headers = {}) {
+    function parseResponse (response) {
+        try {
+            return JSON.parse(response);
+        } catch (error) {
+            return undefined;
+        }
+    }
+
+    function executor (resolve, reject) {
+        function onload () {
+            if (this.status >= 200 && this.status < 300)
+                resolve({
+                    response: xhr.response,
+                    json: parseResponse(xhr.response),
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            else
+                reject({
+                    response: xhr.response,
+                    json: parseResponse(xhr.response),
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+        }
+
+        function onerror () {
+            reject({
+                response: xhr.response,
+                json: parseResponse(xhr.response),
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open(method, url);
+
+        for (const header in headers)
+            xhr.setRequestHeader(header, headers[header]);
+
+        xhr.onload = onload;
+        xhr.onerror = onerror;
+
+        if (data == null)
+            xhr.send();
+        else
+            xhr.send(data);
+    }
+
+    return new Promise(executor);
+};
+
+/*
+    Makes a GET request.
+*/
+homeinfo.requests.get = function (url, headers = {}) {
+    return homeinfo.requests.make('GET', url, null, headers);
+};
+
+/*
+    Makes a POST request.
+*/
+homeinfo.requests.post = function (url, data = null, headers = {}) {
+    return homeinfo.requests.make('POST', url, data, headers);
+};
+
+/*
+    Makes a PUT request.
+*/
+homeinfo.requests.put = function (url, data = null, headers = {}) {
+    return homeinfo.requests.make('PUT', url, data, headers);
+};
+
+/*
+    Makes a PATCH request.
+*/
+homeinfo.requests.patch = function (url, data = null, headers = {}) {
+    return homeinfo.requests.make('PATCH', url, data, headers);
+};
+
+/*
+    Makes a DELETE request.
+*/
+homeinfo.requests.delete = function (url, headers = {}) {
+    return homeinfo.requests.make('DELETE', url, null, headers);
+};
+
+/*
+    Modifies a JSON object and headers for argument usage.
+
+    Example:
+        const url = 'https://example.com/';
+        const headers = {'My-Header': 'someValue'};
+        const json = {'foo': 'bar', 'spamm': 42};
+        promise = requests.post(url, ...requests.jsonify(json));
+*/
+homeinfo.requests.jsonify = function (data, headers = {}) {
+    headers['Content-Type'] = 'application/json';
+    return [JSON.stringify(data), headers];
+};
