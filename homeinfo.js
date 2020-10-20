@@ -31,9 +31,8 @@ homeinfo.isNull = function (element) {
     Sanitize value.
 */
 homeinfo.sanitize = function (value) {
-    if (typeof value == 'string') {
+    if (typeof value == 'string')
         return homeinfo.str.escapeHtml(value);
-    }
 
     return value;
 };
@@ -67,9 +66,8 @@ homeinfo.Range = class {
     }
 
     contains (number) {
-        if (this.includeUpperBoundary) {
+        if (this.includeUpperBoundary)
             return number >= this.lowerBoundary && number <= this.upperBoundary;
-        }
 
         return number >= this.lowerBoundary && number < this.upperBoundary;
     }
@@ -137,9 +135,8 @@ homeinfo.str.comma2dot = function (string) {
     Padds a zero to a digit string if it has exactly one zero after the comma.
 */
 homeinfo.str.padd0 = function (string) {
-    if (string.substr(string.indexOf(',') + 1).length == 1) {
+    if (string.substr(string.indexOf(',') + 1).length == 1)
         return string + '0';
-    }
 
     return string;
 };
@@ -176,9 +173,8 @@ homeinfo.str.strplz = function (string) {
     let i = 0;
 
     for (i; i < string.length; i++) {
-        if (string[i] != '0') {
+        if (string[i] != '0')
             break;
-        }
     }
 
     return string.substr(i);
@@ -217,9 +213,8 @@ homeinfo.num.isEven = function (num) {
 
 
 homeinfo.num.padd = function (num) {
-    if (num < 10) {
+    if (num < 10)
         return '0' + num;
-    }
 
     return '' + num;
 };
@@ -245,9 +240,8 @@ homeinfo.arr.group = function (array) {
             }
         }
 
-        if (match == false) {
+        if (match == false)
             result[array[i]] = 1;
-        }
     }
 
     return result;
@@ -302,33 +296,28 @@ homeinfo.logging.Logger = class {
     }
 
     error (msg) {
-        if (this.level >= homeinfo.logging.ERROR) {
+        if (this.level >= homeinfo.logging.ERROR)
             this.log('[ fail ]', msg);
-        }
     }
 
     warning (msg) {
-        if (this.level >= homeinfo.logging.WARNING) {
+        if (this.level >= homeinfo.logging.WARNING)
             this.log('[ warn ]', msg);
-        }
     }
 
     info (msg) {
-        if (this.level >= homeinfo.logging.INFO) {
+        if (this.level >= homeinfo.logging.INFO)
             this.log('[ info ]', msg);
-        }
     }
 
     success (msg) {
-        if (this.level >= homeinfo.logging.SUCCESS) {
+        if (this.level >= homeinfo.logging.SUCCESS)
             this.log('[  ok  ]', msg);
-        }
     }
 
     debug (msg) {
-        if (this.level >= homeinfo.logging.DEBUG) {
+        if (this.level >= homeinfo.logging.DEBUG)
             this.log('[debug!]', msg);
-        }
     }
 };
 
