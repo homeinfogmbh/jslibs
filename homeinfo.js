@@ -331,3 +331,89 @@ homeinfo.logging.Logger = class {
         }
     }
 };
+
+
+/* Caching. */
+
+/*
+    Updates the respective cache.
+*/
+homeinfo.updateCache = function (cache) {
+    return function (value) {
+        const now = new Date();
+        const json = {'timestamp': now.toString(), 'value': value};
+        const raw = JSON.stringify(json);
+        localStorage.setItem(cache.key, raw);
+        return json;
+    };
+};
+
+
+/*
+    JSON data cache.
+*/
+homeinfo.Cache = class {
+    constructor (key, refreshFunction, lifetime = 3600000, logLevel = homeinfo.logging.WARNING) {
+        this.key = key;
+        this.refreshFunction = refreshFunction;
+        this.lifetime = lifetime;
+        this.logger = new homeinfo.logging.Logger('cache "' + this.key + '"', logLevel);
+    }
+
+    get value () {
+        return this.getValue();
+    }
+
+    get timestamp () {
+        return this.getTimestamp();
+    }
+
+    refresh () {
+        return this.refreshFunction().then(homeinfo.updateCache(this));
+    }
+
+    load (force = false) {
+        if (force) {
+            this.logger.info('Forcing load.');
+            return this.refresh();
+        }
+
+        const raw = localStorage.getItem(this.key);
+
+        if (raw == null) {
+            this.logger.info('Empty cache.');
+            return this.refresh();
+        }
+
+        let json;
+
+        try {
+            json = JSON.parse(raw);
+        } catch (error) {
+            this.logger.warning('Invalid cache content.');
+            return this.refresh();
+        }
+
+        const timestamp = Date.parse(json['timestamp']);
+        const now = new Date();
+
+        if ((now - timestamp) > this.lifetime) {
+            this.logger.info('Cache miss.');
+            return this.refresh();
+        }
+
+        return Promise.resolve(json);
+    }
+
+    getValue (force = false) {
+        return this.load(force).then(json => json['value']);
+    }
+
+    getTimestamp (force = false) {
+        return this.load(force).then(json => json['timestamp']);
+    }
+
+    clear () {
+        localStorage.removeItem(this.key);
+    }
+};
