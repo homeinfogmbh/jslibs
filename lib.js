@@ -112,7 +112,7 @@ export class Range {
 /*
     Converts true, false and null into a string.
 */
-function boolNaToString (boolean, _true = '✓', _false = '✗', na = '?') {
+export function boolNaToString (boolean, _true = '✓', _false = '✗', na = '?') {
     if (boolean == null)
         return na;
 
@@ -209,7 +209,7 @@ export function group (array) {
 /*
     Case-insensitively returns the index of the substring.
 */
-function includesIgnoreCase (haystack, needle) {
+export function includesIgnoreCase (haystack, needle) {
     if (! haystack)
         return false;
 
