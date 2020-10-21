@@ -64,6 +64,19 @@ export class Range {
     }
 }
 
+/*
+    Converts true, false and null into a string.
+*/
+function boolNaToString (boolean, _true = '✓', _false = '✗', na = '?') {
+    if (boolean == null)
+        return na;
+
+    if (boolean)
+        return _true;
+
+    return _false;
+}
+
 
 export function capitalize (string) {
     return string.replace(/\w\S*/g, function (txt) {
