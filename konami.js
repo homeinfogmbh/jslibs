@@ -1,5 +1,5 @@
 /*
-  Konami easter egg.
+  Konami Code easter egg.
 
   (C) 2019-2020 HOMEINFO - Digitale Informationssysteme GmbH
 
