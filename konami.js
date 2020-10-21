@@ -33,7 +33,8 @@ const KONAMI_CODE = [
     'KeyB',
     'KeyA'
 ];
-let MESSAGE = 'HOMEINFO wünscht Ihnen einen schönen ersten April!';
+const DEFAULT_MESSAGE = 'HOMEINFO wünscht Ihnen einen schönen ersten April!';
+let MESSAGE = DEFAULT_MESSAGE;
 
 
 /*
@@ -64,7 +65,7 @@ function checkCode () {
 /*
     Sets the desired message.
 */
-export function setMessage (message = MESSAGE) {
+export function setMessage (message = DEFAULT_MESSAGE) {
     MESSAGE = message;
 }
 
