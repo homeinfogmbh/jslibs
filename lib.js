@@ -170,8 +170,6 @@ export function aprilsFool (func) {
 
         if (now.getMonth() == 4 && now.getDate() == 1)
             return func(...args);
-
-        alert('Es ist nicht der erste April.');
     };
 }
 
