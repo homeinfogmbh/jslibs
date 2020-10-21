@@ -47,8 +47,8 @@ function logFull () {
     Checks whether the keys logged so far match the Konami Code.
 */
 function checkLog () {
-    const subset = KONAMI_CODE.slice(0, KEY_LOG.length);
-    return JSON.stringify(KEY_LOG) === JSON.stringify(subset);
+    const correctSubset = KONAMI_CODE.slice(0, KEY_LOG.length);
+    return JSON.stringify(KEY_LOG) === JSON.stringify(correctSubset);
 }
 
 
