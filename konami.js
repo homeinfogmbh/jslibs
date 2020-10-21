@@ -33,7 +33,7 @@ const KONAMI_CODE = [
     'KeyB',
     'KeyA'
 ];
-export const DEFAULT_MESSAGE = 'HOMEINFO wünscht Ihnen einen schönen ersten April!';
+const DEFAULT_MESSAGE = 'HOMEINFO wünscht Ihnen einen schönen ersten April!';
 let MESSAGE = DEFAULT_MESSAGE;
 
 
