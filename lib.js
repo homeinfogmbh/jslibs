@@ -177,10 +177,10 @@ export function aprilsFool (func) {
 /*
     Enumerates an iterable.
 */
-export function *enumerate (iterable, start = 0) {
+export function *enumerate (iterable, start = 0, step = 1) {
     for (const item of iterable) {
         yield [start, item];
-        start++;
+        start += step;
     }
 }
 
@@ -291,14 +291,14 @@ export function sanitize (value) {
     Strips leading zeros from number-like strings.
 */
 export function strplz (string) {
-    let i = 0;
+    let index, char;
 
-    for (i; i < string.length; i++) {
-        if (string[i] != '0')
+    for ([index, char] of enumerate(string)) {
+        if (char != '0')
             break;
     }
 
-    return string.substr(i);
+    return string.substr(index);
 }
 
 
