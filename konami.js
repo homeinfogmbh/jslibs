@@ -91,4 +91,4 @@ export function konami (event) {
 */
 export function init () {
     document.addEventListener('keydown', aprilsFool(konami));
-);
+}
