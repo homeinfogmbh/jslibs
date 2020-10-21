@@ -38,20 +38,50 @@ export const ENTITYMAP = {
     'Ü': '&Uuml;',
     'ß': '&szlig;'
 };
-export const loader = {
-    start: function () {
-        const loader = document.getElementById('loader');
-        const target = document.getElementById('target');
-        target.style.display = 'none';
-        loader.style.display = 'block';
-    },
-    stop: function () {
-        const loader = document.getElementById('loader');
-        const target = document.getElementById('target');
-        loader.style.display = 'none';
-        target.style.display = 'block';
+
+
+/*
+    Class to start and stop loading animation.
+*/
+export class Loader {
+    constructor (loaderId = 'loader', targetId = 'target') {
+        this.loaderId = loaderId;
+        this.targetId = targetId;
     }
-};
+
+    get loader () {
+        return document.getElementById(this.loaderId);
+    }
+
+    get target () {
+        return document.getElementById(this.targetId);
+    }
+
+    start () {
+        this.target.style.display = 'none';
+        this.loader.style.display = 'block';
+    }
+
+    stop () {
+        this.loader.style.display = 'none';
+        this.target.style.display = 'block';
+    }
+
+    /*
+        Wraps a promise, starting the loader and
+        appending a stop job to the promise, returning it.
+    */
+    wrap (promise) {
+        function stopWrapper (loader) {
+            return function (value) {
+                loader.stop();
+                return value;
+            }
+        }
+        this.start();
+        return promise.then(stopWrapper(this));
+    }
+}
 
 
 /*
