@@ -20,6 +20,8 @@
 */
 'use strict';
 
+/* XXX: This is a LGACY ONLY library for existing projects. */
+
 var homeinfo = homeinfo || {};
 
 homeinfo.isNull = function (element) {
