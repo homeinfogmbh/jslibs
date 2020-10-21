@@ -80,7 +80,7 @@ export function konami (event) {
     KEY_LOG.push(event.code);
 
     if (checkCode())
-        alert(message);
+        alert(MESSAGE);
 }
 
 /*
