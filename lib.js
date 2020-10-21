@@ -162,6 +162,23 @@ export function dot2comma (string) {
 
 
 /*
+    Decorator to only run on 1st of April.
+*/
+export function aprilsFool (target, name, descriptor) {
+    const original = descriptor.value;
+    descriptor.value = function (...args) {
+        const now = new Date();
+
+        if (now.getMonth() == 4 && now.getDate() == 1)
+            return original(...args);
+
+        alert('Es ist nicht der erste April.');
+    };
+    return descriptor;
+}
+
+
+/*
     Enumerates an iterable.
 */
 export function *enumerate (iterable, start = 0) {

@@ -20,6 +20,9 @@
 */
 'use strict';
 
+import { aprilsFool } from './lib.js';
+
+
 const KEY_LOG = [];
 const KONAMI_CODE = [
     'ArrowUp',
@@ -86,9 +89,7 @@ export function konami (event) {
 /*
     Initializes the Konami Code easter egg.
 */
-export function initEasteregg () {
-    now = new Date();
-
-    if (now.getMonth() == 4 && now.getDate() == 1)
-        document.addEventListener('keydown', konami);
-}
+@aprilsFool
+export function init () {
+    document.addEventListener('keydown', konami);
+);
