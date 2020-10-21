@@ -184,7 +184,7 @@ export function escapeHtml (string) {
 /*
     Groups an iterable and counts occurences.
 */
-export function group = function (array) {
+export function group (array) {
     const result = {};
 
     for (let i = 0; i < array.length; i++) {
@@ -311,7 +311,7 @@ export function suppressEvent (func, ...args) {
 /*
     Removes the string after the first occurence of the specified character.
 */
-export function terminate = function (string, character) {
+export function terminate (string, character) {
     return string.substring(0, string.indexOf(character));
 }
 
