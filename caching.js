@@ -20,7 +20,8 @@
 */
 'use strict';
 
-import { WARNING, Logger } from './logging.js';
+
+const CACHE_LIFETIME = 60 * 60 * 1000;  // One hour in milliseconds.
 
 
 /*
@@ -67,11 +68,10 @@ export class JSONStorage {
     JSON data cache.
 */
 export class Cache extends JSONStorage {
-    constructor (key, refreshFunction, lifetime = 3600000, logLevel = WARNING) {
+    constructor (key, refreshFunction, lifetime = CACHE_LIFETIME) {
         super(key);
         this.refreshFunction = refreshFunction;
         this.lifetime = lifetime;
-        this.logger = new Logger('cache "' + this.key + '"', logLevel);
     }
 
     get value () {
@@ -87,25 +87,19 @@ export class Cache extends JSONStorage {
     }
 
     get (force = false) {
-        if (force) {
-            this.logger.info('Forcing refresh.');
+        if (force)
             return this.refresh();
-        }
 
         const json = super.get();
 
-        if (json == null) {
-            this.logger.info('Empty cache.');
+        if (json == null)
             return this.refresh();
-        }
 
         const timestamp = Date.parse(json['timestamp']);
         const now = new Date();
 
-        if ((now - timestamp) > this.lifetime) {
-            this.logger.info('Cache miss.');
+        if ((now - timestamp) > this.lifetime)
             return this.refresh();
-        }
 
         return Promise.resolve(json);
     }
