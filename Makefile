@@ -6,4 +6,4 @@ pull:
 	@ git pull
 
 install:
-	@ install -vm 644 -t /srv/http/de/homeinfo/javascript *.js *.mjs 
+	@ install -vm 644 -t /srv/http/de/homeinfo/javascript *.js
