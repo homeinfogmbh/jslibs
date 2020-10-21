@@ -49,6 +49,22 @@ export class Loader {
         this.targetId = targetId;
     }
 
+    /*
+        Wraps a promise, starting a loader and
+        appending a stop job to the promise.
+    */
+    static wrap (promise, loaderId = 'loader', targetId = 'target') {
+        const loader = new this(loaderId, targetId);
+
+        function stop (value) {
+            loader.stop();
+            return value;
+        }
+
+        loader.start();
+        return promise.then(stop);
+    }
+
     get loader () {
         return document.getElementById(this.loaderId);
     }
@@ -65,21 +81,6 @@ export class Loader {
     stop () {
         this.loader.style.display = 'none';
         this.target.style.display = 'block';
-    }
-
-    /*
-        Wraps a promise, starting the loader and
-        appending a stop job to the promise, returning it.
-    */
-    wrap (promise) {
-        function stopWrapper (loader) {
-            return function (value) {
-                loader.stop();
-                return value;
-            }
-        }
-        this.start();
-        return promise.then(stopWrapper(this));
     }
 }
 
