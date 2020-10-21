@@ -1,5 +1,5 @@
 /*
-  logging.mjs - HOMEINFO logging facility.
+  requests.js - HOMEINFO async requests library.
 
   (C) 2015-2020 HOMEINFO - Digitale Informationssysteme GmbH
 

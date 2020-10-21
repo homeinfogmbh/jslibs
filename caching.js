@@ -1,5 +1,5 @@
 /*
-  logging.mjs - HOMEINFO logging facility.
+  caching.js - HOMEINFO local storage caching library.
 
   (C) 2020 HOMEINFO - Digitale Informationssysteme GmbH
 
