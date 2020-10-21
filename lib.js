@@ -222,7 +222,7 @@ export function isEmail (string) {
 }
 
 
-export const isEmpty (string) {
+export function isEmpty (string) {
     return isNull(string) || string.trim() == '';
 }
 
