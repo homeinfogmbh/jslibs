@@ -38,6 +38,20 @@ export const ENTITYMAP = {
     'Ü': '&Uuml;',
     'ß': '&szlig;'
 };
+export const loader = {
+    start: function () {
+        const loader = document.getElementById('loader');
+        const target = document.getElementById('target');
+        target.style.display = 'none';
+        loader.style.display = 'block';
+    },
+    stop: function () {
+        const loader = document.getElementById('loader');
+        const target = document.getElementById('target');
+        loader.style.display = 'none';
+        target.style.display = 'block';
+    }
+};
 
 
 /*
