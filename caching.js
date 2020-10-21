@@ -44,6 +44,10 @@ export class JSONStorage {
         this.key = key;
     }
 
+    set (value) {
+        localStorage.setItem(this.key, JSON.stringify(value));
+    }
+
     get () {
         const raw = localStorage.getItem(this.key);
 
@@ -51,10 +55,6 @@ export class JSONStorage {
             return null;
 
         return JSON.parse(raw);
-    }
-
-    set (value) {
-        localStorage.setItem(this.key, JSON.stringify(value));
     }
 
     clear () {
