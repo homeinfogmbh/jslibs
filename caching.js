@@ -30,19 +30,45 @@ function update (cache) {
     return function (value) {
         const now = new Date();
         const json = {'timestamp': now.toString(), 'value': value};
-        const raw = JSON.stringify(json);
-        localStorage.setItem(cache.key, raw);
+        cache.set(json);
         return json;
     };
 }
 
 
 /*
+    Class to store JSON data in local storage.
+*/
+export class JSONStorage {
+    constructor (key) {
+        this.key = key;
+    }
+
+    get () {
+        const raw = localStorage.getItem(this.key);
+
+        if (raw == null)
+            return null;
+
+        return JSON.parse(raw);
+    }
+
+    set (value) {
+        localStorage.setItem(this.key, JSON.stringify(value));
+    }
+
+    clear () {
+        return localStorage.removeItem(this.key);
+    }
+}
+
+
+/*
     JSON data cache.
 */
-export class Cache {
+export class Cache extends JSONStorage {
     constructor (key, refreshFunction, lifetime = 3600000, logLevel = WARNING) {
-        this.key = key;
+        super(key);
         this.refreshFunction = refreshFunction;
         this.lifetime = lifetime;
         this.logger = new Logger('cache "' + this.key + '"', logLevel);
@@ -60,25 +86,16 @@ export class Cache {
         return this.refreshFunction().then(update(this));
     }
 
-    load (force = false) {
+    get (force = false) {
         if (force) {
-            this.logger.info('Forcing load.');
+            this.logger.info('Forcing refresh.');
             return this.refresh();
         }
 
-        const raw = localStorage.getItem(this.key);
+        const json = super.get();
 
-        if (raw == null) {
+        if (json == null) {
             this.logger.info('Empty cache.');
-            return this.refresh();
-        }
-
-        let json;
-
-        try {
-            json = JSON.parse(raw);
-        } catch (error) {
-            this.logger.warning('Invalid cache content.');
             return this.refresh();
         }
 
@@ -94,14 +111,10 @@ export class Cache {
     }
 
     getValue (force = false) {
-        return this.load(force).then(json => json['value']);
+        return this.get(force).then(json => json['value']);
     }
 
     getTimestamp (force = false) {
-        return this.load(force).then(json => json['timestamp']);
+        return this.get(force).then(json => json['timestamp']);
     }
-
-    clear () {
-        localStorage.removeItem(this.key);
-    }
-};
+}
