@@ -89,7 +89,8 @@ export function konami (event) {
 /*
     Initializes the Konami Code easter egg.
 */
-@aprilsFool
-export function init () {
-    document.addEventListener('keydown', konami);
+export init = aprilsFool(
+    function {
+        document.addEventListener('keydown', konami);
+    }
 );
