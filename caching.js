@@ -74,41 +74,29 @@ export class Cache extends JSONStorage {
         this.lifetime = lifetime;
     }
 
-    get value () {
-        return this.getValue();
-    }
-
-    get timestamp () {
-        return this.getTimestamp();
-    }
-
     refresh () {
         return this.refreshFunction().then(update(this));
     }
 
-    get (force = false) {
+    load (force = false) {
         if (force)
             return this.refresh();
 
         const json = super.get();
 
-        if (json == null)
+        if (json == null)   // Cache miss.
             return this.refresh();
 
         const timestamp = Date.parse(json['timestamp']);
         const now = new Date();
 
-        if ((now - timestamp) > this.lifetime)
+        if ((now - timestamp) > this.lifetime)  // Cache timeout.
             return this.refresh();
 
         return Promise.resolve(json);
     }
 
-    getValue (force = false) {
-        return this.get(force).then(json => json['value']);
-    }
-
-    getTimestamp (force = false) {
-        return this.get(force).then(json => json['timestamp']);
+    get (force = false) {
+        return this.load(force).then(json => json['value']);
     }
 }
