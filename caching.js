@@ -20,7 +20,7 @@
 */
 'use strict';
 
-import { WARNING, Logger } from 'logging';
+import { WARNING, Logger } from './logging.js';
 
 
 /*
