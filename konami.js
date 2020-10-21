@@ -63,7 +63,7 @@ function checkCode () {
 /*
     Logs the current key to match against the Konami Code.
 */
-function logKey (event) {
+export function konami (event) {
     if (logFull() || !checkLog())
         KEY_LOG.length = 0;
 
@@ -80,5 +80,5 @@ export function initEasteregg () {
     now = new Date();
 
     if (now.getMonth() == 4 && now.getDate() == 1)
-        document.addEventListener('keydown', logKey);
+        document.addEventListener('keydown', konami);
 }
