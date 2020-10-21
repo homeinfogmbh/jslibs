@@ -33,6 +33,7 @@ const KONAMI_CODE = [
     'KeyB',
     'KeyA'
 ];
+let MESSAGE = 'HOMEINFO wünscht Ihnen einen schönen ersten April!';
 
 
 /*
@@ -61,6 +62,14 @@ function checkCode () {
 
 
 /*
+    Sets the desired message.
+*/
+export function setMessage (message) {
+    MESSAGE = message;
+}
+
+
+/*
     Logs the current key to match against the Konami Code.
 */
 export function konami (event) {
@@ -70,7 +79,7 @@ export function konami (event) {
     KEY_LOG.push(event.code);
 
     if (checkCode())
-        alert('HOMEINFO wünscht Ihnen einen schönen ersten April!');
+        alert(message);
 }
 
 /*
