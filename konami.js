@@ -20,8 +20,8 @@
 */
 'use strict';
 
-const keyLog = [];
-const konamiCode = [
+const KEY_LOG = [];
+const KONAMI_CODE = [
     'ArrowUp',
     'ArrowUp',
     'ArrowDown',
@@ -35,16 +35,50 @@ const konamiCode = [
 ];
 
 
+/*
+    Checks whether the log has reached the maximum length.
+*/
+function logFull () {
+    return KEY_LOG.length == KONAMI_CODE.length;
+}
+
+
+/*
+    Checks whether the keys logged so far match the Konami Code.
+*/
+function checkLog () {
+    const subset = KONAMI_CODE.slice(0, KEY_LOG.length);
+    return JSON.stringify(KEY_LOG) === JSON.stringify(subset);
+}
+
+
+/*
+    Checks whether the Konami Code has been matched.
+*/
+function checkCode () {
+    return JSON.stringify(KEY_LOG) === JSON.stringify(KONAMI_CODE);
+}
+
+
+/*
+    Logs the current key to match against the Konami Code.
+*/
 function logKey (event) {
-    if (keyLog.length == 10)
-        keyLog.shift();
+    if (logFull() || !checkLog())
+        KEY_LOG.length = 0;
 
-    keyLog.push(event.code);
+    KEY_LOG.push(event.code);
 
-    if (JSON.stringify(konami.keys) === JSON.stringify(konami.konamiCode))
+    if (checkCode())
         alert('HOMEINFO wünscht Ihnen einen schönen ersten April!');
 }
 
-export function init () {
-    document.onkeydown = logKey;
+/*
+    Initializes the Konami Code easter egg.
+*/
+export function initEasteregg () {
+    now = new Date();
+
+    if (now.getMonth() == 4 && now.getDate() == 1)
+        document.addEventListener('keydown', logKey);
 }
