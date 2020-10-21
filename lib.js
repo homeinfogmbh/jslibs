@@ -148,6 +148,17 @@ export function group = function (array) {
 }
 
 
+/*
+    Case-insensitively returns the index of the substring.
+*/
+function includesIgnoreCase (haystack, needle) {
+    if (! haystack)
+        return false;
+
+    return haystack.toLowerCase().includes(needle.toLowerCase());
+}
+
+
 export function isEmail (string) {
     return EMAIL.test(string);
 }
