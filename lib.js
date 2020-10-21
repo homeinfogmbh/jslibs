@@ -197,22 +197,16 @@ export function escapeHtml (string) {
 /*
     Groups an iterable and counts occurences.
 */
-export function group (array) {
+export function group (iterable) {
     const result = {};
 
-    for (let i = 0; i < array.length; i++) {
+    for (const item of iterable) {
         let match = false;
 
-        for (let key in result) {
-            if (key == array[i]) {
-                result[key] = result[key] + 1;
-                match = true;
-                break;
-            }
-        }
-
-        if (match == false)
-            result[array[i]] = 1;
+        if (item in result)
+            result[item] += 1;
+        else
+            result[item] = 1;
     }
 
     return result;
