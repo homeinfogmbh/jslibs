@@ -39,7 +39,7 @@ const KONAMI_CODE = [
     Checks whether the log has reached the maximum length.
 */
 function logFull () {
-    return KEY_LOG.length == KONAMI_CODE.length;
+    return KEY_LOG.length >= KONAMI_CODE.length;
 }
 
 
