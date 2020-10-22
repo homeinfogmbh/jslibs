@@ -20,7 +20,7 @@
 */
 'use strict';
 
-import { aprilsFool } from './lib.js';
+import { aprilsFool } from './lib.mjs';
 
 
 const KEY_LOG = [];
