@@ -20,6 +20,7 @@
 */
 'use strict';
 
+
 // Log levels.
 export const ERROR = 0;
 export const WARNING = 10;
