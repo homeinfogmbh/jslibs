@@ -34,10 +34,11 @@ function parseResponse (string) {
 
 
 class Request extends XMLHttpRequest {
-    constructor (resolve, reject, headers = {}, withCredentials = true) {
+    constructor (method, url, data, headers = {}, withCredentials = true) {
         super();
-        this.resolve = resolve;
-        this.reject = reject;
+        this.method = method;
+        this.url = url;
+        this.data = data;
         this.headers = headers;
         this.withCredentials = withCredentials;
     }
@@ -68,8 +69,10 @@ class Request extends XMLHttpRequest {
         });
     }
 
-    execute (mthod, url, data = null, headers = {}) {
-        this.open(method, url);
+    execute (resolve, reject) {
+        this.open(this.method, this.url);
+        this.resolve = resolve;
+        this.reject = reject;
 
         for (const header in this.headers)
             xhr.setRequestHeader(header, headers[header]);
@@ -86,12 +89,8 @@ class Request extends XMLHttpRequest {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    function executor (resolve, reject) {
-        const xhr = new Request(resolve, reject);
-        xhr.execute(method, url, data, headers);
-    }
-
-    return new Promise(executor);
+    const request = new Request(method, url, data, headers);
+    return new Promise(request.execute);
 };
 
 /*
