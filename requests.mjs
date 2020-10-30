@@ -137,7 +137,7 @@ export function makeRequest (method, url, data = null, headers = {}) {
         xhr.open(method, url);
         console.log('Headers 4: ' + JSON.stringify(headers));
 
-        for (const header of headers)
+        for (const header in headers)
             xhr.setRequestHeader(header, headers[header]);
 
         xhr.onload = function () {
