@@ -61,12 +61,15 @@ function urlencode (formData) {
     Adds JSON content type to headers
 */
 function setContentType (headers, contentType) {
+    console.log('Headers A: ' + JSON.stringify(headers));
     headers = headers || {};
 
     if (contentType == null)
         return headers;
 
+    console.log('Headers B: ' + JSON.stringify(headers));
     headers['Content-Type'] = contentType;
+    console.log('Headers C: ' + JSON.stringify(headers));
     return headers;
 }
 
