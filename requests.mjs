@@ -36,10 +36,50 @@ function parseJSON (string) {
 /*
     Adds JSON content type to headers
 */
-function jsonify (headers) {
+function setContentType (headers, contentType) {
+    if (contentType == null)
+        return headers;
+
     headers = headers || {};
-    headers['Content-Type'] = 'application/json';
+    headers['Content-Type'] = contentType;
     return headers;
+}
+
+
+/*
+    Determines the content type from the given data.
+*/
+function detectContentType (data) {
+    if (data instanceof FormData)
+        return 'multipart/form-data';
+
+    if (data instanceof File)
+        return 'multipart/form-data';
+
+    if (data instanceof Blob)
+        return 'application/octet-stream';
+
+    if (typeof data === 'string' || data instanceof String)
+        return 'text/plain';
+
+    if (data instanceof Element)
+        return 'text/html';
+
+    if (data instanceof Object)
+        return 'application/json';
+
+    return null;
+}
+
+
+/*
+    Detects the content type of the sent data and sets it in the headers.
+*/
+function updateContentType (headers, data) {
+    if (headers != null && headers['Content-Type'] != null)
+        return headers;
+
+    return setContentType(headers, detectContentType(data))
 }
 
 
@@ -106,21 +146,21 @@ export const request = {
         Makes a POST request.
     */
     post: function (url, data = null, headers = {}) {
-        return makeRequest('POST', url, data, headers);
+        return makeRequest('POST', url, data, updateContentType(headers, data));
     },
 
     /*
         Makes a PUT request.
     */
     put: function (url, data = null, headers = {}) {
-        return makeRequest('PUT', url, data, headers);
+        return makeRequest('PUT', url, data, updateContentType(headers, data));
     },
 
     /*
         Makes a PATCH request.
     */
     patch: function (url, data = null, headers = {}) {
-        return makeRequest('PATCH', url, data, headers);
+        return makeRequest('PATCH', url, data, updateContentType(headers, data));
     },
 
     /*
@@ -129,35 +169,4 @@ export const request = {
     delete: function (url, headers = {}) {
         return makeRequest('DELETE', url, null, headers);
     }
-};
-
-
-/*
-    JSON-requests.
-*/
-export const json = {
-    get: request.get,
-
-    /*
-        Makes a POST request with JSON data.
-    */
-    post: function (url, data, headers = {}) {
-        return request.post(url, JSON.stringify(data), jsonify(headers));
-    },
-
-    /*
-        Makes a PUT request with JSON data.
-    */
-    put: function (url, data, headers = {}) {
-        return request.put(url, JSON.stringify(data), jsonify(headers));
-    },
-
-    /*
-        Makes a PATCH request with JSON data.
-    */
-    patch: function (url, data, headers = {}) {
-        return request.patch(url, JSON.stringify(data), jsonify(headers));
-    },
-
-    delete: request.delete
 };
