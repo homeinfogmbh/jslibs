@@ -21,6 +21,12 @@
 'use strict';
 
 
+import { Logger } from './logging.mjs';
+
+
+const LOGGER = new Logger('requests');
+
+
 /*
     Parses JSON from a string and returns undefined on errors.
 */
@@ -28,6 +34,7 @@ function parseJSON (string) {
     try {
         return JSON.parse(string);
     } catch (error) {
+        LOGGER.warning('Could not parse JSON from string: ' + string);
         return undefined;
     }
 }
@@ -72,6 +79,7 @@ function detectContentType (data) {
     if (data instanceof Object)
         return 'application/json';
 
+    LOGGER.warning('Could not detemine content type for: ' + typeof data);
     return null;
 }
 
