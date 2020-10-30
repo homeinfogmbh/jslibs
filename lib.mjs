@@ -219,8 +219,6 @@ export function group (iterable) {
     const result = {};
 
     for (const item of iterable) {
-        let match = false;
-
         if (item in result)
             result[item] += 1;
         else
