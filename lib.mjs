@@ -194,6 +194,24 @@ export function escapeHtml (string) {
     });
 }
 
+
+/*
+    Returns a JSON key from localstorage.
+*/
+export function getJSONKey (key, fallback = null) {
+    const string = localStorage.getItem(key);
+
+    if (string == null) {
+        if (fallback === undefined)
+            throw 'Key "' + key + '" not found in localStorage.';
+
+        return fallback;
+    }
+
+    return JSON.parse(string);
+}
+
+
 /*
     Groups an iterable and counts occurences.
 */
