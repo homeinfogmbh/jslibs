@@ -45,12 +45,11 @@ function parseJSON (string) {
 */
 function urlencode (formData) {
     const keyValuePairs = [];
-    let key, value;
+    let keyValuePair;
 
-    for (key in formData) {
-        key = encodeURIComponent(key);
-        value = encodeURIComponent(formData[key]);
-        keyValuePairs.push([key, value].join('='));
+    for (const key in formData) {
+        keyValuePair = [encodeURIComponent(key), encodeURIComponent(formData[key])];
+        keyValuePairs.push(keyValuePair.join('='));
     }
 
     return keyValuePairs.join('&').replace(/%20/g, '+');
@@ -58,24 +57,10 @@ function urlencode (formData) {
 
 
 /*
-    Adds JSON content type to headers
-*/
-function setContentType (headers, contentType) {
-    headers = headers || {};
-
-    if (contentType == null)
-        return headers;
-
-    headers['Content-Type'] = contentType;
-    return headers;
-}
-
-
-/*
     Determines the content type from the given data.
     Returns the properly encoded data and the respective content type.
 */
-function detectContentType (data) {
+function autoencode (data) {
     if (data == null)
         return [data, null];
 
@@ -106,13 +91,22 @@ function detectContentType (data) {
     Detects the content type of the sent data and sets it in the headers.
     Returns the properly encoded data and the respective content type.
 */
-function updateContentType (data, headers) {
+function encodePayload (data, headers) {
+    let contentType;
+    headers = headers || {};
+
+    if (data == null)
+        return [data, headers];
+
     if (headers != null && headers['Content-Type'] != null)
         return [data, headers];
 
-    let contentType;
-    [data, contentType] = detectContentType(data);
-    headers = setContentType(headers, contentType);
+    [data, contentType] = autoencode(data);
+
+    if (contentType == null)
+        return [data, headers];
+
+    headers['Content-Type'] = contentType;
     return [data, headers];
 }
 
@@ -121,7 +115,7 @@ function updateContentType (data, headers) {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    [data, headers] = updateContentType(data, headers);
+    [data, headers] = encodePayload(data, headers);
 
     function executor (resolve, reject) {
         const xhr = new XMLHttpRequest();
