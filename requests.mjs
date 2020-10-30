@@ -41,6 +41,23 @@ function parseJSON (string) {
 
 
 /*
+    URL encodes form data.
+*/
+function urlencode (formData) {
+    const keyValuePairs = [];
+    let key, value;
+
+    for (key in formData) {
+        key = encodeURIComponent(key);
+        value = encodeURIComponent(formData[key]);
+        keyValuePairs.push([key, value].join('='));
+    }
+
+    return keyValuePairs.join('&').replace(/%20/g, '+');
+}
+
+
+/*
     Adds JSON content type to headers
 */
 function setContentType (headers, contentType) {
@@ -56,42 +73,47 @@ function setContentType (headers, contentType) {
 
 /*
     Determines the content type from the given data.
+    Returns the properly encoded data and the respective content type.
 */
 function detectContentType (data) {
     if (data === null || data === undefined)
-        return null;
+        return [null, null];
 
     if (data instanceof FormData)
-        return 'multipart/form-data';
+        return [urlencode(data), 'multipart/form-data'];
 
     if (data instanceof File)
-        return 'multipart/form-data';
+        return [data, 'multipart/form-data'];
 
     if (data instanceof Blob)
-        return 'application/octet-stream';
+        return [data, 'application/octet-stream'];
 
     if (typeof data === 'string' || data instanceof String)
-        return 'text/plain';
+        return [data, 'text/plain'];
 
     if (data instanceof Element)
-        return 'text/html';
+        return [data, 'text/html'];
 
     if (data instanceof Object)
-        return 'application/json';
+        return [JSON.stringify(data), 'application/json'];
 
     LOGGER.warning('Could not detemine content type for: ' + typeof data);
-    return null;
+    return [data, null];
 }
 
 
 /*
     Detects the content type of the sent data and sets it in the headers.
+    Returns the properly encoded data and the respective content type.
 */
-function updateContentType (headers, data) {
+function updateContentType (data, headers) {
     if (headers != null && headers['Content-Type'] != null)
-        return headers;
+        return [data, headers];
 
-    return setContentType(headers, detectContentType(data))
+    let contentType;
+    data, contentType = detectContentType(data);
+    headers = setContentType(headers, contentType);
+    return [data, headers];
 }
 
 
@@ -99,12 +121,14 @@ function updateContentType (headers, data) {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
+    data, headers = updateContentType(data, headers);
+
     function executor (resolve, reject) {
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.open(method, url);
 
-        for (const header in updateContentType(headers, data))
+        for (const header in headers)
             xhr.setRequestHeader(header, headers[header]);
 
         xhr.onload = function () {
