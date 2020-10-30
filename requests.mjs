@@ -38,7 +38,9 @@ function parseResponse (string) {
 */
 export function makeRequest (method, url, data = null, headers = {}) {
     function executor (resolve, reject) {
-        function onload () {
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.onload = function () {
             if (this.status >= 200 && this.status < 300)
                 resolve({
                     response: xhr.response,
@@ -53,21 +55,15 @@ export function makeRequest (method, url, data = null, headers = {}) {
                     status: this.status,
                     statusText: xhr.statusText
                 });
-        }
-
-        function onerror () {
+        };
+        xhr.onerror = function () {
             reject({
                 response: xhr.response,
                 json: parseResponse(xhr.response),
                 status: this.status,
                 statusText: xhr.statusText
             });
-        }
-
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.onload = onload;
-        xhr.onerror = onerror;
+        };
         xhr.open(method, url);
 
         for (const header in headers)
