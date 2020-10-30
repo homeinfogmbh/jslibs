@@ -43,6 +43,11 @@ class Request extends XMLHttpRequest {
         this.withCredentials = withCredentials;
     }
 
+    static make(method, url, data, headers = {}, withCredentials = true) {
+        const request = this(method, url, data, headers, withCredentials);
+        return request.execute;
+    }
+
     onload () {
         if (this.status >= 200 && this.status < 300)
             this.resolve({
@@ -89,8 +94,7 @@ class Request extends XMLHttpRequest {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    const request = new Request(method, url, data, headers);
-    return new Promise(request.execute);
+    return new Promise(Request.make(method, url, data, headers));
 };
 
 /*
