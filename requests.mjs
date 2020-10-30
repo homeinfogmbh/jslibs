@@ -113,6 +113,7 @@ function updateContentType (data, headers) {
     let contentType;
     data, contentType = detectContentType(data);
     headers = setContentType(headers, contentType);
+    console.log('Data: ' + data + ', headers: ' + headers);
     return [data, headers];
 }
 
