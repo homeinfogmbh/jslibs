@@ -91,7 +91,7 @@ function autoencode (data) {
     Detects the content type of the sent data and sets it in the headers.
     Returns the properly encoded data and the respective content type.
 */
-function encodePayload (data, headers) {
+function encode (data, headers) {
     let contentType;
     headers = headers || {};
 
@@ -115,7 +115,7 @@ function encodePayload (data, headers) {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    [data, headers] = encodePayload(data, headers);
+    [data, headers] = encode(data, headers);
 
     function executor (resolve, reject) {
         const xhr = new XMLHttpRequest();
