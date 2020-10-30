@@ -44,7 +44,7 @@ class Request extends XMLHttpRequest {
     }
 
     static make(method, url, data, headers = {}, withCredentials = true) {
-        const request = this(method, url, data, headers, withCredentials);
+        const request = new this(method, url, data, headers, withCredentials);
         return request.execute;
     }
 
