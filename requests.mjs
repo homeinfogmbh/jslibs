@@ -129,7 +129,7 @@ export function makeRequest (method, url, data = null, headers = {}) {
         xhr.withCredentials = true;
         xhr.open(method, url);
 
-        for (const header in headers) {
+        for (const header of headers) {
             console.log('Setting header: ' + header + ' = ' + headers[header]);
             xhr.setRequestHeader(header, headers[header]);
         }
