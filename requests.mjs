@@ -33,46 +33,61 @@ function parseResponse (string) {
 }
 
 
-/*
-  Makes a request returning a promise.
-*/
-export function makeRequest (method, url, data = null, headers = {}) {
-    function executor (resolve, reject) {
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.onload = function () {
-            if (this.status >= 200 && this.status < 300)
-                resolve({
-                    response: xhr.response,
-                    json: parseResponse(xhr.response),
-                    status: this.status,
-                    statusText: xhr.statusText
-                });
-            else
-                reject({
-                    response: xhr.response,
-                    json: parseResponse(xhr.response),
-                    status: this.status,
-                    statusText: xhr.statusText
-                });
-        };
-        xhr.onerror = function () {
-            reject({
+class Request extends XMLHttpRequest {
+    constructor (resolve, reject, headers = {}, withCredentials = true) {
+        this.resolve = resolve;
+        this.reject = reject;
+        this.headers = headers;
+        this.withCredentials = withCredentials;
+    }
+
+    onload () {
+        if (this.status >= 200 && this.status < 300)
+            this.resolve({
                 response: xhr.response,
                 json: parseResponse(xhr.response),
                 status: this.status,
                 statusText: xhr.statusText
             });
-        };
-        xhr.open(method, url);
+        else
+            this.reject({
+                response: xhr.response,
+                json: parseResponse(xhr.response),
+                status: this.status,
+                statusText: xhr.statusText
+            });
+    }
 
-        for (const header in headers)
+    onerror () {
+        this.reject({
+            response: xhr.response,
+            json: parseResponse(xhr.response),
+            status: this.status,
+            statusText: xhr.statusText
+        });
+    }
+
+    execute (mthod, url, data = null, headers = {}) {
+        this.open(method, url);
+
+        for (const header in this.headers)
             xhr.setRequestHeader(header, headers[header]);
 
         if (data == null)
-            xhr.send();
+            this.send();
         else
-            xhr.send(data);
+            this.send(data);
+    }
+}
+
+
+/*
+  Makes a request returning a promise.
+*/
+export function makeRequest (method, url, data = null, headers = {}) {
+    function executor (resolve, reject) {
+        const xhr = new Request(resolve, reject);
+        xhr.execute(method, url, data, headers);
     }
 
     return new Promise(executor);
