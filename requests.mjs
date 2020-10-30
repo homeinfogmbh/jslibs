@@ -38,7 +38,14 @@ function parseResponse (response) {
 */
 export function makeRequest (method, url, data = null, headers = {}) {
     function executor (resolve, reject) {
-        function onload () {
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open(method, url);
+
+        for (const header in headers)
+            xhr.setRequestHeader(header, headers[header]);
+
+        xhr.onload = function () {
             if (this.status >= 200 && this.status < 300)
                 resolve({
                     response: xhr.response,
@@ -55,7 +62,7 @@ export function makeRequest (method, url, data = null, headers = {}) {
                 });
         }
 
-        function onerror () {
+        xhr.onerror = function () {
             reject({
                 response: xhr.response,
                 json: parseResponse(xhr.response),
@@ -63,16 +70,6 @@ export function makeRequest (method, url, data = null, headers = {}) {
                 statusText: xhr.statusText
             });
         }
-
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.open(method, url);
-
-        for (const header in headers)
-            xhr.setRequestHeader(header, headers[header]);
-
-        xhr.onload = onload;
-        xhr.onerror = onerror;
 
         if (data == null)
             xhr.send();
