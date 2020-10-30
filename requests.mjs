@@ -95,7 +95,7 @@ class Request extends XMLHttpRequest {
 */
 export function makeRequest (method, url, data = null, headers = {}) {
     return new Promise(Request.make(method, url, data, headers));
-};
+}
 
 /*
     Request shorthands.
