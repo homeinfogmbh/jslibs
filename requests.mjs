@@ -115,7 +115,7 @@ function updateContentType (data, headers) {
         return [data, headers];
 
     let contentType;
-    data, contentType = detectContentType(data);
+    [data, contentType] = detectContentType(data);
     headers = setContentType(headers, contentType);
     console.log('Data: ' + data + ', headers: ' + headers);
     console.log('Headers 2: ' + JSON.stringify(headers));
@@ -128,7 +128,7 @@ function updateContentType (data, headers) {
 */
 export function makeRequest (method, url, data = null, headers = {}) {
     console.log('Headers 0: ' + JSON.stringify(headers));
-    data, headers = updateContentType(data, headers);
+    [data, headers] = updateContentType(data, headers);
     console.log('Headers 3: ' + JSON.stringify(headers));
 
     function executor (resolve, reject) {
