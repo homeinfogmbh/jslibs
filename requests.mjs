@@ -34,18 +34,28 @@ function parseResponse (string) {
 
 
 class Request extends XMLHttpRequest {
-    constructor (method, url, data, headers = {}, withCredentials = true) {
+    constructor (withCredentials = true) {
         super();
-        this.method = method;
-        this.url = url;
-        this.data = data;
-        this.headers = headers;
         this.withCredentials = withCredentials;
     }
 
-    static make(method, url, data, headers = {}, withCredentials = true) {
-        const request = new this(method, url, data, headers, withCredentials);
-        return request.execute;
+    static make (method, url, data, headers = {}, withCredentials = true) {
+        function executor (resolve, reject) {
+            const request = new this(withCredentials);
+            request.open(method, url);
+            request.resolve = resolve;
+            request.reject = reject;
+
+            for (const header in headers)
+                request.setRequestHeader(header, headers[header]);
+
+            if (data == null)
+                request.send();
+            else
+                request.send(data);
+        }
+
+        return new Promise(executor);
     }
 
     onload () {
@@ -73,20 +83,6 @@ class Request extends XMLHttpRequest {
             statusText: xhr.statusText
         });
     }
-
-    execute (resolve, reject) {
-        this.open(this.method, this.url);
-        this.resolve = resolve;
-        this.reject = reject;
-
-        for (const header in this.headers)
-            xhr.setRequestHeader(header, headers[header]);
-
-        if (data == null)
-            this.send();
-        else
-            this.send(data);
-    }
 }
 
 
@@ -94,7 +90,7 @@ class Request extends XMLHttpRequest {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    return new Promise(Request.make(method, url, data, headers));
+    return Request.make(method, url, data, headers);
 }
 
 /*
