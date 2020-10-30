@@ -66,13 +66,12 @@ export function makeRequest (method, url, data = null, headers = {}) {
 
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
+        xhr.onload = onload;
+        xhr.onerror = onerror;
         xhr.open(method, url);
 
         for (const header in headers)
             xhr.setRequestHeader(header, headers[header]);
-
-        xhr.onload = onload;
-        xhr.onerror = onerror;
 
         if (data == null)
             xhr.send();
