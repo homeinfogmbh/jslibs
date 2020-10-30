@@ -76,8 +76,8 @@ function setContentType (headers, contentType) {
     Returns the properly encoded data and the respective content type.
 */
 function detectContentType (data) {
-    if (data === null || data === undefined)
-        return [null, null];
+    if (data == null)
+        return [data, null];
 
     if (data instanceof FormData)
         return [urlencode(data), 'multipart/form-data'];
@@ -129,8 +129,10 @@ export function makeRequest (method, url, data = null, headers = {}) {
         xhr.withCredentials = true;
         xhr.open(method, url);
 
-        for (const header in headers)
+        for (const header in headers) {
+            console.log('Setting header: ' + header + ' = ' + headers[header]);
             xhr.setRequestHeader(header, headers[header]);
+        }
 
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300)
