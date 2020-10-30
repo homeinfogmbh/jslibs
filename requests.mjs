@@ -50,6 +50,9 @@ function setContentType (headers, contentType) {
     Determines the content type from the given data.
 */
 function detectContentType (data) {
+    if (data === null || data === undefined)
+        return null;
+
     if (data instanceof FormData)
         return 'multipart/form-data';
 
@@ -92,7 +95,7 @@ export function makeRequest (method, url, data = null, headers = {}) {
         xhr.withCredentials = true;
         xhr.open(method, url);
 
-        for (const header in headers)
+        for (const header in updateContentType(headers, data))
             xhr.setRequestHeader(header, headers[header]);
 
         xhr.onload = function () {
@@ -146,21 +149,21 @@ export const request = {
         Makes a POST request.
     */
     post: function (url, data = null, headers = {}) {
-        return makeRequest('POST', url, data, updateContentType(headers, data));
+        return makeRequest('POST', url, data, headers);
     },
 
     /*
         Makes a PUT request.
     */
     put: function (url, data = null, headers = {}) {
-        return makeRequest('PUT', url, data, updateContentType(headers, data));
+        return makeRequest('PUT', url, data, headers);
     },
 
     /*
         Makes a PATCH request.
     */
     patch: function (url, data = null, headers = {}) {
-        return makeRequest('PATCH', url, data, updateContentType(headers, data));
+        return makeRequest('PATCH', url, data, headers);
     },
 
     /*
