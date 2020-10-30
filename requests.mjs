@@ -34,6 +34,16 @@ function parseResponse (response) {
 
 
 /*
+    Adds JSON content type to headers
+*/
+function jsonify (headers) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+    return headers;
+}
+
+
+/*
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
@@ -78,7 +88,8 @@ export function makeRequest (method, url, data = null, headers = {}) {
     }
 
     return new Promise(executor);
-};
+}
+
 
 /*
     Request shorthands.
@@ -120,33 +131,33 @@ export const request = {
     }
 };
 
+
 /*
     JSON-requests.
 */
 export const json = {
     get: request.get,
+
     /*
         Makes a POST request with JSON data.
     */
     post: function (url, data, headers = {}) {
-        headers['Content-Type'] = 'application/json';
-        return request.post(url, JSON.stringify(data), headers);
+        return request.post(url, JSON.stringify(data), jsonify(headers));
     },
 
     /*
         Makes a PUT request with JSON data.
     */
     put: function (url, data, headers = {}) {
-        headers['Content-Type'] = 'application/json';
-        return request.put(url, JSON.stringify(data), headers);
+        return request.put(url, JSON.stringify(data), jsonify(headers));
     },
 
     /*
         Makes a PATCH request with JSON data.
     */
     patch: function (url, data, headers = {}) {
-        headers['Content-Type'] = 'application/json';
-        return request.patch(url, JSON.stringify(data), headers);
+        return request.patch(url, JSON.stringify(data), jsonify(headers));
     },
+
     delete: request.delete
 };
