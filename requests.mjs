@@ -24,65 +24,11 @@
 /*
     Parses JSON from a string and returns undefined on errors.
 */
-function parseResponse (string) {
+function parseResponse (response) {
     try {
-        return JSON.parse(string);
+        return JSON.parse(response);
     } catch (error) {
         return undefined;
-    }
-}
-
-
-class Request extends XMLHttpRequest {
-    constructor (withCredentials = true) {
-        super();
-        this.withCredentials = withCredentials;
-    }
-
-    static make (method, url, data, headers = {}, withCredentials = true) {
-        const request = new this(withCredentials);
-
-        function executor (resolve, reject) {
-            request.open(method, url);
-            request.resolve = resolve;
-            request.reject = reject;
-
-            for (const header in headers)
-                request.setRequestHeader(header, headers[header]);
-
-            if (data == null)
-                request.send();
-            else
-                request.send(data);
-        }
-
-        return new Promise(executor);
-    }
-
-    onload () {
-        if (this.status >= 200 && this.status < 300)
-            this.resolve({
-                response: xhr.response,
-                json: parseResponse(xhr.response),
-                status: this.status,
-                statusText: xhr.statusText
-            });
-        else
-            this.reject({
-                response: xhr.response,
-                json: parseResponse(xhr.response),
-                status: this.status,
-                statusText: xhr.statusText
-            });
-    }
-
-    onerror () {
-        this.reject({
-            response: xhr.response,
-            json: parseResponse(xhr.response),
-            status: this.status,
-            statusText: xhr.statusText
-        });
     }
 }
 
@@ -92,22 +38,50 @@ class Request extends XMLHttpRequest {
 */
 export function makeRequest (method, url, data = null, headers = {}) {
     function executor (resolve, reject) {
-        const request = new Request();
-        request.resolve = resolve;
-        request.reject = reject;
-        request.open(method, url);
+        function onload () {
+            if (this.status >= 200 && this.status < 300)
+                resolve({
+                    response: xhr.response,
+                    json: parseResponse(xhr.response),
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            else
+                reject({
+                    response: xhr.response,
+                    json: parseResponse(xhr.response),
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+        }
+
+        function onerror () {
+            reject({
+                response: xhr.response,
+                json: parseResponse(xhr.response),
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open(method, url);
 
         for (const header in headers)
-            request.setRequestHeader(header, headers[header]);
+            xhr.setRequestHeader(header, headers[header]);
+
+        xhr.onload = onload;
+        xhr.onerror = onerror;
 
         if (data == null)
-            request.send();
+            xhr.send();
         else
-            request.send(data);
+            xhr.send(data);
     }
 
     return new Promise(executor);
-}
+};
 
 /*
     Request shorthands.
