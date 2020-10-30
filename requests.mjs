@@ -35,6 +35,7 @@ function parseResponse (string) {
 
 class Request extends XMLHttpRequest {
     constructor (resolve, reject, headers = {}, withCredentials = true) {
+        super();
         this.resolve = resolve;
         this.reject = reject;
         this.headers = headers;
