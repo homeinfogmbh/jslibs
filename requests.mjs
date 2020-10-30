@@ -93,9 +93,9 @@ class Request extends XMLHttpRequest {
 export function makeRequest (method, url, data = null, headers = {}) {
     function executor (resolve, reject) {
         const request = new Request();
-        request.open(method, url);
         request.resolve = resolve;
         request.reject = reject;
+        request.open(method, url);
 
         for (const header in headers)
             request.setRequestHeader(header, headers[header]);
