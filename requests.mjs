@@ -37,10 +37,11 @@ function parseJSON (string) {
     Adds JSON content type to headers
 */
 function setContentType (headers, contentType) {
+    headers = headers || {};
+
     if (contentType == null)
         return headers;
 
-    headers = headers || {};
     headers['Content-Type'] = contentType;
     return headers;
 }
