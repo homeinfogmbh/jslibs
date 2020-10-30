@@ -91,7 +91,22 @@ class Request extends XMLHttpRequest {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    return Request.make(method, url, data, headers);
+    function executor (resolve, reject) {
+        const request = new Request();
+        request.open(method, url);
+        request.resolve = resolve;
+        request.reject = reject;
+
+        for (const header in headers)
+            request.setRequestHeader(header, headers[header]);
+
+        if (data == null)
+            request.send();
+        else
+            request.send(data);
+    }
+
+    return new Promise(executor);
 }
 
 /*
