@@ -128,11 +128,10 @@ export function makeRequest (method, url, data = null, headers = {}) {
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.open(method, url);
+        console.log('Headers: ' + JSON.stringify(headers));
 
-        for (const header of headers) {
-            console.log('Setting header: ' + header + ' = ' + headers[header]);
+        for (const header of headers)
             xhr.setRequestHeader(header, headers[header]);
-        }
 
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300)
