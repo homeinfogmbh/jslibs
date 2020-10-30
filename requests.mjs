@@ -61,15 +61,12 @@ function urlencode (formData) {
     Adds JSON content type to headers
 */
 function setContentType (headers, contentType) {
-    console.log('Headers A: ' + JSON.stringify(headers));
     headers = headers || {};
 
     if (contentType == null)
         return headers;
 
-    console.log('Headers B: ' + JSON.stringify(headers));
     headers['Content-Type'] = contentType;
-    console.log('Headers C: ' + JSON.stringify(headers));
     return headers;
 }
 
@@ -110,15 +107,12 @@ function detectContentType (data) {
     Returns the properly encoded data and the respective content type.
 */
 function updateContentType (data, headers) {
-    console.log('Headers 1: ' + JSON.stringify(headers));
     if (headers != null && headers['Content-Type'] != null)
         return [data, headers];
 
     let contentType;
     [data, contentType] = detectContentType(data);
     headers = setContentType(headers, contentType);
-    console.log('Data: ' + data + ', headers: ' + headers);
-    console.log('Headers 2: ' + JSON.stringify(headers));
     return [data, headers];
 }
 
@@ -127,15 +121,12 @@ function updateContentType (data, headers) {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    console.log('Headers 0: ' + JSON.stringify(headers));
     [data, headers] = updateContentType(data, headers);
-    console.log('Headers 3: ' + JSON.stringify(headers));
 
     function executor (resolve, reject) {
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.open(method, url);
-        console.log('Headers 4: ' + JSON.stringify(headers));
 
         for (const header in headers)
             xhr.setRequestHeader(header, headers[header]);
