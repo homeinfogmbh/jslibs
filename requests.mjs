@@ -22,17 +22,21 @@
 
 
 /*
+    Parses JSON from a string and returns undefined on errors.
+*/
+function parseResponse (string) {
+    try {
+        return JSON.parse(string);
+    } catch (error) {
+        return undefined;
+    }
+}
+
+
+/*
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
-    function parseResponse (response) {
-        try {
-            return JSON.parse(response);
-        } catch (error) {
-            return undefined;
-        }
-    }
-
     function executor (resolve, reject) {
         function onload () {
             if (this.status >= 200 && this.status < 300)
