@@ -40,8 +40,9 @@ class Request extends XMLHttpRequest {
     }
 
     static make (method, url, data, headers = {}, withCredentials = true) {
+        const request = new this(withCredentials);
+
         function executor (resolve, reject) {
-            const request = new this(withCredentials);
             request.open(method, url);
             request.resolve = resolve;
             request.reject = reject;
