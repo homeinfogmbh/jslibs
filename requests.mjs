@@ -24,9 +24,9 @@
 /*
     Parses JSON from a string and returns undefined on errors.
 */
-function parseResponse (response) {
+function parseJSON (string) {
     try {
-        return JSON.parse(response);
+        return JSON.parse(string);
     } catch (error) {
         return undefined;
     }
@@ -59,14 +59,14 @@ export function makeRequest (method, url, data = null, headers = {}) {
             if (this.status >= 200 && this.status < 300)
                 resolve({
                     response: xhr.response,
-                    json: parseResponse(xhr.response),
+                    json: parseJSON(xhr.response),
                     status: this.status,
                     statusText: xhr.statusText
                 });
             else
                 reject({
                     response: xhr.response,
-                    json: parseResponse(xhr.response),
+                    json: parseJSON(xhr.response),
                     status: this.status,
                     statusText: xhr.statusText
                 });
@@ -75,7 +75,7 @@ export function makeRequest (method, url, data = null, headers = {}) {
         xhr.onerror = function () {
             reject({
                 response: xhr.response,
-                json: parseResponse(xhr.response),
+                json: parseJSON(xhr.response),
                 status: this.status,
                 statusText: xhr.statusText
             });
