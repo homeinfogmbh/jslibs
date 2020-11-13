@@ -109,6 +109,20 @@ export class Range {
     }
 }
 
+
+/*
+    Decorator to only run on 1st of April.
+*/
+export function aprilsFool (func) {
+    return function (...args) {
+        const now = new Date();
+
+        if (now.getMonth() == 4 && now.getDate() == 1)
+            return func(...args);
+    };
+}
+
+
 /*
     Converts true, false and null into a string.
 */
@@ -158,19 +172,6 @@ export function date (date) {
 */
 export function dot2comma (string) {
     return string.replace('.', ',');
-}
-
-
-/*
-    Decorator to only run on 1st of April.
-*/
-export function aprilsFool (func) {
-    return function (...args) {
-        const now = new Date();
-
-        if (now.getMonth() == 4 && now.getDate() == 1)
-            return func(...args);
-    };
 }
 
 
