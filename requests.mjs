@@ -21,6 +21,12 @@
 'use strict';
 
 
+import { Logger } from './logging.mjs';
+
+
+const LOGGER = new Logger('requests');
+
+
 /*
     Parses JSON from a string and returns undefined on errors.
 */
@@ -28,58 +34,80 @@ function parseJSON (string) {
     try {
         return JSON.parse(string);
     } catch (error) {
+        LOGGER.warning('Could not parse JSON from string: ' + string);
         return undefined;
     }
 }
 
 
 /*
-    Adds JSON content type to headers
+    URL encodes form data.
 */
-function setContentType (headers, contentType) {
-    if (contentType == null)
-        return headers;
+function urlencode (formData) {
+    const keyValuePairs = [];
+    let keyValuePair;
 
-    headers = headers || {};
-    headers['Content-Type'] = contentType;
-    return headers;
+    for (const key in formData) {
+        keyValuePair = [encodeURIComponent(key), encodeURIComponent(formData[key])];
+        keyValuePairs.push(keyValuePair.join('='));
+    }
+
+    return keyValuePairs.join('&').replace(/%20/g, '+');
 }
 
 
 /*
     Determines the content type from the given data.
+    Returns the properly encoded data and the respective content type.
 */
-function detectContentType (data) {
+function autoencode (data) {
+    if (data == null)
+        return [data, null];
+
     if (data instanceof FormData)
-        return 'multipart/form-data';
+        return [urlencode(data), 'multipart/form-data'];
 
     if (data instanceof File)
-        return 'multipart/form-data';
+        return [data, 'multipart/form-data'];
 
     if (data instanceof Blob)
-        return 'application/octet-stream';
+        return [data, 'application/octet-stream'];
 
     if (typeof data === 'string' || data instanceof String)
-        return 'text/plain';
+        return [data, 'text/plain'];
 
     if (data instanceof Element)
-        return 'text/html';
+        return [data, 'text/html'];
 
     if (data instanceof Object)
-        return 'application/json';
+        return [JSON.stringify(data), 'application/json'];
 
-    return null;
+    LOGGER.warning('Could not detemine content type for: ' + typeof data);
+    return [data, null];
 }
 
 
 /*
     Detects the content type of the sent data and sets it in the headers.
+    Returns the properly encoded data and the respective content type.
 */
-function updateContentType (headers, data) {
-    if (headers != null && headers['Content-Type'] != null)
-        return headers;
+function encode (data, headers) {
+    let contentType;
+    headers = headers || {};
 
-    return setContentType(headers, detectContentType(data))
+    if (data == null)
+        return [data, headers];
+
+    if (headers != null && headers['Content-Type'] != null)
+        return [data, headers];
+
+    [data, contentType] = autoencode(data);
+
+    if (contentType == null)
+        return [data, headers];
+
+    headers['Content-Type'] = contentType;
+    return [data, headers];
 }
 
 
@@ -87,6 +115,8 @@ function updateContentType (headers, data) {
   Makes a request returning a promise.
 */
 export function makeRequest (method, url, data = null, headers = {}) {
+    [data, headers] = encode(data, headers);
+
     function executor (resolve, reject) {
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
@@ -146,21 +176,21 @@ export const request = {
         Makes a POST request.
     */
     post: function (url, data = null, headers = {}) {
-        return makeRequest('POST', url, data, updateContentType(headers, data));
+        return makeRequest('POST', url, data, headers);
     },
 
     /*
         Makes a PUT request.
     */
     put: function (url, data = null, headers = {}) {
-        return makeRequest('PUT', url, data, updateContentType(headers, data));
+        return makeRequest('PUT', url, data, headers);
     },
 
     /*
         Makes a PATCH request.
     */
     patch: function (url, data = null, headers = {}) {
-        return makeRequest('PATCH', url, data, updateContentType(headers, data));
+        return makeRequest('PATCH', url, data, headers);
     },
 
     /*
