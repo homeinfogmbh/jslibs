@@ -21,7 +21,7 @@
 'use strict';
 
 
-export const NEW_LINE = new RegExp('\r?\n','g');
+export const NEW_LINE = new RegExp('\r?\n', 'g');
 export const EMAIL = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 export const ENTITYMAP = {
     '&': '&amp;',
