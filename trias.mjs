@@ -26,322 +26,305 @@
 */
 'use strict';
 
-var trias = trias || {};
-trias.logger = new homeinfo.logging.Logger('trias', homeinfo.logging.DEBUG);
-trias.config = {};
-trias.xmlSerializer = new XMLSerializer();
+
+import { Logger } from './logging.mjs';
 
 
-trias.trias = function (serviceRequest) {
+const LOGGER = new Logger('trias', homeinfo.logging.DEBUG);
+const XML_SERIALIZER = new XMLSerializer();
+
+
+function trias (serviceRequest) {
     const xmlDoc = document.implementation.createDocument('trias', 'Trias', null);
     const root = xmlDoc.getElementsByTagName('Trias')[0];
     root.setAttribute('version', '1.0');
 
-    if (serviceRequest != null) {
+    if (serviceRequest != null)
         root.appendChild(serviceRequest);
-    }
 
     return xmlDoc;
-};
+}
 
 
-trias.siriElement = function (name) {
+function siriElement (name) {
     return document.createElementNS('http://www.siri.org.uk/siri', 'siri:' + name);
-};
+}
 
 
-trias.triasElement = function (name) {
+function triasElement (name) {
     return document.createElementNS('trias', name);
-};
+}
 
 
-trias.requestTimestamp = function (datetime) {
-    const requestTimestamp = trias.siriElement('RequestTimestamp');
+function requestTimestamp (datetime) {
+    const requestTimestamp = siriElement('RequestTimestamp');
 
-    if (datetime == null) {
+    if (datetime == null)
         datetime = new Date();
-    }
 
     requestTimestamp.textContent = datetime.toISOString();
     return requestTimestamp;
-};
+}
 
 
-trias.requestorRef = function (requestor) {
-    const requestorRef = trias.siriElement('RequestorRef');
+function requestorRef (requestor) {
+    const requestorRef = siriElement('RequestorRef');
     requestorRef.textContent = requestor;
     return requestorRef;
-};
+}
 
 
-trias.requestPayload = function (content) {
-    const requestPayload = trias.triasElement('RequestPayload');
+function requestPayload (content) {
+    const requestPayload = triasElement('RequestPayload');
 
-    if (content != null) {
+    if (content != null)
         requestPayload.appendChild(content);
-    }
 
     return requestPayload;
-};
+}
 
 
-trias.serviceRequest = function (requestTimestamp, requestorRef, payload) {
-    const serviceRequest = trias.triasElement('ServiceRequest');
+function serviceRequest (requestTimestamp, requestorRef, payload) {
+    const serviceRequest = triasElement('ServiceRequest');
     serviceRequest.appendChild(requestTimestamp);
     serviceRequest.appendChild(requestorRef);
 
-    if (payload != null) {
+    if (payload != null)
         serviceRequest.appendChild(payload);
-    }
 
     return serviceRequest;
-};
+}
 
 
-trias.text = function (value) {
-    const text = trias.triasElement('Text');
+function text (value) {
+    const text = triasElement('Text');
     text.textContent = value;
     return text;
-};
+}
 
 
-trias.locationName = function (text) {
-    const locationName = trias.triasElement('LocationName');
+function locationName (text) {
+    const locationName = triasElement('LocationName');
 
-    if (typeof(text) == 'string') {
+    if (typeof(text) == 'string')
         locationName.textContent = text;
-    } else {
+    else
         locationName.appendChild(text);
-    }
 
     return locationName;
-};
+}
 
 
-trias.initialInput = function (content) {
-    const initialInput = trias.triasElement('InitialInput');
+function initialInput (content) {
+    const initialInput = triasElement('InitialInput');
 
-    if (content != null) {
+    if (content != null)
         initialInput.appendChild(content);
-    }
 
     return initialInput;
-};
+}
 
 
-trias.type = function (name) {
-    const type = trias.triasElement('Type');
+function type (name) {
+    const type = triasElement('Type');
 
-    if (name == null) {
+    if (name == null)
         name = 'address';
-    }
 
     type.textContent = name;
     return type;
-};
+}
 
 
-trias.language = function (name) {
-    const language = trias.triasElement('Language');
+function language (name) {
+    const language = triasElement('Language');
 
-    if (name == null) {
+    if (name == null)
         name = 'de';
-    }
 
     language.textContent = name;
     return language;
-};
+}
 
 
-trias.numberOfResults = function (number) {
-    const numberOfResults = trias.triasElement('NumberOfResults');
+function numberOfResults (number) {
+    const numberOfResults = triasElement('NumberOfResults');
 
-    if (number == null) {
+    if (number == null)
         number = 1;
-    }
 
     numberOfResults.textContent = number;
     return numberOfResults;
-};
+}
 
 
-trias.restrictions = function (type, language, numberOfResults) {
-    const restrictions = trias.triasElement('Restrictions');
+function restrictions (type, language, numberOfResults) {
+    const restrictions = triasElement('Restrictions');
     restrictions.appendChild(type);
     restrictions.appendChild(language);
     restrictions.appendChild(numberOfResults);
     return restrictions;
-};
+}
 
 
-trias.locationInformationRequest = function (initialInput, restrictions) {
-    const locationInformationRequest = trias.triasElement('LocationInformationRequest');
+function locationInformationRequest (initialInput, restrictions) {
+    const locationInformationRequest = triasElement('LocationInformationRequest');
 
-    if (initialInput != null) {
+    if (initialInput != null)
         locationInformationRequest.appendChild(initialInput);
-    }
 
-    if (restrictions != null) {
+    if (restrictions != null)
         locationInformationRequest.appendChild(restrictions);
-    }
 
     return locationInformationRequest;
-};
+}
 
 
-trias.longitude = function (value) {
-    const longitude = trias.triasElement('Longitude');
+function longitude (value) {
+    const longitude = triasElement('Longitude');
     longitude.textContent = value;
     return longitude;
-};
+}
 
 
-trias.latitude = function (value) {
-    const latitude = trias.triasElement('Latitude');
+function latitude (value) {
+    const latitude = triasElement('Latitude');
     latitude.textContent = value;
     return latitude;
-};
+}
 
 
-trias.center = function (longitude, latitude) {
-    const center = trias.triasElement('Center');
+function center (longitude, latitude) {
+    const center = triasElement('Center');
     center.appendChild(longitude);
     center.appendChild(latitude);
     return center;
-};
+}
 
 
-trias.radius = function (value) {
-    const radius = trias.triasElement('Radius');
+function radius (value) {
+    const radius = triasElement('Radius');
     radius.textContent = value;
     return radius;
-};
+}
 
 
-trias.circle = function (center, radius) {
-    const circle = trias.triasElement('Circle');
+function circle (center, radius) {
+    const circle = triasElement('Circle');
     circle.appendChild(center);
     circle.appendChild(radius);
     return circle;
-};
+}
 
 
-trias.geoRestriction = function (circle) {
-    const geoRestriction = trias.triasElement('GeoRestriction');
+function geoRestriction (circle) {
+    const geoRestriction = triasElement('GeoRestriction');
     geoRestriction.appendChild(circle);
     return geoRestriction;
-};
+}
 
 
-trias.stopPointRef = function (value) {
-    const stopPointRef = trias.triasElement('StopPointRef');
+function stopPointRef (value) {
+    const stopPointRef = triasElement('StopPointRef');
     stopPointRef.textContent = value;
     return stopPointRef;
-};
+}
 
 
-trias.locationRef = function (stopPointRef, locationName) {
-    const locationRef = trias.triasElement('LocationRef');
+function locationRef (stopPointRef, locationName) {
+    const locationRef = triasElement('LocationRef');
     locationRef.appendChild(stopPointRef);
     locationRef.appendChild(locationName);
     return locationRef;
-};
+}
 
 
-trias.depArrTime = function (moment) {
-    const depArrTime = trias.triasElement('DepArrTime');
+function depArrTime (moment) {
+    const depArrTime = triasElement('DepArrTime');
     const dateTimeString = moment.format();
-    trias.logger.debug('Got datetime string: ' + dateTimeString);
+    LOGGER.debug('Got datetime string: ' + dateTimeString);
     depArrTime.textContent = dateTimeString;
     return depArrTime;
-};
+}
 
 
-trias.location = function (locationRef, tripLocation, depArrTime, individualTransportOptions) {
-    const locationContext = trias.triasElement('Location');
+function location (locationRef, tripLocation, depArrTime, individualTransportOptions) {
+    const locationContext = triasElement('Location');
     const ambigErr = 'Must specify either locationRef xor tripLocation';
 
-    if (locationRef != null && tripLocation != null) {
+    if (locationRef != null && tripLocation != null)
         throw ambigErr;
-    } else if (locationRef!= null) {
+    else if (locationRef!= null)
         locationContext.appendChild(locationRef);
-    } else if (tripLocation!= null) {
+    else if (tripLocation!= null)
         locationContext.appendChild(tripLocation);
-    } else {
+    else
         throw ambigErr;
-    }
 
-    if (depArrTime != null) {
+    if (depArrTime != null)
         locationContext.appendChild(depArrTime);
-    }
 
     if (individualTransportOptions != null) {
-        for (let individualTransportOption of individualTransportOptions) {
+        for (let individualTransportOption of individualTransportOptions)
             locationContext.appendChild(individualTransportOption);
-        }
     }
 
     return locationContext;
-};
+}
 
 
-trias.stopEventRequest = function (location, params) {
-    const stopEventRequest = trias.triasElement('StopEventRequest');
+function stopEventRequest (location, params) {
+    const stopEventRequest = triasElement('StopEventRequest');
 
-    if (location != null) {
+    if (location != null)
         stopEventRequest.appendChild(location);
-    }
 
-    if (params != null) {
+    if (params != null)
         stopEventRequest.appendChild(params);
-    }
 
     return stopEventRequest;
-};
+}
 
 
-trias.numberOfResults = function (number) {
-    const numberOfResults = trias.triasElement('NumberOfResults');
+function numberOfResults (number) {
+    const numberOfResults = triasElement('NumberOfResults');
     numberOfResults.textContent = number;
     return numberOfResults;
-};
+}
 
 
-trias.stopEventParam = function (stopEventDataFilterGroup, stopEventPolicyGroup, stopEventContentFilterGroup) {
-    const stopEventParam = trias.triasElement('Params');
+function stopEventParam (stopEventDataFilterGroup, stopEventPolicyGroup, stopEventContentFilterGroup) {
+    const stopEventParam = triasElement('Params');
 
     if (stopEventDataFilterGroup != null) {
-        for (let stopEventDataFilter of stopEventDataFilterGroup) {
+        for (let stopEventDataFilter of stopEventDataFilterGroup)
             stopEventParam.appendChild(stopEventDataFilter);
-        }
     }
 
     if (stopEventPolicyGroup != null) {
-        for (let stopEventPolicy of stopEventPolicyGroup) {
+        for (let stopEventPolicy of stopEventPolicyGroup)
             stopEventParam.appendChild(stopEventPolicy);
-        }
     }
 
     if (stopEventContentFilterGroup != null) {
-        for (let stopEventContentFilter of stopEventContentFilterGroup) {
+        for (let stopEventContentFilter of stopEventContentFilterGroup)
             stopEventParam.appendChild(stopEventContentFilter);
-        }
     }
 
     return stopEventParam;
-};
+}
 
 
-trias._apiError = function () {
+function apiError () {
     swal({
         title: 'Fehler.',
         text: 'Konnte Daten nicht von API abfragen.',
         type: 'error'
     });
-};
+}
 
 
-trias.TriasClient = class {
+export class TriasClient {
     constructor (url, requestorRef) {
         this.url = url || 'https://backend.homeinfo.de/trias';
         this.requestorRef = requestorRef || 'homeinfo.de';
@@ -349,8 +332,8 @@ trias.TriasClient = class {
 
     query (xmlDoc) {
         const url = this.url;
-        const xmlText = trias.xmlSerializer.serializeToString(xmlDoc);
-        trias.logger.debug('Sending:\n' + xmlText);
+        const xmlText = XML_SERIALIZER.serializeToString(xmlDoc);
+        LOGGER.debug('Sending:\n' + xmlText);
 
         return jQuery.ajax({
             url: url,
@@ -360,87 +343,105 @@ trias.TriasClient = class {
     }
 
     locationRequest (locationName) {
-        return trias.trias(
-            trias.serviceRequest(
-                trias.requestTimestamp(),
-                trias.requestorRef(this.requestorRef),
-                trias.requestPayload(
-                    trias.locationInformationRequest(
-                        trias.initialInput(trias.locationName(locationName)),
-                        trias.restrictions(
-                            trias.type('address'),
-                            trias.language(),
-                            trias.numberOfResults(1))))));
+        return trias(
+            serviceRequest(
+                requestTimestamp(),
+                requestorRef(this.requestorRef),
+                requestPayload(
+                    locationInformationRequest(
+                        initialInput(locationName(locationName)),
+                        restrictions(
+                            type('address'),
+                            language(),
+                            numberOfResults(1)
+                        )
+                    )
+                )
+            )
+        );
     }
 
     stopsRequest (longitude, latitude, radius, results) {
-        return trias.trias(
-            trias.serviceRequest(
-                trias.requestTimestamp(),
-                trias.requestorRef(this.requestorRef),
-                trias.requestPayload(
-                    trias.locationInformationRequest(
-                        trias.initialInput(
-                            trias.geoRestriction(
-                                trias.circle(
-                                    trias.center(
-                                        trias.longitude(longitude),
-                                        trias.latitude(latitude)),
-                                    trias.radius(radius)))),
-                        trias.restrictions(
-                            trias.type('stop'),
-                            trias.language(),
-                            trias.numberOfResults(results))))));
+        return trias(
+            serviceRequest(
+                requestTimestamp(),
+                requestorRef(this.requestorRef),
+                requestPayload(
+                    locationInformationRequest(
+                        initialInput(
+                            geoRestriction(
+                                circle(
+                                    center(
+                                        longitude(longitude),
+                                        latitude(latitude)
+                                    ),
+                                    radius(radius)
+                                )
+                            )
+                        ),
+                        restrictions(
+                            type('stop'),
+                            language(),
+                            numberOfResults(results)
+                        )
+                    )
+                )
+            )
+        );
     }
 
     stopEventsRequest (stopPointRef, depArrTime, results) {
-        return trias.trias(
-            trias.serviceRequest(
-                trias.requestTimestamp(),
-                trias.requestorRef(this.requestorRef),
-                trias.requestPayload(
-                    trias.stopEventRequest(
-                        trias.location(
-                            trias.locationRef(
-                                trias.stopPointRef(stopPointRef),
-                                trias.locationName(trias.text())),
+        return trias(
+            serviceRequest(
+                requestTimestamp(),
+                requestorRef(this.requestorRef),
+                requestPayload(
+                    stopEventRequest(
+                        location(
+                            locationRef(
+                                stopPointRef(stopPointRef),
+                                locationName(text())
+                            ),
                             null,
-                            trias.depArrTime(depArrTime),
-                            null),
-                        trias.stopEventParam(
+                            depArrTime(depArrTime),
+                            null
+                        ),
+                        stopEventParam(
                             null,
-                            [trias.numberOfResults(results)],
-                            null)))));
+                            [numberOfResults(results)],
+                            null
+                        )
+                    )
+                )
+            )
+        );
     }
-};
+}
 
 
 /*
     Stop event data wrapper.
 */
-trias.StopEvent = class {
+class StopEvent = class {
     constructor (xml, timeZone) {
-        if (timeZone == null) {
+        if (timeZone == null)
             this.timeZone = '+02:00';
-        } else {
+        else
             this.timeZone = timeZone;
-        }
 
         this.timetabledTime = new Date(xml.getElementsByTagName('TimetabledTime')[0].textContent + this.timeZone);
         const estimatedTimes = xml.getElementsByTagName('EstimatedTime');
 
-        if (estimatedTimes.length > 0) {
+        if (estimatedTimes.length > 0)
             this.estimatedTime = new Date(estimatedTimes[0].textContent + this.timeZone);
-        }
 
         this.line = xml.getElementsByTagName('PublishedLineName')[0].getElementsByTagName('Text')[0].textContent;
         this.destination = xml.getElementsByTagName('DestinationText')[0].getElementsByTagName('Text')[0].textContent;
     }
 
     delay () {
-        if (this.estimatedTime != null) {
+        if (this.estimatedTime != null)
             return (this.estimatedTime.getTime() - this.timetabledTime.getTime()) / 60000;
-        }
 
         return 0;
     }
@@ -452,7 +453,7 @@ trias.StopEvent = class {
         if (delay > 0) {
             const strike = document.createElement('s');
             strike.textContent = departure;
-            departure = trias.xmlSerializer.serializeToString(strike);
+            departure = XML_SERIALIZER.serializeToString(strike);
             departure += ' ' + homeinfo.date.time(this.estimatedTime) + ' (+' + delay + ' min.)';
         }
 
@@ -462,28 +463,28 @@ trias.StopEvent = class {
     lineInfo () {
         return 'Linie ' + this.line + ' nach ' + this.destination;
     }
-};
+}
 
 
-trias.StopPoint = function (name) {
+function StopPoint (name) {
     this.name = name;
     this.stopEvents = [];
-};
+}
 
 
-trias.StopEvents = class {
+class StopEvents {
     constructor (locationName, depArrTime, radius, stops, eventsPerStop) {
-        trias.logger.debug('Location name: ' + locationName);
-        trias.logger.debug('Time: ' + depArrTime);
-        trias.logger.debug('Radius: ' + radius);
-        trias.logger.debug('Stops: ' + stops);
-        trias.logger.debug('Events per stop: ' + eventsPerStop);
+        LOGGER.debug('Location name: ' + locationName);
+        LOGGER.debug('Time: ' + depArrTime);
+        LOGGER.debug('Radius: ' + radius);
+        LOGGER.debug('Stops: ' + stops);
+        LOGGER.debug('Events per stop: ' + eventsPerStop);
         this.locationName = locationName;
         this.depArrTime = depArrTime;
         this.radius = radius;
         this.stops = stops;
         this.eventsPerStop = eventsPerStop;
-        this.client = new trias.TriasClient();
+        this.client = new TriasClient();
     }
 
     stopTime (departure) {
@@ -504,9 +505,8 @@ trias.StopEvents = class {
         const stopEventRow = document.createElement('div');
         let oddEvenClass = 'stopEventRowOdd';
 
-        if (i % 2) {    // compensate for counter starting at 0
+        if (i % 2)  // compensate for counter starting at 0
             oddEvenClass = 'stopEventRowEven';
-        }
 
         stopEventRow.setAttribute('class', 'row stopEventRow ' + oddEvenClass);
         stopEventRow.appendChild(stopTime);
@@ -590,12 +590,11 @@ trias.StopEvents = class {
 
     _renderStopPoints (target, counter, xml) {
         const name = xml.getElementsByTagName('StopPointName')[0].getElementsByTagName('Text')[0].textContent;
-        const stopPoint = new trias.StopPoint(name);
+        const stopPoint = new StopPoint(name);
         const stopEventResults = xml.getElementsByTagName('StopEventResult');
 
-        for (let stopEventResult of stopEventResults) {
-            stopPoint.stopEvents.push(new trias.StopEvent(stopEventResult));
-        }
+        for (let stopEventResult of stopEventResults)
+            stopPoint.stopEvents.push(new StopEvent(stopEventResult));
 
         this._renderStopPoint(stopPoint, target, counter);
     }
@@ -612,7 +611,7 @@ trias.StopEvents = class {
         if (stopPoints > 0) {
             for (let i = 0; i < stopPoints; i++) {
                 let stopPointRef = stopPointRefNodes[i].textContent;
-                trias.logger.debug('Got StopPointRef: ' + stopPointRef);
+                LOGGER.debug('Got StopPointRef: ' + stopPointRef);
                 let stopEventsRequest = this.client.stopEventsRequest(stopPointRef, this.depArrTime, this.eventsPerStop);
                 let promise = this.client.query(stopEventsRequest).then(this._renderStopPointsFactory(target, i));
                 promises.push(promise);
@@ -621,7 +620,7 @@ trias.StopEvents = class {
             return Promise.reject('No stops found.').then(null, this._noStopsFound);
         }
 
-        trias.logger.debug('Pending promises: ' + promises);
+        LOGGER.debug('Pending promises: ' + promises);
         return Promise.all(promises).then(null, this._noStopsFound);
     }
 
@@ -633,14 +632,13 @@ trias.StopEvents = class {
         const longitudes = xml.getElementsByTagName('Longitude');
         const latitudes = xml.getElementsByTagName('Latitude');
 
-        if (longitudes.length == 0 || latitudes.length == 0) {
+        if (longitudes.length == 0 || latitudes.length == 0)
             return Promise.reject('No stops found.').then(null, this._noStopsFound);
-        }
 
         const longitude = longitudes[0].textContent;
-        trias.logger.debug('Longitude: ' + longitude);
+        LOGGER.debug('Longitude: ' + longitude);
         const latitude = latitudes[0].textContent;
-        trias.logger.debug('Latitude: ' + latitude);
+        LOGGER.debug('Latitude: ' + latitude);
         const stopsRequest = this.client.stopsRequest(longitude, latitude, this.radius, this.stops);
         return this.client.query(stopsRequest).then(this._renderStopFactory(target));
     }
@@ -651,6 +649,6 @@ trias.StopEvents = class {
 
     render (target) {
         const locationRequest = this.client.locationRequest(this.locationName);
-        return this.client.query(locationRequest).then(this._renderLocationFactory(target), trias._apiError);
+        return this.client.query(locationRequest).then(this._renderLocationFactory(target), apiError);
     }
-};
+}
