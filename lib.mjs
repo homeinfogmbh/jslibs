@@ -197,6 +197,21 @@ export function escapeHtml (string) {
 
 
 /*
+  Returns a decimal number with German (comma) interpuctuation.
+*/
+export function germanDecimal (number, decimals) {
+    if (number != null) {
+        if (decimals == null)
+            decimals = 2;
+
+        return number.toFixed(decimals).replace('.', ',');
+    }
+
+    return null;
+}
+
+
+/*
     Groups an iterable and counts occurences.
 */
 export function group (iterable) {
