@@ -200,10 +200,7 @@ export function escapeHtml (string) {
   Formats the respective number as EUR currency.
 */
 export function euros = function (price) {
-    if (price != null)
-        return germanDecimal(price) + ' &euro;';
-
-    return null;
+    return germanDecimal(price) + ' &euro;';
 }
 
 
@@ -211,10 +208,7 @@ export function euros = function (price) {
   Returns a decimal number with German (comma) interpuctuation.
 */
 export function germanDecimal (number, decimals = 2) {
-    if (number != null)
-        return number.toFixed(decimals).replace('.', ',');
-
-    return null;
+    return dot2comma(number.toFixed(decimals));
 }
 
 
