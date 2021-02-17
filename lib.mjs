@@ -199,13 +199,9 @@ export function escapeHtml (string) {
 /*
   Returns a decimal number with German (comma) interpuctuation.
 */
-export function germanDecimal (number, decimals) {
-    if (number != null) {
-        if (decimals == null)
-            decimals = 2;
-
+export function germanDecimal (number, decimals = 2) {
+    if (number != null)
         return number.toFixed(decimals).replace('.', ',');
-    }
 
     return null;
 }
