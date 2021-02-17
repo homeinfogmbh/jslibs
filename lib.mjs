@@ -321,6 +321,14 @@ export function sanitize (value) {
 
 
 /*
+  Formats the respective number as square meters.
+*/
+export function squareMeters (area) {
+    return germanDecimal(area) + ' m&sup2;';
+}
+
+
+/*
     Strips leading zeros from number-like strings.
 */
 export function strplz (string) {
