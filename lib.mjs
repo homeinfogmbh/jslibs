@@ -199,7 +199,7 @@ export function escapeHtml (string) {
 /*
   Formats the respective number as EUR currency.
 */
-export function euros = function (price) {
+export function euros (price) {
     return germanDecimal(price) + ' &euro;';
 }
 
