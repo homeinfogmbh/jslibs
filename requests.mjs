@@ -114,12 +114,12 @@ function encode (data, headers) {
 /*
   Makes a request returning a promise.
 */
-export function makeRequest (method, url, data = null, headers = {}) {
+export function makeRequest (method, url, data = null, headers = {}, withCredentials = false) {
     [data, headers] = encode(data, headers);
 
     function executor (resolve, reject) {
         const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
+        xhr.withCredentials = withCredentials;
         xhr.open(method, url);
 
         for (const header in headers)
@@ -168,35 +168,35 @@ export const request = {
     /*
         Makes a GET request.
     */
-    get: function (url, headers = {}) {
-        return makeRequest('GET', url, null, headers);
+    get: function (url, headers = {}, withCredentials = false) {
+        return makeRequest('GET', url, null, headers, withCredentials);
     },
 
     /*
         Makes a POST request.
     */
-    post: function (url, data = null, headers = {}) {
-        return makeRequest('POST', url, data, headers);
+    post: function (url, data = null, headers = {}, withCredentials = false) {
+        return makeRequest('POST', url, data, headers, withCredentials);
     },
 
     /*
         Makes a PUT request.
     */
-    put: function (url, data = null, headers = {}) {
-        return makeRequest('PUT', url, data, headers);
+    put: function (url, data = null, headers = {}, withCredentials = false) {
+        return makeRequest('PUT', url, data, headers, withCredentials);
     },
 
     /*
         Makes a PATCH request.
     */
-    patch: function (url, data = null, headers = {}) {
-        return makeRequest('PATCH', url, data, headers);
+    patch: function (url, data = null, headers = {}, withCredentials = false) {
+        return makeRequest('PATCH', url, data, headers, withCredentials);
     },
 
     /*
         Makes a DELETE request.
     */
-    delete: function (url, headers = {}) {
-        return makeRequest('DELETE', url, null, headers);
+    delete: function (url, headers = {}, withCredentials = false) {
+        return makeRequest('DELETE', url, null, headers, withCredentials);
     }
 };
