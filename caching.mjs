@@ -82,7 +82,7 @@ export class Cache extends JSONStorage {
         if (force)
             return this.refresh();
 
-        const json = super.get();
+        const json = super.get().json;
 
         if (json == null)   // Cache miss.
             return this.refresh();
