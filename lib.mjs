@@ -150,7 +150,7 @@ export function capitalizeFirstLetter (string) {
 
 
 /*
-    Fixes German-style -> American-style float interpunctuation.
+    Converts German-style to American-style decimal interpunctuation.
 */
 export function comma2dot (string) {
     return string.replace(',', '.');
@@ -168,7 +168,7 @@ export function date (date) {
 
 
 /*
-    Fixes American-style -> German-style decimal interpunctuation.
+    Converts American-style to German-style decimal interpunctuation.
 */
 export function dot2comma (string) {
     return string.replace('.', ',');
