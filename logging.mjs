@@ -1,5 +1,5 @@
 /*
-  logging.js - HOMEINFO logging facility.
+  logging.mjs - HOMEINFO logging facility.
 
   (C) 2015-2021 HOMEINFO - Digitale Informationssysteme GmbH
 
