@@ -1,5 +1,5 @@
 /*
-  lib.js - HOMEINFO general-purpose JavaScript library
+  lib.mjs - HOMEINFO general-purpose JavaScript library
 
   (C) 2020-2021 HOMEINFO - Digitale Informationssysteme GmbH
 
