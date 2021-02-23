@@ -114,7 +114,7 @@ export class Range {
     Decorator to only run on 1st of April.
 */
 export function aprilsFool (func) {
-    return function (...args) {
+    return (...args) => {
         const now = new Date();
 
         if (now.getMonth() == 4 && now.getDate() == 1)
