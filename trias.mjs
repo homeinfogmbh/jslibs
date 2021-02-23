@@ -1,5 +1,5 @@
 /*
-  trias.js - JavaScript library for the Trias API
+  trias.mjs - JavaScript library for the Trias API
 
   (C) 2017-2021 HOMEINFO - Digitale Informationssysteme GmbH
 
