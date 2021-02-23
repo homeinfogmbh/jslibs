@@ -78,6 +78,10 @@ export class Cache extends JSONStorage {
         return this.refreshFunction().then(update(this));
     }
 
+    /*
+        Loads the value from the cache and returns
+        a promise resolving to the cached value.
+    */
     load (force = false) {
         if (force)
             return this.refresh();
@@ -96,6 +100,9 @@ export class Cache extends JSONStorage {
         return Promise.resolve(json);
     }
 
+    /*
+        Returns a promise resolving to the cached value.
+    */
     get (force = false) {
         return this.load(force).then(json => json['value']);
     }
