@@ -28,7 +28,7 @@ const CACHE_LIFETIME = 60 * 60 * 1000;  // One hour in milliseconds.
     Updates the respective cache.
 */
 function update (cache) {
-    return function (value) {
+    return value => {
         const now = new Date();
         const json = {'timestamp': now.toString(), 'value': value};
         cache.set(json);
