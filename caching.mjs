@@ -25,7 +25,7 @@ const CACHE_LIFETIME = 60 * 60 * 1000;  // One hour in milliseconds.
 
 
 /*
-    Updates the respective cache.
+    Returns a function that updates the respective cache.
 */
 function update (cache) {
     return value => {
