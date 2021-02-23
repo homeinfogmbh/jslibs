@@ -25,7 +25,7 @@ const CACHE_LIFETIME = 60 * 60 * 1000;  // One hour in milliseconds.
 
 
 /*
-    Returns a function that updates the respective cache.
+    Return a function that updates the respective cache.
 */
 function update (cache) {
     return value => {
@@ -45,10 +45,17 @@ export class JSONStorage {
         this.key = key;
     }
 
+    /*
+        Store the given JSON value in localStorage.
+    */
     set (value) {
         localStorage.setItem(this.key, JSON.stringify(value));
     }
 
+    /*
+        Return the stored JSON value from localStorage.
+        If nothing has been stored, return null.
+    */
     get () {
         const raw = localStorage.getItem(this.key);
 
@@ -58,6 +65,9 @@ export class JSONStorage {
         return JSON.parse(raw);
     }
 
+    /*
+        Remove the cached value from localStorage.
+    */
     clear () {
         return localStorage.removeItem(this.key);
     }
@@ -66,20 +76,29 @@ export class JSONStorage {
 
 /*
     JSON data cache.
+
+    Stores JSON data with a given lifetime in localStorage.
 */
 export class Cache extends JSONStorage {
+    /*
+        Takes a key for localStorage, a refresh function that must
+        return a promise and a cache lifetime in milliseconds.
+    */
     constructor (key, refreshFunction, lifetime = CACHE_LIFETIME) {
         super(key);
         this.refreshFunction = refreshFunction;
         this.lifetime = lifetime;
     }
 
+    /*
+        Refresh the cache content with data returned by the refresh function.
+    */
     refresh () {
         return this.refreshFunction().then(update(this));
     }
 
     /*
-        Loads the value from the cache and returns
+        Load the value from the cache and returns
         a promise resolving to the cached value.
     */
     load (force = false) {
@@ -101,7 +120,7 @@ export class Cache extends JSONStorage {
     }
 
     /*
-        Returns a promise resolving to the cached value.
+        Return a promise resolving to the cached value.
     */
     get (force = false) {
         return this.load(force).then(json => json['value']);
