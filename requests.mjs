@@ -1,5 +1,5 @@
 /*
-  requests.js - HOMEINFO async requests library.
+  requests.mjs - HOMEINFO async requests library.
 
   (C) 2015-2021 HOMEINFO - Digitale Informationssysteme GmbH
 
