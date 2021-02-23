@@ -38,34 +38,30 @@ export class Logger {
         this.level = level;
     }
 
-    log (prefix, msg) {
+    log (msg, level = WARNING, prefix = '[ warn ] ') {
         /* eslint-disable no-console */
-        console.log(prefix + ' ' + this.name + ': ' + msg);
+        if (this.level >= level)
+            console.log(prefix + this.name + ': ' + msg);
         /* eslint-enable no-console */
     }
 
     error (msg) {
-        if (this.level >= ERROR)
-            this.log('[ fail ]', msg);
+        this.log(msg, ERROR, '[ fail ] ');
     }
 
     warning (msg) {
-        if (this.level >= WARNING)
-            this.log('[ warn ]', msg);
+        this.log(msg, WARNING, '[ warn ] ');
     }
 
     info (msg) {
-        if (this.level >= INFO)
-            this.log('[ info ]', msg);
+        this.log(msg, INFO, '[ info ] ');
     }
 
     success (msg) {
-        if (this.level >= SUCCESS)
-            this.log('[  ok  ]', msg);
+        this.log(msg, SUCCESS, '[  ok  ] ');
     }
 
     debug (msg) {
-        if (this.level >= DEBUG)
-            this.log('[debug!]', msg);
+        this.log(msg, DEBUG, '[debug!] ');
     }
 }
