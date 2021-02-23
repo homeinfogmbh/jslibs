@@ -1,5 +1,5 @@
 /*
-  caching.js - HOMEINFO local storage caching library.
+  caching.mjs - HOMEINFO local storage caching library.
 
   (C) 2020-2021 HOMEINFO - Digitale Informationssysteme GmbH
 
