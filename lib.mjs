@@ -347,7 +347,7 @@ export function strplz (string) {
     Wraps a function and disables the default event.
 */
 export function suppressEvent (func, ...args) {
-    return function (event) {
+    return event => {
         if (event != null)
             event.preventDefault();
 
