@@ -98,7 +98,7 @@ function encode (data, headers) {
     if (data == null)
         return [data, headers];
 
-    if (headers != null && headers['Content-Type'] != null)
+    if (headers['Content-Type'] != null)
         return [data, headers];
 
     [data, contentType] = autoencode(data);
