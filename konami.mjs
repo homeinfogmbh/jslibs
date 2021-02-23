@@ -1,5 +1,5 @@
 /*
-  Konami Code easter egg.
+  konami.mjs - Konami Code easter egg.
 
   (C) 2019-2020 HOMEINFO - Digitale Informationssysteme GmbH
 
