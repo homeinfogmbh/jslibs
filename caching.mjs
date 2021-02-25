@@ -30,7 +30,7 @@ const CACHE_LIFETIME = 60 * 60 * 1000;  // One hour in milliseconds.
 function update (cache) {
     return value => {
         const now = new Date();
-        const json = {'timestamp': now.toString(), 'value': value};
+        const json = {timestamp: now.toString(), value: value};
         cache.set(json);
         return json;
     };
@@ -110,7 +110,7 @@ export class Cache extends JSONStorage {
         if (json == null)   // Cache miss.
             return this.refresh();
 
-        const timestamp = Date.parse(json['timestamp']);
+        const timestamp = Date.parse(json.timestamp);
         const now = new Date();
 
         if ((now - timestamp) > this.lifetime)  // Cache timeout.
@@ -123,6 +123,6 @@ export class Cache extends JSONStorage {
         Return a promise resolving to the cached value.
     */
     get (force = false) {
-        return this.load(force).then(json => json['value']);
+        return this.load(force).then(json => json.value);
     }
 }
