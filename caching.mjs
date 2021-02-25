@@ -110,6 +110,9 @@ export class Cache extends JSONStorage {
         if (json == null)   // Cache miss.
             return this.refresh();
 
+        if (json.value === undefined)   // No data cached.
+            return this.refresh();
+
         const timestamp = Date.parse(json.timestamp);
         const now = new Date();
 
