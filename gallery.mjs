@@ -90,5 +90,6 @@ export class Gallery {
         this.mapping.title.innerHTML = this.images[this.index].anhangtitel || this.defaultTitle;
         this.mapping.index.innerHTML = this.index + 1;
         this.mapping.count.innerHTML = this.images.length;
+        this.close();
     }
 }
