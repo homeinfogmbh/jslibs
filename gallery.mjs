@@ -46,14 +46,14 @@ function handleKeydown (gallery) {
         if (gallery.mapping.gallery.style.display == 'none')
             return;
 
-        if (event.code == 'Escape')
+        switch (event.code){
+        case 'Escape':
             return gallery.close();
-
-        if (event.code == 'ArrowLeft')
+        case 'ArrowLeft':
             return gallery.previous();
-
-        if (event.code == 'ArrowRight')
+        case 'ArrowRight':
             return gallery.next();
+        }
     };
 }
 
