@@ -46,10 +46,10 @@ function handleKeydown (gallery) {
         if (gallery.mapping.expose.style.display == 'none')
             return;
 
-        if (event.code == 37)
+        if (event.code == 'ArrowLeft')
             return gallery.previous();
 
-        if (event.code == 39)
+        if (event.code == 'ArrowRight')
             return gallery.next();
     };
 }
