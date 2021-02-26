@@ -246,17 +246,12 @@ export function isEmail (string) {
 
 
 export function isEmpty (string) {
-    return isNull(string) || string.trim() == '';
+    return string == null || string.trim() == '';
 }
 
 
 export function isEven (num) {
     return ! isOdd(num);
-}
-
-
-export function isNull (element) {
-    return  element === undefined || element === null;
 }
 
 
