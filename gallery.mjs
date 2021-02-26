@@ -41,6 +41,20 @@ function previous (gallery) {
 }
 
 
+function handleKeydown (gallery) {
+    return event => {
+        if (gallery.mapping.expose.style.display = 'none')
+            return;
+
+        if (event.keyCode == 37)
+            return gallery.previous();
+
+        if (event.keyCode == 39)
+            return gallery.next();
+    };
+}
+
+
 export class Gallery {
     constructor (images, mapping, urlCallback, defaultTitle = 'Bild') {
         this.images = Array.from(images);
@@ -79,6 +93,7 @@ export class Gallery {
     }
 
     bind () {
+        document.addEventListener('onkeydown', handleKeydown(this));
         this.mapping.next.addEventListener('click', event => next(this));
         this.mapping.previous.addEventListener('click', event => previous(this));
         this.mapping.open.addEventListener('click', event => open(this));
