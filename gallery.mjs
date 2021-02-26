@@ -67,9 +67,13 @@ export class Gallery {
         this.index = 0;
     }
 
-    open () {
-        this.index = 0;
-        this.render();
+    open (reset = true, render = true) {
+        if (reset)
+            this.index = 0;
+
+        if (render)
+            this.render();
+
         this.mapping.expose.style.display = 'none';
         this.mapping.gallery.style.display = 'block';
     }
