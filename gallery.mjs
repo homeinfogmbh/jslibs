@@ -46,6 +46,9 @@ function handleKeydown (gallery) {
         if (gallery.mapping.gallery.style.display == 'none')
             return;
 
+        if (event.code == 'Esc')
+            return gallery.close();
+
         if (event.code == 'ArrowLeft')
             return gallery.previous();
 
