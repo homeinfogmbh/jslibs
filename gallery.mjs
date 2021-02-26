@@ -43,13 +43,13 @@ function previous (gallery) {
 
 function handleKeydown (gallery) {
     return event => {
-        if (gallery.mapping.expose.style.display = 'none')
+        if (gallery.mapping.expose.style.display == 'none')
             return;
 
-        if (event.keyCode == 37)
+        if (event.code == 37)
             return gallery.previous();
 
-        if (event.keyCode == 39)
+        if (event.code == 39)
             return gallery.next();
     };
 }
