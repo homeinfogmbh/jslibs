@@ -93,7 +93,7 @@ export class Gallery {
     }
 
     bind () {
-        document.addEventListener('onkeydown', handleKeydown(this));
+        document.addEventListener('keydown', handleKeydown(this));
         this.mapping.next.addEventListener('click', event => next(this));
         this.mapping.previous.addEventListener('click', event => previous(this));
         this.mapping.open.addEventListener('click', event => open(this));
