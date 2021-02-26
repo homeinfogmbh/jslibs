@@ -21,23 +21,23 @@
 'use strict';
 
 
-function openCallback (gallery) {
-    return event => gallery.open();
+function open (gallery) {
+    return gallery.open();
 }
 
 
-function closeCallback (gallery) {
-    return event => gallery.close();
+function close (gallery) {
+    return gallery.close();
 }
 
 
-function nextCallback (gallery) {
-    return event => gallery.next();
+function next (gallery) {
+    return gallery.next();
 }
 
 
-function previousCallback (gallery) {
-    return event => gallery.previous();
+function previous (gallery) {
+    return gallery.previous();
 }
 
 
@@ -78,10 +78,10 @@ export class Gallery {
     }
 
     bind () {
-        this.mapping.next.addEventListener('click', event => nextCallback(this));
-        this.mapping.previous.addEventListener('click', event => previousCallback(this));
-        this.mapping.open.addEventListener('click', event => openCallback(this));
-        this.mapping.close.addEventListener('click', event => closeCallback(this));
+        this.mapping.next.addEventListener('click', event => next(this));
+        this.mapping.previous.addEventListener('click', event => previous(this));
+        this.mapping.open.addEventListener('click', event => open(this));
+        this.mapping.close.addEventListener('click', event => close(this));
     }
 
     render () {
