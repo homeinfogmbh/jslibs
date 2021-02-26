@@ -43,7 +43,7 @@ function previous (gallery) {
 
 function handleKeydown (gallery) {
     return event => {
-        if (gallery.mapping.expose.style.display == 'none')
+        if (gallery.mapping.gallery.style.display == 'none')
             return;
 
         if (event.code == 'ArrowLeft')
