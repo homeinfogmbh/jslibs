@@ -50,11 +50,13 @@ export class Gallery {
     }
 
     open () {
+        this.mapping.expose.style.display = 'none';
         this.mapping.gallery.style.display = 'block';
     }
 
     close () {
         this.mapping.gallery.style.display = 'none';
+        this.mapping.expose.style.display = 'block';
     }
 
     next () {
