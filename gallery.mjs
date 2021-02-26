@@ -42,10 +42,11 @@ function previous (gallery) {
 
 
 export class Gallery {
-    constructor (images, mapping, urlCallback) {
+    constructor (images, mapping, urlCallback, defaultTitle = 'Bild') {
         this.images = Array.from(images);
         this.mapping = mapping;
         this.urlCallback = urlCallback;
+        this.defaultTitle = defaultTitle;
         this.index = 0;
     }
 
@@ -86,7 +87,7 @@ export class Gallery {
 
     render () {
         this.mapping.image.setAttribute('src', this.urlCallback(this.images[this.index]));
-        this.mapping.title.innerHTML = this.images[this.index].anhangtitel;
+        this.mapping.title.innerHTML = this.images[this.index].anhangtitel || this.defaultTitle;
         this.mapping.index.innerHTML = this.index + 1;
         this.mapping.count.innerHTML = this.images.length;
     }
