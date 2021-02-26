@@ -22,22 +22,22 @@
 
 
 function openCallback (gallery) {
-    return () => gallery.open();
+    return event => gallery.open();
 }
 
 
 function closeCallback (gallery) {
-    return () => gallery.close();
+    return event => gallery.close();
 }
 
 
 function nextCallback (gallery) {
-    return () => gallery.next();
+    return event => gallery.next();
 }
 
 
 function previousCallback (gallery) {
-    return () => gallery.previous();
+    return event => gallery.previous();
 }
 
 
