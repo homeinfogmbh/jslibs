@@ -72,13 +72,18 @@ export class Gallery {
             this.index = 0;
 
         this.render();
-        this.mapping.expose.style.display = 'none';
+
+        for (const element of this.mapping.hide)
+            element.style.display = 'none';
+
         this.mapping.gallery.style.display = 'block';
     }
 
     close () {
         this.mapping.gallery.style.display = 'none';
-        this.mapping.expose.style.display = 'block';
+
+        for (const element of this.mapping.hide)
+            element.style.display = 'block';
     }
 
     next () {
