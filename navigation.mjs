@@ -24,10 +24,11 @@
     Class to represent a single site.
 */
 export class Site {
-    constructor(name, title, url) {
+    constructor(name, title, url, init = null) {
         this.name = name;
         this.title = title;
         this.url = url;
+        this.init = init;
     }
 
     /*
@@ -85,6 +86,9 @@ export class Sites {
 
         document.title = site.title;
         targetElement.load(site.url);   // XXX: Requires jQuery!
+
+        if (site.init != null)
+            return site.init();
     }
 
     /*
