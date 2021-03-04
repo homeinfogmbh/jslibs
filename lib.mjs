@@ -161,6 +161,9 @@ export function comma2dot (string) {
     Returns date like <%d.%m.%Y>.
 */
 export function date (date) {
+    if (date == null)
+        date = new Date();
+
     return padd(date.getDate())
         + '.' + padd(date.getMonth() + 1)
         + '.' + padd(date.getFullYear());
@@ -171,6 +174,9 @@ export function date (date) {
     Returns a datetime string like <%d.%m.%Y %H:%M>.
 */
 export function datetime (date) {
+    if (date == null)
+        date = new Date();
+
     return date(date) + ' ' + time(date);
 }
 
@@ -371,6 +377,9 @@ export function terminate (string, character) {
     Returns time of date like <%H:%M>.
 */
 export function time (date) {
+    if (date == null)
+        date = new Date();
+
     return padd(date.getHours()) + ':' + padd(date.getMinutes());
 }
 
