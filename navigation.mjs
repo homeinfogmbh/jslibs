@@ -78,11 +78,13 @@ export class Sites {
         Loads the respective site from the current window's hash.
     */
     load (targetElement) {
-        if (this.current == null)
+        const site = this.current;
+
+        if (site == null)
             return alert('Fehler!\nKonnte Seite "' + this.hash + '" nicht laden.');
 
         document.title = site.title;
-        targetElement.load(this.current.url);   // XXX: Requires jQuery!
+        targetElement.load(site.url);   // XXX: Requires jQuery!
     }
 
     /*
