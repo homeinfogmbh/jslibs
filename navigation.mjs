@@ -82,7 +82,7 @@ export class Sites {
             return alert('Fehler!\nKonnte Seite "' + this.hash + '" nicht laden.');
 
         document.title = site.title;
-        targetElement.load(this.current.url);
+        targetElement.load(this.current.url);   // XXX: Requires jQuery!
     }
 
     /*
