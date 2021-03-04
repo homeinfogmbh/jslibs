@@ -43,9 +43,9 @@ export class Site {
     Class to represent a set of sites.
 */
 export class Sites {
-    constructor(sites, defaultHash) {
+    constructor(sites, defaultHash = '#startseite') {
         this.sites = Array.from(sites);
-        this.defaultHash = defaultHash || '#startseite';
+        this.defaultHash = defaultHash;
     }
 
     /*
