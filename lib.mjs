@@ -168,6 +168,14 @@ export function date (date) {
 
 
 /*
+    Returns a datetime string like <%d.%m.%y %h:%m>.
+*/
+export function datetime (date) {
+    return date(date) + ' ' + time(date);
+}
+
+
+/*
     Converts American-style to German-style decimal interpunctuation.
 */
 export function dot2comma (string) {
