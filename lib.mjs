@@ -168,7 +168,7 @@ export function date (date) {
 
 
 /*
-    Returns a datetime string like <%d.%m.%y %h:%m>.
+    Returns a datetime string like <%d.%m.%Y %H:%M>.
 */
 export function datetime (date) {
     return date(date) + ' ' + time(date);
