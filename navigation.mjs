@@ -1,7 +1,7 @@
 /*
-  navigation.js - URL hash based navigation library
+  navigation.mjs - URL hash based navigation library
 
-  (C) 2015-2020 HOMEINFO - Digitale Informationssysteme GmbH
+  (C) 2015-2021 HOMEINFO - Digitale Informationssysteme GmbH
 
   This library is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -16,19 +16,14 @@
   You should have received a copy of the GNU General Public License
   along with this library.  If not, see <http://www.gnu.org/licenses/>.
   Maintainer: Richard Neumann <r dot neumann at homeinfo period de>
-
-  Requires:
-        * jQuery.
 */
 'use strict';
-
-var navigation = navigation || {};
 
 
 /*
     Class to represent a single site.
 */
-navigation.Site = class {
+export class Site {
     constructor(name, title, url) {
         this.name = name;
         this.title = title;
@@ -41,13 +36,13 @@ navigation.Site = class {
     get hash() {
         return '#' + this.name;
     }
-};
+}
 
 
 /*
     Class to represent a set of sites.
 */
-navigation.Sites = class {
+export class Sites {
     constructor(sites, defaultHash) {
         this.sites = sites;
         this.defaultHash = defaultHash || '#startseite';
@@ -72,24 +67,22 @@ navigation.Sites = class {
     */
     getSite (hash) {
         for (let site of this.sites) {
-            if (site.hash == hash) {
+            if (site.hash == hash)
                 return site;
-            }
         }
+
+        return null;
     }
 
     /*
         Loads the respective site from the current window's hash.
     */
     load (targetElement) {
-        const site = this.current;
+        if (this.current == null)
+            return alert('Fehler!\nKonnte Seite "' + this.hash + '" nicht laden.');
 
-        if (site != null) {
-            document.title = site.title;
-            targetElement.load(site.url);
-        } else {
-            swal('Fehler!', 'Konnte Seite "' + this.hash + '" nicht laden.', 'error');
-        }
+        document.title = site.title;
+        targetElement.load(this.current.url);
     }
 
     /*
@@ -97,6 +90,6 @@ navigation.Sites = class {
         target element on the window.hashchange event.
     */
     bind (targetElement) {
-        jQuery(window).on('hashchange', this.load.bind(this, targetElement));
+        window.addEventListener('hashchange', this.load.bind(this, targetElement));
     }
-};
+}
