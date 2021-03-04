@@ -44,7 +44,7 @@ export class Site {
 */
 export class Sites {
     constructor(sites, defaultHash) {
-        this.sites = sites;
+        this.sites = Array.from(sites);
         this.defaultHash = defaultHash || '#startseite';
     }
 
@@ -66,7 +66,7 @@ export class Sites {
         Returns the respective site for the provided hash.
     */
     getSite (hash) {
-        for (let site of this.sites) {
+        for (const site of this.sites) {
             if (site.hash == hash)
                 return site;
         }
