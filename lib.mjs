@@ -160,7 +160,7 @@ export function comma2dot (string) {
 /*
     Returns date like <%d.%m.%Y>.
 */
-export function date (date) {
+export function dateStr (date) {
     if (date == null)
         date = new Date();
 
@@ -173,11 +173,11 @@ export function date (date) {
 /*
     Returns a datetime string like <%d.%m.%Y %H:%M>.
 */
-export function datetime (date) {
+export function datetimeStr (date) {
     if (date == null)
         date = new Date();
 
-    return date(date) + ' ' + time(date);
+    return dateStr(date) + ' ' + timeStr(date);
 }
 
 
@@ -376,7 +376,7 @@ export function terminate (string, character) {
 /*
     Returns time of date like <%H:%M>.
 */
-export function time (date) {
+export function timeStr (date) {
     if (date == null)
         date = new Date();
 
