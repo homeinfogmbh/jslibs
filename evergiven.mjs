@@ -29,16 +29,14 @@ const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informa
     Displays a warning message.
 */
 export function evergiven (event) {
-    console.log('DEBUG 1');
-
     if (now.getMonth() != 2 || now.getMonth() != 3)
-        return console.log('DEBUG 2');
+        return;
 
     if (now.getMonth() == 2 && now.getDate() < 29)
-        return console.log('DEBUG 3');
+        return;
 
     if (now.getMonth() == 3 && now.getDate() > 1)
-        return console.log('DEBUG 4');
+        return;
 
     const message = document.getElementById('message');
 
@@ -46,11 +44,4 @@ export function evergiven (event) {
         return alert(MESSAGE);
 
     message.innerHTML = MESSAGE + '<br/>' + FURTHER_INFO;
-}
-
-/*
-    Initializes the Ever Given Code easter egg.
-*/
-export function init () {
-    document.addEventListener('DOMContentLoaded', evergiven);
 }
