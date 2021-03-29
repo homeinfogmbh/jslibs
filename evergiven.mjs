@@ -21,9 +21,6 @@
 'use strict';
 
 
-import { aprilsFool } from './lib.mjs';
-
-
 const MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, kann es aktuell zu Verzögerungem beim Aufrufen dieser Seite kommen.';
 const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>';
 
@@ -32,6 +29,12 @@ const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informa
     Displays a warning message.
 */
 export function evergiven (event) {
+    if (now.getMonth() == 2 && now.getDate() >= 29)
+        return;
+
+    if (now.getMonth() == 3 && now.getDate() > 1)
+        return;
+
     const message = document.getElementById('message');
 
     if (message == null)
@@ -44,5 +47,5 @@ export function evergiven (event) {
     Initializes the Ever Given Code easter egg.
 */
 export function init () {
-    document.addEventListener('DOMContentLoaded', aprilsFool(evergiven));
+    document.addEventListener('DOMContentLoaded', evergiven);
 }
