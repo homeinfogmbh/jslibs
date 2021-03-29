@@ -32,13 +32,13 @@ export function evergiven (event) {
     const now = new Date();
 
     if (now.getMonth() != 2 || now.getMonth() != 3)
-        return;
+        return console.log('DEBUG 1');
 
     if (now.getMonth() == 2 && now.getDate() < 29)
-        return;
+        return console.log('DEBUG 2');
 
     if (now.getMonth() == 3 && now.getDate() > 1)
-        return;
+        return console.log('DEBUG 3');
 
     const message = document.getElementById('message');
 
