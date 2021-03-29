@@ -25,6 +25,7 @@ import { aprilsFool } from './lib.mjs';
 
 
 const MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, kann es aktuell zu Verzögerungem beim Aufrufen dieser Seite kommen.';
+const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>'
 
 
 /*
@@ -34,9 +35,9 @@ export function evergiven (event) {
     const message = document.getElementById('message');
 
     if (message == null)
-        alert(MESSAGE);
-    else
-        message.innerHTML = MESSAGE;
+        return alert(MESSAGE);
+
+    message.innerHTML = MESSAGE + '<br/>' + FURTHER_INFO;
 }
 
 /*
