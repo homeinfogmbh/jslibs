@@ -25,7 +25,7 @@ import { aprilsFool } from './lib.mjs';
 
 
 const MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, kann es aktuell zu Verzögerungem beim Aufrufen dieser Seite kommen.';
-const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>'
+const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>';
 
 
 /*
