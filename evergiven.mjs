@@ -29,7 +29,10 @@ const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informa
     Displays a warning message.
 */
 export function evergiven (event) {
-    if (now.getMonth() == 2 && now.getDate() >= 29)
+    if (now.getMonth() != 2 || now.getMonth() != 3)
+        return;
+
+    if (now.getMonth() == 2 && now.getDate() < 29)
         return;
 
     if (now.getMonth() == 3 && now.getDate() > 1)
