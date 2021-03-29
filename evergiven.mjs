@@ -25,20 +25,25 @@ const MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, k
 const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>';
 
 
+function checkDate () {
+    const now = new Date();
+
+    if (now.getMonth() == 2 && now.getDate() >= 29)
+        return true;
+
+    if (now.getMonth() == 3 && now.getDate() == 1)
+        return true;
+
+    return false;
+}
+
+
 /*
     Displays a warning message.
 */
 export function evergiven (event) {
-    const now = new Date();
-
-    if (now.getMonth() != 2 || now.getMonth() != 3)
-        return console.log('DEBUG 1');
-
-    if (now.getMonth() == 2 && now.getDate() < 29)
-        return console.log('DEBUG 2');
-
-    if (now.getMonth() == 3 && now.getDate() > 1)
-        return console.log('DEBUG 3');
+    if (!checkDate())
+        return;
 
     const message = document.getElementById('message');
 
