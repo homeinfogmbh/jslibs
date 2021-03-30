@@ -26,7 +26,7 @@ const EVERGIVEN_FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weite
 
 
 /*
-    Displays a warning message.
+    Displays a warning message regarding the Ever Given stuck in the Suez Canal.
 */
 export function evergiven (event) {
     if (now.getMonth() != 2 || && now.getDate() != 29)
