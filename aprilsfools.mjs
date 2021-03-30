@@ -21,8 +21,8 @@
 'use strict';
 
 
-const MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, kann es aktuell zu Verzögerungem beim Aufrufen dieser Seite kommen.';
-const FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>';
+const EVERGIVEN_MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, kann es aktuell zu Verzögerungem beim Aufrufen dieser Seite kommen.';
+const EVERGIVEN_FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>';
 
 
 /*
@@ -35,7 +35,7 @@ export function evergiven (event) {
     const message = document.getElementById('message');
 
     if (message == null)
-        return alert(MESSAGE);
+        return alert(EVERGIVEN_MESSAGE);
 
-    message.innerHTML = MESSAGE + '<br/>' + FURTHER_INFO;
+    message.innerHTML = EVERGIVEN_MESSAGE + '<br/>' + EVERGIVEN_FURTHER_INFO;
 }
