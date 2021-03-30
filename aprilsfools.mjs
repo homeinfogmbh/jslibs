@@ -1,5 +1,5 @@
 /*
-  evergiven.mjs - Ever Given easter egg.
+  aprilsfools.mjs - Aprils fools.
 
   (C) 2021 HOMEINFO - Digitale Informationssysteme GmbH
 
