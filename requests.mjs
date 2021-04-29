@@ -114,7 +114,7 @@ function encode (data, headers) {
 /*
   Makes a request returning a promise.
 */
-export function makeRequest (method, url, data = null, headers = {}, withCredentials = false) {
+export function makeRequest (method, url, data = null, headers = null, withCredentials = false) {
     [data, headers] = encode(data, headers);
 
     function executor (resolve, reject) {
@@ -168,35 +168,35 @@ export const request = {
     /*
         Makes a GET request.
     */
-    get: function (url, headers = {}, withCredentials = false) {
+    get: function (url, headers = null, withCredentials = false) {
         return makeRequest('GET', url, null, headers, withCredentials);
     },
 
     /*
         Makes a POST request.
     */
-    post: function (url, data = null, headers = {}, withCredentials = false) {
+    post: function (url, data = null, headers = null, withCredentials = false) {
         return makeRequest('POST', url, data, headers, withCredentials);
     },
 
     /*
         Makes a PUT request.
     */
-    put: function (url, data = null, headers = {}, withCredentials = false) {
+    put: function (url, data = null, headers = null, withCredentials = false) {
         return makeRequest('PUT', url, data, headers, withCredentials);
     },
 
     /*
         Makes a PATCH request.
     */
-    patch: function (url, data = null, headers = {}, withCredentials = false) {
+    patch: function (url, data = null, headers = null, withCredentials = false) {
         return makeRequest('PATCH', url, data, headers, withCredentials);
     },
 
     /*
         Makes a DELETE request.
     */
-    delete: function (url, headers = {}, withCredentials = false) {
+    delete: function (url, headers = null, withCredentials = false) {
         return makeRequest('DELETE', url, null, headers, withCredentials);
     }
 };
