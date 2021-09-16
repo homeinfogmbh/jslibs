@@ -372,7 +372,7 @@ export function terminate (string, character) {
 */
 export function timeStr (date) {
     if (date == null)
-        date = new Date();
+        return timeStr(new Date());
 
     return padd(date.getHours()) + ':' + padd(date.getMinutes());
 }
