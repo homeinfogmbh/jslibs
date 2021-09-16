@@ -130,10 +130,7 @@ export function boolNaToString (boolean, _true = '✓', _false = '✗', na = '?'
     if (boolean == null)
         return na;
 
-    if (boolean)
-        return _true;
-
-    return _false;
+    return boolean ? _true : _false;
 }
 
 
