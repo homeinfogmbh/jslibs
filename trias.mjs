@@ -419,12 +419,8 @@ export class TriasClient {
     Stop event data wrapper.
 */
 class StopEvent = class {
-    constructor (xml, timeZone) {
-        if (timeZone == null)
-            this.timeZone = '+02:00';
-        else
-            this.timeZone = timeZone;
-
+    constructor (xml, timeZone = '+02:00') {
+        this.timeZone = timeZone;
         this.timetabledTime = new Date(xml.getElementsByTagName('TimetabledTime')[0].textContent + this.timeZone);
         const estimatedTimes = xml.getElementsByTagName('EstimatedTime');
 
