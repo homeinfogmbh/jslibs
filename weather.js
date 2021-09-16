@@ -62,13 +62,14 @@ weather.realativeDate = function (date) {
     const dayAfterTomorrow = new Date();
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
-    if (now.toDateString() == date.toDateString()) {
+    if (now.toDateString() == date.toDateString())
         return 'Heute';
-    } else if (tomorrow.toDateString() == date.toDateString()) {
+
+    if (tomorrow.toDateString() == date.toDateString())
         return 'Morgen';
-    } else if (dayAfterTomorrow.toDateString() == date.toDateString()) {
+
+    if (dayAfterTomorrow.toDateString() == date.toDateString())
         return 'Übermorgen';
-    }
 };
 
 
@@ -103,11 +104,9 @@ weather.Client = class {
 */
 weather.Forecast = class {
     constructor (weather) {
-        for (let prop in weather) {
-            if (Object.prototype.hasOwnProperty.call(weather, prop)) {
+        for (const prop in weather)
+            if (Object.prototype.hasOwnProperty.call(weather, prop))
                 this[prop] = weather[prop];
-            }
-        }
     }
 
     get dateTime () {
@@ -115,57 +114,67 @@ weather.Forecast = class {
     }
 
     get cardinalPoint () {
-        if (this.wind != null) {
-            if (this.wind.deg != null) {
-                if (weather.cardinalPoint.N1.contains(this.wind.deg) ||
-                    weather.cardinalPoint.N2.contains(this.wind.deg)) {
-                    return 'N';
-                } else if (weather.cardinalPoint.NNE.contains(this.wind.deg)) {
-                    return 'NNO';
-                } else if (weather.cardinalPoint.NE.contains(this.wind.deg)) {
-                    return 'NO';
-                } else if (weather.cardinalPoint.ENE.contains(this.wind.deg)) {
-                    return 'ONO';
-                } else if (weather.cardinalPoint.E.contains(this.wind.deg)) {
-                    return 'O';
-                } else if (weather.cardinalPoint.ESE.contains(this.wind.deg)) {
-                    return 'OSO';
-                } else if (weather.cardinalPoint.SE.contains(this.wind.deg)) {
-                    return 'SO';
-                } else if (weather.cardinalPoint.SSE.contains(this.wind.deg)) {
-                    return 'SSO';
-                } else if (weather.cardinalPoint.S.contains(this.wind.deg)) {
-                    return 'S';
-                } else if (weather.cardinalPoint.SSW.contains(this.wind.deg)) {
-                    return 'SSW';
-                } else if (weather.cardinalPoint.SW.contains(this.wind.deg)) {
-                    return 'SW';
-                } else if (weather.cardinalPoint.WSW.contains(this.wind.deg)) {
-                    return 'WSW';
-                } else if (weather.cardinalPoint.W.contains(this.wind.deg)) {
-                    return 'W';
-                } else if (weather.cardinalPoint.WNW.contains(this.wind.deg)) {
-                    return 'WNW';
-                } else if (weather.cardinalPoint.NW.contains(this.wind.deg)) {
-                    return 'NW';
-                } else if (weather.cardinalPoint.NNW.contains(this.wind.deg)) {
-                    return 'NNW';
-                } else {
-                    throw 'Invalid degrees: ' + this.wind.deg + '.';
-                }
-            }
-        }
+        if (this.wind == null || this.wind.deg == null)
+            return 'N/A';
 
-        return 'N/A';
+        if (weather.cardinalPoint.N1.contains(this.wind.deg) ||
+            weather.cardinalPoint.N2.contains(this.wind.deg))
+            return 'N';
+
+        if (weather.cardinalPoint.NNE.contains(this.wind.deg))
+            return 'NNO';
+
+        if (weather.cardinalPoint.NE.contains(this.wind.deg))
+            return 'NO';
+
+        if (weather.cardinalPoint.ENE.contains(this.wind.deg))
+            return 'ONO';
+
+        if (weather.cardinalPoint.E.contains(this.wind.deg))
+            return 'O';
+
+        if (weather.cardinalPoint.ESE.contains(this.wind.deg))
+            return 'OSO';
+
+        if (weather.cardinalPoint.SE.contains(this.wind.deg))
+            return 'SO';
+
+        if (weather.cardinalPoint.SSE.contains(this.wind.deg))
+            return 'SSO';
+
+        if (weather.cardinalPoint.S.contains(this.wind.deg))
+            return 'S';
+
+        if (weather.cardinalPoint.SSW.contains(this.wind.deg))
+            return 'SSW';
+
+        if (weather.cardinalPoint.SW.contains(this.wind.deg))
+            return 'SW';
+
+        if (weather.cardinalPoint.WSW.contains(this.wind.deg))
+            return 'WSW';
+
+        if (weather.cardinalPoint.W.contains(this.wind.deg))
+            return 'W';
+
+        if (weather.cardinalPoint.WNW.contains(this.wind.deg))
+            return 'WNW';
+
+        if (weather.cardinalPoint.NW.contains(this.wind.deg))
+            return 'NW';
+
+        if (weather.cardinalPoint.NNW.contains(this.wind.deg))
+            return 'NNW';
+
+        throw 'Invalid degrees: ' + this.wind.deg + '.';
     }
 
     get title () {
         const dateTime = this.dateTime;
         const prefix = weather.realativeDate(dateTime);
 
-        if (prefix != null) {
+        if (prefix != null)
             return prefix + ' ' + dateTime.toLocaleString();
-        }
 
         return dateTime.toLocaleString();
     }
@@ -174,11 +183,9 @@ weather.Forecast = class {
         if (this.weather != null) {
             const weather = this.weather[0];
 
-            if (weather != null) {
-                if (weather.icon != null) {
+            if (weather != null)
+                if (weather.icon != null)
                     return this.translateIcon(weather.icon);
-                }
-            }
         }
 
         return null;
@@ -189,64 +196,62 @@ weather.Forecast = class {
         to HOMEINFO weather icon codes.
     */
     translateIcon (icon) {
-        if (icon == '01d' || icon == '01n') {
+        if (icon == '01d' || icon == '01n')
             return 22;
-        } else if (icon == '02d' || icon == '02n') {
+
+        if (icon == '02d' || icon == '02n')
             return 0;
-        } else if (icon == '03d' || icon == '03n') {
+
+        if (icon == '03d' || icon == '03n')
             return 12;
-        } else if (icon == '04d' || icon == '04n') {
+
+        if (icon == '04d' || icon == '04n')
             return 9;
-        } else if (icon == '09d' || icon == '09n') {
+
+        if (icon == '09d' || icon == '09n')
             return 21;
-        } else if (icon == '10d' || icon == '10n') {
+
+        if (icon == '10d' || icon == '10n')
             return 2;
-        } else if (icon == '11d' || icon == '11n') {
+
+        if (icon == '11d' || icon == '11n')
             return 1;
-        } else if (icon == '13d' || icon == '13n') {
+
+        if (icon == '13d' || icon == '13n')
             return 10;
-        } else if (icon == '50d' || icon == '50n') {
+
+        if (icon == '50d' || icon == '50n')
             return 19;
-        }
     }
 
     /*
         Renders the weather data according to the mapping.
     */
     render (mapping) {
-        if (mapping.title != null) {
+        if (mapping.title != null)
             mapping.title.html(this.title);
-        }
 
         if (mapping.icon != null) {
             const icon = this.icon;
 
-            if (icon != null) {
+            if (icon != null)
                 mapping.icon.attr('src', weather.iconURL(icon));
-            } else {
+            else
                 mapping.icon.attr('src', weather.iconURL('dummy'));
-            }
         }
 
         if (mapping.type != null) {
             if (this.weather != null) {
                 const weather = this.weather[0];
 
-                if (weather != null) {
-                    if (weather.description != null) {
+                if (weather != null)
+                    if (weather.description != null)
                         mapping.type.html(weather.description);
-                    }
-                }
             }
         }
 
-        if (mapping.temperature != null) {
-            if (this.main != null) {
-                if (this.main.temp_min != null && this.main.temp_max != null) {
-                    mapping.temperature.html(this.main.temp_min + ' / ' + this.main.temp_max + ' °C');
-                }
-            }
-        }
+        if (mapping.temperature != null && this.main != null && this.main.temp_min != null && this.main.temp_max != null)
+            mapping.temperature.html(this.main.temp_min + ' / ' + this.main.temp_max + ' °C');
     }
 };
 
@@ -262,15 +267,9 @@ weather.DayForecast = class {
     get maxTemp () {
         let tempMax = -Infinity;
 
-        for (let forecast of this.forecasts) {
-            if (forecast.main != null) {
-                if (forecast.main.temp_max != null) {
-                    if (forecast.main.temp_max > tempMax) {
-                        tempMax = forecast.main.temp_max;
-                    }
-                }
-            }
-        }
+        for (const forecast of this.forecasts)
+            if (forecast.main != null && forecast.main.temp_max != null && forecast.main.temp_max > tempMax)
+                tempMax = forecast.main.temp_max;
 
         return tempMax;
     }
@@ -278,15 +277,9 @@ weather.DayForecast = class {
     get minTemp () {
         let tempMin = Infinity;
 
-        for (let forecast of this.forecasts) {
-            if (forecast.main != null) {
-                if (forecast.main.temp_min != null) {
-                    if (forecast.main.temp_min < tempMin) {
-                        tempMin = forecast.main.temp_min;
-                    }
-                }
-            }
-        }
+        for (const forecast of this.forecasts)
+            if (forecast.main != null && forecast.main.temp_min != null && forecast.main.temp_min < tempMin)
+                tempMin = forecast.main.temp_min;
 
         return tempMin;
     }
@@ -300,9 +293,8 @@ weather.DayForecast = class {
         const localeDate = moment(dateTime).format('LL');
         const prefix = weather.realativeDate(dateTime);
 
-        if (prefix != null) {
+        if (prefix != null)
             return prefix + ' ' + localeDate;
-        }
 
         return localeDate;
     }
@@ -314,11 +306,8 @@ weather.DayForecast = class {
     get type () {
         const weather_ = this.weather();
 
-        if (weather_ != null) {
-            if (weather_.description != null) {
-                return weather_.description;
-            }
-        }
+        if (weather_ != null && weather_.description != null)
+            return weather_.description;
 
         return null;
     }
@@ -330,13 +319,12 @@ weather.DayForecast = class {
     forecast (index = 0) {
         const forecast = this.forecasts[index];
 
-        if (forecast == null) {
+        if (forecast == null)
             swal({
                 title: 'Fehler!',
                 text: 'Konnte keine Wetterdaten finden.',
                 type: 'error'
             });
-        }
 
         return forecast;
     }
@@ -344,13 +332,12 @@ weather.DayForecast = class {
     weather (index = 0, forecastIndex = 0) {
         const weather = this.forecast(forecastIndex).weather[index];
 
-        if (weather == null) {
+        if (weather == null)
             swal({
                 title: 'Fehler!',
                 text: 'Konnte keine Wetterdaten finden.',
                 type: 'error'
             });
-        }
 
         return weather;
     }
