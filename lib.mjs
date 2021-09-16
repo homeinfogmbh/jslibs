@@ -244,7 +244,7 @@ export function group (iterable) {
     Case-insensitively returns the index of the substring.
 */
 export function includesIgnoreCase (haystack, needle) {
-    if (! haystack)
+    if (!haystack)
         return false;
 
     return haystack.toLowerCase().includes(needle.toLowerCase());
