@@ -264,10 +264,9 @@ function location (locationRef, tripLocation, depArrTime, individualTransportOpt
     if (depArrTime != null)
         locationContext.appendChild(depArrTime);
 
-    if (individualTransportOptions != null) {
+    if (individualTransportOptions != null)
         for (let individualTransportOption of individualTransportOptions)
             locationContext.appendChild(individualTransportOption);
-    }
 
     return locationContext;
 }
@@ -296,20 +295,17 @@ function numberOfResults (number) {
 function stopEventParam (stopEventDataFilterGroup, stopEventPolicyGroup, stopEventContentFilterGroup) {
     const stopEventParam = triasElement('Params');
 
-    if (stopEventDataFilterGroup != null) {
+    if (stopEventDataFilterGroup != null)
         for (let stopEventDataFilter of stopEventDataFilterGroup)
             stopEventParam.appendChild(stopEventDataFilter);
-    }
 
-    if (stopEventPolicyGroup != null) {
+    if (stopEventPolicyGroup != null)
         for (let stopEventPolicy of stopEventPolicyGroup)
             stopEventParam.appendChild(stopEventPolicy);
-    }
 
-    if (stopEventContentFilterGroup != null) {
+    if (stopEventContentFilterGroup != null)
         for (let stopEventContentFilter of stopEventContentFilterGroup)
             stopEventParam.appendChild(stopEventContentFilter);
-    }
 
     return stopEventParam;
 }
