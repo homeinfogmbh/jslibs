@@ -27,6 +27,13 @@ export const WARNING = 10;
 export const INFO = 20;
 export const SUCCESS = 30;
 export const DEBUG = 40;
+const PREFIXES = {
+    ERROR: '[ fail ]',
+    WARNING: '[ warn ]',
+    INFO: '[ info ]',
+    SUCCESS: '[  ok  ]',
+    DEBUG: '[debug!]'
+};
 
 
 /*
@@ -38,30 +45,33 @@ export class Logger {
         this.level = level;
     }
 
-    log (msg, level = WARNING, prefix = '[ warn ] ') {
+    log (msg, level = WARNING, prefix = null) {
+        if (prefix == null)
+            prefix = PREFIXES[level] || '[  na  ]';
+
         /* eslint-disable no-console */
         if (this.level >= level)
-            console.log(prefix + this.name + ': ' + msg);
+            console.log(prefix + ' ' + this.name + ': ' + msg);
         /* eslint-enable no-console */
     }
 
     error (msg) {
-        this.log(msg, ERROR, '[ fail ] ');
+        this.log(msg, ERROR);
     }
 
     warning (msg) {
-        this.log(msg, WARNING, '[ warn ] ');
+        this.log(msg, WARNING);
     }
 
     info (msg) {
-        this.log(msg, INFO, '[ info ] ');
+        this.log(msg, INFO);
     }
 
     success (msg) {
-        this.log(msg, SUCCESS, '[  ok  ] ');
+        this.log(msg, SUCCESS);
     }
 
     debug (msg) {
-        this.log(msg, DEBUG, '[debug!] ');
+        this.log(msg, DEBUG);
     }
 }
