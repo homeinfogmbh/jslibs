@@ -57,11 +57,10 @@ function triasElement (name) {
 
 
 function requestTimestamp (datetime) {
-    const requestTimestamp = siriElement('RequestTimestamp');
-
     if (datetime == null)
-        datetime = new Date();
+        return requestTimestamp(new Date());
 
+    const requestTimestamp = siriElement('RequestTimestamp');
     requestTimestamp.textContent = datetime.toISOString();
     return requestTimestamp;
 }
