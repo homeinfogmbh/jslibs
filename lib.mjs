@@ -159,7 +159,7 @@ export function comma2dot (string) {
 */
 export function dateStr (date) {
     if (date == null)
-        date = new Date();
+        return dateStr(new Date());
 
     return padd(date.getDate())
         + '.' + padd(date.getMonth() + 1)
@@ -172,7 +172,7 @@ export function dateStr (date) {
 */
 export function datetimeStr (date) {
     if (date == null)
-        date = new Date();
+        return datetimeStr(new Date());
 
     return dateStr(date) + ' ' + timeStr(date);
 }
