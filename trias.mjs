@@ -125,34 +125,22 @@ function initialInput (content) {
 }
 
 
-function type (name) {
+function type (name = 'address') {
     const type = triasElement('Type');
-
-    if (name == null)
-        name = 'address';
-
     type.textContent = name;
     return type;
 }
 
 
-function language (name) {
+function language (name = 'de') {
     const language = triasElement('Language');
-
-    if (name == null)
-        name = 'de';
-
     language.textContent = name;
     return language;
 }
 
 
-function numberOfResults (number) {
+function numberOfResults (number = 1) {
     const numberOfResults = triasElement('NumberOfResults');
-
-    if (number == null)
-        number = 1;
-
     numberOfResults.textContent = number;
     return numberOfResults;
 }
