@@ -106,7 +106,7 @@ function text (value) {
 function locationName (text) {
     const locationName = triasElement('LocationName');
 
-    if (typeof(text) == 'string')
+    if (typeof text === 'string' || text instanceof String)
         locationName.textContent = text;
     else
         locationName.appendChild(text);
