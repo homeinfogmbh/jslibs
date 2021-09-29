@@ -93,7 +93,7 @@ function autoencode (data) {
 */
 function encode (data, headers) {
     let contentType;
-    headers = headers || {};
+    headers = (headers == null) ? {} : Object.assign({}, headers);
 
     if (data == null)
         return [data, headers];
