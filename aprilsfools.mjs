@@ -21,7 +21,7 @@
 'use strict';
 
 
-const EVERGIVEN_MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, kann es aktuell zu Verzögerungem beim Aufrufen dieser Seite kommen.';
+const EVERGIVEN_MESSAGE = 'Aufgrund der Havarie des Frachters "Ever Given" im Sueskanal, kann es aktuell zu Verzögerungen beim Aufrufen dieser Seite kommen.';
 const EVERGIVEN_FURTHER_INFO = '<a href="https://istheshipstillstuck.com/">Weitere Informationen.</a>';
 
 
