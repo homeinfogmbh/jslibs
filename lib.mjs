@@ -23,7 +23,7 @@
 
 export const NEW_LINE = new RegExp('\r?\n', 'g');
 export const EMAIL = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-export const ENTITYMAP = {
+export const ENTITY_MAP = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
@@ -202,7 +202,7 @@ export function *enumerate (iterable, start = 0, step = 1) {
 */
 export function escapeHtml (string) {
     return string.replace(/[&<>"'\/äöüÄÖÜß]/g, function (string) {
-        return ENTITYMAP[string];
+        return ENTITY_MAP[string];
     });
 }
 
