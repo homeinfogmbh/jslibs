@@ -15,6 +15,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this library.  If not, see <http://www.gnu.org/licenses/>.
+
   Maintainer: Richard Neumann <r dot neumann at homeinfo period de>
 */
 'use strict';
