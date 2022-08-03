@@ -147,7 +147,7 @@ export function capitalizeFirstLetter (string) {
 
 
 /*
-    Converts German-style to American-style decimal interpunctuation.
+    Converts German-style to American-style decimal punctuation.
 */
 export function comma2dot (string) {
     return string.replace(',', '.');
@@ -179,7 +179,7 @@ export function datetimeStr (date) {
 
 
 /*
-    Converts American-style to German-style decimal interpunctuation.
+    Converts American-style to German-style decimal punctuation.
 */
 export function dot2comma (string) {
     return string.replace('.', ',');
@@ -216,7 +216,7 @@ export function euros (price) {
 
 
 /*
-  Returns a decimal number with German (comma) interpuctuation.
+  Returns a decimal number with German (comma) punctuation.
 */
 export function germanDecimal (number, decimals = 2) {
     return dot2comma(number.toFixed(decimals));
@@ -224,7 +224,7 @@ export function germanDecimal (number, decimals = 2) {
 
 
 /*
-    Groups an iterable and counts occurences.
+    Group an iterable and count occurrences of items.
 */
 export function group (iterable) {
     const result = {};
@@ -360,7 +360,7 @@ export function suppressEvent (func, ...args) {
 
 
 /*
-    Removes the string after the first occurence of the specified character.
+    Removes the string after the first occurrence of the specified character.
 */
 export function terminate (string, character) {
     return string.substring(0, string.indexOf(character));
