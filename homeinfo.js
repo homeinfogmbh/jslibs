@@ -20,7 +20,7 @@
 */
 'use strict';
 
-/* XXX: This is a LGACY ONLY library for existing projects. */
+/* XXX: This is a LEGACY ONLY library for existing projects. */
 
 var homeinfo = homeinfo || {};
 
